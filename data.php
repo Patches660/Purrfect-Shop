@@ -37,6 +37,78 @@ $cats = [
         'price' => 12000,
         'image' => 'cat_siamese.jpg',
         'features' => ['Superposition sleeping', 'High intelligence', 'Dynamic food demand algorithm']
+    ],
+    'cat_mainecoon' => [
+        'id' => 'cat_mainecoon',
+        'type' => 'cat',
+        'name' => 'Cyber Maine Coon',
+        'description' => 'แมวไซส์ยักษ์ใหญ่ใจดี น้ำหนักตัวระดับเซิร์ฟเวอร์แบบ Full Rack ช่วยสอดส่องความผิดปกติในห้องปฏิบัติการและตรวจสอบการเชื่อมต่อสายเคเบิลต่าง ๆ ได้อย่างใกล้ชิด',
+        'price' => 32000,
+        'image' => 'cat_mainecoon.jpg',
+        'features' => ['Heavy duty surveillance', 'Rack mount companion size', 'Hardware integrity sensor']
+    ],
+    'cat_ragdoll' => [
+        'id' => 'cat_ragdoll',
+        'type' => 'cat',
+        'name' => 'Calming Ragdoll',
+        'description' => 'แมวที่มีตัวอ่อนนุ่มเหมือนตุ๊กตาผ้า นุ่มฟูบำบัดความเครียดระหว่างกระบวนการ Compile โค้ดนาน ๆ ช่วยลดระดับคอร์ติซอลและฮอร์โมนความหัวร้อนของผู้ใช้อย่างมีประสิทธิภาพ',
+        'price' => 28000,
+        'image' => 'cat_ragdoll.jpg',
+        'features' => ['Floppy body layout', 'Instant stress relief purr', 'High compilation buffer']
+    ],
+    'cat_bengal' => [
+        'id' => 'cat_bengal',
+        'type' => 'cat',
+        'name' => 'Network Bengal',
+        'description' => 'แมวลายเสือดาวปราดเปรียวและเปี่ยมไปด้วยพลังงานสูง เหมาะกับการฝึกวิ่งตรวจสายแลน (LAN cables) และช่วยตามหาอุปกรณ์ฮาร์ดแวร์ขนาดเล็กที่ตกตามซอกตู้เก็บอุปกรณ์',
+        'price' => 26000,
+        'image' => 'cat_bengal.jpg',
+        'features' => ['Exotic tiger patterns', 'Under-floor wire routing helper', 'High physical stamina']
+    ],
+    'cat_scottish' => [
+        'id' => 'cat_scottish',
+        'type' => 'cat',
+        'name' => 'Scottish Fold (UI/UX Critic)',
+        'description' => 'หูพับกลมกลืนน่ารัก มักจะนั่งจ้องมองหน้าจอคอมพิวเตอร์ของคุณเป็นเวลานานเพื่อช่วยเป็นคู่คิดวิเคราะห์การออกแบบหน้าจอและระบบการทำงานของ User Interface แบบเงียบ ๆ',
+        'price' => 19000,
+        'image' => 'cat_scottish.jpg',
+        'features' => ['Folded ears framework', 'UI/UX review stare', 'Calm and steady focus']
+    ],
+    'cat_munchkin' => [
+        'id' => 'cat_munchkin',
+        'type' => 'cat',
+        'name' => 'Low-Profile Munchkin',
+        'description' => 'แมวขาสั้นสายพันธุ์ขวัญใจคนไอที รูปร่างแบบ Low-profile เหมาะสำหรับการลงไปตรวจเช็กความร้อนใต้เคสคอมพิวเตอร์ หรือวิ่งเล่นตรวจใต้โต๊ะทำงานที่สายไฟระโยงระยาง',
+        'price' => 22000,
+        'image' => 'cat_munchkin.jpg',
+        'features' => ['Low-profile chassis design', 'Cable tangle warning system', 'Extremely friendly API']
+    ],
+    'cat_russian' => [
+        'id' => 'cat_russian',
+        'type' => 'cat',
+        'name' => 'Silent Russian Blue',
+        'description' => 'แมวสีเทาเงินดวงตาสีเขียวมรกต สุขุม เรียบร้อย เงียบสงบ ไม่ส่งเสียงรบกวน เหมาะสำหรับนักพัฒนาระบบหลังบ้าน (Backend) ที่เน้นทำระบบเงียบ ๆ ในเวลากลางคืน',
+        'price' => 20000,
+        'image' => 'cat_russian.jpg',
+        'features' => ['Zero audio emissions', 'Elegant silver-blue sheen', 'Night shift optimization']
+    ],
+    'cat_abyssinian' => [
+        'id' => 'cat_abyssinian',
+        'type' => 'cat',
+        'name' => 'Pomodoro Abyssinian',
+        'description' => 'แมวพลังงานล้นเหลือ คอยกระโดดป่วนคีย์บอร์ดเพื่อเตือนเมื่อคุณนั่งทำงานติดต่อกันนานเกินไป (Pomodoro) ช่วยรักษาสุขภาพกระดูกสันหลังและหลังส่วนล่างของนักพัฒนา',
+        'price' => 16000,
+        'image' => 'cat_abyssinian.jpg',
+        'features' => ['Active timer alerts', 'High speed enter-key trigger', 'Ergonomic physical helper']
+    ],
+    'cat_americanshorthair' => [
+        'id' => 'cat_americanshorthair',
+        'type' => 'cat',
+        'name' => 'Multi-OS American Shorthair',
+        'description' => 'แมวลายเสือสีเงินสุดคลาสสิก ปรับตัวและเข้ากันได้กับทุกระบบปฏิบัติการ (Windows, Mac, Linux) ดูแลง่าย ทนทานต่อการเปลี่ยนแปลงของสภาพแวดล้อมระบบจัดเตรียมเสถียรภาพ',
+        'price' => 14000,
+        'image' => 'cat_americanshorthair.jpg',
+        'features' => ['Cross-platform compatibility', 'Highly resilient compiler', 'Classic stripe pattern']
     ]
 ];
 
