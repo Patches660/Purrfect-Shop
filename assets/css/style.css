@@ -87,7 +87,7 @@ header {
 }
 
 .logo-img {
-    height: 40px;
+    height: 70px;
     width: auto;
     object-fit: contain;
     animation: purr-pulse 3s infinite alternate;
@@ -995,8 +995,8 @@ footer p {
 
 /* Custom Added brand image styles */
 .hero-logo-img {
-    width: 150px;
-    height: 150px;
+    width: 280px;
+    height: 280px;
     object-fit: contain;
     margin-bottom: 1.5rem;
     filter: drop-shadow(0 0 15px var(--primary-glow));
