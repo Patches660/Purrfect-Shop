@@ -97,7 +97,7 @@ require_once __DIR__ . '/header.php';
 
         <div style="text-align: center; margin-top: 2rem;">
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem;">
-                ขอบคุณที่สั่งซื้อสินค้าและโปรแกรมกับ <strong>Cat Cyber Shop</strong><br>
+                ขอบคุณที่สั่งซื้อสินค้าและโปรแกรมกับ <strong>Cat Shop</strong><br>
                 ทีมงานพัฒนาของเรา (นำโดย Pattanun 66040233148 IT) จะติดต่อคุณเพื่อส่งมอบโดยเร็วที่สุด!
             </p>
             <a href="products.php" class="btn btn-primary">ช้อปปิ้งต่อ 🐱💻</a>

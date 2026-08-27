@@ -5,10 +5,10 @@ require_once __DIR__ . '/header.php';
 <!-- Hero Banner Area -->
 <section class="hero">
     <div class="hero-glow"></div>
-    <img src="assets/images/logo.png" alt="Cat Cyber Shop Logo" class="hero-logo-img">
+    <img src="assets/images/logo.png" alt="Cat Shop Logo" class="hero-logo-img">
     <h1 class="hero-title">
         <span class="gradient-text-1">CAT</span> 
-        <span class="gradient-text-2">CYBER</span> SHOP
+        <span class="gradient-text-2">SHOP</span>
     </h1>
     <p class="hero-slogan">
         ขายแมวพร้อมกับ ขายโปรแกรมตามความต้องการผู้ใช้ แบ่งตามขนาดขอบเขต
@@ -34,7 +34,7 @@ require_once __DIR__ . '/header.php';
         <div class="glass-card">
             <div class="card-top">
                 <div class="card-icon-wrapper">🐱</div>
-                <h3 class="card-title">Cyber Cats เพื่อนแท้โปรแกรมเมอร์</h3>
+                <h3 class="card-title">Cats เพื่อนแท้โปรแกรมเมอร์</h3>
                 <p class="card-desc">แมวของเราได้รับการฝึกฝนให้เข้าสังคมกับเหล่านักพัฒนา พร้อมชิปวิเคราะห์และเสียงร้องความต้านทานระดับโอห์มต่ำที่จะบำบัดความเครียดของคุณได้อย่างดี</p>
             </div>
             <ul class="card-features">
@@ -85,9 +85,9 @@ require_once __DIR__ . '/header.php';
         <!-- Featured Cat -->
         <div class="glass-card">
             <div class="card-top">
-                <img src="assets/images/cat_british.jpg" alt="Cyber British Shorthair" class="product-cat-img">
+                <img src="assets/images/cat_british.jpg" alt="British Shorthair" class="product-cat-img">
                 <span class="price-label" style="color: var(--primary-gold); font-weight: 700; margin-bottom: 0.5rem; display: block;">POPULAR</span>
-                <h3 class="card-title">Cyber British Shorthair</h3>
+                <h3 class="card-title">British Shorthair</h3>
                 <p class="card-desc">เพื่อนช่วยตรวจโค้ดขวัญใจนักเรียน นักศึกษา และโปรแกรมเมอร์มืออาชีพ พร้อมชิปเตือนเมื่อเขียนโค้ดซ้ำซ้อน</p>
             </div>
             <div class="card-price-row">

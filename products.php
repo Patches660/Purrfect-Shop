@@ -40,19 +40,19 @@ require_once __DIR__ . '/header.php';
 <!-- Header -->
 <div class="section-header">
     <h1 class="section-title">ศูนย์รวมสินค้าและบริการ</h1>
-    <p class="section-subtitle">เลือกซื้อคู่หูแมวไซเบอร์ หรือคำนวณสเปกโปรแกรมตามขอบเขตความต้องการ</p>
+    <p class="section-subtitle">เลือกซื้อคู่หูแมว หรือคำนวณสเปกโปรแกรมตามขอบเขตความต้องการ</p>
 </div>
 
 <!-- Filters Menu -->
 <div class="catalog-filters">
     <button class="filter-btn <?php echo $filter === 'all' ? 'active' : ''; ?>" onclick="filterCatalog('all')">ALL PRODUCTS</button>
-    <button class="filter-btn <?php echo $filter === 'cat' ? 'active' : ''; ?>" onclick="filterCatalog('cat')">CYBER CATS 🐾</button>
+    <button class="filter-btn <?php echo $filter === 'cat' ? 'active' : ''; ?>" onclick="filterCatalog('cat')">CATS 🐾</button>
     <button class="filter-btn <?php echo $filter === 'program' ? 'active' : ''; ?>" onclick="filterCatalog('program')">PROGRAMMING SCOPES 💻</button>
 </div>
 
 <!-- Cats Section -->
 <div class="catalog-item-group" id="cat-group" style="<?php echo ($filter === 'all' || $filter === 'cat') ? '' : 'display:none;'; ?>">
-    <h2 class="catalog-section-title">🐱 สายพันธุ์แมวไซเบอร์ (Cyber Cats)</h2>
+    <h2 class="catalog-section-title">🐱 สายพันธุ์แมว (Cats)</h2>
     <div class="cards-grid">
         <?php foreach ($cats as $key => $cat): ?>
             <div class="glass-card">

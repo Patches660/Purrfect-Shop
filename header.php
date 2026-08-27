@@ -12,15 +12,15 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Cyber Shop - แมวและโปรแกรมตามสั่ง</title>
+    <title>Cat Shop - แมวและโปรแกรมตามสั่ง</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <header>
         <div class="nav-container">
             <a href="index.php" class="logo">
-                <img src="assets/images/logo.png" alt="Cat Cyber Shop Logo" class="logo-img">
-                <span class="logo-text">CAT <span>CYBER</span> SHOP</span>
+                <img src="assets/images/logo.png" alt="Cat Shop Logo" class="logo-img">
+                <span class="logo-text">CAT SHOP</span>
             </a>
             <nav>
                 <ul class="nav-menu">
