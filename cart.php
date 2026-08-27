@@ -50,7 +50,7 @@ require_once __DIR__ . '/header.php';
     <div class="invoice-card">
         <div class="invoice-header">
             <span style="font-size: 2.2rem; display: block; margin-bottom: 0.5rem;">🎉</span>
-            <h2 style="font-family: 'Orbitron'; font-weight: 800; font-size: 1.6rem; color: var(--primary-cyan);">ORDER SUCCESSFUL</h2>
+            <h2 style="font-family: 'Orbitron'; font-weight: 800; font-size: 1.6rem; color: var(--primary-gold);">ORDER SUCCESSFUL</h2>
             <div class="invoice-badge">ใบเสร็จชำระเงินจำลอง</div>
             <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">
                 รหัสคำสั่งซื้อ: <strong style="color: white; font-family: 'Orbitron';"><?php echo $invoice_id; ?></strong><br>

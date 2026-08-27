@@ -103,7 +103,7 @@ require_once __DIR__ . '/header.php';
         <div class="glass-card pink-accent">
             <div class="card-top">
                 <div class="card-icon-wrapper">⚙️</div>
-                <span class="price-label" style="color: var(--primary-cyan); font-weight: 700; margin-bottom: 0.5rem; display: block;">HOT DEALS</span>
+                <span class="price-label" style="color: var(--primary-gold); font-weight: 700; margin-bottom: 0.5rem; display: block;">HOT DEALS</span>
                 <h3 class="card-title">Medium Scope App</h3>
                 <p class="card-desc">ระบบเว็บแอปพลิเคชันจัดการข้อมูลทั่วไป พร้อมฐานข้อมูลและระบบสมาชิกครบถ้วน ส่งมอบภายใน 3 สัปดาห์</p>
             </div>
@@ -112,7 +112,7 @@ require_once __DIR__ . '/header.php';
                     <span class="price-label">เริ่มต้นที่</span>
                     <span class="price-val">15,000 ฿</span>
                 </div>
-                <a href="products.php?filter=program" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem; border-color: var(--accent-pink); color: var(--accent-pink);">สั่งทำโปรแกรม</a>
+                <a href="products.php?filter=program" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem; border-color: var(--primary-gold); color: var(--primary-gold);">สั่งทำโปรแกรม</a>
             </div>
         </div>
     </div>

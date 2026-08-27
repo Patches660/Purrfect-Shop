@@ -31,7 +31,7 @@ require_once __DIR__ . '/header.php';
 
 <!-- Added Alert Banner -->
 <?php if (!empty($added_message)): ?>
-    <div style="background: rgba(0, 242, 254, 0.15); border: 1px solid var(--primary-cyan); border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; text-shadow: 0 0 10px rgba(0,242,254,0.3); font-weight: 500;">
+    <div style="background: rgba(168, 85, 247, 0.12); border: 1px solid var(--primary-gold); border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; text-shadow: 0 0 10px var(--gold-glow); font-weight: 500;">
         <span><?php echo $added_message; ?></span>
         <a href="cart.php" class="btn btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.8rem; font-family: 'Orbitron';">ไปที่ตะกร้า 🛒</a>
     </div>
@@ -64,7 +64,7 @@ require_once __DIR__ . '/header.php';
                 </div>
                 
                 <div>
-                    <h4 style="font-size: 0.85rem; color: var(--primary-cyan); font-family: 'Orbitron'; margin-bottom: 0.5rem; text-transform: uppercase;">ความสามารถพิเศษ</h4>
+                    <h4 style="font-size: 0.85rem; color: var(--primary-purple); font-family: 'Orbitron'; margin-bottom: 0.5rem; text-transform: uppercase;">ความสามารถพิเศษ</h4>
                     <ul class="card-features" style="margin-bottom: 1.5rem;">
                         <?php foreach ($cat['features'] as $feat): ?>
                             <li><?php echo $feat; ?></li>
@@ -138,7 +138,7 @@ require_once __DIR__ . '/header.php';
     <!-- Dynamic Calculator Form -->
     <div class="configurator-wrapper" id="custom-estimator">
         <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
-            <h2 class="section-title" style="font-size: 1.8rem; background: var(--gradient-cyan); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">⚡ เครื่องคำนวณประเมินงบประมาณตามความต้องการ</h2>
+            <h2 class="section-title" style="font-size: 1.8rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">⚡ เครื่องคำนวณประเมินงบประมาณตามความต้องการ</h2>
             <p class="section-subtitle">เลือกและปรับแต่งขนาดฟังก์ชันเพิ่มเติมเพื่อประกอบการส่งสเปกงานลงตะกร้า</p>
         </div>
         

@@ -15,7 +15,7 @@ require_once __DIR__ . '/header.php';
             <div class="creator-details">
                 <div class="detail-item">
                     <div class="detail-label">STUDENT ID / รหัสนิสิต</div>
-                    <div class="detail-val" style="color: var(--primary-cyan); font-family: 'Orbitron'; font-weight: 700; letter-spacing: 1px;">66040233148</div>
+                    <div class="detail-val" style="color: var(--primary-gold); font-family: 'Orbitron'; font-weight: 700; letter-spacing: 1px;">66040233148</div>
                 </div>
                 <div class="detail-item">
                     <div class="detail-label">MAJOR / สาขาวิชา</div>
