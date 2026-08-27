@@ -57,15 +57,8 @@ require_once __DIR__ . '/header.php';
         <?php foreach ($cats as $key => $cat): ?>
             <div class="glass-card">
                 <div class="card-top">
-                    <!-- Icon representation or design instead of broken image links -->
-                    <div class="card-icon-wrapper">
-                        <?php 
-                        if ($key == 'cat_british') echo '🇬🇧';
-                        elseif ($key == 'cat_persian') echo '🇮🇷';
-                        elseif ($key == 'cat_sphynx') echo '👽';
-                        else echo '🇹🇭';
-                        ?>
-                    </div>
+                    <!-- Real Cat Image -->
+                    <img src="assets/images/<?php echo $cat['image']; ?>" alt="<?php echo $cat['name']; ?>" class="product-cat-img">
                     <h3 class="card-title"><?php echo $cat['name']; ?></h3>
                     <p class="card-desc"><?php echo $cat['description']; ?></p>
                 </div>

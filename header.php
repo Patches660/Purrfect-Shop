@@ -19,7 +19,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <header>
         <div class="nav-container">
             <a href="index.php" class="logo">
-                <span class="logo-icon">🐱</span>
+                <img src="assets/images/logo.png" alt="Cat Cyber Shop Logo" class="logo-img">
                 <span class="logo-text">CAT <span>CYBER</span> SHOP</span>
             </a>
             <nav>

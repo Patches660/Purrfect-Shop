@@ -5,6 +5,7 @@ require_once __DIR__ . '/header.php';
 <!-- Hero Banner Area -->
 <section class="hero">
     <div class="hero-glow"></div>
+    <img src="assets/images/logo.png" alt="Cat Cyber Shop Logo" class="hero-logo-img">
     <h1 class="hero-title">
         <span class="gradient-text-1">CAT</span> 
         <span class="gradient-text-2">CYBER</span> SHOP

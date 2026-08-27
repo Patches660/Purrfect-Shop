@@ -86,6 +86,13 @@ header {
     animation: purr-pulse 3s infinite alternate;
 }
 
+.logo-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    animation: purr-pulse 3s infinite alternate;
+}
+
 .logo-text {
     font-family: 'Orbitron', sans-serif;
     font-weight: 800;
@@ -984,4 +991,29 @@ footer p {
     .hero-slogan {
         font-size: 1.1rem;
     }
+}
+
+/* Custom Added brand image styles */
+.hero-logo-img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 15px var(--primary-glow));
+    animation: purr-pulse 4s infinite alternate;
+}
+
+.product-cat-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-glass);
+    transition: var(--transition);
+}
+
+.glass-card:hover .product-cat-img {
+    border-color: var(--primary-cyan);
+    transform: scale(1.02);
 }
