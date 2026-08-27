@@ -85,8 +85,8 @@ require_once __DIR__ . '/header.php';
         <!-- Featured Cat -->
         <div class="glass-card">
             <div class="card-top">
-                <div class="card-icon-wrapper">🐈</div>
-                <span class="price-label" style="color: var(--accent-pink); font-weight: 700; margin-bottom: 0.5rem; display: block;">POPULAR</span>
+                <img src="assets/images/cat_british.jpg" alt="Cyber British Shorthair" class="product-cat-img">
+                <span class="price-label" style="color: var(--primary-gold); font-weight: 700; margin-bottom: 0.5rem; display: block;">POPULAR</span>
                 <h3 class="card-title">Cyber British Shorthair</h3>
                 <p class="card-desc">เพื่อนช่วยตรวจโค้ดขวัญใจนักเรียน นักศึกษา และโปรแกรมเมอร์มืออาชีพ พร้อมชิปเตือนเมื่อเขียนโค้ดซ้ำซ้อน</p>
             </div>
@@ -95,7 +95,7 @@ require_once __DIR__ . '/header.php';
                     <span class="price-label">เริ่มต้นที่</span>
                     <span class="price-val">15,000 ฿</span>
                 </div>
-                <a href="products.php?filter=cat" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem;">เลือกดูแมว</a>
+                <a href="products.php?filter=cat" class="btn btn-secondary btn-sm" style="padding: 0.5rem 1rem; font-size: 0.8rem; border-color: var(--primary-gold); color: var(--primary-gold);">เลือกดูแมว</a>
             </div>
         </div>
 
