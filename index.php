@@ -85,7 +85,7 @@ require_once __DIR__ . '/header.php';
         <!-- Featured Cat -->
         <div class="glass-card">
             <div class="card-top">
-                <img src="assets/images/cat_british.jpg" alt="British Shorthair" class="product-cat-img">
+                <div class="card-icon-wrapper">🐈</div>
                 <span class="price-label" style="color: var(--primary-gold); font-weight: 700; margin-bottom: 0.5rem; display: block;">POPULAR</span>
                 <h3 class="card-title">British Shorthair</h3>
                 <p class="card-desc">เพื่อนช่วยตรวจโค้ดขวัญใจนักเรียน นักศึกษา และโปรแกรมเมอร์มืออาชีพ พร้อมชิปเตือนเมื่อเขียนโค้ดซ้ำซ้อน</p>
