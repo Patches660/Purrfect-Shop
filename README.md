@@ -144,18 +144,7 @@ CatCyberShop/
 
 ---
 
-## 👨‍💻 ข้อมูลผู้พัฒนา (Developer Information)
-
-* **ชื่อ-นามสกุล:** Pattanun Kamhongsa (ภัทรนันท์ คำหงษา)
-* **รหัสนิสิต:** 66040233148
-* **สาขาวิชา:** เทคโนโลยีสารสนเทศ (Information Technology - IT)
-* **คณะ:** คณะเทคโนโลยีสารสนเทศ (Faculty of Informatics)
-* **มหาวิทยาลัย:** มหาวิทยาลัยมหาสารคาม (Mahasarakham University)
-* **วิชา:** Workshop 2567 (Semester 4)
-* **GitHub Repository:** [https://github.com/Patches660/Purrfect-Shop-Files](https://github.com/Patches660/Purrfect-Shop-Files)
-
----
-
 <div align="center">
   <sub>Crafted with ❤️ and 🐾 for Cat Lovers everywhere.</sub>
 </div>
+
