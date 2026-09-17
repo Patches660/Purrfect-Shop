@@ -86,7 +86,7 @@
                             </a>
                         </li>
                                                 <li>
-                            <a href="creator.html" class="nav-link ">
+                            <a href="creator.html" class="nav-link active">
                                 👨‍💻 ผู้จัดทำ
                             </a>
                         </li>
@@ -102,99 +102,59 @@
     </header>
     <main>
                 
-<div class="auth-container">
-    <div class="auth-card">
-        <div class="auth-header">
-            <div class="auth-icon-circle">🐱</div>
-            <h1 class="auth-title">สมัครสมาชิก Cat Shop</h1>
-            <p class="auth-subtitle">
-                ร่วมเป็นครอบครัวทาสแมว รับสิทธิพิเศษส่วนลดทันที 5% ทุกออเดอร์ 🐾
-            </p>
-            <div style="background: linear-gradient(135deg, #0B0F19 0%, #1E293B 100%); border: 1px solid #F59E0B; border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-top: 1rem; text-align: left; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
-                <span style="font-size: 1.5rem;">👑</span>
-                <div style="font-size: 0.84rem; color: #F1F5F9; line-height: 1.45;">
-                    <strong style="color: #FBBF24;">สิทธิพิเศษต้อนรับ VIP:</strong> สมัครแล้วระบบจะส่งอีเมล <strong>VIP Member Card</strong> และโค้ดลด 15% (<code style="color: #FCD34D;">WELCOME15</code>) เข้าอีเมลของคุณทันที!
-                </div>
-            </div>
+<div class="creator-container">
+    <div class="creator-card">
+        <div class="creator-header-banner"></div>
+        <div class="creator-avatar-wrap">
+            <div class="creator-avatar">👨‍💻</div>
         </div>
 
-        
-        <form method="POST" action="#" onsubmit="return false;" id="register-form">
-            <div class="form-group">
-                <label for="fullname">ชื่อ - นามสกุล *</label>
-                <input type="text" id="fullname" name="fullname" class="form-control" 
-                       placeholder="เช่น สมชาย ใจดี" value="" required>
-            </div>
+        <div class="creator-body">
+            <h1 class="creator-name">Pattanun Kamhongsa</h1>
+            <p class="creator-role">IT Student & Web Developer 🐾</p>
 
-            <div class="form-group">
-                <label for="username">ชื่อผู้ใช้ (Username) *</label>
-                <input type="text" id="username" name="username" class="form-control" 
-                       placeholder="เช่น catlover99" value="" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">อีเมล (Email) *</label>
-                <input type="email" id="email" name="email" class="form-control" 
-                       placeholder="เช่น yourname@gmail.com" value="" required>
-            </div>
-
-            <div class="form-group">
-                <label for="phone">เบอร์โทรศัพท์ (Phone Number) *</label>
-                <input type="tel" id="phone" name="phone" class="form-control" 
-                       placeholder="เช่น 0891234567" value="" required>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                <div class="form-group">
-                    <label for="password">รหัสผ่าน *</label>
-                    <input type="password" id="password" name="password" class="form-control" 
-                           placeholder="อย่างน้อย 6 ตัวอักษร" required>
+            <div class="creator-info-grid">
+                <div class="creator-info-item">
+                    <div class="creator-info-label">STUDENT ID / รหัสนิสิต</div>
+                    <div class="creator-info-val" style="color: var(--primary-coral);">66040233148</div>
                 </div>
-                <div class="form-group">
-                    <label for="confirm_password">ยืนยันรหัสผ่าน *</label>
-                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" 
-                           placeholder="พิมพ์รหัสผ่านซ้ำอีกครั้ง" required>
+
+                <div class="creator-info-item">
+                    <div class="creator-info-label">MAJOR / สาขาวิชา</div>
+                    <div class="creator-info-val">Information Technology (IT)</div>
+                </div>
+
+                <div class="creator-info-item">
+                    <div class="creator-info-label">FACULTY / คณะ</div>
+                    <div class="creator-info-val">คณะเทคโนโลยีสารสนเทศ</div>
+                </div>
+
+                <div class="creator-info-item">
+                    <div class="creator-info-label">PROJECT / ภาคการศึกษา</div>
+                    <div class="creator-info-val" style="color: var(--accent-mint);">Workshop 2567 (Semester 4)</div>
                 </div>
             </div>
 
-            <!-- Consent Section -->
-            <div class="consent-box">
-                <div class="consent-header">
-                    <span>📋 การให้ความยินยอมและการคุ้มครองข้อมูล (Consent)</span>
-                </div>
-
-                <!-- Email Consent -->
-                <label class="consent-item">
-                    <input type="checkbox" name="consent_email" class="consent-checkbox" checked>
-                    <div class="consent-text">
-                        <strong>ยินยอมรับข่าวสารทางอีเมล:</strong> ข้าพเจ้ายินยอมให้ <strong>Cat Shop</strong> ส่งข้อมูลข่าวสาร โปรโมชั่นพิเศษ สายพันธุ์น้องแมวเข้าใหม่ และเกร็ดความรู้การดูแลสัตว์เลี้ยงผ่านทาง <u>อีเมล</u>
-                    </div>
-                </label>
-
-                <!-- Phone Consent -->
-                <label class="consent-item">
-                    <input type="checkbox" name="consent_phone" class="consent-checkbox" >
-                    <div class="consent-text">
-                        <strong>ยินยอมให้ติดต่อทางเบอร์โทรศัพท์:</strong> ข้าพเจ้ายินยอมให้เจ้าหน้าที่ติดต่อแจ้งเตือนสถานะการจองน้องแมว การประสานงานจัดส่ง และข้อเสนอพิเศษผ่านทาง <u>เบอร์โทรศัพท์ / SMS</u>
-                    </div>
-                </label>
-
-                <!-- Terms and PDPA Consent -->
-                <label class="consent-item" style="border-top: 1px solid #FFE6D9; padding-top: 0.8rem; margin-top: 0.8rem;">
-                    <input type="checkbox" name="consent_terms" class="consent-checkbox" required >
-                    <div class="consent-text">
-                        <strong>ข้อกำหนดและนโยบายความเป็นส่วนตัว (PDPA) *:</strong> ข้าพเจ้ายอมรับข้อกำหนด เงื่อนไขการให้บริการ และนโยบายการคุ้มครองข้อมูลส่วนบุคคลของร้าน Cat Shop
-                    </div>
-                </label>
+            <div style="background: var(--bg-page); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.5rem; text-align: left; margin-bottom: 2rem; font-size: 0.92rem; color: var(--text-secondary); line-height: 1.7;">
+                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem;">
+                    💡 เกี่ยวกับโครงการร้านค้า Cat Shop
+                </h3>
+                <p style="margin-bottom: 0.8rem;">
+                    โครงการ <strong>Cat Shop (อาณาจักรน้องแมวสายพันธุ์แท้)</strong> ได้รับการพัฒนาขึ้นโดยมีเป้าหมายเพื่อฝึกฝนทักษะการสร้างเว็บแอปพลิเคชันเชิงพาณิชย์ (E-Commerce Web Application) ด้วยภาษา PHP, HTML5, Modern CSS และ JavaScript โดยเน้นประสบการณ์ผู้ใช้ (UX/UI) ที่น่ารัก อบอุ่น สวยงาม
+                </p>
+                <p>
+                    ระบบมาพร้อมฟังก์ชันการแนะนำสายพันธุ์น้องแมวตามหมวดหมู่ไลฟ์สไตล์ (Recommendation System), ระบบคัดกรองอัจฉริยะ (Smart Cat Matcher), ระบบสมัครสมาชิกพร้อมการขอความยินยอม (Consent) ทางอีเมลและเบอร์โทรศัพท์ตามหลัก PDPA, ระบบจัดการตะกร้าสินค้า และคำนวณส่วนลดสมาชิกอัตโนมัติ
+                </p>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem;">
-                ยืนยันการสมัครสมาชิก 🐾
-            </button>
-        </form>
-
-        <div style="text-align: center; margin-top: 1.8rem; padding-top: 1.2rem; border-top: 1px solid var(--border-color); font-size: 0.92rem; color: var(--text-secondary);">
-            มีบัญชีสมาชิกอยู่แล้ว? <a href="login.html" style="color: var(--primary-coral); font-weight: 700; text-decoration: none;">เข้าสู่ระบบที่นี่</a>
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <a href="products.html" class="btn btn-primary">
+                    เลือกชมน้องแมวในร้าน 🐱
+                </a>
+                <a href="index.html" class="btn btn-secondary">
+                    กลับสู่หน้าแรก 🏠
+                </a>
+            </div>
         </div>
     </div>
 </div>
