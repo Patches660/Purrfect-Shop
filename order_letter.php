@@ -607,12 +607,12 @@ $page_title = "จดหมายตอบรับการรับเลี�
                 <div class="cert-footer">
                     <div class="signature-block">
                         <div style="font-family: 'Brush Script MT', cursive; font-size: 1.8rem; color: #1E293B;">
-                            Pattanun Kamhongsa
+                            Purrfect Cattery Team
                         </div>
                         <div class="signature-line"></div>
                         <div class="signature-name">คุณพัฒนนันท์ คำหงษา</div>
                         <div class="signature-title">ผู้ก่อตั้งและหัวหน้าผู้เพาะพันธุ์ (Master Breeder)</div>
-                        <div style="font-size: 0.75rem; color: #94A3B8;">ใบอนุญาตเพาะพันธุ์เลขที่: TH-CAT-66040233148</div>
+                        <div style="font-size: 0.75rem; color: #94A3B8;">ใบอนุญาตเพาะพันธุ์เลขที่: TH-CAT-TH-CAT-8899</div>
                     </div>
 
                     <!-- Official Golden Seal -->

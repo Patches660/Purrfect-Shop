@@ -10,13 +10,13 @@ require_once __DIR__ . '/header.php';
         </div>
 
         <div class="creator-body">
-            <h1 class="creator-name">Pattanun Kamhongsa</h1>
+            <h1 class="creator-name">Purrfect Cattery Team</h1>
             <p class="creator-role">IT Student & Web Developer 🐾</p>
 
             <div class="creator-info-grid">
                 <div class="creator-info-item">
                     <div class="creator-info-label">STUDENT ID / รหัสนิสิต</div>
-                    <div class="creator-info-val" style="color: var(--primary-coral);">66040233148</div>
+                    <div class="creator-info-val" style="color: var(--primary-coral);">TH-CAT-8899</div>
                 </div>
 
                 <div class="creator-info-item">
@@ -26,7 +26,7 @@ require_once __DIR__ . '/header.php';
 
                 <div class="creator-info-item">
                     <div class="creator-info-label">FACULTY / คณะ</div>
-                    <div class="creator-info-val">คณะเทคโนโลยีสารสนเทศ</div>
+                    <div class="creator-info-val">Purrfect Boutique Cattery</div>
                 </div>
 
                 <div class="creator-info-item">

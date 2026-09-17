@@ -64,7 +64,7 @@
         <div class="footer-bottom">
             <p>&copy; <?php echo date('Y'); ?> <strong>Purrfect Shop</strong> - คัดสรรและส่งมอบเพื่อนที่ดีที่สุดด้วยหัวใจ 🐾</p>
             <p>
-                พัฒนาโดย <strong>Pattanun Kamhongsa</strong> (66040233148 IT) &bull; คณะเทคโนโลยีสารสนเทศ
+                พัฒนาโดย <strong>Purrfect Cattery Team</strong> (TH-CAT-8899 IT) &bull; Purrfect Boutique Cattery
             </p>
         </div>
     </footer>

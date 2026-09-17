@@ -5,7 +5,7 @@
  * Directly dispatches emails through the official EmailJS REST API v1.0
  * Endpoint: https://api.emailjs.com/api/v1.0/email/send
  * Zero external Composer dependencies required!
- * Developer: Pattanun Kamhongsa (66040233148 IT)
+ * Developer: Purrfect Cattery Team 🐾
  */
 
 class EmailJsMailer {

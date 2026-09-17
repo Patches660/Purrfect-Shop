@@ -329,7 +329,7 @@ function renderMemberWelcomeEmail($recipient_name = 'คุณสุพรรษ
                             </div>
                             <div style="font-size: 11px; color: #64748B; line-height: 1.6;">
                                 อีเมลติดต่อทีมงาน: <a href="mailto:{$sender_email}" style="color: #FCD34D;">{$sender_email}</a><br>
-                                &copy; 2026 Purrfect Shop. พัฒนาโดย Pattanun Kamhongsa (66040233148 IT)
+                                &copy; 2026 Purrfect Shop. พัฒนาโดย Purrfect Cattery Team 🐾
                             </div>
                         </td>
                     </tr>

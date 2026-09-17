@@ -282,7 +282,7 @@ function renderNewsletterSubscribeEmail($recipient_name = 'คนรักน้
                                 หากไม่ต้องการรับจดหมายข่าว สามารถกดปรับแต่งความถี่หรือ <a href="{$email_base_url}/subscribe.php" style="color: #059669; text-decoration: underline;">ยกเลิกรับข่าวสาร (Unsubscribe)</a> ได้ตลอดเวลา
                             </div>
                             <div style="font-size: 10.5px; color: #94A3B8;">
-                                &copy; 2026 Purrfect Shop. พัฒนาโดย Pattanun Kamhongsa (66040233148 IT)
+                                &copy; 2026 Purrfect Shop. พัฒนาโดย Purrfect Cattery Team 🐾
                             </div>
                         </td>
                     </tr>

@@ -156,8 +156,8 @@ $email_base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'htt
 <!-- Email Footer -->
 <div class="email-footer-box">
     <p style="margin-bottom: 0.4rem;">
-        <strong>Cat Boutique Cattery Thailand</strong> • พัฒนาและดูแลโดย Pattanun Kamhongsa (รหัสนักศึกษา 66040233148)<br>
-        คณะเทคโนโลยีสารสนเทศ (IT) • ฟาร์มแมวมาตรฐานสากลระบบปิด
+        <strong>Cat Boutique Cattery Thailand</strong> • พัฒนาและดูแลโดย Purrfect Cattery Team 🐾<br>
+        Purrfect Boutique Cattery (IT) • ฟาร์มแมวมาตรฐานสากลระบบปิด
     </p>
     <p style="color: #CBD5E1; font-size: 0.72rem; margin-top: 0.6rem;">
         อีเมลฉบับนี้ส่งถึง <?php echo htmlspecialchars($recipient_email); ?> เนื่องจากคุณได้ทำการสมัครสมาชิกบน Cat Boutique<br>
