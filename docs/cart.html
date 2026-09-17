@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purrfect Shop - เพราะทุกบ้านควรมีเจ้าเหมียว 🐾</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/favicon.png">
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('cat_shop_theme') || 'warm';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch(e) {}
+        })();
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <!-- 1. Top Utility Bar: Announcements, Theme Switcher, Admin Console & User Profile -->
+        <div class="top-utility-bar">
+            <div class="top-utility-container">
+                <div class="top-utility-left">
+                    <span class="top-badge-pill">🐾 Purrfect Cattery & Boutique</span>
+                    <span class="top-utility-tagline">ฟาร์มเพาะพันธุ์น้องแมวสายพันธุ์แท้มาตรฐานสากล • การันตีสุขภาพ 180 วัน</span>
+                </div>
+                
+                <div class="top-utility-right">
+                    <!-- Theme Loop Switcher Button -->
+                    <button type="button" class="theme-loop-btn" onclick="cycleTheme()" title="กดเพื่อสลับสีพื้นหลังแบบวนลูป (Loop)">
+                        🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
+                    </button>
+
+                    <!-- Admin Console Shortcut (Only visible for Admins) -->
+                    
+                    <!-- User Account / Profile Badge -->
+                                            <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                            <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
+                            <a href="subscribe.html" class="btn btn-sm " style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="รับข้อมูลข่าวสารโดยยังไม่ต้องสมัครสมาชิก">
+                                📬 รับข้อมูลข่าวสาร
+                            </a>
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.85rem; font-size: 0.82rem;">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.9rem; font-size: 0.82rem;">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+
+        <!-- 2. Main Navigation Bar: Brand Logo, Page Links & Shopping Cart -->
+        <div class="main-nav-bar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <img src="assets/images/logo.png" alt="Purrfect Shop Logo" class="logo-img">
+                    <div class="logo-title-group">
+                        <span class="logo-text">Purrfect Shop 🐾</span>
+                        <span class="logo-tagline">เพราะทุกบ้านควรมีเจ้าเหมียว</span>
+                    </div>
+                </a>
+                
+                <nav>
+                    <ul class="nav-menu">
+                        <li>
+                            <a href="index.html" class="nav-link ">
+                                🏠 หน้าแรก
+                            </a>
+                        </li>
+                        <li>
+                            <a href="products.html" class="nav-link ">
+                                🐱 น้องแมวทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="recommend.html" class="nav-link ">
+                                🌟 แนะนำสำหรับคุณ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="welcome_deal.html" class="nav-link " style="position: relative;">
+                                🎁 ดีลสมาชิกใหม่
+                                <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
+                            </a>
+                        </li>
+                                                <li>
+                            <a href="creator.html" class="nav-link ">
+                                👨‍💻 ผู้จัดทำ
+                            </a>
+                        </li>
+                        <li class="cart-badge-container">
+                            <a href="cart.html" class="nav-link nav-cart-btn active">
+                                🛒 ตะกร้า
+                                                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+                
+<!-- Stepper Indicator -->
+<div class="checkout-stepper">
+    <div class="step-item active">
+        <span class="step-number">1</span>
+        <span>เลือกน้องแมว</span>
+    </div>
+    <span class="step-arrow">→</span>
+    <div class="step-item ">
+        <span class="step-number">2</span>
+        <span>ข้อมูลจัดส่ง & ชำระเงิน</span>
+    </div>
+    <span class="step-arrow">→</span>
+    <div class="step-item ">
+        <span class="step-number">3</span>
+        <span>ใบเสร็จ & ใบรับรอง</span>
+    </div>
+</div>
+
+
+            <!-- Empty Cart -->
+        <div style="text-align: center; padding: 4rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 580px; margin: 0 auto; box-shadow: var(--shadow-sm);">
+            <div style="font-size: 4.5rem; margin-bottom: 1rem;">🧺</div>
+            <h2 style="font-size: 1.7rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem;">
+                ยังไม่มีน้องแมวในตะกร้าของคุณ
+            </h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.6;">
+                ค้นหาน้องแมวสายพันธุ์ที่ใช่เพื่อมอบความรักและความอบอุ่นให้กับบ้านของคุณ
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <a href="products.html" class="btn btn-primary btn-lg">
+                    เลือกชมน้องแมวทั้งหมด 🐾
+                </a>
+                <a href="recommend.html" class="btn btn-secondary btn-lg">
+                    ดูระบบแนะนำสายพันธุ์ 🌟
+                </a>
+            </div>
+        </div>
+    
+
+<script>
+// Switch Payment Channels Tabs
+function switchPaymentChannel(channel) {
+    // Update Radio card styles
+    const cards = document.querySelectorAll('.payment-method-card');
+    cards.forEach(c => {
+        c.classList.remove('active');
+        const radio = c.querySelector('input[type="radio"]');
+        if (radio && radio.value === channel) {
+            c.classList.add('active');
+            radio.checked = true;
+        }
+    });
+
+    // Toggle detail panels
+    const panels = ['bank_transfer', 'promptpay', 'credit_card', 'cod'];
+    panels.forEach(p => {
+        const elem = document.getElementById('panel-' + p);
+        if (elem) {
+            elem.style.display = (p === channel) ? 'block' : 'none';
+        }
+    });
+
+    // Update required status
+    const bankAccountInput = document.getElementById('user_bank_account');
+    const isTest = document.getElementById('test_skip_account')?.checked;
+    if (bankAccountInput && !isTest) {
+        bankAccountInput.required = (channel === 'bank_transfer');
+    }
+}
+
+// Toggle TEST Mode Checkbox (ตามคำขอ)
+function toggleTestMode(isTest) {
+    const bankAccountInput = document.getElementById('user_bank_account');
+    const custName = document.getElementById('customer_name');
+    const custPhone = document.getElementById('customer_phone');
+    const delivAddr = document.getElementById('delivery_address');
+    const testNotice = document.getElementById('test-mode-notice');
+    const paymentContainer = document.getElementById('payment-details-container');
+    const methodsGrid = document.getElementById('payment-methods-grid');
+
+    if (isTest) {
+        // Remove required constraints
+        if (bankAccountInput) bankAccountInput.required = false;
+        if (custName) custName.required = false;
+        if (custPhone) custPhone.required = false;
+        if (delivAddr) delivAddr.required = false;
+
+        // Visual feedback
+        if (paymentContainer) paymentContainer.style.opacity = '0.5';
+        if (methodsGrid) methodsGrid.style.opacity = '0.5';
+        if (testNotice) testNotice.style.display = 'block';
+    } else {
+        // Restore constraints
+        if (custName) custName.required = true;
+        if (custPhone) custPhone.required = true;
+        if (delivAddr) delivAddr.required = true;
+
+        const currentChannel = document.querySelector('input[name="payment_channel"]:checked')?.value || 'bank_transfer';
+        if (bankAccountInput) bankAccountInput.required = (currentChannel === 'bank_transfer');
+
+        if (paymentContainer) paymentContainer.style.opacity = '1';
+        if (methodsGrid) methodsGrid.style.opacity = '1';
+        if (testNotice) testNotice.style.display = 'none';
+    }
+}
+</script>
+
+    <footer>
+        <!-- Newsletter Subscription Ribbon -->
+        <div style="background: linear-gradient(135deg, rgba(255, 117, 86, 0.12) 0%, rgba(254, 243, 199, 0.5) 100%); border-bottom: 1px solid var(--border-color); padding: 1.8rem 1rem;">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <span style="font-size: 2.4rem; line-height: 1;">📬</span>
+                    <div>
+                        <h4 style="margin: 0 0 4px 0; font-size: 1.15rem; color: var(--text-main); font-weight: 800;">
+                            สมัครรับจดหมายข่าว & ดีลลับน้องแมว Purrfect Shop 🐾
+                        </h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">
+                            รับแจ้งเตือนน้องแมวเข้าใหม่ เกร็ดสุขภาพจากสัตวแพทย์ พร้อมรับโค้ดส่วนลด 10% (CATNEWS10) ทันทีทางอีเมล
+                        </p>
+                    </div>
+                </div>
+                <form action="subscribe.html" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
+                    <input type="email" name="subscriber_email" placeholder="กรอกอีเมลของคุณ เช่น name@gmail.com" required style="flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 999px; padding: 10px 22px; font-weight: 800; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);">
+                        ติดตามข่าวสาร ✨
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h3>Purrfect Shop 🐾</h3>
+                <p style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.4rem;">
+                    "เพราะทุกบ้านควรมีเจ้าเหมียว"
+                </p>
+                <p>
+                    ฟาร์มและศูนย์รวมน้องแมวสายพันธุ์แท้ 100% สุขภาพดี ได้รับการดูแลจากสัตวแพทย์อย่างใกล้ชิด
+                    พร้อมบริการตรวจสุขภาพ ฉีดวัคซีน ถ่ายพยาธิ และใบเพ็ดดีกรีรับรองสายพันธุ์ครบถ้วน
+                </p>
+                <div style="margin-top: 1rem; display: flex; gap: 0.8rem; font-size: 0.85rem; color: var(--text-muted);">
+                    <span>📍 บริการจัดส่งทั่วประเทศ</span> &bull; 
+                    <span>⏰ เปิดทุกวัน 09:00 - 20:00 น.</span>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>หมวดหมู่แนะนำ</h4>
+                <ul>
+                    <li><a href="recommend.html?cat=popular">🔥 สายพันธุ์ยอดนิยม</a></li>
+                    <li><a href="recommend.html?cat=condo">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
+                    <li><a href="recommend.html?cat=fluffy">🧸 แมวขนยาวนุ่มฟู</a></li>
+                    <li><a href="recommend.html?cat=short_hair">✨ แมวขนสั้นดูแลง่าย</a></li>
+                    <li><a href="recommend.html?cat=beginner">👶 มือใหม่เลี้ยงง่าย</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>ความปลอดภัย & สมาชิก</h4>
+                <ul>
+                    <li><a href="register.html">✨ สมัครสมาชิกรับส่วนลด 5%</a></li>
+                    <li><a href="creator.html">👨‍💻 ข้อมูลผู้จัดทำโครงการ</a></li>
+                    <li><a href="cart.html">🛒 ตะกร้าการจองน้องแมว</a></li>
+                    <li><a href="recommend.html">🌟 แนะนำสายพันธุ์สำหรับคุณ</a></li>
+                    <li><a href="products.html">🐱 ดูสายพันธุ์น้องแมวทั้งหมด</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 <strong>Purrfect Shop</strong> - คัดสรรและส่งมอบเพื่อนที่ดีที่สุดด้วยหัวใจ 🐾</p>
+            <p>
+                พัฒนาโดย <strong>Pattanun Kamhongsa</strong> (66040233148 IT) &bull; คณะเทคโนโลยีสารสนเทศ
+            </p>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

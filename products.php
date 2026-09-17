@@ -1,264 +1,221 @@
 <?php
 require_once __DIR__ . '/data.php';
 
-// Handle Add to Cart actions
+// Handle Add to Cart action
 $added_message = "";
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
-    if ($_POST['action'] === 'add_cat') {
-        $id = $_POST['cat_id'];
-        addToCart($id, 'cat');
-        $added_message = "🐾 เพิ่ม " . $cats[$id]['name'] . " ลงในตะกร้าเรียบร้อยแล้ว!";
-    } elseif ($_POST['action'] === 'add_program') {
-        $id = $_POST['program_id'];
-        addToCart($id, 'program');
-        $added_message = "💻 เพิ่ม " . $programs[$id]['name'] . " ลงในตะกร้าเรียบร้อยแล้ว!";
-    } elseif ($_POST['action'] === 'add_custom') {
-        $base_id = $_POST['base_scale'];
-        $final_price = floatval($_POST['custom_price']);
-        $notes = $_POST['custom_notes'];
-        
-        $base_name = $programs[$base_id]['name'];
-        addToCart($base_id, 'program', $final_price, $notes);
-        $added_message = "⚡ เพิ่มโปรแกรมแบบกำหนดเอง (" . $base_name . ") ลงในตะกร้าเรียบร้อยแล้ว!";
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_cat') {
+    $cat_id = $_POST['cat_id'] ?? '';
+    if (addToCart($cat_id)) {
+        $cat_name = $cats[$cat_id]['name'] ?? 'น้องแมว';
+        $added_message = "🐾 เพิ่ม " . htmlspecialchars($cat_name) . " ลงในตะกร้าเรียบร้อยแล้ว!";
     }
 }
 
-// Check initial query filter
-$filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
+// Initial filter from query string
+$selected_category = $_GET['cat'] ?? 'all';
+if (!isset($recommendation_categories[$selected_category])) {
+    $selected_category = 'all';
+}
 
 require_once __DIR__ . '/header.php';
 ?>
 
 <!-- Added Alert Banner -->
 <?php if (!empty($added_message)): ?>
-    <div style="background: rgba(168, 85, 247, 0.12); border: 1px solid var(--primary-gold); border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; text-shadow: 0 0 10px var(--gold-glow); font-weight: 500;">
+    <div class="alert-box alert-success" style="margin-bottom: 2rem; justify-content: space-between;">
         <span><?php echo $added_message; ?></span>
-        <a href="cart.php" class="btn btn-secondary" style="padding: 0.4rem 1rem; font-size: 0.8rem; font-family: 'Orbitron';">ไปที่ตะกร้า 🛒</a>
+        <a href="cart.php" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.9rem; font-size: 0.8rem;">
+            ดูตะกร้าสินค้า 🛒
+        </a>
     </div>
 <?php endif; ?>
 
-<!-- Header -->
+<!-- Section Header -->
 <div class="section-header">
-    <h1 class="section-title">ศูนย์รวมสินค้าและบริการ</h1>
-    <p class="section-subtitle">เลือกซื้อคู่หูแมว หรือคำนวณสเปกโปรแกรมตามขอบเขตความต้องการ</p>
+    <span class="section-tag">🐱 PREMIUM CATTERY</span>
+    <h1 class="section-title">ศูนย์รวมน้องแมวสายพันธุ์แท้ 100%</h1>
+    <p class="section-subtitle">
+        คัดสรรเฉพาะน้องแมวเกรดคุณภาพ เลี้ยงดูในระบบปิด ได้รับการฉีดวัคซีนและตรวจสุขภาพครบถ้วน พร้อมใบเพ็ดดีกรี
+    </p>
 </div>
 
-<!-- Filters Menu -->
-<div class="catalog-filters">
-    <button class="filter-btn <?php echo $filter === 'all' ? 'active' : ''; ?>" onclick="filterCatalog('all')">ALL PRODUCTS</button>
-    <button class="filter-btn <?php echo $filter === 'cat' ? 'active' : ''; ?>" onclick="filterCatalog('cat')">CATS 🐾</button>
-    <button class="filter-btn <?php echo $filter === 'program' ? 'active' : ''; ?>" onclick="filterCatalog('program')">PROGRAMMING SCOPES 💻</button>
-</div>
-
-<!-- Cats Section -->
-<div class="catalog-item-group" id="cat-group" style="<?php echo ($filter === 'all' || $filter === 'cat') ? '' : 'display:none;'; ?>">
-    <h2 class="catalog-section-title">🐱 สายพันธุ์แมว (Cats)</h2>
-    <div class="cards-grid">
-        <?php foreach ($cats as $key => $cat): ?>
-            <div class="glass-card">
-                <div class="card-top">
-                    <!-- Real Cat Image -->
-                    <img src="assets/images/<?php echo $cat['image']; ?>" alt="<?php echo $cat['name']; ?>" class="product-cat-img">
-                    <h3 class="card-title"><?php echo $cat['name']; ?></h3>
-                    <p class="card-desc"><?php echo $cat['description']; ?></p>
-                </div>
-                
-                <div>
-                    <h4 style="font-size: 0.85rem; color: var(--primary-purple); font-family: 'Orbitron'; margin-bottom: 0.5rem; text-transform: uppercase;">ความสามารถพิเศษ</h4>
-                    <ul class="card-features" style="margin-bottom: 1.5rem;">
-                        <?php foreach ($cat['features'] as $feat): ?>
-                            <li><?php echo $feat; ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                    
-                    <div class="card-price-row">
-                        <div class="card-price">
-                            <span class="price-label">ราคาเช่า/ซื้อขาด</span>
-                            <span class="price-val"><?php echo number_format($cat['price']); ?> ฿</span>
-                        </div>
-                        <form method="POST" action="">
-                            <input type="hidden" name="action" value="add_cat">
-                            <input type="hidden" name="cat_id" value="<?php echo $cat['id']; ?>">
-                            <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.85rem;">สั่งเลี้ยง 🐾</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
-</div>
-
-<!-- Programs Section -->
-<div class="catalog-item-group" id="program-group" style="<?php echo ($filter === 'all' || $filter === 'program') ? '' : 'display:none;'; ?>">
-    <h2 class="catalog-section-title" style="margin-top: 5rem;">💻 บริการพัฒนาซอฟต์แวร์ตามขนาดขอบเขต (Programming Scopes)</h2>
-    <div class="cards-grid">
-        <?php foreach ($programs as $key => $prog): ?>
-            <div class="glass-card pink-accent">
-                <div class="card-top">
-                    <div class="card-icon-wrapper">
-                        <?php 
-                        if ($key == 'prog_small') echo '⚙️';
-                        elseif ($key == 'prog_medium') echo '🖥️';
-                        else echo '🏢';
-                        ?>
-                    </div>
-                    <h3 class="card-title"><?php echo $prog['name']; ?></h3>
-                    <p class="card-desc"><?php echo $prog['description']; ?></p>
-                </div>
-                
-                <div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.85rem;">
-                        <span style="color: var(--text-muted);">ระยะเวลาส่งมอบ:</span>
-                        <span style="color: var(--accent-pink); font-weight: 700;"><?php echo $prog['duration']; ?></span>
-                    </div>
-                    
-                    <h4 style="font-size: 0.85rem; color: var(--accent-pink); font-family: 'Orbitron'; margin-bottom: 0.5rem; text-transform: uppercase;">ขอบเขตงานมาตรฐาน</h4>
-                    <ul class="card-features" style="margin-bottom: 1.5rem;">
-                        <?php foreach ($prog['details'] as $det): ?>
-                            <li><?php echo $det; ?></li>
-                        <?php endforeach; ?>
-                    </ul>
-                    
-                    <div class="card-price-row">
-                        <div class="card-price">
-                            <span class="price-label">ราคาเริ่มต้น</span>
-                            <span class="price-val"><?php echo number_format($prog['price']); ?> ฿</span>
-                        </div>
-                        <form method="POST" action="">
-                            <input type="hidden" name="action" value="add_program">
-                            <input type="hidden" name="program_id" value="<?php echo $prog['id']; ?>">
-                            <button type="submit" class="btn btn-danger" style="padding: 0.6rem 1.2rem; font-size: 0.85rem;">สั่งทำโปรแกรม 💻</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
-
-    <!-- Dynamic Calculator Form -->
-    <div class="configurator-wrapper" id="custom-estimator">
-        <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
-            <h2 class="section-title" style="font-size: 1.8rem; background: var(--gradient-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">⚡ เครื่องคำนวณประเมินงบประมาณตามความต้องการ</h2>
-            <p class="section-subtitle">เลือกและปรับแต่งขนาดฟังก์ชันเพิ่มเติมเพื่อประกอบการส่งสเปกงานลงตะกร้า</p>
+<!-- Search & Filter Controls -->
+<div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem 2rem; margin-bottom: 2.5rem; box-shadow: var(--shadow-sm);">
+    <!-- Category Tabs -->
+    <div style="margin-bottom: 1.2rem;">
+        <label style="display: block; font-size: 0.88rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem;">
+            🏷️ เลือกหมวดหมู่แนะนำ:
+        </label>
+        <div class="category-nav" style="justify-content: flex-start; margin-bottom: 0;">
+            <?php foreach ($recommendation_categories as $cat_key => $cat_meta): ?>
+                <button type="button" 
+                        class="cat-filter-btn <?php echo $selected_category === $cat_key ? 'active' : ''; ?>"
+                        onclick="filterProductsPage('<?php echo $cat_key; ?>', this)">
+                    <?php echo $cat_meta['name']; ?>
+                </button>
+            <?php endforeach; ?>
         </div>
-        
-        <form method="POST" action="" id="calculator-form">
-            <input type="hidden" name="action" value="add_custom">
-            <input type="hidden" name="custom_price" id="form-custom-price" value="5000">
-            <input type="hidden" name="custom_notes" id="form-custom-notes" value="">
+    </div>
 
-            <div class="configurator-grid">
-                <!-- Inputs Section -->
-                <div class="configurator-options">
-                    <div class="form-group">
-                        <label for="base_scale">1. เลือกขนาดขอบเขตโครงงานพื้นฐาน (Base Scale)</label>
-                        <select name="base_scale" id="base_scale" onchange="calculatePrice()">
-                            <option value="prog_small" data-price="5000">Small Scope (เริ่มต้น 5,000 ฿)</option>
-                            <option value="prog_medium" data-price="15000">Medium Scope (เริ่มต้น 15,000 ฿)</option>
-                            <option value="prog_large" data-price="45000">Large/Enterprise Scope (เริ่มต้น 45,000 ฿)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>2. เลือกเพิ่มฟังก์ชันที่ต้องการ (Add-ons)</label>
-                        <div class="checkbox-options">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="opt_auth" value="3000" onchange="calculatePrice()">
-                                <span>ระบบล็อกอิน & สิทธิ์ผู้ใช้ (+3,000 ฿)</span>
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="opt_db" value="4000" onchange="calculatePrice()">
-                                <span>จัดการฐานข้อมูล MySQL (+4,000 ฿)</span>
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="opt_pay" value="5000" onchange="calculatePrice()">
-                                <span>เชื่อมช่องทางชำระเงิน (+5,000 ฿)</span>
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="opt_express" value="3000" onchange="calculatePrice()">
-                                <span>งานด่วน (จัดทำครึ่งเวลา) (+3,000 ฿)</span>
-                            </label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="user_req">3. รายละเอียดความต้องการเพิ่มเติม (User Requirements)</label>
-                        <textarea name="user_req" id="user_req" rows="3" placeholder="ระบุการทำงานของโปรแกรมที่อยากได้ เช่น บอทสำหรับสุ่มแจกของรางวัล, ระบบจองโต๊ะร้านอาหารพร้อมแจ้งเตือนไลน์ ฯลฯ" oninput="calculatePrice()"></textarea>
-                    </div>
+    <!-- Search & Sort Row -->
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; padding-top: 1.2rem; border-top: 1px dashed var(--border-color);">
+        <div style="flex: 1; min-width: 250px;">
+            <input type="text" id="cat-search-input" class="form-control" 
+                   placeholder="🔍 ค้นหาชื่อสายพันธุ์, ลักษณะ, หรือนิสัย เช่น บริติช, ขาสั้น, ขี้อ้อน..." 
+                   oninput="applyProductFilters()">
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+            <label for="cat-sort-select" style="font-size: 0.88rem; font-weight: 600; color: var(--text-secondary); white-space: nowrap;">
+                เรียงตาม:
+            </label>
+            <select id="cat-sort-select" class="form-control" style="width: auto; padding: 0.6rem 1rem;" onchange="applyProductFilters()">
+                <option value="default">สายพันธุ์แนะนำ</option>
+                <option value="price_asc">ราคา: ต่ำไปสูง</option>
+                <option value="price_desc">ราคา: สูงไปต่ำ</option>
+                <option value="name_asc">ชื่อสายพันธุ์ (ก-ฮ / A-Z)</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Product Count Bar -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-muted);">
+    <div>
+        แสดงผลน้องแมว: <strong id="product-count" style="color: var(--primary-coral);"><?php echo count($cats); ?></strong> ตัว
+    </div>
+    <div style="font-size: 0.82rem;">
+        🩺 ตรวจสุขภาพแล้วทุกตัว • 🚗 รับประกันการจัดส่งปลอดภัย
+    </div>
+</div>
+
+<!-- All Cats Grid -->
+<div class="cats-grid" id="products-catalog-grid">
+    <?php foreach ($cats as $key => $cat): ?>
+        <div class="cat-card product-item-card" 
+             data-id="<?php echo $cat['id']; ?>"
+             data-name="<?php echo htmlspecialchars($cat['name']); ?>"
+             data-breed="<?php echo htmlspecialchars($cat['breed']); ?>"
+             data-desc="<?php echo htmlspecialchars($cat['description']); ?>"
+             data-price="<?php echo $cat['price']; ?>"
+             data-categories="<?php echo implode(',', $cat['categories']); ?>"
+             data-hair="<?php echo $cat['hair_type']; ?>">
+            <div class="cat-card-img-wrap">
+                <img src="assets/images/<?php echo $cat['image']; ?>" alt="<?php echo $cat['name']; ?>" class="cat-card-img">
+                <span class="cat-card-badge">✨ พร้อมย้ายบ้าน</span>
+                <span class="cat-card-gender"><?php echo $cat['gender']; ?></span>
+            </div>
+            
+            <div class="cat-card-body">
+                <div class="cat-card-breed"><?php echo $cat['breed']; ?></div>
+                <h3 class="cat-card-name"><?php echo $cat['name']; ?></h3>
+                <p class="cat-card-desc"><?php echo $cat['description']; ?></p>
+                
+                <div class="cat-tags-row">
+                    <span class="cat-pill-tag highlight">🩺 <?php echo $cat['age']; ?></span>
+                    <span class="cat-pill-tag">🧶 <?php echo $cat['hair_label']; ?></span>
+                    <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
                 </div>
 
-                <!-- Preview Invoice Box -->
-                <div>
-                    <div class="configurator-preview">
-                        <div>
-                            <div class="preview-header">
-                                <h3 class="preview-title">สรุปราคางานสั่งทำ</h3>
-                                <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem;">รายละเอียดความต้องการจะถูกแนบไปกับระบบหลังสั่งซื้อ</p>
-                            </div>
-                            <ul class="preview-list">
-                                <li>
-                                    <span>ขอบเขตตั้งต้น:</span>
-                                    <span class="cost-val" id="lbl-base">5,000 ฿</span>
-                                </li>
-                                <li id="row-auth" style="display: none;">
-                                    <span>ระบบสมาชิกและความปลอดภัย:</span>
-                                    <span class="cost-val">+3,000 ฿</span>
-                                </li>
-                                <li id="row-db" style="display: none;">
-                                    <span>จัดการฐานข้อมูลภายนอก:</span>
-                                    <span class="cost-val">+4,000 ฿</span>
-                                </li>
-                                <li id="row-pay" style="display: none;">
-                                    <span>เชื่อมเกตเวย์ชำระเงิน:</span>
-                                    <span class="cost-val">+5,000 ฿</span>
-                                </li>
-                                <li id="row-express" style="display: none;">
-                                    <span>จัดส่งด่วนพิเศษ (Express):</span>
-                                    <span class="cost-val">+3,000 ฿</span>
-                                </li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <div class="preview-total">
-                                <span class="total-title">ยอดรวมประเมิน:</span>
-                                <span class="total-price" id="lbl-total">5,000 ฿</span>
-                            </div>
-                            <button type="submit" class="btn btn-primary" style="width: 100%;">หยิบใส่ตะกร้า (สเปกพิเศษ) 🛒</button>
-                        </div>
+                <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+                    <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ ข้อมูลสุขภาพ:</div>
+                    <div><?php echo $cat['vaccine']; ?></div>
+                </div>
+
+                <div class="cat-card-footer">
+                    <div class="cat-price-box">
+                        <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+                        <span class="cat-price-val"><?php echo number_format($cat['price']); ?> ฿</span>
                     </div>
+                    <form method="POST" action="products.php">
+                        <input type="hidden" name="action" value="add_cat">
+                        <input type="hidden" name="cat_id" value="<?php echo $cat['id']; ?>">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            รับเลี้ยงน้อง 🐾
+                        </button>
+                    </form>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    <?php endforeach; ?>
 </div>
 
 <script>
-function filterCatalog(type) {
-    // URL fallback
-    window.history.pushState(null, '', 'products.php?filter=' + type);
+let currentProductCategory = '<?php echo $selected_category; ?>';
+
+function filterProductsPage(categoryKey, btnElement) {
+    currentProductCategory = categoryKey;
     
-    // UI toggle
-    const catGroup = document.getElementById('cat-group');
-    const programGroup = document.getElementById('program-group');
-    
-    const buttons = document.querySelectorAll('.filter-btn');
-    buttons.forEach(btn => btn.classList.remove('active'));
-    
-    if (type === 'all') {
-        catGroup.style.display = 'block';
-        programGroup.style.display = 'block';
-        event.currentTarget.classList.add('active');
-    } else if (type === 'cat') {
-        catGroup.style.display = 'block';
-        programGroup.style.display = 'none';
-        event.currentTarget.classList.add('active');
-    } else if (type === 'program') {
-        catGroup.style.display = 'none';
-        programGroup.style.display = 'block';
-        event.currentTarget.classList.add('active');
+    // Update button states
+    const buttons = document.querySelectorAll('.category-nav .cat-filter-btn');
+    buttons.forEach(b => b.classList.remove('active'));
+    if (btnElement) {
+        btnElement.classList.add('active');
     }
+
+    // Update URL without reload
+    window.history.pushState(null, '', 'products.php?cat=' + categoryKey);
+
+    applyProductFilters();
 }
+
+function applyProductFilters() {
+    const searchVal = (document.getElementById('cat-search-input').value || '').trim().toLowerCase();
+    const sortVal = document.getElementById('cat-sort-select').value;
+    const cards = Array.from(document.querySelectorAll('.product-item-card'));
+    
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        const categories = card.getAttribute('data-categories').split(',');
+        const name = (card.getAttribute('data-name') || '').toLowerCase();
+        const breed = (card.getAttribute('data-breed') || '').toLowerCase();
+        const desc = (card.getAttribute('data-desc') || '').toLowerCase();
+        
+        // Category check
+        const matchCategory = (currentProductCategory === 'all') || categories.includes(currentProductCategory);
+        
+        // Search check
+        const matchSearch = !searchVal || name.includes(searchVal) || breed.includes(searchVal) || desc.includes(searchVal);
+
+        if (matchCategory && matchSearch) {
+            card.style.display = 'flex';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    document.getElementById('product-count').innerText = visibleCount;
+
+    // Sorting
+    const grid = document.getElementById('products-catalog-grid');
+    const visibleCards = cards.filter(c => c.style.display !== 'none');
+
+    visibleCards.sort((a, b) => {
+        const priceA = parseFloat(a.getAttribute('data-price')) || 0;
+        const priceB = parseFloat(b.getAttribute('data-price')) || 0;
+        const nameA = a.getAttribute('data-name');
+        const nameB = b.getAttribute('data-name');
+
+        if (sortVal === 'price_asc') {
+            return priceA - priceB;
+        } else if (sortVal === 'price_desc') {
+            return priceB - priceA;
+        } else if (sortVal === 'name_asc') {
+            return nameA.localeCompare(nameB, 'th');
+        }
+        return 0; // default order
+    });
+
+    visibleCards.forEach(c => grid.appendChild(c));
+}
+
+// Initial apply
+window.addEventListener('DOMContentLoaded', () => {
+    if (currentProductCategory !== 'all') {
+        applyProductFilters();
+    }
+});
 </script>
 
 <?php 

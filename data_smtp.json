@@ -1,0 +1,12 @@
+{
+    "enabled": false,
+    "host": "smtp.gmail.com",
+    "port": 587,
+    "encryption": "tls",
+    "username": "",
+    "password": "",
+    "from_email": "purrfect.cattery.shop@gmail.com",
+    "from_name": "Purrfect Cattery & Boutique 🐾",
+    "last_tested": null,
+    "last_status": "ยังไม่ได้ทดสอบเชื่อมต่อ (ปิดโหมดส่งจริง - ใช้งาน Outbox จำลอง)"
+}

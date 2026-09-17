@@ -1,0 +1,20 @@
+{
+    "enabled": true,
+    "service_id": "service_4aihlkj",
+    "template_id": "template_xt7cq3g",
+    "template_welcome": "template_xt7cq3g",
+    "template_subscribe": "template_y8wnrlt",
+    "public_key": "pJxoR0jf2aj4qNih-",
+    "private_key": "",
+    "from_name": "Purrfect Cattery & Boutique 🐾",
+    "from_email": "purrfect.cattery.shop@gmail.com",
+    "last_tested": "2026-09-17 07:03:59",
+    "last_status": "ส่งสำเร็จ (200 OK Accepted) [subscribe]",
+    "_comment_order": "Order Confirmation — ใช้ EmailJS Account ที่ 2 (Gmail บัญชีอื่น) เพื่อแยก template ออกจาก Free plan limit",
+    "order_enabled": true,
+    "order_service_id": "service_3n2rkol",
+    "order_template_id": "template_pt8dolh",
+    "order_public_key": "W-8QyJeFcTQcTtoFA",
+    "order_from_name": "Purrfect Shop — ยืนยันคำสั่งซื้อ 🐾",
+    "order_from_email": ""
+}

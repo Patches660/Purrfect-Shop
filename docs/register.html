@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purrfect Shop - เพราะทุกบ้านควรมีเจ้าเหมียว 🐾</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/favicon.png">
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('cat_shop_theme') || 'warm';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch(e) {}
+        })();
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <!-- 1. Top Utility Bar: Announcements, Theme Switcher, Admin Console & User Profile -->
+        <div class="top-utility-bar">
+            <div class="top-utility-container">
+                <div class="top-utility-left">
+                    <span class="top-badge-pill">🐾 Purrfect Cattery & Boutique</span>
+                    <span class="top-utility-tagline">ฟาร์มเพาะพันธุ์น้องแมวสายพันธุ์แท้มาตรฐานสากล • การันตีสุขภาพ 180 วัน</span>
+                </div>
+                
+                <div class="top-utility-right">
+                    <!-- Theme Loop Switcher Button -->
+                    <button type="button" class="theme-loop-btn" onclick="cycleTheme()" title="กดเพื่อสลับสีพื้นหลังแบบวนลูป (Loop)">
+                        🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
+                    </button>
+
+                    <!-- Admin Console Shortcut (Only visible for Admins) -->
+                    
+                    <!-- User Account / Profile Badge -->
+                                            <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                            <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
+                            <a href="subscribe.html" class="btn btn-sm " style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="รับข้อมูลข่าวสารโดยยังไม่ต้องสมัครสมาชิก">
+                                📬 รับข้อมูลข่าวสาร
+                            </a>
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.85rem; font-size: 0.82rem;">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.9rem; font-size: 0.82rem;">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+
+        <!-- 2. Main Navigation Bar: Brand Logo, Page Links & Shopping Cart -->
+        <div class="main-nav-bar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <img src="assets/images/logo.png" alt="Purrfect Shop Logo" class="logo-img">
+                    <div class="logo-title-group">
+                        <span class="logo-text">Purrfect Shop 🐾</span>
+                        <span class="logo-tagline">เพราะทุกบ้านควรมีเจ้าเหมียว</span>
+                    </div>
+                </a>
+                
+                <nav>
+                    <ul class="nav-menu">
+                        <li>
+                            <a href="index.html" class="nav-link ">
+                                🏠 หน้าแรก
+                            </a>
+                        </li>
+                        <li>
+                            <a href="products.html" class="nav-link ">
+                                🐱 น้องแมวทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="recommend.html" class="nav-link ">
+                                🌟 แนะนำสำหรับคุณ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="welcome_deal.html" class="nav-link " style="position: relative;">
+                                🎁 ดีลสมาชิกใหม่
+                                <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
+                            </a>
+                        </li>
+                                                <li>
+                            <a href="creator.html" class="nav-link ">
+                                👨‍💻 ผู้จัดทำ
+                            </a>
+                        </li>
+                        <li class="cart-badge-container">
+                            <a href="cart.html" class="nav-link nav-cart-btn ">
+                                🛒 ตะกร้า
+                                                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+                
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="auth-icon-circle">🐱</div>
+            <h1 class="auth-title">สมัครสมาชิก Cat Shop</h1>
+            <p class="auth-subtitle">
+                ร่วมเป็นครอบครัวทาสแมว รับสิทธิพิเศษส่วนลดทันที 5% ทุกออเดอร์ 🐾
+            </p>
+            <div style="background: linear-gradient(135deg, #0B0F19 0%, #1E293B 100%); border: 1px solid #F59E0B; border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-top: 1rem; text-align: left; display: flex; align-items: center; gap: 0.75rem; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
+                <span style="font-size: 1.5rem;">👑</span>
+                <div style="font-size: 0.84rem; color: #F1F5F9; line-height: 1.45;">
+                    <strong style="color: #FBBF24;">สิทธิพิเศษต้อนรับ VIP:</strong> สมัครแล้วระบบจะส่งอีเมล <strong>VIP Member Card</strong> และโค้ดลด 15% (<code style="color: #FCD34D;">WELCOME15</code>) เข้าอีเมลของคุณทันที!
+                </div>
+            </div>
+        </div>
+
+        
+        <form method="POST" action="register.php" id="register-form">
+            <div class="form-group">
+                <label for="fullname">ชื่อ - นามสกุล *</label>
+                <input type="text" id="fullname" name="fullname" class="form-control" 
+                       placeholder="เช่น สมชาย ใจดี" value="" required>
+            </div>
+
+            <div class="form-group">
+                <label for="username">ชื่อผู้ใช้ (Username) *</label>
+                <input type="text" id="username" name="username" class="form-control" 
+                       placeholder="เช่น catlover99" value="" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">อีเมล (Email) *</label>
+                <input type="email" id="email" name="email" class="form-control" 
+                       placeholder="เช่น yourname@gmail.com" value="" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">เบอร์โทรศัพท์ (Phone Number) *</label>
+                <input type="tel" id="phone" name="phone" class="form-control" 
+                       placeholder="เช่น 0891234567" value="" required>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="password">รหัสผ่าน *</label>
+                    <input type="password" id="password" name="password" class="form-control" 
+                           placeholder="อย่างน้อย 6 ตัวอักษร" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm_password">ยืนยันรหัสผ่าน *</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" 
+                           placeholder="พิมพ์รหัสผ่านซ้ำอีกครั้ง" required>
+                </div>
+            </div>
+
+            <!-- Consent Section -->
+            <div class="consent-box">
+                <div class="consent-header">
+                    <span>📋 การให้ความยินยอมและการคุ้มครองข้อมูล (Consent)</span>
+                </div>
+
+                <!-- Email Consent -->
+                <label class="consent-item">
+                    <input type="checkbox" name="consent_email" class="consent-checkbox" checked>
+                    <div class="consent-text">
+                        <strong>ยินยอมรับข่าวสารทางอีเมล:</strong> ข้าพเจ้ายินยอมให้ <strong>Cat Shop</strong> ส่งข้อมูลข่าวสาร โปรโมชั่นพิเศษ สายพันธุ์น้องแมวเข้าใหม่ และเกร็ดความรู้การดูแลสัตว์เลี้ยงผ่านทาง <u>อีเมล</u>
+                    </div>
+                </label>
+
+                <!-- Phone Consent -->
+                <label class="consent-item">
+                    <input type="checkbox" name="consent_phone" class="consent-checkbox" >
+                    <div class="consent-text">
+                        <strong>ยินยอมให้ติดต่อทางเบอร์โทรศัพท์:</strong> ข้าพเจ้ายินยอมให้เจ้าหน้าที่ติดต่อแจ้งเตือนสถานะการจองน้องแมว การประสานงานจัดส่ง และข้อเสนอพิเศษผ่านทาง <u>เบอร์โทรศัพท์ / SMS</u>
+                    </div>
+                </label>
+
+                <!-- Terms and PDPA Consent -->
+                <label class="consent-item" style="border-top: 1px solid #FFE6D9; padding-top: 0.8rem; margin-top: 0.8rem;">
+                    <input type="checkbox" name="consent_terms" class="consent-checkbox" required >
+                    <div class="consent-text">
+                        <strong>ข้อกำหนดและนโยบายความเป็นส่วนตัว (PDPA) *:</strong> ข้าพเจ้ายอมรับข้อกำหนด เงื่อนไขการให้บริการ และนโยบายการคุ้มครองข้อมูลส่วนบุคคลของร้าน Cat Shop
+                    </div>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem;">
+                ยืนยันการสมัครสมาชิก 🐾
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.8rem; padding-top: 1.2rem; border-top: 1px solid var(--border-color); font-size: 0.92rem; color: var(--text-secondary);">
+            มีบัญชีสมาชิกอยู่แล้ว? <a href="login.html" style="color: var(--primary-coral); font-weight: 700; text-decoration: none;">เข้าสู่ระบบที่นี่</a>
+        </div>
+    </div>
+</div>
+
+    <footer>
+        <!-- Newsletter Subscription Ribbon -->
+        <div style="background: linear-gradient(135deg, rgba(255, 117, 86, 0.12) 0%, rgba(254, 243, 199, 0.5) 100%); border-bottom: 1px solid var(--border-color); padding: 1.8rem 1rem;">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <span style="font-size: 2.4rem; line-height: 1;">📬</span>
+                    <div>
+                        <h4 style="margin: 0 0 4px 0; font-size: 1.15rem; color: var(--text-main); font-weight: 800;">
+                            สมัครรับจดหมายข่าว & ดีลลับน้องแมว Purrfect Shop 🐾
+                        </h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">
+                            รับแจ้งเตือนน้องแมวเข้าใหม่ เกร็ดสุขภาพจากสัตวแพทย์ พร้อมรับโค้ดส่วนลด 10% (CATNEWS10) ทันทีทางอีเมล
+                        </p>
+                    </div>
+                </div>
+                <form action="subscribe.html" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
+                    <input type="email" name="subscriber_email" placeholder="กรอกอีเมลของคุณ เช่น name@gmail.com" required style="flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 999px; padding: 10px 22px; font-weight: 800; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);">
+                        ติดตามข่าวสาร ✨
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h3>Purrfect Shop 🐾</h3>
+                <p style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.4rem;">
+                    "เพราะทุกบ้านควรมีเจ้าเหมียว"
+                </p>
+                <p>
+                    ฟาร์มและศูนย์รวมน้องแมวสายพันธุ์แท้ 100% สุขภาพดี ได้รับการดูแลจากสัตวแพทย์อย่างใกล้ชิด
+                    พร้อมบริการตรวจสุขภาพ ฉีดวัคซีน ถ่ายพยาธิ และใบเพ็ดดีกรีรับรองสายพันธุ์ครบถ้วน
+                </p>
+                <div style="margin-top: 1rem; display: flex; gap: 0.8rem; font-size: 0.85rem; color: var(--text-muted);">
+                    <span>📍 บริการจัดส่งทั่วประเทศ</span> &bull; 
+                    <span>⏰ เปิดทุกวัน 09:00 - 20:00 น.</span>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>หมวดหมู่แนะนำ</h4>
+                <ul>
+                    <li><a href="recommend.html?cat=popular">🔥 สายพันธุ์ยอดนิยม</a></li>
+                    <li><a href="recommend.html?cat=condo">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
+                    <li><a href="recommend.html?cat=fluffy">🧸 แมวขนยาวนุ่มฟู</a></li>
+                    <li><a href="recommend.html?cat=short_hair">✨ แมวขนสั้นดูแลง่าย</a></li>
+                    <li><a href="recommend.html?cat=beginner">👶 มือใหม่เลี้ยงง่าย</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>ความปลอดภัย & สมาชิก</h4>
+                <ul>
+                    <li><a href="register.html">✨ สมัครสมาชิกรับส่วนลด 5%</a></li>
+                    <li><a href="creator.html">👨‍💻 ข้อมูลผู้จัดทำโครงการ</a></li>
+                    <li><a href="cart.html">🛒 ตะกร้าการจองน้องแมว</a></li>
+                    <li><a href="recommend.html">🌟 แนะนำสายพันธุ์สำหรับคุณ</a></li>
+                    <li><a href="products.html">🐱 ดูสายพันธุ์น้องแมวทั้งหมด</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 <strong>Purrfect Shop</strong> - คัดสรรและส่งมอบเพื่อนที่ดีที่สุดด้วยหัวใจ 🐾</p>
+            <p>
+                พัฒนาโดย <strong>Pattanun Kamhongsa</strong> (66040233148 IT) &bull; คณะเทคโนโลยีสารสนเทศ
+            </p>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

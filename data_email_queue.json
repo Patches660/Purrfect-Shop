@@ -1,0 +1,165 @@
+[
+    {
+        "id": "q_6aab75755cf50",
+        "type": "order",
+        "order_id": "PFC-260917-ECBD",
+        "to_email": "oavatan@gmail.com",
+        "to_name": "oavatan@gmail.com",
+        "order_data": {
+            "order_id": "PFC-260917-ECBD",
+            "user_id": "u_6aab71660b2fe",
+            "username": "oavatan@gmail.com",
+            "customer_name": "oavatan@gmail.com",
+            "customer_phone": "0634169812",
+            "customer_email": "oavatan@gmail.com",
+            "delivery_address": "-",
+            "delivery_date": "2026-09-20",
+            "delivery_timeslot": "ช่วงบ่าย (13:00 - 17:00 น.)",
+            "items": [
+                {
+                    "id": "cat_british",
+                    "name": "น้องสโนว์ (British Shorthair)",
+                    "breed": "บริติช ช็อตแฮร์ (British Shorthair)",
+                    "price": 18000,
+                    "image": "cat_british.jpg",
+                    "age": "2.5 เดือน",
+                    "gender": "ผู้ (Male)",
+                    "vaccine": "ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิแล้ว",
+                    "pedigree": "มีใบเพ็ดดีกรี WCF รับรองสายพันธุ์",
+                    "qty": 1
+                }
+            ],
+            "cat_count": 1,
+            "subtotal": 18000,
+            "discount": 900,
+            "vat": 1197,
+            "total": 18297,
+            "payment_channel": "🧪 โหมดทดสอบระบบ (TEST MODE)",
+            "payment_details": "ข้ามการตรวจสอบข้อมูลการชำระเงินและเลขบัญชีสำหรับทดสอบระบบ",
+            "status": "ชำระเงินแล้ว \/ กำลังเตรียมส่งมอบ (Paid & Preparing)",
+            "created_at": "2026-09-17 07:07:01"
+        },
+        "queued_at": "2026-09-17 07:07:01",
+        "status": "sent",
+        "attempts": 1,
+        "last_error": "",
+        "sent_at": "2026-09-17 07:07:03"
+    },
+    {
+        "id": "q_6aab97b2ac930",
+        "type": "order",
+        "order_id": "PFC-260917-IMG01",
+        "to_email": "oavatan@gmail.com",
+        "to_name": "คุณโอภาส (ทดสอบรูปสินค้า)",
+        "order_data": {
+            "order_id": "PFC-260917-IMG01",
+            "customer_name": "คุณโอภาส (ทดสอบรูปสินค้า)",
+            "customer_email": "oavatan@gmail.com",
+            "items": [
+                {
+                    "id": "cat_british",
+                    "name": "น้องสโนว์ (British Shorthair)",
+                    "breed": "บริติช ช็อตแฮร์ (British Shorthair)",
+                    "gender": "ผู้ (Male)",
+                    "age": "2.5 เดือน",
+                    "image": "cat_british.jpg",
+                    "price": 18000,
+                    "qty": 1
+                },
+                {
+                    "id": "cat_persian",
+                    "name": "น้องปุยหิมะ (Persian Classic)",
+                    "breed": "เปอร์เซีย (Persian)",
+                    "gender": "เมีย (Female)",
+                    "age": "3 เดือน",
+                    "image": "cat_persian.jpg",
+                    "price": 16500,
+                    "qty": 1
+                }
+            ],
+            "subtotal": 34500,
+            "discount": 1725,
+            "vat": 2294.25,
+            "total": 35069.25,
+            "payment_channel": "💳 ชำระผ่านบัตรเครดิต \/ เดบิต",
+            "delivery_date": "2026-09-20",
+            "delivery_address": "99\/99 อาคารทดสอบ ถนนนวัตกรรม แขวงลาดยาว เขตจตุจักร กรุงเทพฯ 10900",
+            "delivery_timeslot": "ช่วงบ่าย (13:00 - 17:00 น.)"
+        },
+        "queued_at": "2026-09-17 09:33:06",
+        "status": "sent",
+        "attempts": 1,
+        "last_error": "",
+        "sent_at": "2026-09-17 09:33:08"
+    },
+    {
+        "id": "q_6aab98ead6fc0",
+        "type": "order",
+        "order_id": "PFC-260917-5574",
+        "to_email": "patanunkohotmail@gmail.com",
+        "to_name": "patanunkohotmail@gmail.com",
+        "order_data": {
+            "order_id": "PFC-260917-5574",
+            "user_id": "u_6aab98b91604f",
+            "username": "patanunkohotmail@gmail.com",
+            "customer_name": "patanunkohotmail@gmail.com",
+            "customer_phone": "0634169812",
+            "customer_email": "patanunkohotmail@gmail.com",
+            "delivery_address": "-",
+            "delivery_date": "2026-09-20",
+            "delivery_timeslot": "ช่วงบ่าย (13:00 - 17:00 น.)",
+            "items": [
+                {
+                    "id": "cat_persian",
+                    "name": "น้องปุยหิมะ (Persian Classic)",
+                    "breed": "เปอร์เซีย (Persian)",
+                    "price": 16500,
+                    "image": "cat_persian.jpg",
+                    "age": "3 เดือน",
+                    "gender": "เมีย (Female)",
+                    "vaccine": "ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพพร้อมย้ายบ้าน",
+                    "pedigree": "มีใบเพ็ดดีกรี CFA สายเลือดแชมป์",
+                    "qty": 1
+                },
+                {
+                    "id": "cat_ragdoll",
+                    "name": "น้องคอตตอน (Ragdoll)",
+                    "breed": "แร็กดอลล์ (Ragdoll)",
+                    "price": 29000,
+                    "image": "cat_ragdoll.jpg",
+                    "age": "2.5 เดือน",
+                    "gender": "เมีย (Female)",
+                    "vaccine": "ฉีดวัคซีนครบ 2 เข็ม + ตรวจพันธุกรรมโรคหัวใจ HCM ปกติ",
+                    "pedigree": "มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์",
+                    "qty": 1
+                },
+                {
+                    "id": "cat_americanshorthair",
+                    "name": "น้องการ์ฟิลด์ (American Shorthair)",
+                    "breed": "อเมริกัน ช็อตแฮร์ (American Shorthair)",
+                    "price": 15000,
+                    "image": "cat_americanshorthair.jpg",
+                    "age": "2.5 เดือน",
+                    "gender": "ผู้ (Male)",
+                    "vaccine": "ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิเรียบร้อย",
+                    "pedigree": "มีใบเพ็ดดีกรี WCF ลาย Classic Tabby ชัดเจน",
+                    "qty": 1
+                }
+            ],
+            "cat_count": 3,
+            "subtotal": 60500,
+            "discount": 3025,
+            "vat": 4023.25,
+            "total": 61498.25,
+            "payment_channel": "🧪 โหมดทดสอบระบบ (TEST MODE)",
+            "payment_details": "ข้ามการตรวจสอบข้อมูลการชำระเงินและเลขบัญชีสำหรับทดสอบระบบ",
+            "status": "ชำระเงินแล้ว \/ กำลังเตรียมส่งมอบ (Paid & Preparing)",
+            "created_at": "2026-09-17 09:38:18"
+        },
+        "queued_at": "2026-09-17 09:38:18",
+        "status": "sent",
+        "attempts": 1,
+        "last_error": "",
+        "sent_at": "2026-09-17 09:38:20"
+    }
+]
