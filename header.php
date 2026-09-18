@@ -80,9 +80,9 @@ $logged_user = getCurrentUser();
                     <?php if ($logged_user): ?>
                         <div style="display: inline-flex; align-items: center; gap: 0.6rem;">
                             <!-- Loyalty Points Badge -->
-                            <span class="top-badge-pill" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-weight: 800;" title="Paw Points สะสมของคุณ">
+                            <a href="profile.php?tab=points" class="top-badge-pill" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; transition: transform 0.2s ease;" title="ดูระบบสะสมแต้ม Paw Points & Tiers ของคุณ">
                                 🐾 <?php echo number_format($logged_user['paw_points'] ?? 150); ?> พอยท์
-                            </span>
+                            </a>
                             <a href="subscribe.php" class="btn btn-sm <?php echo $current_page == 'subscribe.php' ? 'active' : ''; ?>" style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="รับข้อมูลข่าวสารและโปรโมชัน">
                                 📬 ข่าวสาร
                             </a>

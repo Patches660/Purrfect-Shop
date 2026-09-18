@@ -513,74 +513,424 @@ require_once __DIR__ . '/header.php';
     <!-- =========================================================
          TAB 4: สะสมแต้ม Paw Points & ระดับสมาชิก (Loyalty & Tiers)
          ========================================================= -->
+    <?php
+    $user_points = intval($currUser['paw_points'] ?? 150);
+
+    // Tier calculation
+    if ($user_points >= 5000) {
+        $current_tier_key = 'diamond';
+        $current_tier_name = 'Diamond Paw VIP';
+        $current_tier_icon = '👑';
+        $current_tier_color = '#7C3AED';
+        $current_tier_badge_bg = 'linear-gradient(135deg, #7C3AED 0%, #A855F7 100%)';
+        $current_discount = '15%';
+        $next_tier_name = 'Max Level (ระดับสูงสุด)';
+        $next_tier_target = 5000;
+        $points_needed = 0;
+        $tier_progress_percent = 100;
+    } elseif ($user_points >= 1500) {
+        $current_tier_key = 'gold';
+        $current_tier_name = 'Gold Paw VIP';
+        $current_tier_icon = '🥇';
+        $current_tier_color = '#EA580C';
+        $current_tier_badge_bg = 'linear-gradient(135deg, #EA580C 0%, #F97316 100%)';
+        $current_discount = '10%';
+        $next_tier_name = 'Diamond Paw VIP 👑';
+        $next_tier_target = 5000;
+        $points_needed = 5000 - $user_points;
+        $tier_progress_percent = min(100, max(5, round((($user_points - 1500) / (5000 - 1500)) * 100)));
+    } elseif ($user_points >= 500) {
+        $current_tier_key = 'silver';
+        $current_tier_name = 'Silver Paw';
+        $current_tier_icon = '🥈';
+        $current_tier_color = '#475569';
+        $current_tier_badge_bg = 'linear-gradient(135deg, #64748B 0%, #94A3B8 100%)';
+        $current_discount = '7%';
+        $next_tier_name = 'Gold Paw VIP 🥇';
+        $next_tier_target = 1500;
+        $points_needed = 1500 - $user_points;
+        $tier_progress_percent = min(100, max(5, round((($user_points - 500) / (1500 - 500)) * 100)));
+    } else {
+        $current_tier_key = 'bronze';
+        $current_tier_name = 'Bronze Paw';
+        $current_tier_icon = '🥉';
+        $current_tier_color = '#B45309';
+        $current_tier_badge_bg = 'linear-gradient(135deg, #D97706 0%, #F59E0B 100%)';
+        $current_discount = '5%';
+        $next_tier_name = 'Silver Paw 🥈';
+        $next_tier_target = 500;
+        $points_needed = 500 - $user_points;
+        $tier_progress_percent = min(100, max(5, round(($user_points / 500) * 100)));
+    }
+
+    // Global Scale for the big visual tube (0 to 5,000 points)
+    $global_progress_percent = min(100, max(3, round(($user_points / 5000) * 100)));
+    ?>
+
     <div id="tab-points" class="profile-tab-panel" style="<?php echo $active_tab === 'points' ? 'display: block;' : 'display: none;'; ?>">
         <div class="checkout-block">
-            <h3 class="checkout-block-title" style="margin-bottom: 1.4rem;">
-                <span>🎁 ระบบสะสมแต้ม Paw Points & ระดับสมาชิก (Loyalty Tiers)</span>
-            </h3>
+            <div class="checkout-block-header" style="margin-bottom: 1.5rem;">
+                <h3 class="checkout-block-title">
+                    <span>🎁 ระบบสะสมแต้ม Paw Points & ระดับสมาชิก (Loyalty Tiers)</span>
+                </h3>
+                <span class="badge" style="background: rgba(255,107,74,0.12); color: var(--primary-coral); font-weight: 700;">
+                    🐾 คลับคนรักแมว VIP
+                </span>
+            </div>
 
-            <!-- Points Card -->
-            <div style="background: linear-gradient(135deg, #FF6B4A 0%, #FF8E72 50%, #FFA885 100%); color: #FFFFFF; border-radius: var(--radius-lg); padding: 2.2rem; box-shadow: 0 10px 25px rgba(255,107,74,0.35); margin-bottom: 2rem;">
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+            <!-- 1. Hero Summary Card -->
+            <div style="background: linear-gradient(135deg, #FF6B4A 0%, #FF8E72 50%, #FFA885 100%); color: #FFFFFF; border-radius: var(--radius-lg); padding: 2.2rem; box-shadow: 0 12px 30px rgba(255,107,74,0.3); margin-bottom: 2rem; position: relative; overflow: hidden;">
+                <!-- Decorative Paw watermark -->
+                <div style="position: absolute; right: -20px; bottom: -30px; font-size: 10rem; opacity: 0.12; user-select: none; pointer-events: none;">🐾</div>
+
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; position: relative; z-index: 1;">
                     <div>
-                        <span style="font-size: 0.85rem; font-weight: 700; background: rgba(255,255,255,0.25); padding: 4px 12px; border-radius: 999px;">🐾 PURRFECT REWARDS CLUB</span>
-                        <h2 style="font-size: 2.4rem; font-weight: 800; margin: 0.6rem 0 0.2rem 0; font-family: 'Outfit';">
-                            <?php echo number_format($currUser['paw_points'] ?? 150); ?> <span style="font-size: 1.2rem; font-weight: 600;">Paw Points</span>
+                        <span style="font-size: 0.82rem; font-weight: 800; background: rgba(255,255,255,0.25); padding: 4px 14px; border-radius: 999px; letter-spacing: 0.5px; text-transform: uppercase;">
+                            🐾 PURRFECT REWARDS CLUB
+                        </span>
+                        <h2 style="font-size: 2.6rem; font-weight: 900; margin: 0.7rem 0 0.2rem 0; font-family: 'Outfit'; letter-spacing: -0.5px;">
+                            <?php echo number_format($user_points); ?> <span style="font-size: 1.3rem; font-weight: 600;">Paw Points</span>
                         </h2>
-                        <p style="margin: 0; font-size: 0.9rem; opacity: 0.95;">
-                            ทุกๆ ยอดสั่งซื้อ 100 บาท = 1 Paw Point • 100 พอยท์ แลกส่วนลดได้ 100 บาท
+                        <p style="margin: 0; font-size: 0.95rem; opacity: 0.95; line-height: 1.5;">
+                            มูลค่าเทียบเท่าส่วนลดเงินสด <strong>฿<?php echo number_format($user_points); ?> บาท</strong> (อัตรา 100 พอยท์ = 100 บาท)
                         </p>
                     </div>
-                    <div style="text-align: right;">
-                        <span style="font-size: 0.8rem; opacity: 0.9; display: block;">ระดับสมาชิกปัจจุบัน:</span>
-                        <div style="background: #FFFFFF; color: #B45309; padding: 6px 16px; border-radius: 999px; font-weight: 800; font-size: 1rem; margin-top: 4px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-                            🥉 Bronze Paw (ลด 5%)
+
+                    <!-- Current Tier Badge Box -->
+                    <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); padding: 1.2rem 1.6rem; border-radius: var(--radius-md); box-shadow: 0 6px 16px rgba(0,0,0,0.1); min-width: 220px; text-align: center;">
+                        <span style="font-size: 0.78rem; color: #64748B; font-weight: 700; display: block; margin-bottom: 4px;">ระดับสมาชิกปัจจุบันของคุณ:</span>
+                        <div style="font-size: 1.4rem; font-weight: 800; color: <?php echo $current_tier_color; ?>; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                            <span><?php echo $current_tier_icon; ?></span>
+                            <span><?php echo $current_tier_name; ?></span>
+                        </div>
+                        <div style="font-size: 0.82rem; color: var(--primary-coral); font-weight: 700; margin-top: 4px; background: rgba(255,107,74,0.1); padding: 2px 8px; border-radius: 999px; display: inline-block;">
+                            สิทธิพิเศษ: ส่วนลด <?php echo $current_discount; ?> ทุกรายการ
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tiers Grid -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-bottom: 2rem;">
-                <!-- Bronze -->
-                <div style="background: var(--bg-card); border: 2px solid #E2E8F0; border-radius: var(--radius-md); padding: 1.4rem;">
-                    <span style="font-size: 2rem; display: block; margin-bottom: 6px;">🥉</span>
-                    <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--text-main); margin: 0 0 4px 0;">Bronze Paw</h4>
-                    <span style="font-size: 0.78rem; color: var(--text-muted);">สำหรับสมาชิกทุกคน</span>
-                    <ul style="margin: 1rem 0 0 0; padding-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;">
-                        <li>✓ ส่วนลด 5% ทุกรายการ</li>
-                        <li>✓ รับข่าวสาร & ดีลลับก่อนใคร</li>
-                        <li>✓ สะสมแต้มทุกการจอง</li>
-                    </ul>
+            <!-- 2. Interactive Progress Tube (หลอดแต้มเลื่อนระดับ) -->
+            <div style="background: var(--bg-card); border: 2px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.8rem; margin-bottom: 2rem; box-shadow: var(--shadow-sm);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1rem;">
+                    <div>
+                        <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin: 0 0 4px 0; display: flex; align-items: center; gap: 6px;">
+                            <span>📊 หลอดแต้มสะสมเพื่อเลื่อนขั้นสู่ระดับถัดไป</span>
+                        </h4>
+                        <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+                            <?php if ($user_points >= 5000): ?>
+                                🎉 <strong>ยินดีด้วยครับ!</strong> คุณสะสมครบระดับสูงสุด <strong>Diamond Paw VIP</strong> ได้รับสิทธิประโยชน์สูงสุดตลอดชีพ
+                            <?php else: ?>
+                                คุณมี <strong><?php echo number_format($user_points); ?></strong> แต้ม • ขาดอีกเพียง <strong style="color: var(--primary-coral);"><?php echo number_format($points_needed); ?> แต้ม</strong> จะได้เลื่อนขั้นสู่ <strong style="color: #92400E;"><?php echo $next_tier_name; ?></strong>
+                            <?php endif; ?>
+                        </p>
+                    </div>
+                    <div style="background: var(--primary-coral-soft); color: var(--primary-coral); font-weight: 800; font-size: 0.9rem; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,107,74,0.3);">
+                        ⚡ เป้าหมายถัดไป: <?php echo number_format($next_tier_target); ?> แต้ม (สำเร็จ <?php echo $tier_progress_percent; ?>%)
+                    </div>
                 </div>
 
-                <!-- Silver -->
-                <div style="background: #FFFBF5; border: 2px solid #F59E0B; border-radius: var(--radius-md); padding: 1.4rem; position: relative;">
-                    <span style="position: absolute; top: 12px; right: 12px; background: #F59E0B; color: #FFF; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">เป้าหมายถัดไป</span>
-                    <span style="font-size: 2rem; display: block; margin-bottom: 6px;">🥈</span>
-                    <h4 style="font-size: 1.1rem; font-weight: 800; color: #92400E; margin: 0 0 4px 0;">Silver Paw</h4>
-                    <span style="font-size: 0.78rem; color: var(--text-muted);">ยอดสะสมครบ 20,000 บาท</span>
-                    <ul style="margin: 1rem 0 0 0; padding-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;">
-                        <li>✓ ส่วนลด 7% ทุกรายการ</li>
-                        <li>✓ <strong>ฟรี! ค่าจัดส่ง Pet Taxi ทั่วไทย</strong></li>
-                        <li>✓ แต้มคูณ 1.2 เท่า</li>
-                    </ul>
+                <!-- The Visual Animated Progress Bar (หลอดแก้วแต้ม) -->
+                <div style="position: relative; margin: 1.8rem 0 2.6rem 0;">
+                    <!-- Outer Tube Track -->
+                    <div style="background: #E2E8F0; height: 26px; border-radius: 999px; overflow: hidden; position: relative; box-shadow: inset 0 2px 5px rgba(0,0,0,0.12); border: 2px solid #CBD5E1;">
+                        <!-- Inner Gradient Fill -->
+                        <div style="width: <?php echo $global_progress_percent; ?>%; height: 100%; background: linear-gradient(90deg, #FF9E7A 0%, #FF6B4A 45%, #F59E0B 80%, #7C3AED 100%); border-radius: 999px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 12px rgba(255,107,74,0.6); position: relative;">
+                            <!-- Animated Light Shimmer -->
+                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); animation: shimmerBar 2.5s infinite;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone Checkpoints along the tube -->
+                    <div style="display: flex; justify-content: space-between; position: absolute; top: -7px; left: 0; right: 0; pointer-events: none;">
+                        <!-- Node 1: Bronze (0) -->
+                        <div style="text-align: center; width: 40px; margin-left: -5px;">
+                            <div style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 0 ? '#10B981' : '#FFFFFF'; ?>; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid #FFFFFF; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                                🥉
+                            </div>
+                            <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Bronze</span>
+                            <span style="font-size: 0.68rem; color: var(--text-muted);">0 แต้ม</span>
+                        </div>
+
+                        <!-- Node 2: Silver (500) -->
+                        <div style="text-align: center; width: 50px;">
+                            <div style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 500 ? '#10B981' : '#FFFFFF'; ?>; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid <?php echo $user_points >= 500 ? '#10B981' : '#CBD5E1'; ?>; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                                <?php echo $user_points >= 500 ? '✓' : '🥈'; ?>
+                            </div>
+                            <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Silver</span>
+                            <span style="font-size: 0.68rem; color: var(--text-muted);">500 แต้ม</span>
+                        </div>
+
+                        <!-- Node 3: Gold VIP (1,500) -->
+                        <div style="text-align: center; width: 60px;">
+                            <div style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 1500 ? '#10B981' : '#FFFFFF'; ?>; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid <?php echo $user_points >= 1500 ? '#10B981' : '#CBD5E1'; ?>; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                                <?php echo $user_points >= 1500 ? '✓' : '🥇'; ?>
+                            </div>
+                            <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Gold VIP</span>
+                            <span style="font-size: 0.68rem; color: var(--text-muted);">1,500 แต้ม</span>
+                        </div>
+
+                        <!-- Node 4: Diamond VIP (5,000) -->
+                        <div style="text-align: center; width: 70px; margin-right: -10px;">
+                            <div style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 5000 ? '#7C3AED' : '#FFFFFF'; ?>; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid <?php echo $user_points >= 5000 ? '#7C3AED' : '#CBD5E1'; ?>; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                                <?php echo $user_points >= 5000 ? '👑' : '💎'; ?>
+                            </div>
+                            <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Diamond</span>
+                            <span style="font-size: 0.68rem; color: var(--text-muted);">5,000 แต้ม</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Gold VIP -->
-                <div style="background: #FFF7ED; border: 2px solid #EA580C; border-radius: var(--radius-md); padding: 1.4rem;">
-                    <span style="font-size: 2rem; display: block; margin-bottom: 6px;">🥇</span>
-                    <h4 style="font-size: 1.1rem; font-weight: 800; color: #C2410C; margin: 0 0 4px 0;">Gold Paw VIP</h4>
-                    <span style="font-size: 0.78rem; color: var(--text-muted);">ยอดสะสมครบ 50,000 บาท</span>
-                    <ul style="margin: 1rem 0 0 0; padding-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;">
-                        <li>✓ <strong>ส่วนลด 10% ตลอดชีพ</strong></li>
-                        <li>✓ ฟรี! บริการตรวจสุขภาพประจำปี 1 ปี</li>
-                        <li>✓ สายด่วนสัตวแพทย์ส่วนตัว 24 ชม.</li>
-                    </ul>
+                <div style="background: var(--bg-card-subtle); border-radius: var(--radius-sm); padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 0.82rem; color: var(--text-secondary);">
+                    <span>💡 <strong>คำแนะนำ:</strong> ช้อปปิ้งน้องแมวหรือสินค้าทุก 100 บาท จะได้รับ 1 Paw Point ทันทีเพื่อขยับหลอดแต้ม</span>
+                    <a href="products.php" class="btn btn-primary btn-sm" style="padding: 4px 12px; font-size: 0.78rem;">
+                        🛒 ช้อปปิ้งเพื่อสะสมแต้ม
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Tiers Breakdown: สะสมเท่าไรถึงจะเลื่อนขั้น -->
+            <div style="margin-bottom: 2.5rem;">
+                <h4 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                    <span>🏆 เกณฑ์คะแนนสะสม & สิทธิพิเศษของแต่ละระดับสมาชิก</span>
+                </h4>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem;">
+                    <!-- Tier 1: Bronze -->
+                    <div style="background: var(--bg-card); border: 2px solid <?php echo $current_tier_key === 'bronze' ? '#B45309' : '#E2E8F0'; ?>; border-radius: var(--radius-md); padding: 1.5rem; position: relative; box-shadow: <?php echo $current_tier_key === 'bronze' ? '0 6px 16px rgba(180,83,9,0.15)' : 'none'; ?>;">
+                        <?php if ($current_tier_key === 'bronze'): ?>
+                            <span style="position: absolute; top: 12px; right: 12px; background: #B45309; color: #FFF; font-size: 0.68rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;">✓ ระดับปัจจุบัน</span>
+                        <?php endif; ?>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 2.2rem; line-height: 1;">🥉</span>
+                            <div>
+                                <h4 style="font-size: 1.15rem; font-weight: 800; color: #B45309; margin: 0;">Bronze Paw</h4>
+                                <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted);">สะสม 0 – 499 แต้ม</span>
+                            </div>
+                        </div>
+                        <div style="background: #FEF3C7; color: #92400E; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px;">
+                            ส่วนลด 5% ทุกรายการ
+                        </div>
+                        <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7;">
+                            <li>✓ สมัครสมาชิกใหม่ รับสิทธิ์ทันที</li>
+                            <li>✓ รับโค้ดส่วนลดต้อนรับ 15% (ใช้ครั้งแรก)</li>
+                            <li>✓ สะสมแต้ม: ทุก 100 บาท = 1 Paw Point</li>
+                            <li>✓ รับข่าวสาร & ดีลลับก่อนใคร</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tier 2: Silver -->
+                    <div style="background: <?php echo $current_tier_key === 'silver' ? '#FFFBF5' : 'var(--bg-card)'; ?>; border: 2px solid <?php echo $current_tier_key === 'silver' ? '#F59E0B' : '#E2E8F0'; ?>; border-radius: var(--radius-md); padding: 1.5rem; position: relative; box-shadow: <?php echo $current_tier_key === 'silver' ? '0 6px 16px rgba(245,158,11,0.2)' : 'none'; ?>;">
+                        <?php if ($current_tier_key === 'silver'): ?>
+                            <span style="position: absolute; top: 12px; right: 12px; background: #F59E0B; color: #FFF; font-size: 0.68rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;">✓ ระดับปัจจุบัน</span>
+                        <?php elseif ($user_points < 500): ?>
+                            <span style="position: absolute; top: 12px; right: 12px; background: #64748B; color: #FFF; font-size: 0.68rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;">🎯 เป้าหมายถัดไป</span>
+                        <?php endif; ?>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 2.2rem; line-height: 1;">🥈</span>
+                            <div>
+                                <h4 style="font-size: 1.15rem; font-weight: 800; color: #475569; margin: 0;">Silver Paw</h4>
+                                <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted);">สะสม 500 – 1,499 แต้ม</span>
+                            </div>
+                        </div>
+                        <div style="background: #F1F5F9; color: #334155; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px;">
+                            ส่วนลด 7% ทุกรายการ
+                        </div>
+                        <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7;">
+                            <li>✓ <strong>ฟรี! ค่าจัดส่ง Pet Taxi ติดแอร์</strong> 1 ครั้ง</li>
+                            <li>✓ อัตราสะสมแต้มคูณ <strong>1.2 เท่า</strong></li>
+                            <li>✓ รับของขวัญวันเกิด 200 Paw Points</li>
+                            <li>✓ บริการจองคิวตรวจสุขภาพล่วงหน้า</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tier 3: Gold VIP -->
+                    <div style="background: <?php echo $current_tier_key === 'gold' ? '#FFF7ED' : 'var(--bg-card)'; ?>; border: 2px solid <?php echo $current_tier_key === 'gold' ? '#EA580C' : '#E2E8F0'; ?>; border-radius: var(--radius-md); padding: 1.5rem; position: relative; box-shadow: <?php echo $current_tier_key === 'gold' ? '0 6px 16px rgba(234,88,12,0.2)' : 'none'; ?>;">
+                        <?php if ($current_tier_key === 'gold'): ?>
+                            <span style="position: absolute; top: 12px; right: 12px; background: #EA580C; color: #FFF; font-size: 0.68rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;">✓ ระดับปัจจุบัน</span>
+                        <?php endif; ?>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 2.2rem; line-height: 1;">🥇</span>
+                            <div>
+                                <h4 style="font-size: 1.15rem; font-weight: 800; color: #C2410C; margin: 0;">Gold Paw VIP</h4>
+                                <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted);">สะสม 1,500 – 4,999 แต้ม</span>
+                            </div>
+                        </div>
+                        <div style="background: #FFEDD5; color: #9A3412; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px;">
+                            ส่วนลด 10% ทุกรายการ
+                        </div>
+                        <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7;">
+                            <li>✓ <strong>ฟรี! บริการตรวจสุขภาพประจำปี 1 ปี</strong></li>
+                            <li>✓ สายด่วนสัตวแพทย์ส่วนตัวให้คำปรึกษา 24 ชม.</li>
+                            <li>✓ อัตราสะสมแต้มคูณ <strong>1.5 เท่า</strong></li>
+                            <li>✓ สิทธิ์เลือกจับจองลูกแมวครอกใหม่ก่อนใคร</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tier 4: Diamond VIP -->
+                    <div style="background: <?php echo $current_tier_key === 'diamond' ? '#FAF5FF' : 'var(--bg-card)'; ?>; border: 2px solid <?php echo $current_tier_key === 'diamond' ? '#7C3AED' : '#E2E8F0'; ?>; border-radius: var(--radius-md); padding: 1.5rem; position: relative; box-shadow: <?php echo $current_tier_key === 'diamond' ? '0 6px 16px rgba(124,58,237,0.2)' : 'none'; ?>;">
+                        <?php if ($current_tier_key === 'diamond'): ?>
+                            <span style="position: absolute; top: 12px; right: 12px; background: #7C3AED; color: #FFF; font-size: 0.68rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;">✓ ระดับปัจจุบัน</span>
+                        <?php endif; ?>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 2.2rem; line-height: 1;">👑</span>
+                            <div>
+                                <h4 style="font-size: 1.15rem; font-weight: 800; color: #7C3AED; margin: 0;">Diamond VIP</h4>
+                                <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted);">สะสมครบ 5,000+ แต้ม</span>
+                            </div>
+                        </div>
+                        <div style="background: #F3E8FF; color: #6B21A8; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px;">
+                            ส่วนลด 15% VIP ตลอดชีพ
+                        </div>
+                        <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7;">
+                            <li>✓ <strong>ฟรี! จัดส่ง Pet Taxi & เครื่องบิน ตลอดชีพ</strong></li>
+                            <li>✓ สัตวแพทย์ On-Call เยี่ยมตรวจสุขภาพถึงบ้าน</li>
+                            <li>✓ อัตราสะสมแต้มคูณ <strong>2.0 เท่า (Super Points)</strong></li>
+                            <li>✓ ของขวัญพรีเมียม VIP Welcome Set ทุกปี</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. ทำอะไรบ้างถึงจะได้แต้ม (Ways to Earn Points Guide) -->
+            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2rem;">
+                <h4 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                    <span>🎯 รวมวิธีสะสมแต้ม Paw Points (ทำอะไรบ้างถึงจะได้แต้ม?)</span>
+                </h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                    ทำภารกิจง่ายๆ เหล่านี้เพื่อรับคะแนนสะสมเข้ากระเป๋าของคุณทันที:
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+                    <!-- Action 1: Shopping -->
+                    <div style="border: 1.5px solid #FFE4D6; background: #FFF9F6; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">🛒</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">สั่งซื้อน้องแมว & สินค้า</h5>
+                                <span style="background: var(--primary-coral); color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+1 แต้ม / 100บ.</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                ทุกยอดการสั่งซื้อ 100 บาท รับทันที 1 Paw Point เช่น รับเลี้ยงน้องแมว 25,000 บาท ได้รับทันที <strong>250 แต้ม</strong>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action 2: Register -->
+                    <div style="border: 1.5px solid #FEF3C7; background: #FFFDF5; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">✨</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">สมัครสมาชิกใหม่</h5>
+                                <span style="background: #D97706; color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+100 แต้ม</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                ลงทะเบียนเปิดบัญชีสมาชิกใหม่ รับแต้มโบนัสเริ่มต้นทันที <strong>100 Paw Points</strong> พร้อมโค้ดส่วนลด 15%
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action 3: Review -->
+                    <div style="border: 1.5px solid #E0E7FF; background: #F8FAFF; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">⭐</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">เขียนรีวิวความประทับใจ</h5>
+                                <span style="background: #4F46E5; color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+50 แต้ม</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                รีวิวความน่ารักและการดูแลหลังรับน้องแมวไป พร้อมแนบรูปถ่าย รับทันที <strong>50 Paw Points</strong> ต่อรายการ
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action 4: Birthday -->
+                    <div style="border: 1.5px solid #FCE7F3; background: #FFF5F9; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">🎂</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">ของขวัญเดือนเกิด</h5>
+                                <span style="background: #DB2777; color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+200 แต้ม</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                ฉลองวันเกิดของคุณด้วยแต้มของขวัญพิเศษ <strong>200 Paw Points</strong> โอนเข้าบัญชีอัตโนมัติในเดือนเกิด
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action 5: Referral -->
+                    <div style="border: 1.5px solid #D1FAE5; background: #F6FEFA; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">🤝</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">แนะนำเพื่อนมารับเลี้ยง</h5>
+                                <span style="background: #059669; color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+300 แต้ม</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                ชวนเพื่อนมารับเลี้ยงน้องแมว เมื่อเพื่อนสั่งซื้อครั้งแรก คุณรับ <strong>300 Paw Points</strong> เพื่อนรับส่วนลด 10%
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action 6: Cat Quiz -->
+                    <div style="border: 1.5px solid #EDE9FE; background: #FBF9FF; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">🧭</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">ทำแบบประเมินค้นหาแมวที่ใช่</h5>
+                                <span style="background: #7C3AED; color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+20 แต้ม</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                ปรึกษาและตอบคำถามแบบทดสอบความพร้อมในการเลี้ยงน้องแมวผ่านระบบ รับฟรีทันที <strong>20 Paw Points</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Points Calculator Simulator (เครื่องคำนวณแต้มจำลอง) -->
+            <div style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); color: #FFFFFF; border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-md);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.2rem;">
+                    <div>
+                        <h4 style="font-size: 1.2rem; font-weight: 800; margin: 0 0 4px 0; color: #F8FAFC;">
+                            🧮 เครื่องคำนวณแต้มสะสมจากยอดซื้อ (Points Calculator)
+                        </h4>
+                        <p style="font-size: 0.85rem; color: #94A3B8; margin: 0;">
+                            ลองกรอกยอดซื้อที่ต้องการเพื่อดูจำนวน Paw Points ที่คุณจะได้รับทันที:
+                        </p>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.2rem;">
+                    <div style="position: relative; max-width: 260px; width: 100%;">
+                        <input type="number" id="sim-amount-input" value="25000" min="0" step="500" class="form-input" style="background: #334155; border: 1.5px solid #475569; color: #FFF; font-size: 1.2rem; font-weight: 800; padding: 10px 45px 10px 14px; border-radius: 8px; width: 100%;" oninput="calculateSimPoints()">
+                        <span style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #94A3B8; font-weight: 700;">฿</span>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 18px; display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 0.85rem; color: #CBD5E1;">จะได้รับแต้ม:</span>
+                        <span id="sim-points-result" style="font-family: 'Outfit'; font-size: 1.6rem; font-weight: 900; color: #FBBF24;">+250 พอยท์</span>
+                        <span style="font-size: 0.82rem; color: #94A3B8;">(มูลค่าส่วนลด ฿250 บาท)</span>
+                    </div>
+                </div>
+
+                <div style="font-size: 0.8rem; color: #94A3B8;">
+                    * ยิ่งระดับสมาชิกสูงขึ้น คุณจะได้รับตัวคูณแต้มโบนัสพิเศษ (Silver x1.2, Gold VIP x1.5, Diamond x2.0)
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+    function calculateSimPoints() {
+        const input = document.getElementById('sim-amount-input');
+        const result = document.getElementById('sim-points-result');
+        let val = parseFloat(input.value) || 0;
+        if (val < 0) val = 0;
+        const pts = Math.floor(val / 100);
+        result.innerText = `+${pts.toLocaleString()} พอยท์`;
+    }
+    </script>
 
     <!-- =========================================================
          TAB 4: กล่องจดหมาย & ข่าวสารจากร้านค้า (Inbox & Newsletters)
