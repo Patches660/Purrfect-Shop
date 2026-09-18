@@ -1,4 +1,4 @@
-﻿<!-- chat_widget.php - Floating Live Chat Widget with Popup Quick Menu -->
+<!-- chat_widget.php - Floating Live Chat Widget with Popup Quick Menu -->
 <div id="purrfect-chat-root">
     <!-- 1. Floating Launcher Button (Fixed Bottom-Right) -->
     <button id="chat-launcher-btn" type="button" onclick="togglePurrfectChat()" title="ปรึกษาแอดมิน & แชทบอทแนะนำน้องแมว 🐾">
@@ -200,7 +200,15 @@
                 cardHtml += '</div>';
             }
 
-            const formattedTime = msg.timestamp ? msg.timestamp.split(' ')[1] || msg.timestamp : '';
+            let formattedTime = '';
+            if (msg.timestamp) {
+                const tParts = msg.timestamp.split(' ');
+                if (tParts[1]) {
+                    formattedTime = tParts[1].substring(0, 5) + ' น.';
+                } else {
+                    formattedTime = msg.timestamp;
+                }
+            }
 
             html += `
                 <div class="chat-message-row ${senderClass}">

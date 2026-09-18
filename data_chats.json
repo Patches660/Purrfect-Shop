@@ -1,74 +1,26 @@
-{
-    "conversations": {
-        "guest_a40a414509": {
-            "user_id": "guest_a40a414509",
-            "user_name": "ผู้เยี่ยมชม (4509)",
-            "user_email": "guest@purrfect.shop",
-            "is_member": false,
-            "avatar": "assets\/images\/logo.png",
-            "unread_admin": 0,
-            "unread_user": 0,
-            "last_active": "2026-09-18 10:44:43",
-            "messages": [
-                {
-                    "id": "msg_init_1789721083",
-                    "sender": "bot",
-                    "sender_name": "Purrfect Bot 🐾",
-                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
-                    "cards": [],
-                    "timestamp": "2026-09-18 10:44:43"
-                },
-                {
-                    "id": "msg_q_c_6aacf9fba6d6c",
-                    "sender": "customer",
-                    "sender_name": "ผู้เยี่ยมชม (4509)",
-                    "text": "🐱 แนะนำน้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่",
-                    "cards": [],
-                    "timestamp": "2026-09-18 10:44:43"
-                },
-                {
-                    "id": "msg_q_b_6aacf9fba6d98",
-                    "sender": "bot",
-                    "sender_name": "Purrfect Advisor 🐾",
-                    "text": "นี่คือน้องแมวยอดนิยมอันดับ 1 เลี้ยงง่าย เป็นมิตร สุขภาพแข็งแรง เหมาะสำหรับมือใหม่ที่เพิ่งเริ่มเลี้ยงที่สุดครับ 🐾",
-                    "cards": [
-                        {
-                            "id": "cat_british",
-                            "name": "น้องสโนว์ (British Shorthair)",
-                            "breed": "บริติช ช็อตแฮร์ (British Shorthair)",
-                            "price": 18000,
-                            "price_fmt": "฿18,000",
-                            "image": "assets\/images\/cat_british.jpg",
-                            "hair": "ขนสั้นแน่นนุ่ม",
-                            "highlight": "หน้ากลมแก้มยุ้ยน่าฟัด",
-                            "link": "products.php"
-                        },
-                        {
-                            "id": "cat_americanshorthair",
-                            "name": "น้องการ์ฟิลด์ (American Shorthair)",
-                            "breed": "อเมริกัน ช็อตแฮร์ (American Shorthair)",
-                            "price": 15000,
-                            "price_fmt": "฿15,000",
-                            "image": "assets\/images\/cat_americanshorthair.jpg",
-                            "hair": "ขนสั้นแน่นลายชัดเจน",
-                            "highlight": "ลายเสือคลาสสิกคมชัด",
-                            "link": "products.php"
-                        },
-                        {
-                            "id": "cat_scottish",
-                            "name": "น้องพุดดิ้ง (Scottish Fold)",
-                            "breed": "สก็อตติช โฟลด์ (Scottish Fold)",
-                            "price": 21000,
-                            "price_fmt": "฿21,000",
-                            "image": "assets\/images\/cat_scottish.jpg",
-                            "hair": "ขนสั้นนุ่มหนา",
-                            "highlight": "หูพับแนบสนิทหน้ากลมน่ารัก",
-                            "link": "products.php"
-                        }
-                    ],
-                    "timestamp": "2026-09-18 10:44:43"
-                }
-            ]
-        }
-    }
+﻿{
+    "conversations":  {
+                          "u_6a97f8b172436":  {
+                                                  "unread_admin":  0,
+                                                  "user_name":  "คุณกิตติพงษ์ รักแมว",
+                                                  "avatar":  "assets/images/logo.png",
+                                                  "unread_user":  0,
+                                                  "last_active":  "2026-09-18 16:02:35",
+                                                  "user_email":  "catlover@example.com",
+                                                  "is_member":  true,
+                                                  "messages":  [
+                                                                   {
+                                                                       "id":  "msg_welcome_1",
+                                                                       "text":  "สวัสดีครับคุณกิตติพงษ์! 🐾 ยินดีต้อนรับสู่ศูนย์บริการลูกค้า Purrfect Shop หากสนใจน้องแมวสายพันธุ์ไหน หรือต้องการสอบถามเรื่องการดูแล สามารถกดปุ่ม \u0027⚡ คำถาม\u0027 หรือพิมพ์ข้อความสอบถามแอดมินได้เลยครับ",
+                                                                       "sender_name":  "Purrfect Bot 🐾",
+                                                                       "timestamp":  "2026-09-18 16:02:35",
+                                                                       "cards":  [
+
+                                                                                 ],
+                                                                       "sender":  "bot"
+                                                                   }
+                                                               ],
+                                                  "user_id":  "u_6a97f8b172436"
+                                              }
+                      }
 }

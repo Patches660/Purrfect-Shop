@@ -1,5 +1,7 @@
 <?php
 // Cat Shop - Core Data & Helper Functions
+date_default_timezone_set('Asia/Bangkok');
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

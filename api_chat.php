@@ -1,5 +1,6 @@
-﻿<?php
+<?php
 // api_chat.php - Realtime Live Chat & Smart Bot Backend
+date_default_timezone_set('Asia/Bangkok');
 header('Content-Type: application/json; charset=utf-8');
 
 if (session_status() === PHP_SESSION_NONE) {
