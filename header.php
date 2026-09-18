@@ -176,6 +176,23 @@ $logged_user = getCurrentUser();
             </div>
         </div>
     </header>
+
+    <script>
+    window.trackPurrfectBehavior = function(type, target, category) {
+        try {
+            const formData = new FormData();
+            formData.append('action', 'track');
+            formData.append('event_type', type);
+            formData.append('target', target);
+            formData.append('category', category || 'general');
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon('api_analytics.php', formData);
+            } else {
+                fetch('api_analytics.php', { method: 'POST', body: formData });
+            }
+        } catch (e) {}
+    };
+    </script>
     <main>
         <?php if (!empty($_SESSION['flash_success'])): ?>
             <div style="max-width: 1200px; margin: 1.5rem auto 0 auto; padding: 1rem 1.5rem; background: #ECFDF5; border: 1.5px solid #10B981; border-radius: 12px; color: #065F46; font-weight: 700; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);">
