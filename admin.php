@@ -1275,7 +1275,7 @@ require_once __DIR__ . '/header.php';
                     html += `
                         <div style="max-width: 80%; ${alignStyle}">
                             <div style="font-size: 0.72rem; color: #94A3B8; margin-bottom: 2px; ${isAdmin ? 'text-align:right;' : ''}">
-                                <strong>${senderTag}</strong> &bull; ${msg.timestamp ? msg.timestamp.split(' ')[1] : ''}
+                                <strong>${senderTag}</strong> &bull; ${msg.timestamp ? (msg.timestamp.split(' ')[1] ? msg.timestamp.split(' ')[1].substring(0, 5) : msg.timestamp) : ''}
                             </div>
                             <div style="padding: 10px 14px; border-radius: 12px; font-size: 0.88rem; line-height: 1.45; box-shadow: 0 2px 4px rgba(0,0,0,0.03); ${bubbleBg}">
                                 ${escapeHtml(msg.text).replace(/\n/g, '<br>')}

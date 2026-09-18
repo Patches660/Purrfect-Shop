@@ -96,6 +96,8 @@
     let pollInterval = null;
     let currentUserId = '';
 
+    let isBotTyping = false;
+
     window.togglePurrfectChat = function() {
         const win = document.getElementById('purrfect-chat-window');
         const launcher = document.getElementById('chat-launcher-btn');
@@ -144,6 +146,10 @@
     };
 
     window.loadChatMessages = function(forceScroll = false) {
+        if (isBotTyping && !forceScroll) {
+            return; // Don't interrupt typing animation during 3s delay
+        }
+
         fetch('api_chat.php?action=get_messages')
             .then(res => res.json())
             .then(data => {
@@ -160,11 +166,20 @@
                         strip.innerHTML = `👤 สนทนาในนาม: <strong>${escapeHtml(u.name)}</strong> • <a href="login.php" style="color:var(--primary-coral); text-decoration:underline;">เข้าสู่ระบบ</a> เพื่อสะสมแต้ม`;
                     }
 
-                    renderMessages(conv.messages || [], forceScroll);
+                    if (!isBotTyping) {
+                        renderMessages(conv.messages || [], forceScroll);
+                    }
                 }
             })
             .catch(err => console.log('Chat load error:', err));
     };
+
+    function getCurrentTimeFormatted() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
 
     function renderMessages(messages, forceScroll = false) {
         const container = document.getElementById('chat-messages-container');
@@ -204,7 +219,7 @@
             if (msg.timestamp) {
                 const tParts = msg.timestamp.split(' ');
                 if (tParts[1]) {
-                    formattedTime = tParts[1].substring(0, 5) + ' น.';
+                    formattedTime = tParts[1].substring(0, 5);
                 } else {
                     formattedTime = msg.timestamp;
                 }
@@ -218,7 +233,7 @@
                             <span class="chat-sender-name">${escapeHtml(msg.sender_name || senderBadge)}</span>
                             <span class="chat-time">${formattedTime}</span>
                         </div>
-                        <div class="chat-text">${escapeHtml(msg.text).replace(/\n/g, '<br>')}</div>
+                        <div class="chat-text">${escapeHtml(msg.text).replace(/\\n/g, '<br>')}</div>
                         ${cardHtml}
                     </div>
                 </div>
@@ -233,7 +248,59 @@
         lastMessageCount = messages.length;
     }
 
+    const quickPromptsMap = {
+        1: '🐱 แนะนำน้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่',
+        2: '🏢 มีน้องแมวพันธุ์ไหนที่เหมาะกับเลี้ยงในคอนโด/ห้องพักบ้าง?',
+        3: '🤧 เป็นภูมิแพ้ แนะนำน้องแมวขนไม่ร่วง/ผลัดขนน้อยหน่อยครับ',
+        4: '👑 ขอดูแมวสายพันธุ์พรีเมียม ขนฟูหน้าหวาน มีใบเพ็ดดีกรี',
+        5: '🎁 ตอนนี้มีโปรโมชั่นหรือดีลส่วนลดสมาชิกใหม่อะไรบ้าง?',
+        6: '🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?'
+    };
+
     window.sendQuickReply = function(option) {
+        const container = document.getElementById('chat-messages-container');
+        const userText = quickPromptsMap[option] || 'คำถามด่วน';
+        const currentTime = getCurrentTimeFormatted();
+
+        // 1. Instantly display customer message in UI
+        const customerRow = document.createElement('div');
+        customerRow.className = 'chat-message-row msg-customer';
+        customerRow.innerHTML = `
+            <div class="chat-bubble-content">
+                <div class="chat-sender-header">
+                    <span class="chat-sender-name">คุณ</span>
+                    <span class="chat-time">${currentTime}</span>
+                </div>
+                <div class="chat-text">${escapeHtml(userText)}</div>
+            </div>
+        `;
+        container.appendChild(customerRow);
+
+        // 2. Instantly display Typing Indicator
+        const typingRow = document.createElement('div');
+        typingRow.id = 'chat-typing-indicator';
+        typingRow.className = 'chat-message-row msg-bot';
+        typingRow.innerHTML = `
+            <div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>
+            <div class="chat-bubble-content">
+                <div class="chat-sender-header">
+                    <span class="chat-sender-name">🤖 ผู้ช่วย AI</span>
+                    <span class="chat-time">${currentTime}</span>
+                </div>
+                <div class="chat-typing-bubble">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span style="font-size:0.75rem; color:#888; margin-left:6px; font-weight:600;">🐾 Purrfect Advisor กำลังตอบ... 💬</span>
+                </div>
+            </div>
+        `;
+        container.appendChild(typingRow);
+        container.scrollTop = container.scrollHeight;
+
+        isBotTyping = true;
+
+        // 3. Send request to backend
         const formData = new FormData();
         formData.append('action', 'quick_reply');
         formData.append('option', option);
@@ -242,13 +309,13 @@
             method: 'POST',
             body: formData
         })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                loadChatMessages(true);
-            }
-        })
         .catch(err => console.log('Quick reply error:', err));
+
+        // 4. Wait exactly 3 seconds (3000ms) before showing bot's response
+        setTimeout(() => {
+            isBotTyping = false;
+            loadChatMessages(true);
+        }, 3000);
     };
 
     window.handleSendChatMessage = function(e) {
