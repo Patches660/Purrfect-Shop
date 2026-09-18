@@ -68,6 +68,7 @@
             </p>
         </div>
     </footer>
+    <?php require_once __DIR__ . '/chat_widget.php'; ?>
     <script src="assets/js/main.js"></script>
 </body>
 </html>

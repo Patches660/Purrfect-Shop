@@ -428,6 +428,9 @@ require_once __DIR__ . '/header.php';
         <a href="admin.php?tab=newsletter" class="admin-tab-btn <?php echo $active_tab === 'newsletter' ? 'active' : ''; ?>">
             📢 ส่งข่าวสาร & โปรโมชัน (<?php echo count($all_newsletters); ?>)
         </a>
+        <a href="admin.php?tab=livechat" class="admin-tab-btn <?php echo $active_tab === 'livechat' ? 'active' : ''; ?>">
+            💬 ศูนย์แชทสด & ดูแลลูกค้า (Live Chat)
+        </a>
     </div>
 
     <!-- =========================================================
@@ -992,6 +995,304 @@ require_once __DIR__ . '/header.php';
                 <?php endif; ?>
             </div>
         </div>
+    <?php endif; ?>
+
+    <!-- =========================================================
+         TAB 5: LIVE CHAT MANAGEMENT CONSOLE
+         ========================================================= -->
+    <?php if ($active_tab === 'livechat'): ?>
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.8rem; box-shadow: var(--shadow-md);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 style="font-size: 1.4rem; font-weight: 800; margin: 0 0 4px 0; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                        💬 ศูนย์แชทสด & บริการลูกค้า (Live Customer Chat Console)
+                    </h2>
+                    <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">
+                        ติดต่อพูดคุยกับลูกค้าสมาชิกทุกคนในระบบ และผู้เยี่ยมชมร้านค้าแบบเรียลไทม์
+                    </p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 0.85rem; color: #10B981; font-weight: 700; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 4px 12px; border-radius: 999px; display: inline-flex; align-items: center; gap: 6px;">
+                        <span style="width: 8px; height: 8px; background: #10B981; border-radius: 50%; display: inline-block; box-shadow: 0 0 6px #10B981;"></span> 
+                        แอดมินออนไลน์พร้อมตอบ
+                    </span>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="adminRefreshConversations()" style="padding: 6px 12px;">
+                        🔄 รีเฟรชแชท
+                    </button>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 320px 1fr; gap: 1.5rem; min-height: 600px; border: 1.5px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; background: #FAF7F5;">
+                <!-- Left Column: Customer Conversations List -->
+                <div style="background: #FFFFFF; border-right: 1.5px solid var(--border-color); display: flex; flex-direction: column;">
+                    <div style="padding: 12px; border-bottom: 1px solid var(--border-color); background: #FCFAF8;">
+                        <input type="text" id="admin-chat-search" placeholder="🔍 ค้นหาชื่อสมาชิกหรืออีเมล..." oninput="adminFilterConversations()" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.85rem; background: #FFFFFF;">
+                    </div>
+                    <div id="admin-conv-list" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column;">
+                        <div style="text-align: center; padding: 30px; color: var(--text-muted); font-size: 0.85rem;">
+                            ⏳ กำลังโหลดรายชื่อลูกค้า...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Active Chat Feed & Admin Input -->
+                <div style="display: flex; flex-direction: column; background: #FFFFFF;">
+                    <!-- Active Chat Header -->
+                    <div id="admin-active-header" style="padding: 14px 20px; border-bottom: 1.5px solid var(--border-color); background: #FFFFFF; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <img id="admin-target-avatar" src="assets/images/logo.png" alt="" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--border-color); object-fit: cover;">
+                            <div>
+                                <div id="admin-target-name" style="font-weight: 800; font-size: 1.05rem; color: var(--text-main);">เลือกผู้ใช้เพื่อเริ่มสนทนา</div>
+                                <div id="admin-target-meta" style="font-size: 0.8rem; color: var(--text-muted); display: flex; gap: 8px; align-items: center;">
+                                    <span>กรุณาคลิกเลือกรายชื่อลูกค้าจากแถบด้านซ้าย</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Messages Stream Area -->
+                    <div id="admin-messages-box" style="flex: 1; padding: 20px; overflow-y: auto; background: #F8FAFC; display: flex; flex-direction: column; gap: 12px; max-height: 430px;">
+                        <div style="text-align: center; padding: 50px 20px; color: #94A3B8;">
+                            <span style="font-size: 2.5rem; display: block; margin-bottom: 10px;">💬</span>
+                            คลิกเลือกรายชื่อสมาชิกทางด้านซ้ายเพื่อเปิดหน้าต่างสนทนาและพิมพ์ตอบกลับ
+                        </div>
+                    </div>
+
+                    <!-- Admin Reply Controls & Attachment Box -->
+                    <div id="admin-reply-panel" style="padding: 14px; border-top: 1.5px solid var(--border-color); background: #FFFFFF; display: none; flex-direction: column; gap: 10px;">
+                        <!-- Quick Response Snippets & Product Attachment -->
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                            <div style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+                                <span style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">⚡ ตอบด่วน:</span>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="adminInsertQuick('สวัสดีครับคุณลูกค้า มีอะไรให้แอดมินดูแลสอบถามได้เลยนะครับ 🐾')" style="font-size: 0.72rem; padding: 2px 8px;">
+                                    👋 สวัสดีต้อนรับ
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="adminInsertQuick('น้องแมวตัวนี้สุขภาพสมบูรณ์มาก มีใบเพ็ดดีกรีและวัคซีนครบ พร้อมย้ายบ้านได้ทันทีครับ ✨')" style="font-size: 0.72rem; padding: 2px 8px;">
+                                    🐱 แจ้งสถานะน้องแมว
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="adminInsertQuick('หากสะดวก สามารถส่งเบอร์โทรหรือ Line ID ไว้เพื่อให้แอดมินส่งวิดีโอตัวจริงของน้องให้ชมได้นะครับ 📱')" style="font-size: 0.72rem; padding: 2px 8px;">
+                                    📱 ขอข้อมูลติดต่อ
+                                </button>
+                            </div>
+
+                            <!-- Attach Cat Card Picker -->
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <label style="font-size: 0.75rem; font-weight: 700; color: var(--primary-coral);">🐱 แนบการ์ดแมว:</label>
+                                <select id="admin-attach-cat" style="font-size: 0.78rem; padding: 4px 8px; border-radius: 6px; border: 1px solid var(--border-color); max-width: 180px;">
+                                    <option value="">-- ไม่แนบการ์ดสินค้า --</option>
+                                    <?php foreach ($cats as $cid => $c): ?>
+                                        <option value="<?php echo $cid; ?>"><?php echo htmlspecialchars($c['name']); ?> (฿<?php echo number_format($c['price']); ?>)</option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Form -->
+                        <form onsubmit="adminSubmitChatMessage(event)" style="display: flex; gap: 10px; align-items: flex-end;">
+                            <textarea id="admin-input-text" rows="2" placeholder="พิมพ์ข้อความตอบกลับลูกค้าในฐานะแอดมิน..." style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--border-color); font-size: 0.9rem; font-family: inherit; resize: none; outline: none;"></textarea>
+                            <button type="submit" class="btn btn-primary" style="padding: 12px 20px; font-weight: 700; height: 100%; border-radius: 10px; display: flex; align-items: center; gap: 6px;">
+                                <span>ส่งข้อความ</span> <span>➤</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        (function() {
+            let allConversations = [];
+            let activeTargetUserId = '';
+            let adminPollTimer = null;
+
+            window.adminRefreshConversations = function() {
+                fetch('api_chat.php?action=admin_get_conversations')
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'success') {
+                            allConversations = data.conversations || [];
+                            renderAdminConversationsList(allConversations);
+                            if (activeTargetUserId) {
+                                adminLoadTargetChat(activeTargetUserId, false);
+                            }
+                        }
+                    })
+                    .catch(err => console.log('Admin chat list error:', err));
+            };
+
+            function renderAdminConversationsList(list) {
+                const container = document.getElementById('admin-conv-list');
+                if (!container) return;
+
+                if (list.length === 0) {
+                    container.innerHTML = '<div style="text-align:center; padding:30px; color:#94A3B8; font-size:0.85rem;">ไม่พบรายการสนทนา</div>';
+                    return;
+                }
+
+                let html = '';
+                list.forEach(c => {
+                    const isActive = c.user_id === activeTargetUserId ? 'background: #FFF0EB; border-left: 4px solid var(--primary-coral);' : 'background: #FFFFFF;';
+                    const roleBadge = c.is_member ? '<span style="font-size:0.68rem; background:#FEF3C7; color:#92400E; padding:1px 6px; border-radius:4px; font-weight:700;">🐾 สมาชิก</span>' : '<span style="font-size:0.68rem; background:#F1F5F9; color:#475569; padding:1px 6px; border-radius:4px;">👤 ผู้เยี่ยมชม</span>';
+                    const unreadHtml = c.unread_admin > 0 ? `<span style="background:#EF4444; color:#FFF; font-size:0.7rem; font-weight:800; padding:2px 6px; border-radius:999px;">${c.unread_admin} ใหม่</span>` : '';
+
+                    html += `
+                        <div onclick="adminSelectCustomer('${c.user_id}')" style="padding: 12px 14px; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: background 0.15s; ${isActive}" class="admin-conv-item">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <img src="${c.avatar || 'assets/images/logo.png'}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid #E2E8F0;">
+                                    <div>
+                                        <div style="font-weight: 700; font-size: 0.88rem; color: var(--text-main); line-height: 1.2;">
+                                            ${escapeHtml(c.user_name)}
+                                        </div>
+                                        <div style="margin-top: 2px;">${roleBadge}</div>
+                                    </div>
+                                </div>
+                                <div>${unreadHtml}</div>
+                            </div>
+                            <div style="font-size: 0.78rem; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 4px;">
+                                ${escapeHtml(c.last_message || 'ยังไม่มีข้อความ')}
+                            </div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+
+            window.adminFilterConversations = function() {
+                const query = (document.getElementById('admin-chat-search').value || '').toLowerCase();
+                const filtered = allConversations.filter(c => {
+                    return (c.user_name || '').toLowerCase().includes(query) || (c.user_email || '').toLowerCase().includes(query);
+                });
+                renderAdminConversationsList(filtered);
+            };
+
+            window.adminSelectCustomer = function(userId) {
+                activeTargetUserId = userId;
+                renderAdminConversationsList(allConversations);
+                adminLoadTargetChat(userId, true);
+                document.getElementById('admin-reply-panel').style.display = 'flex';
+                setTimeout(() => document.getElementById('admin-input-text').focus(), 200);
+            };
+
+            window.adminLoadTargetChat = function(userId, forceScroll) {
+                fetch(`api_chat.php?action=get_messages&target_user_id=${encodeURIComponent(userId)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 'success' && data.conversation) {
+                            const conv = data.conversation;
+                            // Header
+                            document.getElementById('admin-target-avatar').src = conv.avatar || 'assets/images/logo.png';
+                            document.getElementById('admin-target-name').innerText = conv.user_name || 'ลูกค้า';
+                            document.getElementById('admin-target-meta').innerHTML = `
+                                <span>📧 ${escapeHtml(conv.user_email || 'ไม่มีอีเมล')}</span> &bull; 
+                                <span>${conv.is_member ? '🐾 สมาชิกร้านค้า' : '👤 ผู้เยี่ยมชม'}</span> &bull; 
+                                <span>🕒 ใช้งานล่าสุด: ${conv.last_active}</span>
+                            `;
+
+                            renderAdminMessages(conv.messages || [], forceScroll);
+                        }
+                    })
+                    .catch(err => console.log('Admin target chat error:', err));
+            };
+
+            function renderAdminMessages(messages, forceScroll) {
+                const box = document.getElementById('admin-messages-box');
+                if (!box) return;
+
+                let html = '';
+                messages.forEach(msg => {
+                    const isAdmin = msg.sender === 'admin';
+                    const isBot = msg.sender === 'bot';
+                    const alignStyle = isAdmin ? 'align-self: flex-end;' : 'align-self: flex-start;';
+                    const bubbleBg = isAdmin ? 'background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E3A8A;' : (isBot ? 'background: #F1F5F9; border: 1px solid #CBD5E1; color: #334155;' : 'background: #FFFFFF; border: 1.5px solid #FFD8CC; color: #1E293B;');
+                    const senderTag = isAdmin ? '👨‍💼 แอดมิน (คุณ)' : (isBot ? '🤖 ผู้ช่วย AI' : '👤 ' + (msg.sender_name || 'ลูกค้า'));
+
+                    let cardHtml = '';
+                    if (msg.cards && msg.cards.length > 0) {
+                        cardHtml += '<div style="display:flex; gap:8px; margin-top:8px; overflow-x:auto; padding-bottom:4px;">';
+                        msg.cards.forEach(card => {
+                            cardHtml += `
+                                <div style="flex-shrink:0; width:140px; background:#FFF; border:1px solid #E2E8F0; border-radius:8px; overflow:hidden; padding:6px; font-size:0.75rem;">
+                                    <img src="${card.image}" style="width:100%; height:75px; object-fit:cover; border-radius:4px;">
+                                    <div style="font-weight:700; color:#1E293B; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(card.name)}</div>
+                                    <div style="color:#FF6B4A; font-weight:800;">${escapeHtml(card.price_fmt || card.price)}</div>
+                                </div>
+                            `;
+                        });
+                        cardHtml += '</div>';
+                    }
+
+                    html += `
+                        <div style="max-width: 80%; ${alignStyle}">
+                            <div style="font-size: 0.72rem; color: #94A3B8; margin-bottom: 2px; ${isAdmin ? 'text-align:right;' : ''}">
+                                <strong>${senderTag}</strong> &bull; ${msg.timestamp ? msg.timestamp.split(' ')[1] : ''}
+                            </div>
+                            <div style="padding: 10px 14px; border-radius: 12px; font-size: 0.88rem; line-height: 1.45; box-shadow: 0 2px 4px rgba(0,0,0,0.03); ${bubbleBg}">
+                                ${escapeHtml(msg.text).replace(/\n/g, '<br>')}
+                                ${cardHtml}
+                            </div>
+                        </div>
+                    `;
+                });
+
+                box.innerHTML = html;
+                if (forceScroll) {
+                    box.scrollTop = box.scrollHeight;
+                }
+            }
+
+            window.adminInsertQuick = function(txt) {
+                const input = document.getElementById('admin-input-text');
+                input.value = txt;
+                input.focus();
+            };
+
+            window.adminSubmitChatMessage = function(e) {
+                e.preventDefault();
+                if (!activeTargetUserId) return;
+
+                const input = document.getElementById('admin-input-text');
+                const text = input.value.trim();
+                const catCard = document.getElementById('admin-attach-cat').value;
+
+                if (!text) return;
+                input.value = '';
+
+                const formData = new FormData();
+                formData.append('action', 'admin_send_message');
+                formData.append('target_user_id', activeTargetUserId);
+                formData.append('message', text);
+                formData.append('cat_card_id', catCard);
+
+                fetch('api_chat.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('admin-attach-cat').value = '';
+                        adminLoadTargetChat(activeTargetUserId, true);
+                    } else {
+                        alert('ส่งข้อความไม่สำเร็จ: ' + data.message);
+                    }
+                })
+                .catch(err => console.log('Admin send msg error:', err));
+            };
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                adminRefreshConversations();
+                adminPollTimer = setInterval(() => {
+                    adminRefreshConversations();
+                }, 4000);
+            });
+        })();
+        </script>
     <?php endif; ?>
 </div>
 
