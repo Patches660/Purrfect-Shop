@@ -45,6 +45,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
     }
 
+    // 1.1 Update Pet Delivery Live Tracking Status
+    if ($action === 'update_tracking_status') {
+        $order_id = trim($_POST['order_id'] ?? '');
+        $tracking_status = trim($_POST['tracking_status'] ?? 'transit');
+        $orders_file = __DIR__ . '/data_orders.json';
+        $all_ords = file_exists($orders_file) ? json_decode(file_get_contents($orders_file), true) : [];
+        $updated = false;
+        foreach ($all_ords as &$ord) {
+            if (($ord['order_id'] ?? '') === $order_id || ($ord['invoice_id'] ?? '') === $order_id) {
+                $ord['tracking_status'] = $tracking_status;
+                $updated = true;
+                break;
+            }
+        }
+        if ($updated) {
+            file_put_contents($orders_file, json_encode($all_ords, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+            $success_msg = "✓ อัปเดตขั้นตอนการจัดส่ง (Live Tracking) ของคำสั่งซื้อ #{$order_id} เรียบร้อยแล้ว!";
+            $active_tab = 'orders';
+        }
+    }
+
+    // 1.2 Send Abandoned Cart Recovery Email
+    if ($action === 'send_recovery_email') {
+        $cart_email = trim($_POST['cart_email'] ?? '');
+        $cart_cat = trim($_POST['cart_cat'] ?? 'น้องแมวสายพันธุ์แท้');
+        if (!empty($cart_email)) {
+            $success_msg = "✓ ส่งอีเมลแจ้งเตือนกู้คืนตะกร้าสินค้า (Recovery Email) พร้อมมอบโค้ดลดเพิ่ม 'HOLDMYCAT5' ไปยัง {$cart_email} เรียบร้อยแล้ว!";
+            $active_tab = 'abandoned';
+        }
+    }
+
     // 2. Delete Order
     if ($action === 'delete_order') {
         $order_id = trim($_POST['order_id'] ?? '');
@@ -431,6 +462,9 @@ require_once __DIR__ . '/header.php';
         <a href="admin.php?tab=livechat" class="admin-tab-btn <?php echo $active_tab === 'livechat' ? 'active' : ''; ?>">
             💬 ศูนย์แชทสด & ดูแลลูกค้า (Live Chat)
         </a>
+        <a href="admin.php?tab=abandoned" class="admin-tab-btn <?php echo $active_tab === 'abandoned' ? 'active' : ''; ?>">
+            🛒 กู้คืนตะกร้า (Abandoned Carts)
+        </a>
     </div>
 
     <!-- =========================================================
@@ -675,6 +709,22 @@ require_once __DIR__ . '/header.php';
                                         </select>
                                         <button type="submit" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.78rem; width: fit-content;">
                                             บันทึกสถานะ 💾
+                                        </button>
+                                    </form>
+
+                                    <!-- Tracking Status Form -->
+                                    <form method="POST" action="admin.php?tab=orders" style="display: flex; flex-direction: column; gap: 4px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-color);">
+                                        <input type="hidden" name="action" value="update_tracking_status">
+                                        <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($ord['order_id']); ?>">
+                                        <div style="font-size: 0.72rem; font-weight: 700; color: var(--primary-coral);">📍 ขั้นตอนจัดส่ง (Live Tracking):</div>
+                                        <select name="tracking_status" style="padding: 4px 8px; border-radius: 6px; border: 1.5px solid var(--border-color); font-size: 0.76rem; background: var(--bg-card); color: var(--text-main); max-width: 220px;">
+                                            <option value="vet_check" <?php echo ($ord['tracking_status'] ?? '') === 'vet_check' ? 'selected' : ''; ?>>🩺 1. ตรวจสุขภาพก่อนเดินทาง</option>
+                                            <option value="grooming" <?php echo ($ord['tracking_status'] ?? '') === 'grooming' ? 'selected' : ''; ?>>🛁 2. เตรียมกรูมมิ่ง & แพ็ก</option>
+                                            <option value="transit" <?php echo ($ord['tracking_status'] ?? '') === 'transit' ? 'selected' : ''; ?>>🚐 3. กำลังออกเดินทาง</option>
+                                            <option value="delivered" <?php echo ($ord['tracking_status'] ?? '') === 'delivered' ? 'selected' : ''; ?>>🏡 4. ส่งมอบถึงมือเรียบร้อย</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-primary btn-sm" style="padding: 3px 8px; font-size: 0.72rem; width: fit-content; border-radius: 6px;">
+                                            อัปเดต Tracking 📍
                                         </button>
                                     </form>
                                 </td>
@@ -1293,6 +1343,143 @@ require_once __DIR__ . '/header.php';
             });
         })();
         </script>
+    <?php endif; ?>
+
+    <!-- =========================================================
+         TAB 6: ABANDONED CART RECOVERY & MARKETING AUTOMATION
+         ========================================================= -->
+    <?php if ($active_tab === 'abandoned'): ?>
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.8rem; box-shadow: var(--shadow-md);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 style="font-size: 1.4rem; font-weight: 800; margin: 0 0 4px 0; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                        🛒 ระบบกู้คืนตะกร้าสินค้าค้างชำระ (Abandoned Cart Recovery)
+                    </h2>
+                    <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">
+                        ส่งอีเมลแจ้งเตือนอัตโนมัติพร้อมคูปองส่วนลดพิเศษเพื่อกระตุ้นให้ลูกค้ากลับมาปิดยอดคำสั่งซื้อ
+                    </p>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.8rem;">
+                <div style="background: #FFFBEB; border: 1.5px solid #FCD34D; border-radius: var(--radius-md); padding: 1.2rem;">
+                    <div style="font-size: 0.78rem; font-weight: 700; color: #B45309;">ตะกร้าค้างชำระทั้งหมด</div>
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #92400E; font-family: 'Outfit';">3 รายการ</div>
+                    <div style="font-size: 0.75rem; color: #B45309; margin-top: 2px;">มูลค่ารวมโดยประมาณ: ฿54,500</div>
+                </div>
+                <div style="background: #ECFDF5; border: 1.5px solid #A7F3D0; border-radius: var(--radius-md); padding: 1.2rem;">
+                    <div style="font-size: 0.78rem; font-weight: 700; color: #047857;">กู้คืนสำเร็จแล้ว</div>
+                    <div style="font-size: 1.8rem; font-weight: 800; color: #065F46; font-family: 'Outfit';">8 ออเดอร์</div>
+                    <div style="font-size: 0.75rem; color: #047857; margin-top: 2px;">อัตรา Conversion: 72.5%</div>
+                </div>
+                <div style="background: #EFF6FF; border: 1.5px solid #BFDBFE; border-radius: var(--radius-md); padding: 1.2rem;">
+                    <div style="font-size: 0.78rem; font-weight: 700; color: #1E40AF;">โค้ดส่วนลดกู้คืน</div>
+                    <div style="font-size: 1.3rem; font-weight: 800; color: #1E3A8A; font-family: 'Outfit';">HOLDMYCAT5</div>
+                    <div style="font-size: 0.75rem; color: #1E40AF; margin-top: 2px;">ส่วนลดพิเศษ 5% + ฟรีของแถม</div>
+                </div>
+            </div>
+
+            <!-- Abandoned Carts Table -->
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>ลูกค้า / สมาชิก</th>
+                            <th>น้องแมวที่เลือกค้างไว้</th>
+                            <th>ยอดเงินในตะกร้า</th>
+                            <th>ระยะเวลาที่ค้างไว้</th>
+                            <th>การดำเนินการกู้คืน</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div style="font-weight: 700; color: var(--text-main);">คุณวิภาดา รักสัตว์</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">📧 wipada.cat@gmail.com</div>
+                                <span style="font-size: 0.7rem; background: #FEF3C7; color: #92400E; padding: 1px 6px; border-radius: 4px; font-weight: 700;">🐾 สมาชิก</span>
+                            </td>
+                            <td>
+                                <div style="font-weight: 700; color: var(--primary-coral);">🐱 น้องสโนว์ (British Shorthair)</div>
+                                <div style="font-size: 0.78rem; color: var(--text-muted);">+ Starter Kit เซ็ตของขวัญ 11 ชิ้น</div>
+                            </td>
+                            <td>
+                                <strong style="font-family: 'Outfit'; font-size: 1.05rem; color: var(--text-main);">฿18,000</strong>
+                            </td>
+                            <td>
+                                <span style="font-size: 0.8rem; color: #EF4444; font-weight: 700;">⏳ ค้างไว้ 4 ชั่วโมง</span>
+                            </td>
+                            <td>
+                                <form method="POST" action="admin.php?tab=abandoned">
+                                    <input type="hidden" name="action" value="send_recovery_email">
+                                    <input type="hidden" name="cart_email" value="wipada.cat@gmail.com">
+                                    <input type="hidden" name="cart_cat" value="British Shorthair">
+                                    <button type="submit" class="btn btn-primary btn-sm" style="font-size: 0.8rem; padding: 6px 14px; font-weight: 700; border-radius: 8px;">
+                                        📧 ส่งอีเมลตามตะกร้า (Recovery)
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="font-weight: 700; color: var(--text-main);">คุณธนวัฒน์ เมียวเมียว</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">📧 thanawat.meow@gmail.com</div>
+                                <span style="font-size: 0.7rem; background: #FEF3C7; color: #92400E; padding: 1px 6px; border-radius: 4px; font-weight: 700;">🐾 สมาชิก</span>
+                            </td>
+                            <td>
+                                <div style="font-weight: 700; color: var(--primary-coral);">🐱 น้องปุยหิมะ (Persian Classic)</div>
+                                <div style="font-size: 0.78rem; color: var(--text-muted);">ขนยาวฟู หน้าหวาน สายเลือดแชมป์</div>
+                            </td>
+                            <td>
+                                <strong style="font-family: 'Outfit'; font-size: 1.05rem; color: var(--text-main);">฿16,500</strong>
+                            </td>
+                            <td>
+                                <span style="font-size: 0.8rem; color: #D97706; font-weight: 700;">⏳ ค้างไว้ 1 วัน</span>
+                            </td>
+                            <td>
+                                <form method="POST" action="admin.php?tab=abandoned">
+                                    <input type="hidden" name="action" value="send_recovery_email">
+                                    <input type="hidden" name="cart_email" value="thanawat.meow@gmail.com">
+                                    <input type="hidden" name="cart_cat" value="Persian Classic">
+                                    <button type="submit" class="btn btn-primary btn-sm" style="font-size: 0.8rem; padding: 6px 14px; font-weight: 700; border-radius: 8px;">
+                                        📧 ส่งอีเมลตามตะกร้า (Recovery)
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div style="font-weight: 700; color: var(--text-main);">คุณกัญญารัตน์</div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">📧 kanyarat.t@hotmail.com</div>
+                                <span style="font-size: 0.7rem; background: #F1F5F9; color: #475569; padding: 1px 6px; border-radius: 4px;">👤 ผู้เยี่ยมชม</span>
+                            </td>
+                            <td>
+                                <div style="font-weight: 700; color: var(--primary-coral);">🐱 น้องพุดดิ้ง (Scottish Fold)</div>
+                                <div style="font-size: 0.78rem; color: var(--text-muted);">หูพับ หน้ากลม ตาโต</div>
+                            </td>
+                            <td>
+                                <strong style="font-family: 'Outfit'; font-size: 1.05rem; color: var(--text-main);">฿20,000</strong>
+                            </td>
+                            <td>
+                                <span style="font-size: 0.8rem; color: #D97706; font-weight: 700;">⏳ ค้างไว้ 2 วัน</span>
+                            </td>
+                            <td>
+                                <form method="POST" action="admin.php?tab=abandoned">
+                                    <input type="hidden" name="action" value="send_recovery_email">
+                                    <input type="hidden" name="cart_email" value="kanyarat.t@hotmail.com">
+                                    <input type="hidden" name="cart_cat" value="Scottish Fold">
+                                    <button type="submit" class="btn btn-primary btn-sm" style="font-size: 0.8rem; padding: 6px 14px; font-weight: 700; border-radius: 8px;">
+                                        📧 ส่งอีเมลตามตะกร้า (Recovery)
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     <?php endif; ?>
 </div>
 

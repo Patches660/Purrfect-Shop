@@ -1,4 +1,4 @@
-﻿<!-- chat_widget.php - Floating Live Chat Widget & Smart Quick Reply Bot -->
+﻿<!-- chat_widget.php - Floating Live Chat Widget with Popup Quick Menu -->
 <div id="purrfect-chat-root">
     <!-- 1. Floating Launcher Button (Fixed Bottom-Right) -->
     <button id="chat-launcher-btn" type="button" onclick="togglePurrfectChat()" title="ปรึกษาแอดมิน & แชทบอทแนะนำน้องแมว 🐾">
@@ -34,31 +34,6 @@
             <span id="chat-user-label">กำลังโหลดข้อมูลผู้ใช้...</span>
         </div>
 
-        <!-- Quick Reply Prompts Section -->
-        <div class="chat-quick-section">
-            <div class="chat-quick-title">⚡ คำถามด่วนยอดนิยม (คลิกเพื่อให้บอทแนะนำทันที):</div>
-            <div class="chat-quick-pills">
-                <button type="button" class="quick-pill" onclick="sendQuickReply(1)">
-                    🐱 1. น้องแมวยอดนิยม เลี้ยงง่าย
-                </button>
-                <button type="button" class="quick-pill" onclick="sendQuickReply(2)">
-                    🏢 2. เหมาะกับเลี้ยงในคอนโด
-                </button>
-                <button type="button" class="quick-pill" onclick="sendQuickReply(3)">
-                    🤧 3. คนเป็นภูมิแพ้ ขนไม่ร่วง
-                </button>
-                <button type="button" class="quick-pill" onclick="sendQuickReply(4)">
-                    👑 4. พันธุ์พรีเมียม ขนฟู ใบเพ็ด
-                </button>
-                <button type="button" class="quick-pill" onclick="sendQuickReply(5)">
-                    🎁 5. ดีลส่วนลด & โปรโมชั่น
-                </button>
-                <button type="button" class="quick-pill" onclick="sendQuickReply(6)">
-                    🩺 6. การรับประกันสุขภาพ 180 วัน
-                </button>
-            </div>
-        </div>
-
         <!-- Chat Messages Body -->
         <div id="chat-messages-container" class="chat-messages-container">
             <div class="chat-loading-spinner" id="chat-loading">
@@ -66,8 +41,45 @@
             </div>
         </div>
 
-        <!-- Chat Input Bar -->
+        <!-- Pop-up Quick Questions Menu Overlay (Toggled by "⚡ คำถาม" button) -->
+        <div id="chat-quick-menu-popup" class="chat-quick-popup-hidden">
+            <div class="chat-quick-popup-header">
+                <span>⚡ เลือกคำถามด่วน (บอทแนะนำทันที)</span>
+                <button type="button" class="quick-popup-close-btn" onclick="toggleQuickMenuPopup()">✕</button>
+            </div>
+            <div class="chat-quick-popup-grid">
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(1)">
+                    <span class="popup-item-icon">🐱</span>
+                    <span class="popup-item-text">1. น้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(2)">
+                    <span class="popup-item-icon">🏢</span>
+                    <span class="popup-item-text">2. เหมาะกับเลี้ยงในคอนโด / รักความสงบ</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(3)">
+                    <span class="popup-item-icon">🤧</span>
+                    <span class="popup-item-text">3. คนเป็นภูมิแพ้ ขนไม่ร่วง / ผลัดขน 0%</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(4)">
+                    <span class="popup-item-icon">👑</span>
+                    <span class="popup-item-text">4. สายพันธุ์พรีเมียม ขนฟู มีใบเพ็ดดีกรี</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(5)">
+                    <span class="popup-item-icon">🎁</span>
+                    <span class="popup-item-text">5. โปรโมชั่น & ดีลส่วนลดสมาชิกใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(6)">
+                    <span class="popup-item-icon">🩺</span>
+                    <span class="popup-item-text">6. การรับประกันสุขภาพ 180 วัน & ขนส่ง</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Input Bar (With ⚡ คำถาม button beside input) -->
         <form id="chat-input-form" onsubmit="handleSendChatMessage(event)" class="chat-input-form">
+            <button type="button" id="chat-quick-trigger-btn" class="chat-quick-trigger-btn" onclick="toggleQuickMenuPopup()" title="คลิกเพื่อเปิดคำถามด่วน 6 ข้อ">
+                <span>⚡ คำถาม</span>
+            </button>
             <input type="text" id="chat-input-text" placeholder="พิมพ์ข้อความคุยกับแอดมิน..." autocomplete="off" maxlength="500">
             <button type="submit" id="chat-send-btn" class="chat-send-btn" title="ส่งข้อความ">
                 <span>➤</span>
@@ -79,6 +91,7 @@
 <script>
 (function() {
     let chatIsOpen = false;
+    let quickPopupIsOpen = false;
     let lastMessageCount = 0;
     let pollInterval = null;
     let currentUserId = '';
@@ -102,7 +115,32 @@
             win.classList.remove('chat-window-visible');
             win.classList.add('chat-window-hidden');
             launcher.classList.remove('launcher-active');
+            closeQuickMenuPopup();
         }
+    };
+
+    window.toggleQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = !quickPopupIsOpen;
+        if (quickPopupIsOpen) {
+            popup.classList.remove('chat-quick-popup-hidden');
+            popup.classList.add('chat-quick-popup-visible');
+        } else {
+            popup.classList.remove('chat-quick-popup-visible');
+            popup.classList.add('chat-quick-popup-hidden');
+        }
+    };
+
+    window.closeQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = false;
+        popup.classList.remove('chat-quick-popup-visible');
+        popup.classList.add('chat-quick-popup-hidden');
+    };
+
+    window.sendQuickReplyFromPopup = function(option) {
+        closeQuickMenuPopup();
+        sendQuickReply(option);
     };
 
     window.loadChatMessages = function(forceScroll = false) {
@@ -117,7 +155,7 @@
                     // Update user strip
                     const strip = document.getElementById('chat-user-label');
                     if (u.is_member) {
-                        strip.innerHTML = `👤 สนทนาในนามสมาชิก: <strong>${escapeHtml(u.name)}</strong> (สิทธิ์ส่วนลด 5% 🐾)`;
+                        strip.innerHTML = `👤 สนทนาในนามสมาชิก: <strong>${escapeHtml(u.name)}</strong> (ส่วนลด 5% 🐾)`;
                     } else {
                         strip.innerHTML = `👤 สนทนาในนาม: <strong>${escapeHtml(u.name)}</strong> • <a href="login.php" style="color:var(--primary-coral); text-decoration:underline;">เข้าสู่ระบบ</a> เพื่อสะสมแต้ม`;
                     }
@@ -188,10 +226,6 @@
     }
 
     window.sendQuickReply = function(option) {
-        const btn = event.currentTarget;
-        btn.classList.add('pill-clicked');
-        setTimeout(() => btn.classList.remove('pill-clicked'), 600);
-
         const formData = new FormData();
         formData.append('action', 'quick_reply');
         formData.append('option', option);

@@ -208,10 +208,18 @@ require_once __DIR__ . '/header.php';
             📦 ประวัติการสั่งซื้อ & แมวที่ชำระแล้ว (<?php echo count($user_orders); ?>)
         </button>
         <button type="button" 
+                class="cat-filter-btn <?php echo $active_tab === 'points' ? 'active' : ''; ?>" 
+                onclick="switchProfileTab('points', this)">
+            🎁 สะสมแต้ม Paw Points & Tiers
+        </button>
+        <button type="button" 
                 class="cat-filter-btn <?php echo $active_tab === 'inbox' ? 'active' : ''; ?>" 
                 onclick="switchProfileTab('inbox', this)">
             📬 กล่องจดหมาย & ข่าวสารร้านค้า (<?php echo count($user_messages); ?>)
         </button>
+        <a href="tracking.php" class="cat-filter-btn" style="text-decoration: none; color: var(--primary-coral); border-color: var(--primary-coral);">
+            📍 ติดตามการจัดส่งสด
+        </a>
         <?php if (isAdmin()): ?>
             <a href="admin.php" class="cat-filter-btn" style="background: #1E293B; color: #FBBF24; border-color: #F59E0B; text-decoration: none;" title="เปิดหน้าจัดการระบบ">
                 🛠️ จัดการระบบ (Admin Panel) &rarr;
@@ -436,12 +444,20 @@ require_once __DIR__ . '/header.php';
                                     </span>
                                 </div>
                                 <div>
-                                    <a href="order_letter.php?id=<?php echo urlencode($order['order_id']); ?>" target="_blank" 
-                                       class="btn btn-secondary btn-sm" 
-                                       style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 700; color: #92400E; background: #FEF3C7; border-color: #FCD34D; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;" 
-                                       title="เปิดดูจดหมายตอบรับและใบรับประกันอย่างเป็นทางการ">
-                                        📜 จดหมายตอบรับ
-                                    </a>
+                                    <div style="display: flex; gap: 6px;">
+                                        <a href="tracking.php?track=<?php echo urlencode($order['tracking_id'] ?? $order['order_id']); ?>" 
+                                           class="btn btn-primary btn-sm" 
+                                           style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;" 
+                                           title="ติดตามสถานะการส่งมอบสัตว์เลี้ยงแบบเรียลไทม์">
+                                            📍 ติดตามส่งมอบ
+                                        </a>
+                                        <a href="order_letter.php?id=<?php echo urlencode($order['order_id']); ?>" target="_blank" 
+                                           class="btn btn-secondary btn-sm" 
+                                           style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 700; color: #92400E; background: #FEF3C7; border-color: #FCD34D; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;" 
+                                           title="เปิดดูจดหมายตอบรับและใบรับประกันอย่างเป็นทางการ">
+                                            📜 จดหมายตอบรับ
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
 
@@ -478,15 +494,11 @@ require_once __DIR__ . '/header.php';
                                         <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">
                                             <?php echo $order['payment_channel']; ?>
                                         </span>
-                                        <div style="font-size: 0.78rem; color: var(--text-muted);">
-                                            <?php echo htmlspecialchars($order['payment_details'] ?? ''); ?>
-                                        </div>
                                     </div>
-
                                     <div style="text-align: right;">
-                                        <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">จำนวนเงินที่ชำระแล้วสุทธิ:</span>
-                                        <span style="font-size: 1.4rem; font-weight: 800; color: var(--primary-coral); font-family: 'Outfit';">
-                                            <?php echo number_format($order['total'], 2); ?> ฿
+                                        <span style="font-size: 0.82rem; color: var(--text-muted);">ยอดรวมสุทธิ:</span>
+                                        <span style="font-size: 1.3rem; font-weight: 800; color: var(--primary-coral); font-family: 'Outfit'; display: block;">
+                                            <?php echo number_format($order['total']); ?> ฿
                                         </span>
                                     </div>
                                 </div>
@@ -495,6 +507,78 @@ require_once __DIR__ . '/header.php';
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         TAB 4: สะสมแต้ม Paw Points & ระดับสมาชิก (Loyalty & Tiers)
+         ========================================================= -->
+    <div id="tab-points" class="profile-tab-panel" style="<?php echo $active_tab === 'points' ? 'display: block;' : 'display: none;'; ?>">
+        <div class="checkout-block">
+            <h3 class="checkout-block-title" style="margin-bottom: 1.4rem;">
+                <span>🎁 ระบบสะสมแต้ม Paw Points & ระดับสมาชิก (Loyalty Tiers)</span>
+            </h3>
+
+            <!-- Points Card -->
+            <div style="background: linear-gradient(135deg, #FF6B4A 0%, #FF8E72 50%, #FFA885 100%); color: #FFFFFF; border-radius: var(--radius-lg); padding: 2.2rem; box-shadow: 0 10px 25px rgba(255,107,74,0.35); margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <span style="font-size: 0.85rem; font-weight: 700; background: rgba(255,255,255,0.25); padding: 4px 12px; border-radius: 999px;">🐾 PURRFECT REWARDS CLUB</span>
+                        <h2 style="font-size: 2.4rem; font-weight: 800; margin: 0.6rem 0 0.2rem 0; font-family: 'Outfit';">
+                            <?php echo number_format($currUser['paw_points'] ?? 150); ?> <span style="font-size: 1.2rem; font-weight: 600;">Paw Points</span>
+                        </h2>
+                        <p style="margin: 0; font-size: 0.9rem; opacity: 0.95;">
+                            ทุกๆ ยอดสั่งซื้อ 100 บาท = 1 Paw Point • 100 พอยท์ แลกส่วนลดได้ 100 บาท
+                        </p>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="font-size: 0.8rem; opacity: 0.9; display: block;">ระดับสมาชิกปัจจุบัน:</span>
+                        <div style="background: #FFFFFF; color: #B45309; padding: 6px 16px; border-radius: 999px; font-weight: 800; font-size: 1rem; margin-top: 4px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                            🥉 Bronze Paw (ลด 5%)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tiers Grid -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-bottom: 2rem;">
+                <!-- Bronze -->
+                <div style="background: var(--bg-card); border: 2px solid #E2E8F0; border-radius: var(--radius-md); padding: 1.4rem;">
+                    <span style="font-size: 2rem; display: block; margin-bottom: 6px;">🥉</span>
+                    <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--text-main); margin: 0 0 4px 0;">Bronze Paw</h4>
+                    <span style="font-size: 0.78rem; color: var(--text-muted);">สำหรับสมาชิกทุกคน</span>
+                    <ul style="margin: 1rem 0 0 0; padding-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;">
+                        <li>✓ ส่วนลด 5% ทุกรายการ</li>
+                        <li>✓ รับข่าวสาร & ดีลลับก่อนใคร</li>
+                        <li>✓ สะสมแต้มทุกการจอง</li>
+                    </ul>
+                </div>
+
+                <!-- Silver -->
+                <div style="background: #FFFBF5; border: 2px solid #F59E0B; border-radius: var(--radius-md); padding: 1.4rem; position: relative;">
+                    <span style="position: absolute; top: 12px; right: 12px; background: #F59E0B; color: #FFF; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">เป้าหมายถัดไป</span>
+                    <span style="font-size: 2rem; display: block; margin-bottom: 6px;">🥈</span>
+                    <h4 style="font-size: 1.1rem; font-weight: 800; color: #92400E; margin: 0 0 4px 0;">Silver Paw</h4>
+                    <span style="font-size: 0.78rem; color: var(--text-muted);">ยอดสะสมครบ 20,000 บาท</span>
+                    <ul style="margin: 1rem 0 0 0; padding-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;">
+                        <li>✓ ส่วนลด 7% ทุกรายการ</li>
+                        <li>✓ <strong>ฟรี! ค่าจัดส่ง Pet Taxi ทั่วไทย</strong></li>
+                        <li>✓ แต้มคูณ 1.2 เท่า</li>
+                    </ul>
+                </div>
+
+                <!-- Gold VIP -->
+                <div style="background: #FFF7ED; border: 2px solid #EA580C; border-radius: var(--radius-md); padding: 1.4rem;">
+                    <span style="font-size: 2rem; display: block; margin-bottom: 6px;">🥇</span>
+                    <h4 style="font-size: 1.1rem; font-weight: 800; color: #C2410C; margin: 0 0 4px 0;">Gold Paw VIP</h4>
+                    <span style="font-size: 0.78rem; color: var(--text-muted);">ยอดสะสมครบ 50,000 บาท</span>
+                    <ul style="margin: 1rem 0 0 0; padding-left: 1.2rem; font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7;">
+                        <li>✓ <strong>ส่วนลด 10% ตลอดชีพ</strong></li>
+                        <li>✓ ฟรี! บริการตรวจสุขภาพประจำปี 1 ปี</li>
+                        <li>✓ สายด่วนสัตวแพทย์ส่วนตัว 24 ชม.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 

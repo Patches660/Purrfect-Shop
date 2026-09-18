@@ -17,6 +17,33 @@ $logged_user = getCurrentUser();
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+    <!-- Google Analytics 4 (GA4) Simulation Script -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PURRFECTCAT88"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PURRFECTCAT88', {
+            'page_title': document.title,
+            'transport_type': 'beacon'
+        });
+    </script>
+
+    <!-- Meta Pixel (Facebook Pixel) Simulation Script -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '123456789012345');
+        fbq('track', 'PageView');
+    </script>
+
     <script>
         (function() {
             try {
@@ -49,16 +76,19 @@ $logged_user = getCurrentUser();
                         </a>
                     <?php endif; ?>
 
-                    <!-- User Account / Profile Badge -->
+                    <!-- User Account / Profile Badge & Paw Points -->
                     <?php if ($logged_user): ?>
                         <div style="display: inline-flex; align-items: center; gap: 0.6rem;">
+                            <!-- Loyalty Points Badge -->
+                            <span class="top-badge-pill" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-weight: 800;" title="Paw Points สะสมของคุณ">
+                                🐾 <?php echo number_format($logged_user['paw_points'] ?? 150); ?> พอยท์
+                            </span>
                             <a href="subscribe.php" class="btn btn-sm <?php echo $current_page == 'subscribe.php' ? 'active' : ''; ?>" style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="รับข้อมูลข่าวสารและโปรโมชัน">
-                                📬 รับข้อมูลข่าวสาร
+                                📬 ข่าวสาร
                             </a>
-                            <a href="profile.php" class="user-badge <?php echo $current_page == 'profile.php' ? 'active' : ''; ?>" title="คลิกเพื่อจัดการโปรไฟล์ ข้อมูลชำระเงิน และประวัติคำสั่งซื้อ">
+                            <a href="profile.php" class="user-badge <?php echo $current_page == 'profile.php' ? 'active' : ''; ?>" title="คลิกเพื่อจัดการโปรไฟล์และประวัติคำสั่งซื้อ">
                                 <img src="<?php echo htmlspecialchars($logged_user['avatar'] ?? 'assets/images/logo.png'); ?>" alt="Avatar" class="user-avatar-sm" style="width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--primary-coral);">
                                 <span>คุณ<?php echo htmlspecialchars($logged_user['username']); ?></span>
-                                <span class="discount-pill">ลด 5%</span>
                             </a>
                         </div>
                     <?php else: ?>
@@ -79,14 +109,14 @@ $logged_user = getCurrentUser();
             </div>
         </div>
 
-        <!-- 2. Main Navigation Bar: Brand Logo, Page Links & Shopping Cart -->
+        <!-- 2. Main Branding & Primary Navigation Bar -->
         <div class="main-nav-bar">
             <div class="nav-container">
-                <a href="index.php" class="logo">
+                <a href="index.php" class="site-logo">
                     <img src="assets/images/logo.png" alt="Purrfect Shop Logo" class="logo-img">
-                    <div class="logo-title-group">
-                        <span class="logo-text">Purrfect Shop 🐾</span>
-                        <span class="logo-tagline">เพราะทุกบ้านควรมีเจ้าเหมียว</span>
+                    <div class="logo-text">
+                        <span class="logo-title">Purrfect Shop</span>
+                        <span class="logo-subtitle">Cattery & Boutique</span>
                     </div>
                 </a>
                 
@@ -111,6 +141,11 @@ $logged_user = getCurrentUser();
                             <a href="welcome_deal.php" class="nav-link <?php echo $current_page == 'welcome_deal.php' ? 'active' : ''; ?>" style="position: relative;">
                                 🎁 ดีลสมาชิกใหม่
                                 <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tracking.php" class="nav-link <?php echo $current_page == 'tracking.php' ? 'active' : ''; ?>">
+                                📍 ติดตามการจัดส่ง
                             </a>
                         </li>
                         <?php if (isAdmin()): ?>

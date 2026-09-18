@@ -124,10 +124,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $invoice_vat = round($after_discount * 0.07, 2);
             $invoice_total = $after_discount + $invoice_vat;
             $invoice_id = 'PFC-' . date('ymd') . '-' . strtoupper(substr(md5(uniqid()), 0, 4));
+            $tracking_id = 'TRACK-TH-' . date('ym') . '-' . strtoupper(substr(md5(uniqid()), 0, 5));
+            $shipping_method = trim($_POST['shipping_method'] ?? 'pet_taxi');
+            $paw_points_earned = floor($invoice_total / 100);
 
             // Save Order to JSON
             $newOrder = [
                 'order_id' => $invoice_id,
+                'invoice_id' => $invoice_id,
+                'tracking_id' => $tracking_id,
+                'tracking_status' => 'vet_check',
+                'shipping_method' => $shipping_method,
                 'user_id' => $currUser ? $currUser['id'] : 'guest',
                 'username' => $currUser ? $currUser['username'] : 'guest',
                 'customer_name' => $customer_name,
@@ -142,9 +149,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 'discount' => $invoice_discount,
                 'vat' => $invoice_vat,
                 'total' => $invoice_total,
+                'paw_points_earned' => $paw_points_earned,
                 'payment_channel' => $paid_channel,
                 'payment_details' => $paid_details,
-                'status' => 'ชำระเงินแล้ว / กำลังเตรียมส่งมอบ (Paid & Preparing)',
+                'status' => 'ชำระเงินแล้ว / ตรวจสุขภาพก่อนส่งมอบ (Paid & Vet Check)',
                 'created_at' => date('Y-m-d H:i:s')
             ];
             saveOrder($newOrder);
@@ -206,18 +214,24 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                 ✓ ได้รับการรับรองสุขภาพและสายพันธุ์แท้ 100%
             </div>
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.8rem; text-align: left; background: var(--bg-card-subtle); padding: 1.2rem 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); font-size: 0.88rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1.8rem; text-align: left; background: var(--bg-card-subtle); padding: 1.2rem 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-color); font-size: 0.88rem;">
                 <div>
                     <span style="color: var(--text-muted); font-size: 0.78rem; display: block;">รหัสคำสั่งจอง:</span>
-                    <strong style="font-family: 'Outfit', sans-serif; font-size: 1.1rem; color: var(--primary-coral);"><?php echo $invoice_id; ?></strong>
+                    <strong style="font-family: 'Outfit', sans-serif; font-size: 1.05rem; color: var(--primary-coral);"><?php echo $invoice_id; ?></strong>
                 </div>
                 <div>
-                    <span style="color: var(--text-muted); font-size: 0.78rem; display: block;">วันที่ทำรายการ:</span>
-                    <strong><?php echo date('d/m/Y H:i'); ?> น.</strong>
+                    <span style="color: var(--text-muted); font-size: 0.78rem; display: block;">หมายเลข Tracking พัสดุ:</span>
+                    <strong style="font-family: 'Outfit', sans-serif; font-size: 1.05rem; color: #047857;"><?php echo $tracking_id; ?></strong>
                 </div>
                 <div>
-                    <span style="color: var(--text-muted); font-size: 0.78rem; display: block;">สถานะการจอง:</span>
-                    <span style="color: var(--accent-mint); font-weight: 700;">● ได้รับการยืนยัน (Confirmed)</span>
+                    <span style="color: var(--text-muted); font-size: 0.78rem; display: block;">Paw Points ที่ได้รับ:</span>
+                    <strong style="color: #B45309; font-size: 1rem;">🐾 +<?php echo number_format($paw_points_earned); ?> พอยท์</strong>
+                </div>
+                <div>
+                    <span style="color: var(--text-muted); font-size: 0.78rem; display: block;">สถานะการส่งมอบ:</span>
+                    <a href="tracking.php?track=<?php echo urlencode($tracking_id); ?>" class="btn btn-primary btn-sm" style="padding: 4px 12px; font-size: 0.78rem; border-radius: 999px; font-weight: 700; margin-top: 2px;">
+                        📍 ติดตามการจัดส่งสด
+                    </a>
                 </div>
             </div>
         </div>
@@ -452,6 +466,41 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                             <input type="email" name="customer_email" id="customer_email" class="form-control" 
                                    placeholder="เช่น yourname@example.com" 
                                    value="<?php echo htmlspecialchars($default_email); ?>">
+                        </div>
+
+                        <!-- Specialized Pet Delivery Options -->
+                        <div class="form-group" style="margin-bottom: 1.2rem;">
+                            <label style="font-size: 0.88rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem; display: block;">
+                                🚐 เลือกรูปแบบการจัดส่งสัตว์เลี้ยงเฉพาะทาง (Specialized Pet Delivery) *
+                            </label>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.8rem;">
+                                <label style="border: 1.5px solid var(--primary-coral); background: #FFF7F3; border-radius: 10px; padding: 10px; cursor: pointer; display: flex; align-items: flex-start; gap: 8px;">
+                                    <input type="radio" name="shipping_method" value="pet_taxi" checked style="margin-top: 3px; accent-color: var(--primary-coral);">
+                                    <div>
+                                        <strong style="font-size: 0.88rem; color: var(--text-main); display: block;">🚐 รถตู้ Pet Taxi ปรับอากาศ</strong>
+                                        <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">คุมอุณหภูมิ 24-26°C + พี่เลี้ยงดูแล</span>
+                                        <span style="font-size: 0.75rem; color: #047857; font-weight: 700;">ฟรี (โปรโมชั่นฟาร์ม)</span>
+                                    </div>
+                                </label>
+
+                                <label style="border: 1.5px solid var(--border-color); background: var(--bg-card); border-radius: 10px; padding: 10px; cursor: pointer; display: flex; align-items: flex-start; gap: 8px;">
+                                    <input type="radio" name="shipping_method" value="air_cargo" style="margin-top: 3px; accent-color: var(--primary-coral);">
+                                    <div>
+                                        <strong style="font-size: 0.88rem; color: var(--text-main); display: block;">✈️ เครื่องบิน Pet Air Cargo</strong>
+                                        <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">มาตรฐาน IATA สำหรับต่างจังหวัด</span>
+                                        <span style="font-size: 0.75rem; color: #B45309; font-weight: 700;">+฿1,200</span>
+                                    </div>
+                                </label>
+
+                                <label style="border: 1.5px solid var(--border-color); background: var(--bg-card); border-radius: 10px; padding: 10px; cursor: pointer; display: flex; align-items: flex-start; gap: 8px;">
+                                    <input type="radio" name="shipping_method" value="farm_pickup" style="margin-top: 3px; accent-color: var(--primary-coral);">
+                                    <div>
+                                        <strong style="font-size: 0.88rem; color: var(--text-main); display: block;">🏡 นัดรับด้วยตนเองที่ฟาร์ม</strong>
+                                        <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Meet & Greet รับคำแนะนำฟรี</span>
+                                        <span style="font-size: 0.75rem; color: #047857; font-weight: 700;">ฟรี (กิฟต์เซ็ตพิเศษ)</span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
 
                         <div class="form-group">
