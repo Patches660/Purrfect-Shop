@@ -1,252 +1,1452 @@
+
+Warning: Undefined array key "REQUEST_METHOD" in C:\Users\Windows\Downloads\ALL WORK\ALL WORK\W\2567\Semester 4\WorkShop\CatCyberShop\cart.php on line 58
 <!DOCTYPE html>
 <html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ตะกร้าการรับเลี้ยงน้องแมว — Purrfect Shop 🐾</title>
+    <title>Purrfect Shop - เพราะทุกบ้านควรมีเจ้าเหมียว 🐾</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+    <!-- Google Analytics 4 (GA4) Simulation Script -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PURRFECTCAT88"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PURRFECTCAT88', {
+            'page_title': document.title,
+            'transport_type': 'beacon'
+        });
+    </script>
+
+    <!-- Meta Pixel (Facebook Pixel) Simulation Script -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '123456789012345');
+        fbq('track', 'PageView');
+    </script>
+
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('cat_shop_theme') || 'warm';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch(e) {}
+        })();
+    </script>
 </head>
 <body>
     <header class="site-header">
+        <!-- 1. Top Utility Bar: Announcements, Theme Switcher, Admin Console & User Profile -->
         <div class="top-utility-bar">
             <div class="top-utility-container">
                 <div class="top-utility-left">
                     <span class="top-badge-pill">🐾 Purrfect Cattery & Boutique</span>
                     <span class="top-utility-tagline">ฟาร์มเพาะพันธุ์น้องแมวสายพันธุ์แท้มาตรฐานสากล • การันตีสุขภาพ 180 วัน</span>
                 </div>
+                
                 <div class="top-utility-right">
-                    <a href="subscribe.html" class="btn btn-sm" style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none;">
-                        📬 รับข้อมูลข่าวสาร
-                    </a>
-                    <a href="login.html" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.85rem; font-size: 0.82rem;">เข้าสู่ระบบ 🔑</a>
-                    <a href="register.html" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.9rem; font-size: 0.82rem;">สมัครสมาชิก ✨</a>
-                </div>
+                    <!-- Theme Loop Switcher Button -->
+                    <button type="button" class="theme-loop-btn" onclick="cycleTheme()" title="กดเพื่อสลับสีพื้นหลังแบบวนลูป (Loop)">
+                        🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
+                    </button>
+
+                    <!-- Admin Console Shortcut (Only visible for Admins) -->
+                    
+                    <!-- User Account / Profile Badge & Paw Points -->
+                                            <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                            <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
+                            <a href="subscribe.html" class="btn btn-sm " style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="รับข้อมูลข่าวสารโดยยังไม่ต้องสมัครสมาชิก">
+                                📬 รับข้อมูลข่าวสาร
+                            </a>
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.85rem; font-size: 0.82rem;">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.9rem; font-size: 0.82rem;">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                                    </div>
             </div>
         </div>
 
+        <!-- 2. Main Branding & Primary Navigation Bar -->
         <div class="main-nav-bar">
             <div class="nav-container">
-                <a href="index.html" class="logo">
+                <a href="index.html" class="site-logo">
                     <img src="assets/images/logo.png" alt="Purrfect Shop Logo" class="logo-img">
-                    <div class="logo-title-group">
-                        <span class="logo-text">Purrfect Shop 🐾</span>
-                        <span class="logo-tagline">เพราะทุกบ้านควรมีเจ้าเหมียว</span>
+                    <div class="logo-text">
+                        <span class="logo-title">Purrfect Shop</span>
+                        <span class="logo-subtitle">Cattery & Boutique</span>
                     </div>
                 </a>
+
+                <!-- 3-Line Hamburger Menu Button (Mobile & Tablet) -->
+                <button type="button" class="mobile-menu-toggle-btn" id="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="เปิดเมนูการนำทางและหมวดหมู่" title="เปิดเมนู ☰">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+                
                 <nav>
                     <ul class="nav-menu">
-                        <li><a href="index.html" class="nav-link">🏠 หน้าแรก</a></li>
-                        <li><a href="products.html" class="nav-link">🐱 น้องแมวทั้งหมด</a></li>
-                        <li><a href="recommend.html" class="nav-link">🌟 แนะนำสำหรับคุณ</a></li>
-                        <li><a href="welcome_deal.html" class="nav-link">🎁 ดีลสมาชิกใหม่ <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; margin-left: 2px;">HOT</span></a></li>
-                        <li><a href="creator.html" class="nav-link">👨‍💻 ผู้จัดทำ</a></li>
-                        <li class="cart-badge-container"><a href="cart.html" class="nav-link nav-cart-btn active">🛒 ตะกร้า <span class="cart-count">2</span></a></li>
+                        <li>
+                            <a href="index.html" class="nav-link ">
+                                🏠 หน้าแรก
+                            </a>
+                        </li>
+                        <li>
+                            <a href="products.html" class="nav-link ">
+                                🐱 น้องแมวทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="recommend.html" class="nav-link ">
+                                🌟 แนะนำสำหรับคุณ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="welcome_deal.html" class="nav-link " style="position: relative;">
+                                🎁 ดีลสมาชิกใหม่
+                                <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tracking.html" class="nav-link ">
+                                📍 ติดตามการจัดส่ง
+                            </a>
+                        </li>
+                        <li>
+                            <a href="creator.html" class="nav-link ">
+                                👨‍💻 ผู้จัดทำ
+                            </a>
+                        </li>
+                        <li class="cart-badge-container">
+                            <a href="cart.html" class="nav-link nav-cart-btn active">
+                                🛒 ตะกร้า
+                                                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
 
-    <main class="container" style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
-        <!-- Stepper -->
-        <div class="checkout-stepper" style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap;">
-            <div class="step-item active" style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary-coral);">
-                <span style="background: var(--primary-coral); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">1</span>
-                <span>เลือกน้องแมว</span>
+    <!-- =========================================================
+         MOBILE NAVIGATION DRAWER (OFF-CANVAS SLIDING MENU)
+         ========================================================= -->
+    <!-- Drawer Backdrop -->
+    <div id="mobile-drawer-backdrop" class="mobile-drawer-backdrop" onclick="closeMobileDrawer()"></div>
+
+    <!-- Mobile Drawer Content -->
+    <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="เมนูหลักสำหรับมือถือ">
+        <div class="drawer-header">
+            <div class="drawer-branding">
+                <img src="assets/images/logo.png" alt="Logo" class="drawer-logo-img">
+                <div>
+                    <strong class="drawer-title">Purrfect Shop</strong>
+                    <span class="drawer-subtitle">เมนูด่วน & หมวดหมู่บริการ</span>
+                </div>
             </div>
-            <span style="color: var(--border-color);">→</span>
-            <div class="step-item" style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text-muted);">
-                <span style="background: var(--border-color); color: var(--text-main); width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">2</span>
-                <span>ข้อมูลจัดส่ง & ชำระเงิน</span>
-            </div>
-            <span style="color: var(--border-color);">→</span>
-            <div class="step-item" style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text-muted);">
-                <span style="background: var(--border-color); color: var(--text-main); width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">3</span>
-                <span>ใบเสร็จ & ใบรับรอง</span>
-            </div>
+            <button type="button" class="drawer-close-btn" onclick="closeMobileDrawer()" aria-label="ปิดเมนู">✕</button>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: start;">
-            <!-- Cart Items Column -->
-            <div>
-                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; border-bottom: 1.5px solid var(--border-color); padding-bottom: 0.8rem;">
-                        <h2 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-main);">
-                            🐾 รายการน้องแมวในตะกร้า (2 ตัว)
-                        </h2>
-                        <span style="font-size: 0.85rem; color: var(--text-muted);">✨ รับประกันสุขภาพและสายพันธุ์ 100%</span>
-                    </div>
-
-                    <!-- Item 1 -->
-                    <div style="display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px dashed var(--border-color); align-items: center; flex-wrap: wrap;">
-                        <img src="assets/images/cat_british.jpg" alt="British Shorthair" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover; border: 1.5px solid var(--border-color);">
-                        <div style="flex: 1; min-width: 200px;">
-                            <h4 style="margin: 0 0 4px; font-size: 1.05rem; color: var(--text-main); font-weight: 800;">
-                                น้องสโนว์ (British Shorthair)
-                            </h4>
-                            <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
-                                สายพันธุ์: บริติช ช็อตแฮร์ &bull; เพศ: ผู้ &bull; อายุ: 2.5 เดือน<br>
-                                <span style="color: #059669;">✓ ฉีดวัคซีนครบ 2 เข็ม + มีใบเพ็ดดีกรี WCF</span>
-                            </div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 1.15rem; font-weight: 800; color: var(--primary-coral);">18,000 ฿</div>
-                            <span style="font-size: 0.78rem; color: var(--text-muted);">จำนวน: 1 ตัว</span>
-                        </div>
-                    </div>
-
-                    <!-- Item 2 -->
-                    <div style="display: flex; gap: 1rem; padding: 1rem 0; align-items: center; flex-wrap: wrap;">
-                        <img src="assets/images/cat_persian.jpg" alt="Persian Classic" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover; border: 1.5px solid var(--border-color);">
-                        <div style="flex: 1; min-width: 200px;">
-                            <h4 style="margin: 0 0 4px; font-size: 1.05rem; color: var(--text-main); font-weight: 800;">
-                                น้องปุยหิมะ (Persian Classic)
-                            </h4>
-                            <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
-                                สายพันธุ์: เปอร์เซียขนยาว &bull; เพศ: เมีย &bull; อายุ: 3 เดือน<br>
-                                <span style="color: #059669;">✓ ฉีดวัคซีนครบ 2 เข็ม + มีใบเพ็ดดีกรี CFA</span>
-                            </div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 1.15rem; font-weight: 800; color: var(--primary-coral);">16,500 ฿</div>
-                            <span style="font-size: 0.78rem; color: var(--text-muted);">จำนวน: 1 ตัว</span>
-                        </div>
-                    </div>
+        <div class="drawer-body">
+            <!-- หมวดที่ 1: บัญชีผู้ใช้ & การตั้งค่า -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>⚙️ หมวดที่ 1: บัญชีผู้ใช้ & การตั้งค่า</span>
                 </div>
-
-                <!-- Shipping & Payment Form Mockup -->
-                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm);">
-                    <h3 style="margin: 0 0 1rem; font-size: 1.15rem; font-weight: 800; color: var(--text-main);">
-                        📍 ข้อมูลผู้รับเลี้ยงและช่องทางชำระเงิน
-                    </h3>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                        <div>
-                            <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">ชื่อ-นามสกุล:</label>
-                            <input type="text" value="คุณลูกค้าผู้รักน้องแมว" class="form-control" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-page);">
-                        </div>
-                        <div>
-                            <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">เบอร์โทรศัพท์ติดต่อ:</label>
-                            <input type="text" value="081-234-5678" class="form-control" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-page);">
-                        </div>
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">อีเมลรับใบเสร็จและใบเพ็ดดีกรี:</label>
-                        <input type="email" value="customer@example.com" class="form-control" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-page);">
-                    </div>
-                    <div style="margin-bottom: 1rem;">
-                        <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">ที่อยู่จัดส่ง / นัดหมายรับน้องแมว:</label>
-                        <textarea class="form-control" rows="2" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-page);">99/99 หมู่บ้านพรีเมียม ซอยอารีย์ ถนนพหลโยธิน แขวงสามเสนใน เขตพญาไท กรุงเทพฯ 10400</textarea>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Order Summary Column -->
-            <div>
-                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm); position: sticky; top: 90px;">
-                    <h3 style="margin: 0 0 1.2rem; font-size: 1.15rem; font-weight: 800; color: var(--text-main); border-bottom: 1.5px solid var(--border-color); padding-bottom: 0.6rem;">
-                        🧾 สรุปยอดการสั่งซื้อ
-                    </h3>
-                    
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.92rem; color: var(--text-muted);">
-                        <span>ยอดรวมน้องแมว (2 ตัว):</span>
-                        <span style="font-weight: 700; color: var(--text-main);">34,500 ฿</span>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.92rem; color: #059669;">
-                        <span>ส่วนลดสมาชิก VIP (5%):</span>
-                        <span style="font-weight: 700;">- 1,725 ฿</span>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.92rem; color: var(--text-muted);">
-                        <span>ภาษีมูลค่าเพิ่ม (VAT 7%):</span>
-                        <span>2,294.25 ฿</span>
-                    </div>
-
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.92rem; color: var(--text-muted);">
-                        <span>ค่าบริการจัดส่งพิเศษพร้อมพี่เลี้ยง:</span>
-                        <span style="color: #059669; font-weight: 700;">ฟรี (โปรโมชั่น)</span>
-                    </div>
-
-                    <hr style="border: 0; border-top: 1.5px dashed var(--border-color); margin: 1rem 0;">
-
-                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5rem;">
-                        <span style="font-size: 1.1rem; font-weight: 800; color: var(--text-main);">ยอดชำระสุทธิ:</span>
-                        <span style="font-size: 1.6rem; font-weight: 900; color: var(--primary-coral);">35,069.25 ฿</span>
-                    </div>
-
-                    <!-- Coupon Code Input -->
-                    <div style="display: flex; gap: 8px; margin-bottom: 1.2rem;">
-                        <input type="text" value="WELCOME15" placeholder="ใส่โค้ดส่วนลด" style="flex: 1; padding: 8px 12px; border-radius: 8px; border: 1.5px solid #FDBA74; background: #FFF7ED; font-weight: 700; font-size: 0.88rem; color: #EA580C;">
-                        <button type="button" class="btn btn-secondary" onclick="alert('ใช้โค้ดส่วนลด WELCOME15 สำเร็จ! ลดเพิ่ม 15%');" style="padding: 8px 14px; font-size: 0.85rem; font-weight: 700;">ใช้โค้ด</button>
-                    </div>
-
-                    <!-- Checkout Button -->
-                    <button type="button" onclick="showCheckoutSuccess()" class="btn btn-primary btn-block" style="width: 100%; padding: 14px; font-size: 1.1rem; font-weight: 800; border-radius: 12px; box-shadow: var(--shadow-coral); cursor: pointer;">
-                        ✨ ยืนยันคำสั่งซื้อและรับเลี้ยง 🐾
+                <div class="drawer-grid">
+                    <!-- Theme Loop Switcher -->
+                    <button type="button" class="drawer-action-btn theme-drawer-btn" onclick="cycleTheme(); updateDrawerThemeName();" title="กดเพื่อสลับธีมสี">
+                        <span class="drawer-btn-icon">🎨</span>
+                        <span class="drawer-btn-label">ธีม: <strong id="drawer-theme-current-name">อบอุ่น คอรัล</strong></span>
+                        <span class="drawer-btn-badge">🔄 สลับสี</span>
                     </button>
 
-                    <div style="margin-top: 1rem; text-align: center; font-size: 0.78rem; color: var(--text-muted);">
-                        🔒 ข้อมูลการชำระเงินปลอดภัยด้วยการเข้ารหัส SSL 256-bit
-                    </div>
+                    <!-- User Profile / Login / Register -->
+                                            <a href="subscribe.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                            <span class="drawer-link-icon">📬</span>
+                            <div class="drawer-link-info">
+                                <span class="drawer-link-title">รับข้อมูลข่าวสาร</span>
+                                <span class="drawer-link-sub">รับสิทธิ์โปรโมชัน & ข่าวกิจกรรม</span>
+                            </div>
+                        </a>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="text-align: center; justify-content: center; font-size: 0.85rem; padding: 0.5rem;" onclick="closeMobileDrawer()">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="text-align: center; justify-content: center; font-size: 0.85rem; padding: 0.5rem;" onclick="closeMobileDrawer()">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                    
+                    <a href="index.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🏠</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">หน้าแรก (Home)</span>
+                            <span class="drawer-link-sub">ศูนย์รวมน้องแมว & โปรโมชันเด่น</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- หมวดที่ 2: เมนูหลัก & บริการร้านค้า -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>🐱 หมวดที่ 2: เมนูบริการ & เลือกชมน้องแมว</span>
+                </div>
+                <div class="drawer-grid">
+                    <a href="products.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🐱</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">น้องแมวทั้งหมด</span>
+                            <span class="drawer-link-sub">สายพันธุ์แท้ 100% พร้อมย้ายบ้าน</span>
+                        </div>
+                    </a>
+
+                    <a href="recommend.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🌟</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">แนะนำสำหรับคุณ</span>
+                            <span class="drawer-link-sub">ระบบค้นหาสายพันธุ์ตามไลฟ์สไตล์</span>
+                        </div>
+                    </a>
+
+                    <a href="welcome_deal.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🎁</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ดีลสมาชิกใหม่</span>
+                            <span class="drawer-link-sub">คูปองส่วนลดพิเศษ & Starter Kit</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FF5A5F; color: #FFFFFF; font-weight: 800;">HOT</span>
+                    </a>
+
+                    <a href="tracking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">📍</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ติดตามการจัดส่ง</span>
+                            <span class="drawer-link-sub">ระบบติดตามสถานะสด 4 ขั้นตอน</span>
+                        </div>
+                    </a>
+
+                    <a href="creator.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">👨‍💻</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ผู้จัดทำ</span>
+                            <span class="drawer-link-sub">ประวัติ & ข้อมูลโครงงาน</span>
+                        </div>
+                    </a>
+
+                    <a href="cart.html" class="drawer-link-item active" style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🛒</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
+                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
+                        </div>
+                                            </a>
                 </div>
             </div>
         </div>
-    </main>
-
-    <!-- Checkout Success Modal -->
-    <div id="successModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
-        <div style="background: white; border-radius: 24px; padding: 2.5rem; max-width: 520px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.3); animation: scaleUp 0.3s ease;">
-            <div style="font-size: 4rem; margin-bottom: 10px;">🎉🐱</div>
-            <h2 style="font-size: 1.6rem; font-weight: 900; color: #1E293B; margin: 0 0 8px;">ยืนยันคำสั่งซื้อสำเร็จ!</h2>
-            <p style="color: #64748B; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1.5rem;">
-                ขอบคุณที่รับเลี้ยงน้องแมวกับ Purrfect Shop! ระบบได้จัดเตรียมการจัดส่งและส่งอีเมลยืนยันคำสั่งซื้อพร้อมรูปภาพสินค้าไปยังอีเมลของคุณเรียบร้อยแล้ว
-            </p>
-            <div style="background: #FFF7ED; border: 1.5px solid #FDBA74; border-radius: 12px; padding: 12px; margin-bottom: 1.5rem; font-size: 0.88rem; color: #C2410C; font-weight: 700;">
-                หมายเลขคำสั่งซื้อ: PFC-260917-8899
-            </div>
-            <div style="display: flex; gap: 10px; justify-content: center;">
-                <a href="email_showcase.html" class="btn btn-primary" style="padding: 10px 20px; font-weight: 700; border-radius: 50px; text-decoration: none;">📧 ดูตัวอย่างอีเมลที่ได้รับ</a>
-                <a href="index.html" class="btn btn-secondary" style="padding: 10px 20px; font-weight: 700; border-radius: 50px; text-decoration: none;">🏠 กลับหน้าแรก</a>
-            </div>
-        </div>
-    </div>
+    </aside>
 
     <script>
-        function showCheckoutSuccess() {
-            document.getElementById('successModal').style.display = 'flex';
+    function toggleMobileDrawer() {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (!drawer || !backdrop) return;
+        
+        const isOpen = drawer.classList.contains('open');
+        if (isOpen) {
+            closeMobileDrawer();
+        } else {
+            drawer.classList.add('open');
+            backdrop.classList.add('open');
+            if (btn) btn.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            updateDrawerThemeName();
         }
+    }
+
+    function closeMobileDrawer() {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (drawer) drawer.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('open');
+        if (btn) btn.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function updateDrawerThemeName() {
+        const currentNameEl = document.getElementById('theme-current-name');
+        const drawerThemeEl = document.getElementById('drawer-theme-current-name');
+        if (currentNameEl && drawerThemeEl) {
+            drawerThemeEl.textContent = currentNameEl.textContent;
+        }
+    }
+
+    // Sync theme label on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+        updateDrawerThemeName();
+    });
     </script>
 
+    <script>
+    window.trackPurrfectBehavior = function(type, target, category) {
+        try {
+            const formData = new FormData();
+            formData.append('action', 'track');
+            formData.append('event_type', type);
+            formData.append('target', target);
+            formData.append('category', category || 'general');
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon('api_analytics.php', formData);
+            } else {
+                fetch('api_analytics.php', { method: 'POST', body: formData });
+            }
+        } catch (e) {}
+    };
+    </script>
+    <main>
+                
+<!-- Leaflet Interactive Map Picker CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<style>
+/* Shipping Option Cards Dynamic Selection Style */
+.shipping-option-card {
+    border: 2px solid var(--border-color);
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    user-select: none;
+}
+.shipping-option-card:hover {
+    border-color: var(--primary-coral);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 74, 0.15);
+}
+.shipping-option-card.active,
+.shipping-option-card:has(input[type="radio"]:checked) {
+    border-color: var(--primary-coral) !important;
+    background: #FFF7F3 !important;
+    box-shadow: 0 4px 14px rgba(255, 107, 74, 0.22) !important;
+}
+[data-theme="dark"] .shipping-option-card.active,
+[data-theme="dark"] .shipping-option-card:has(input[type="radio"]:checked) {
+    background: rgba(255, 107, 74, 0.15) !important;
+    border-color: var(--primary-coral) !important;
+}
+
+/* Location Input Mode Selection Cards (Manual vs GPS) */
+.location-mode-card {
+    border: 2px solid var(--border-color);
+    background: var(--bg-card);
+    border-radius: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+}
+.location-mode-card:hover {
+    border-color: #047857;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+.location-mode-card.active,
+.location-mode-card:has(input[type="radio"]:checked) {
+    border-color: #047857 !important;
+    background: #ECFDF5 !important;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2) !important;
+}
+[data-theme="dark"] .location-mode-card.active,
+[data-theme="dark"] .location-mode-card:has(input[type="radio"]:checked) {
+    background: rgba(16, 185, 129, 0.15) !important;
+    border-color: #10B981 !important;
+}
+</style>
+
+<!-- Stepper Indicator -->
+<div class="checkout-stepper">
+    <div class="step-item active">
+        <span class="step-number">1</span>
+        <span>เลือกน้องแมว</span>
+    </div>
+    <span class="step-arrow">→</span>
+    <div class="step-item ">
+        <span class="step-number">2</span>
+        <span>ข้อมูลจัดส่ง & ชำระเงิน</span>
+    </div>
+    <span class="step-arrow">→</span>
+    <div class="step-item ">
+        <span class="step-number">3</span>
+        <span>ใบเสร็จ & ใบรับรอง</span>
+    </div>
+</div>
+
+
+            <!-- Empty Cart -->
+        <div style="text-align: center; padding: 4rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 580px; margin: 0 auto; box-shadow: var(--shadow-sm);">
+            <div style="font-size: 4.5rem; margin-bottom: 1rem;">🧺</div>
+            <h2 style="font-size: 1.7rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem;">
+                ยังไม่มีน้องแมวในตะกร้าของคุณ
+            </h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.6;">
+                ค้นหาน้องแมวสายพันธุ์ที่ใช่เพื่อมอบความรักและความอบอุ่นให้กับบ้านของคุณ
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <a href="products.html" class="btn btn-primary btn-lg">
+                    เลือกชมน้องแมวทั้งหมด 🐾
+                </a>
+                <a href="recommend.html" class="btn btn-secondary btn-lg">
+                    ดูระบบแนะนำสายพันธุ์ 🌟
+                </a>
+            </div>
+        </div>
+    
+
+<script>
+// Switch Payment Channels Tabs
+function switchPaymentChannel(channel) {
+    // Update Radio card styles
+    const cards = document.querySelectorAll('.payment-method-card');
+    cards.forEach(c => {
+        c.classList.remove('active');
+        const radio = c.querySelector('input[type="radio"]');
+        if (radio && radio.value === channel) {
+            c.classList.add('active');
+            radio.checked = true;
+        }
+    });
+
+    // Toggle detail panels
+    const panels = ['bank_transfer', 'promptpay', 'credit_card', 'cod', 'paypal', 'paw_points'];
+    panels.forEach(p => {
+        const elem = document.getElementById('panel-' + p);
+        if (elem) {
+            elem.style.display = (p === channel) ? 'block' : 'none';
+        }
+    });
+
+    // Update required status
+    const bankAccountInput = document.getElementById('user_bank_account');
+    const isTest = document.getElementById('test_skip_account')?.checked;
+    if (bankAccountInput && !isTest) {
+        bankAccountInput.required = (channel === 'bank_transfer');
+    }
+}
+
+// Toggle TEST Mode Checkbox (ตามคำขอ)
+function toggleTestMode(isTest) {
+    const bankAccountInput = document.getElementById('user_bank_account');
+    const custName = document.getElementById('customer_name');
+    const custPhone = document.getElementById('customer_phone');
+    const delivAddr = document.getElementById('delivery_address');
+    const testNotice = document.getElementById('test-mode-notice');
+    const paymentContainer = document.getElementById('payment-details-container');
+    const methodsGrid = document.getElementById('payment-methods-grid');
+
+    if (isTest) {
+        // Remove required constraints
+        if (bankAccountInput) bankAccountInput.required = false;
+        if (custName) custName.required = false;
+        if (custPhone) custPhone.required = false;
+        if (delivAddr) delivAddr.required = false;
+
+        // Visual feedback & disable interaction on payment options
+        if (methodsGrid) {
+            methodsGrid.style.opacity = '0.35';
+            methodsGrid.style.filter = 'grayscale(85%)';
+            methodsGrid.style.pointerEvents = 'none';
+            methodsGrid.style.userSelect = 'none';
+            methodsGrid.style.cursor = 'not-allowed';
+            methodsGrid.querySelectorAll('input, button, label').forEach(el => el.setAttribute('disabled', 'disabled'));
+        }
+        if (paymentContainer) {
+            paymentContainer.style.opacity = '0.35';
+            paymentContainer.style.filter = 'grayscale(85%)';
+            paymentContainer.style.pointerEvents = 'none';
+            paymentContainer.style.userSelect = 'none';
+            paymentContainer.style.cursor = 'not-allowed';
+            paymentContainer.querySelectorAll('input, select, button, textarea').forEach(el => el.setAttribute('disabled', 'disabled'));
+        }
+        if (testNotice) testNotice.style.display = 'block';
+    } else {
+        // Restore constraints
+        if (custName) custName.required = true;
+        if (custPhone) custPhone.required = true;
+        if (delivAddr) delivAddr.required = true;
+
+        const currentChannel = document.querySelector('input[name="payment_channel"]:checked')?.value || 'bank_transfer';
+        if (bankAccountInput) bankAccountInput.required = (currentChannel === 'bank_transfer');
+
+        // Restore visual & interactive state
+        if (methodsGrid) {
+            methodsGrid.style.opacity = '1';
+            methodsGrid.style.filter = 'none';
+            methodsGrid.style.pointerEvents = 'auto';
+            methodsGrid.style.userSelect = 'auto';
+            methodsGrid.style.cursor = 'auto';
+            methodsGrid.querySelectorAll('input, button, label').forEach(el => el.removeAttribute('disabled'));
+        }
+        if (paymentContainer) {
+            paymentContainer.style.opacity = '1';
+            paymentContainer.style.filter = 'none';
+            paymentContainer.style.pointerEvents = 'auto';
+            paymentContainer.style.userSelect = 'auto';
+            paymentContainer.style.cursor = 'auto';
+            paymentContainer.querySelectorAll('input, select, button, textarea').forEach(el => el.removeAttribute('disabled'));
+        }
+        if (testNotice) testNotice.style.display = 'none';
+    }
+}
+
+// -------------------------------------------------------------
+// Auto-expanding Delivery Address Textarea (Cannot be manually resized, auto-grows with content)
+// -------------------------------------------------------------
+function autoResizeAddress(elem) {
+    const ta = elem || document.getElementById('delivery_address');
+    if (!ta) return;
+    ta.style.height = 'auto';
+    const newHeight = Math.max(56, ta.scrollHeight);
+    ta.style.height = newHeight + 'px';
+}
+
+// Switch Specialized Pet Delivery Options (เปลี่ยนสีกรอบและพื้นหลังทันทีเมื่อคลิก)
+function selectShippingOption(cardElem) {
+    if (!cardElem) return;
+    const allCards = document.querySelectorAll('.shipping-option-card');
+    allCards.forEach(c => c.classList.remove('active'));
+    cardElem.classList.add('active');
+    const radio = cardElem.querySelector('input[type="radio"]');
+    if (radio) radio.checked = true;
+}
+
+// Switch Address Input Mode (Manual Textarea vs GPS Map Picker)
+function switchAddressMode(mode) {
+    const cardManual = document.getElementById('modeCardManual');
+    const cardGps = document.getElementById('modeCardGps');
+    const mapContainer = document.getElementById('mapPickerContainer');
+    const badge = document.getElementById('addressSourceBadge');
+    const radioManual = cardManual?.querySelector('input[type="radio"]');
+    const radioGps = cardGps?.querySelector('input[type="radio"]');
+
+    if (mode === 'gps') {
+        if (cardManual) cardManual.classList.remove('active');
+        if (cardGps) cardGps.classList.add('active');
+        if (radioGps) radioGps.checked = true;
+        if (mapContainer) mapContainer.style.display = 'block';
+        if (badge) {
+            badge.textContent = '📍 โหมดพิกัด GPS & Google Maps';
+            badge.style.background = '#ECFDF5';
+            badge.style.borderColor = '#A7F3D0';
+            badge.style.color = '#047857';
+        }
+        setTimeout(() => {
+            initDeliveryMap();
+            if (mapInstance) {
+                mapInstance.invalidateSize();
+                mapInstance.setView([currentLat, currentLng], mapInstance.getZoom());
+            }
+        }, 150);
+    } else {
+        if (cardGps) cardGps.classList.remove('active');
+        if (cardManual) cardManual.classList.add('active');
+        if (radioManual) radioManual.checked = true;
+        if (mapContainer) mapContainer.style.display = 'none';
+        if (badge) {
+            badge.textContent = '✍️ โหมดกรอกที่อยู่เอง';
+            badge.style.background = '#EFF6FF';
+            badge.style.borderColor = '#BFDBFE';
+            badge.style.color = '#1E40AF';
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    autoResizeAddress();
+    const testCheckbox = document.getElementById('test_skip_account');
+    if (testCheckbox) {
+        toggleTestMode(testCheckbox.checked);
+    }
+    const currentAddressMode = document.querySelector('input[name="address_input_mode"]:checked')?.value || 'manual';
+    switchAddressMode(currentAddressMode);
+});
+
+// -------------------------------------------------------------
+// Interactive Google Maps & GPS Geolocation Functions
+// -------------------------------------------------------------
+let mapInstance = null;
+let markerInstance = null;
+let currentTileLayer = null;
+let currentLat = parseFloat(document.getElementById('delivery_lat')?.value) || 13.756331;
+let currentLng = parseFloat(document.getElementById('delivery_lng')?.value) || 100.501765;
+
+const tileLayerUrls = {
+    google_road: {
+        url: 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
+        attribution: '© Google Maps & Purrfect Cat Transport',
+        maxZoom: 20
+    },
+    google_satellite: {
+        url: 'https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}',
+        attribution: '© Google Maps Satellite & Purrfect Cat Transport',
+        maxZoom: 20
+    },
+    osm: {
+        url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attribution: '© OpenStreetMap Contributors & Purrfect Cat Transport',
+        maxZoom: 19
+    }
+};
+
+function showGpsStatus(msg, isSuccess = true) {
+    const banner = document.getElementById('gpsStatusBanner');
+    if (!banner) return;
+    banner.style.display = 'block';
+    if (isSuccess) {
+        banner.style.background = '#ECFDF5';
+        banner.style.border = '1px solid #A7F3D0';
+        banner.style.color = '#065F46';
+    } else {
+        banner.style.background = '#FEF2F2';
+        banner.style.border = '1px solid #FECACA';
+        banner.style.color = '#991B1B';
+    }
+    banner.innerHTML = msg;
+    setTimeout(() => {
+        if (banner) banner.style.display = 'none';
+    }, 7000);
+}
+
+function initDeliveryMap() {
+    if (mapInstance) {
+        mapInstance.invalidateSize();
+        return;
+    }
+    const mapDiv = document.getElementById('deliveryMap');
+    if (!mapDiv) return;
+
+    mapInstance = L.map('deliveryMap', {
+        center: [currentLat, currentLng],
+        zoom: 14,
+        zoomControl: true
+    });
+
+    // Default to Google Maps Road Layer
+    switchMapTileLayer('google_road');
+
+    // Reliable inline SVG Pin Icon (never breaks due to external CDN)
+    const customIcon = L.divIcon({
+        className: 'custom-cat-pin',
+        html: `<div style="background: linear-gradient(135deg, #FF6B4A, #FF8E72); color: white; width: 40px; height: 40px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(255,107,74,0.5); border: 2.5px solid #FFFFFF; cursor: pointer;">
+                 <span style="transform: rotate(45deg); font-size: 20px; line-height: 1;">🐾</span>
+               </div>`,
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+        popupAnchor: [0, -38]
+    });
+
+    markerInstance = L.marker([currentLat, currentLng], {
+        draggable: true,
+        icon: customIcon
+    }).addTo(mapInstance);
+
+    markerInstance.bindPopup("🐾 <strong>จุดส่งมอบน้องแมว (GPS)</strong><br>คลิกหรือลากหมุดบนแผนที่เพื่อระบุตำแหน่ง").openPopup();
+
+    markerInstance.on('dragend', function(e) {
+        const pos = e.target.getLatLng();
+        updateSelectedCoordinates(pos.lat, pos.lng, true);
+        reverseGeocodeAddress(pos.lat, pos.lng);
+    });
+
+    mapInstance.on('click', function(e) {
+        markerInstance.setLatLng(e.latlng);
+        updateSelectedCoordinates(e.latlng.lat, e.latlng.lng, true);
+        reverseGeocodeAddress(e.latlng.lat, e.latlng.lng);
+    });
+
+    setTimeout(() => {
+        if (mapInstance) mapInstance.invalidateSize();
+    }, 300);
+}
+
+function switchMapTileLayer(layerType) {
+    if (!mapInstance) return;
+    if (currentTileLayer) {
+        mapInstance.removeLayer(currentTileLayer);
+    }
+    const config = tileLayerUrls[layerType] || tileLayerUrls.google_road;
+    currentTileLayer = L.tileLayer(config.url, {
+        maxZoom: config.maxZoom,
+        attribution: config.attribution
+    }).addTo(mapInstance);
+
+    // Update active button styles
+    const btnRoad = document.getElementById('btnLayerRoad');
+    const btnSat = document.getElementById('btnLayerSat');
+    const btnOsm = document.getElementById('btnLayerOsm');
+
+    [btnRoad, btnSat, btnOsm].forEach(btn => {
+        if (btn) {
+            btn.style.background = 'var(--bg-card)';
+            btn.style.color = 'var(--text-secondary)';
+            btn.style.borderColor = 'var(--border-color)';
+            btn.style.fontWeight = 'normal';
+        }
+    });
+
+    if (layerType === 'google_road' && btnRoad) {
+        btnRoad.style.background = '#DBEAFE';
+        btnRoad.style.color = '#1E40AF';
+        btnRoad.style.borderColor = '#93C5FD';
+        btnRoad.style.fontWeight = '700';
+    } else if (layerType === 'google_satellite' && btnSat) {
+        btnSat.style.background = '#FEF3C7';
+        btnSat.style.color = '#92400E';
+        btnSat.style.borderColor = '#FCD34D';
+        btnSat.style.fontWeight = '700';
+    } else if (layerType === 'osm' && btnOsm) {
+        btnOsm.style.background = '#ECFDF5';
+        btnOsm.style.color = '#065F46';
+        btnOsm.style.borderColor = '#A7F3D0';
+        btnOsm.style.fontWeight = '700';
+    }
+}
+
+function updateSelectedCoordinates(lat, lng, syncInputs = true) {
+    lat = parseFloat(lat).toFixed(6);
+    lng = parseFloat(lng).toFixed(6);
+    currentLat = parseFloat(lat);
+    currentLng = parseFloat(lng);
+
+    const latInput = document.getElementById('delivery_lat');
+    const lngInput = document.getElementById('delivery_lng');
+    const displaySpan = document.getElementById('display_lat_lng');
+    const gmapLink = document.getElementById('googleMapsLink');
+
+    if (latInput && syncInputs) latInput.value = lat;
+    if (lngInput && syncInputs) lngInput.value = lng;
+    if (displaySpan) displaySpan.textContent = `Lat: ${lat}, Lng: ${lng}`;
+    if (gmapLink) gmapLink.href = `https://www.google.com/maps?q=${lat},${lng}`;
+}
+
+function onManualCoordinateChange() {
+    const latVal = parseFloat(document.getElementById('delivery_lat')?.value);
+    const lngVal = parseFloat(document.getElementById('delivery_lng')?.value);
+    if (!isNaN(latVal) && !isNaN(lngVal) && latVal >= -90 && latVal <= 90 && lngVal >= -180 && lngVal <= 180) {
+        updateSelectedCoordinates(latVal, lngVal, false);
+        if (mapInstance && markerInstance) {
+            mapInstance.setView([latVal, lngVal], mapInstance.getZoom());
+            markerInstance.setLatLng([latVal, lngVal]);
+        }
+    }
+}
+
+// Smart Parser: Extracts Lat,Lng from Google Maps URL, Share Link, or Coordinate Strings
+function parseAndSetGoogleMapsInput(rawText) {
+    if (!rawText) return;
+    rawText = rawText.trim();
+
+    // 1. Check for coordinates format: "13.7563, 100.5018" or "13.7563,100.5018"
+    const coordRegex = /(-?\d+\.\d{3,})[\s,]+(-?\d+\.\d{3,})/;
+    const coordMatch = rawText.match(coordRegex);
+
+    if (coordMatch) {
+        const lat = parseFloat(coordMatch[1]);
+        const lng = parseFloat(coordMatch[2]);
+        if (lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+            updateSelectedCoordinates(lat, lng, true);
+            if (mapInstance && markerInstance) {
+                mapInstance.setView([lat, lng], 16);
+                markerInstance.setLatLng([lat, lng]);
+            }
+            reverseGeocodeAddress(lat, lng);
+            showGpsStatus(`✓ แปลงพิกัดจาก Google Maps สำเร็จ: Lat: ${lat.toFixed(6)}, Lng: ${lng.toFixed(6)}`, true);
+            return;
+        }
+    }
+
+    // 2. If it's a URL or place query, search it via Nominatim
+    if (rawText.length > 2) {
+        document.getElementById('mapSearchInput').value = rawText.replace(/https?:\/\/[^\s]+/g, '').trim() || rawText;
+        searchLocationOnMap(rawText);
+    }
+}
+
+function setPresetCoordinate(lat, lng, addressHint) {
+    updateSelectedCoordinates(lat, lng, true);
+    const container = document.getElementById('mapPickerContainer');
+    if (container && container.style.display === 'none') {
+        toggleMapPicker();
+    }
+    if (mapInstance && markerInstance) {
+        mapInstance.setView([lat, lng], 15);
+        markerInstance.setLatLng([lat, lng]);
+    }
+    const addrArea = document.getElementById('delivery_address');
+    if (addrArea && (!addrArea.value.trim() || addrArea.value.includes('กรุงเทพฯ') || addrArea.value.includes('อำเภอ') || addrArea.value.includes('เมือง'))) {
+        addrArea.value = addressHint;
+        autoResizeAddress(addrArea);
+    }
+    showGpsStatus(`✓ เลือกพิกัด: <strong>${addressHint}</strong> (Lat: ${lat}, Lng: ${lng}) เรียบร้อยแล้ว`, true);
+}
+
+function toggleMapPicker() {
+    const container = document.getElementById('mapPickerContainer');
+    const label = document.getElementById('mapToggleLabel');
+    if (!container) return;
+
+    if (container.style.display === 'none' || container.style.display === '') {
+        container.style.display = 'block';
+        if (label) label.textContent = 'ย่อ แผนที่ GPS';
+        setTimeout(() => {
+            initDeliveryMap();
+            if (mapInstance) {
+                mapInstance.invalidateSize();
+                mapInstance.setView([currentLat, currentLng], mapInstance.getZoom());
+            }
+        }, 150);
+    } else {
+        container.style.display = 'none';
+        if (label) label.textContent = 'ขยาย แผนที่ GPS';
+    }
+}
+
+function locateCurrentGPS() {
+    const btn = document.getElementById('btnCurrentGPS');
+    const oldText = btn ? btn.innerHTML : '';
+    if (btn) btn.innerHTML = '⏳ กำลังหา GPS...';
+    showGpsStatus('⏳ กำลังค้นหาตำแหน่งพิกัด GPS อุปกรณ์ของคุณด้วยความแม่นยำสูง...', true);
+
+    const container = document.getElementById('mapPickerContainer');
+    if (container && container.style.display === 'none') {
+        toggleMapPicker();
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                const lat = pos.coords.latitude;
+                const lng = pos.coords.longitude;
+                updateSelectedCoordinates(lat, lng, true);
+                initDeliveryMap();
+                if (mapInstance && markerInstance) {
+                    mapInstance.setView([lat, lng], 16);
+                    markerInstance.setLatLng([lat, lng]);
+                    markerInstance.openPopup();
+                }
+                reverseGeocodeAddress(lat, lng);
+                if (btn) btn.innerHTML = oldText;
+                showGpsStatus(`✓ ตรวจพบตำแหน่ง GPS ของคุณแล้ว: Lat: ${lat.toFixed(6)}, Lng: ${lng.toFixed(6)} (ความแม่นยำ ~${Math.round(pos.coords.accuracy || 10)}m)`, true);
+            },
+            (err) => {
+                console.warn('Browser GPS error, trying IP-based fallback:', err);
+                fetch('https://ipapi.co/json/')
+                    .then(res => res.json())
+                    .then(ipData => {
+                        if (ipData && ipData.latitude && ipData.longitude) {
+                            const lat = ipData.latitude;
+                            const lng = ipData.longitude;
+                            updateSelectedCoordinates(lat, lng, true);
+                            initDeliveryMap();
+                            if (mapInstance && markerInstance) {
+                                mapInstance.setView([lat, lng], 14);
+                                markerInstance.setLatLng([lat, lng]);
+                            }
+                            reverseGeocodeAddress(lat, lng);
+                            showGpsStatus(`✓ ประมาณพิกัดจากพื้นที่เชื่อมต่อ (${ipData.city || 'ประเทศไทย'}): Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)} • คุณสามารถคลิกหรือลากหมุดบนแผนที่เพื่อความแม่นยำได้`, true);
+                        } else {
+                            throw new Error('No IP coords');
+                        }
+                    })
+                    .catch(() => {
+                        showGpsStatus(`⚠️ ไม่สามารถดึงพิกัด GPS ได้ (${err.message}) กรุณาคลิกเลือกตำแหน่งบนแผนที่ Google Maps หรือเลือกพิกัดด่วนด้านบน`, false);
+                    })
+                    .finally(() => {
+                        if (btn) btn.innerHTML = oldText;
+                    });
+            },
+            { enableHighAccuracy: true, timeout: 9000, maximumAge: 0 }
+        );
+    } else {
+        if (btn) btn.innerHTML = oldText;
+        showGpsStatus('เบราว์เซอร์ไม่รองรับ GPS กรุณาคลิกเลือกตำแหน่งบนแผนที่แทน', false);
+    }
+}
+
+function searchLocationOnMap(queryParam) {
+    const query = queryParam || document.getElementById('mapSearchInput')?.value.trim();
+    if (!query) return;
+
+    showGpsStatus(`⏳ กำลังค้นหาสถานที่ "${query}"...`, true);
+
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=th&limit=1`)
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                const lat = parseFloat(data[0].lat);
+                const lng = parseFloat(data[0].lon);
+                updateSelectedCoordinates(lat, lng, true);
+                initDeliveryMap();
+                if (mapInstance && markerInstance) {
+                    mapInstance.setView([lat, lng], 15);
+                    markerInstance.setLatLng([lat, lng]);
+                    markerInstance.openPopup();
+                }
+                const addrArea = document.getElementById('delivery_address');
+                if (addrArea && !addrArea.value.trim()) {
+                    addrArea.value = data[0].display_name;
+                    autoResizeAddress(addrArea);
+                }
+                showGpsStatus(`✓ ค้นพบสถานที่: <strong>${data[0].display_name}</strong>`, true);
+            } else {
+                showGpsStatus(`⚠️ ไม่พบสถานที่: "${query}" กรุณาลองใช้คำค้นหาอื่นหรือคลิกเลือกบนแผนที่`, false);
+            }
+        })
+        .catch(err => {
+            console.error('Map search error:', err);
+            showGpsStatus('เกิดข้อผิดพลาดในการค้นหาสถานที่', false);
+        });
+}
+
+function reverseGeocodeAddress(lat, lng) {
+    const targetLat = lat || currentLat;
+    const targetLng = lng || currentLng;
+
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${targetLat}&lon=${targetLng}&accept-language=th`)
+        .then(res => res.json())
+        .then(data => {
+            if (data && data.display_name) {
+                const addrArea = document.getElementById('delivery_address');
+                if (addrArea) {
+                    addrArea.value = data.display_name;
+                    autoResizeAddress(addrArea);
+                    showGpsStatus(`✓ อัปเดตที่อยู่จัดส่งจากพิกัด: <strong>${data.display_name}</strong>`, true);
+                }
+            }
+        })
+        .catch(err => console.error(err));
+}
+</script>
+
     <footer>
+        <!-- Newsletter Subscription Ribbon -->
+        <div style="background: linear-gradient(135deg, rgba(255, 117, 86, 0.12) 0%, rgba(254, 243, 199, 0.5) 100%); border-bottom: 1px solid var(--border-color); padding: 1.8rem 1rem;">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <span style="font-size: 2.4rem; line-height: 1;">📬</span>
+                    <div>
+                        <h4 style="margin: 0 0 4px 0; font-size: 1.15rem; color: var(--text-main); font-weight: 800;">
+                            สมัครรับจดหมายข่าว & ดีลลับน้องแมว Purrfect Shop 🐾
+                        </h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">
+                            รับแจ้งเตือนน้องแมวเข้าใหม่ เกร็ดสุขภาพจากสัตวแพทย์ พร้อมรับโค้ดส่วนลด 10% (CATNEWS10) ทันทีทางอีเมล
+                        </p>
+                    </div>
+                </div>
+                <form action="subscribe.html" onsubmit="event.preventDefault(); alert('ขอบคุณที่สมัครรับข่าวสาร Purrfect Shop 🐾');" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
+                    <input type="email" name="subscriber_email" placeholder="กรอกอีเมลของคุณ เช่น name@gmail.com" required style="flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 999px; padding: 10px 22px; font-weight: 800; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);">
+                        ติดตามข่าวสาร ✨
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <div class="footer-inner">
             <div class="footer-brand">
                 <h3>Purrfect Shop 🐾</h3>
-                <p style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.4rem;">"เพราะทุกบ้านควรมีเจ้าเหมียว"</p>
-                <p>ฟาร์มและศูนย์รวมน้องแมวสายพันธุ์แท้ 100% สุขภาพดี การันตีคุณภาพและใบเพ็ดดีกรีสากล</p>
+                <p style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.4rem;">
+                    "เพราะทุกบ้านควรมีเจ้าเหมียว"
+                </p>
+                <p>
+                    ฟาร์มและศูนย์รวมน้องแมวสายพันธุ์แท้ 100% สุขภาพดี ได้รับการดูแลจากสัตวแพทย์อย่างใกล้ชิด
+                    พร้อมบริการตรวจสุขภาพ ฉีดวัคซีน ถ่ายพยาธิ และใบเพ็ดดีกรีรับรองสายพันธุ์ครบถ้วน
+                </p>
+                <div style="margin-top: 1rem; display: flex; gap: 0.8rem; font-size: 0.85rem; color: var(--text-muted);">
+                    <span>📍 บริการจัดส่งทั่วประเทศ</span> &bull; 
+                    <span>⏰ เปิดทุกวัน 09:00 - 20:00 น.</span>
+                </div>
             </div>
+
             <div class="footer-col">
-                <h4>ลิงก์ด่วน</h4>
+                <h4>หมวดหมู่แนะนำ</h4>
                 <ul>
-                    <li><a href="index.html">🏠 หน้าแรก</a></li>
-                    <li><a href="products.html">🐱 น้องแมวทั้งหมด</a></li>
-                    <li><a href="recommend.html">🌟 แนะนำสำหรับคุณ</a></li>
-                    <li><a href="welcome_deal.html">🎁 ดีลสมาชิกใหม่</a></li>
+                    <li><a href="recommend.html">🔥 สายพันธุ์ยอดนิยม</a></li>
+                    <li><a href="recommend.html">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
+                    <li><a href="recommend.html">🧸 แมวขนยาวนุ่มฟู</a></li>
+                    <li><a href="recommend.html">✨ แมวขนสั้นดูแลง่าย</a></li>
+                    <li><a href="recommend.html">👶 มือใหม่เลี้ยงง่าย</a></li>
                 </ul>
             </div>
+
             <div class="footer-col">
-                <h4>ระบบจำลอง</h4>
+                <h4>ความปลอดภัย & สมาชิก</h4>
                 <ul>
-                    <li><a href="email_showcase.html">📧 แกลเลอรีอีเมล 3 แบบ</a></li>
-                    <li><a href="subscribe.html">📬 สมัครรับข่าวสาร</a></li>
-                    <li><a href="creator.html">👨‍💻 ข้อมูลผู้จัดทำ</a></li>
+                    <li><a href="register.html">✨ สมัครสมาชิกรับส่วนลด 5%</a></li>
+                    <li><a href="creator.html">👨‍💻 ข้อมูลผู้จัดทำโครงการ</a></li>
+                    <li><a href="cart.html">🛒 ตะกร้าการจองน้องแมว</a></li>
+                    <li><a href="recommend.html">🌟 แนะนำสายพันธุ์สำหรับคุณ</a></li>
+                    <li><a href="products.html">🐱 ดูสายพันธุ์น้องแมวทั้งหมด</a></li>
                 </ul>
             </div>
         </div>
+
         <div class="footer-bottom">
             <p>&copy; 2026 <strong>Purrfect Shop</strong> - คัดสรรและส่งมอบเพื่อนที่ดีที่สุดด้วยหัวใจ 🐾</p>
+            <p>
+                พัฒนาโดย <strong>Purrfect Cattery Team</strong> (TH-CAT-8899 IT) &bull; Purrfect Boutique Cattery
+            </p>
         </div>
     </footer>
+    <!-- chat_widget.php - Floating Live Chat Widget with Popup Quick Menu -->
+<div id="purrfect-chat-root">
+    <!-- 1. Floating Launcher Button (Fixed Bottom-Right) -->
+    <button id="chat-launcher-btn" type="button" onclick="togglePurrfectChat()" title="ปรึกษาแอดมิน & แชทบอทแนะนำน้องแมว 🐾">
+        <span class="launcher-icon">💬</span>
+        <span class="launcher-cat-icon">🐾</span>
+        <span class="launcher-close-icon">✕</span>
+        <span class="launcher-status-dot"></span>
+        <span id="chat-unread-badge" class="chat-unread-badge" style="display: none;">0</span>
+    </button>
+
+    <!-- 2. Chat Popup Window -->
+    <div id="purrfect-chat-window" class="chat-window-hidden">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar-wrapper">
+                    <img src="assets/images/logo.png" alt="Purrfect Advisor" class="chat-header-avatar">
+                    <span class="chat-online-badge"></span>
+                </div>
+                <div>
+                    <div class="chat-header-title">Purrfect Live Chat 🐾</div>
+                    <div class="chat-header-subtitle">
+                        <span class="status-pulse-dot"></span> เจ้าหน้าที่ & AI แนะนำสายพันธุ์ (ออนไลน์)
+                    </div>
+                </div>
+            </div>
+            <div class="chat-header-actions">
+                <button type="button" class="chat-btn-icon" onclick="togglePurrfectChat()" title="ย่อหน้าต่าง">✕</button>
+            </div>
+        </div>
+
+        <!-- Current User Info Strip -->
+        <div id="chat-user-strip" class="chat-user-strip">
+            <span id="chat-user-label">กำลังโหลดข้อมูลผู้ใช้...</span>
+        </div>
+
+        <!-- Chat Messages Body -->
+        <div id="chat-messages-container" class="chat-messages-container">
+            <div class="chat-loading-spinner" id="chat-loading">
+                <span>🐾 กำลังโหลดการสนทนา...</span>
+            </div>
+        </div>
+
+        <!-- Pop-up Quick Questions Menu Overlay (Toggled by "⚡ คำถาม" button) -->
+        <div id="chat-quick-menu-popup" class="chat-quick-popup-hidden">
+            <div class="chat-quick-popup-header">
+                <span>⚡ เลือกคำถามด่วน (บอทแนะนำทันที)</span>
+                <button type="button" class="quick-popup-close-btn" onclick="toggleQuickMenuPopup()">✕</button>
+            </div>
+            <div class="chat-quick-popup-grid">
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(1)">
+                    <span class="popup-item-icon">🐱</span>
+                    <span class="popup-item-text">1. น้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(2)">
+                    <span class="popup-item-icon">🏢</span>
+                    <span class="popup-item-text">2. เหมาะกับเลี้ยงในคอนโด / รักความสงบ</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(3)">
+                    <span class="popup-item-icon">🤧</span>
+                    <span class="popup-item-text">3. คนเป็นภูมิแพ้ ขนไม่ร่วง / ผลัดขน 0%</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(4)">
+                    <span class="popup-item-icon">👑</span>
+                    <span class="popup-item-text">4. สายพันธุ์พรีเมียม ขนฟู มีใบเพ็ดดีกรี</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(5)">
+                    <span class="popup-item-icon">🎁</span>
+                    <span class="popup-item-text">5. โปรโมชั่น & ดีลส่วนลดสมาชิกใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(6)">
+                    <span class="popup-item-icon">🩺</span>
+                    <span class="popup-item-text">6. การรับประกันสุขภาพ 180 วัน & ขนส่ง</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Input Bar (With ⚡ คำถาม button beside input) -->
+        <form id="chat-input-form" onsubmit="handleSendChatMessage(event)" class="chat-input-form">
+            <button type="button" id="chat-quick-trigger-btn" class="chat-quick-trigger-btn" onclick="toggleQuickMenuPopup()" title="คลิกเพื่อเปิดคำถามด่วน 6 ข้อ">
+                <span>⚡ คำถาม</span>
+            </button>
+            <input type="text" id="chat-input-text" placeholder="พิมพ์ข้อความคุยกับแอดมิน..." autocomplete="off" maxlength="500">
+            <button type="submit" id="chat-send-btn" class="chat-send-btn" title="ส่งข้อความ">
+                <span>➤</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+(function() {
+    let chatIsOpen = false;
+    let quickPopupIsOpen = false;
+    let lastMessageCount = 0;
+    let pollInterval = null;
+    let currentUserId = '';
+    let isBotTyping = false;
+    let lastRenderedSig = '';
+
+    window.togglePurrfectChat = function() {
+        const win = document.getElementById('purrfect-chat-window');
+        const launcher = document.getElementById('chat-launcher-btn');
+        if (!win || !launcher) return;
+
+        // Trigger dynamic bounce click animation
+        launcher.classList.remove('anim-pulse');
+        void launcher.offsetWidth; // Force reflow
+        launcher.classList.add('anim-pulse');
+
+        chatIsOpen = !chatIsOpen;
+
+        if (chatIsOpen) {
+            win.classList.remove('chat-window-hidden', 'chat-window-closing');
+            win.classList.add('chat-window-visible');
+            launcher.classList.add('launcher-active');
+            const unread = document.getElementById('chat-unread-badge');
+            if (unread) {
+                unread.style.display = 'none';
+                unread.innerText = '0';
+            }
+            loadChatMessages(true);
+            setTimeout(() => {
+                const input = document.getElementById('chat-input-text');
+                if (input) input.focus();
+            }, 300);
+        } else {
+            launcher.classList.remove('launcher-active');
+            closeQuickMenuPopup();
+
+            // Trigger smooth closing animation
+            win.classList.remove('chat-window-visible');
+            win.classList.add('chat-window-closing');
+            setTimeout(() => {
+                if (!chatIsOpen) {
+                    win.classList.remove('chat-window-closing');
+                    win.classList.add('chat-window-hidden');
+                }
+            }, 260);
+        }
+    };
+
+    window.toggleQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = !quickPopupIsOpen;
+        if (quickPopupIsOpen) {
+            popup.classList.remove('chat-quick-popup-hidden');
+            popup.classList.add('chat-quick-popup-visible');
+        } else {
+            popup.classList.remove('chat-quick-popup-visible');
+            popup.classList.add('chat-quick-popup-hidden');
+        }
+    };
+
+    window.closeQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = false;
+        popup.classList.remove('chat-quick-popup-visible');
+        popup.classList.add('chat-quick-popup-hidden');
+    };
+
+    window.sendQuickReplyFromPopup = function(option) {
+        closeQuickMenuPopup();
+        sendQuickReply(option);
+    };
+
+    window.loadChatMessages = function(forceScroll = false) {
+        if (isBotTyping && !forceScroll) {
+            return; // Don't interrupt typing indicator during delay
+        }
+
+        fetch('api_chat.php?action=get_messages')
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success' && data.conversation) {
+                    const conv = data.conversation;
+                    const u = data.current_user;
+                    currentUserId = u.id;
+
+                    // Update user strip
+                    const strip = document.getElementById('chat-user-label');
+                    if (u.is_member) {
+                        strip.innerHTML = `👤 สนทนาในนามสมาชิก: <strong>${escapeHtml(u.name)}</strong> (ส่วนลด 5% 🐾)`;
+                    } else {
+                        strip.innerHTML = `👤 สนทนาในนาม: <strong>${escapeHtml(u.name)}</strong> • <a href="login.html" style="color:var(--primary-coral); text-decoration:underline;">เข้าสู่ระบบ</a> เพื่อสะสมแต้ม`;
+                    }
+
+                    if (!isBotTyping) {
+                        renderMessages(conv.messages || [], forceScroll);
+                    }
+                }
+            })
+            .catch(err => console.log('Chat load error:', err));
+    };
+
+    function getCurrentTimeFormatted() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    function renderMessages(messages, forceScroll = false) {
+        const container = document.getElementById('chat-messages-container');
+        if (!container) return;
+
+        const currentSig = messages.length + '_' + (messages.length > 0 ? (messages[messages.length - 1].id || messages[messages.length - 1].text) : '');
+        if (currentSig === lastRenderedSig && !forceScroll) {
+            return; // Avoid unnecessary re-rendering to prevent scroll bounce or flickering
+        }
+        lastRenderedSig = currentSig;
+
+        let html = '';
+        messages.forEach(msg => {
+            const isCustomer = msg.sender === 'customer';
+            const senderClass = isCustomer ? 'msg-customer' : (msg.sender === 'admin' ? 'msg-admin' : 'msg-bot');
+            const senderBadge = isCustomer ? 'คุณ' : (msg.sender === 'admin' ? '👨‍💼 แอดมิน' : '🤖 ผู้ช่วย AI');
+
+            let cardHtml = '';
+            if (msg.cards && msg.cards.length > 0) {
+                cardHtml += `
+                    <div class="chat-carousel-wrapper">
+                        <button type="button" class="carousel-nav-btn nav-prev" onclick="scrollChatCarousel(this, -180)" title="เลื่อนดูน้องแมวก่อนหน้า">◀</button>
+                        <div class="chat-cards-carousel">
+                `;
+                msg.cards.forEach(card => {
+                    cardHtml += `
+                        <div class="chat-cat-card">
+                            <img src="${card.image}" alt="${escapeHtml(card.name)}" class="chat-cat-img" onerror="this.src='assets/images/logo.png'">
+                            <div class="chat-cat-info">
+                                <div class="chat-cat-name">${escapeHtml(card.name)}</div>
+                                <div class="chat-cat-breed">${escapeHtml(card.breed)}</div>
+                                <div class="chat-cat-highlight">${escapeHtml(card.highlight || '')}</div>
+                                <div class="chat-cat-price">${escapeHtml(card.price_fmt || card.price)}</div>
+                                <a href="${card.link || 'products.php'}" class="btn btn-primary btn-sm chat-card-action">
+                                    ดูน้องตัวนี้ 🐾
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                });
+                cardHtml += `
+                        </div>
+                        <button type="button" class="carousel-nav-btn nav-next" onclick="scrollChatCarousel(this, 180)" title="เลื่อนดูน้องแมวถัดไป">▶</button>
+                    </div>
+                `;
+            }
+
+            let formattedTime = '';
+            if (msg.timestamp) {
+                const tParts = msg.timestamp.split(' ');
+                if (tParts[1]) {
+                    formattedTime = tParts[1].substring(0, 5);
+                } else {
+                    formattedTime = msg.timestamp;
+                }
+            }
+
+            html += `
+                <div class="chat-message-row ${senderClass}">
+                    ${!isCustomer ? `<div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>` : ''}
+                    <div class="chat-bubble-content">
+                        <div class="chat-sender-header">
+                            <span class="chat-sender-name">${escapeHtml(msg.sender_name || senderBadge)}</span>
+                            <span class="chat-time">${formattedTime}</span>
+                        </div>
+                        <div class="chat-text">${escapeHtml(msg.text).replace(/\\n/g, '<br>')}</div>
+                        ${cardHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+        lastMessageCount = messages.length;
+    }
+
+    window.scrollChatCarousel = function(btn, delta) {
+        if (!btn) return;
+        const wrapper = btn.closest('.chat-carousel-wrapper');
+        if (wrapper) {
+            const carousel = wrapper.querySelector('.chat-cards-carousel');
+            if (carousel) {
+                carousel.scrollBy({ left: delta, behavior: 'smooth' });
+            }
+        }
+    };
+
+    const quickPromptsMap = {
+        1: '🐱 แนะนำน้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่',
+        2: '🏢 มีน้องแมวพันธุ์ไหนที่เหมาะกับเลี้ยงในคอนโด/ห้องพักบ้าง?',
+        3: '🤧 เป็นภูมิแพ้ แนะนำน้องแมวขนไม่ร่วง/ผลัดขนน้อยหน่อยครับ',
+        4: '👑 ขอดูแมวสายพันธุ์พรีเมียม ขนฟูหน้าหวาน มีใบเพ็ดดีกรี',
+        5: '🎁 ตอนนี้มีโปรโมชั่นหรือดีลส่วนลดสมาชิกใหม่อะไรบ้าง?',
+        6: '🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?'
+    };
+
+    function showTypingIndicator(userText) {
+        const container = document.getElementById('chat-messages-container');
+        if (!container) return;
+
+        const currentTime = getCurrentTimeFormatted();
+
+        // 1. Immediately append user's bubble
+        if (userText) {
+            const customerRow = document.createElement('div');
+            customerRow.className = 'chat-message-row msg-customer';
+            customerRow.innerHTML = `
+                <div class="chat-bubble-content">
+                    <div class="chat-sender-header">
+                        <span class="chat-sender-name">คุณ</span>
+                        <span class="chat-time">${currentTime}</span>
+                    </div>
+                    <div class="chat-text">${escapeHtml(userText)}</div>
+                </div>
+            `;
+            container.appendChild(customerRow);
+        }
+
+        // 2. Append typing animation indicator
+        const oldTyping = document.getElementById('chat-typing-indicator');
+        if (oldTyping) oldTyping.remove();
+
+        const typingRow = document.createElement('div');
+        typingRow.id = 'chat-typing-indicator';
+        typingRow.className = 'chat-message-row msg-bot';
+        typingRow.innerHTML = `
+            <div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>
+            <div class="chat-bubble-content">
+                <div class="chat-sender-header">
+                    <span class="chat-sender-name">🤖 ผู้ช่วย AI</span>
+                    <span class="chat-time">${currentTime}</span>
+                </div>
+                <div class="chat-typing-bubble">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span style="font-size:0.75rem; color:#888; margin-left:6px; font-weight:600;">กำลังพิมพ์ข้อความ... 💬</span>
+                </div>
+            </div>
+        `;
+        container.appendChild(typingRow);
+        container.scrollTop = container.scrollHeight;
+        isBotTyping = true;
+    }
+
+    window.sendQuickReply = function(option) {
+        closeQuickMenuPopup();
+        const userText = quickPromptsMap[option] || 'คำถามด่วน';
+        showTypingIndicator(userText);
+
+        const formData = new FormData();
+        formData.append('action', 'quick_reply');
+        formData.append('option', option);
+
+        const apiPromise = fetch('api_chat.php', {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json()).catch(err => console.log(err));
+
+        // Smooth natural delay (~3.0s) for typing animation
+        setTimeout(() => {
+            apiPromise.then(() => {
+                isBotTyping = false;
+                const typing = document.getElementById('chat-typing-indicator');
+                if (typing) typing.remove();
+                loadChatMessages(true);
+            });
+        }, 3000);
+    };
+
+    window.handleSendChatMessage = function(e) {
+        e.preventDefault();
+        const input = document.getElementById('chat-input-text');
+        const text = input.value.trim();
+        if (!text) return;
+
+        input.value = '';
+        showTypingIndicator(text);
+
+        const formData = new FormData();
+        formData.append('action', 'send_message');
+        formData.append('message', text);
+
+        const apiPromise = fetch('api_chat.php', {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json()).catch(err => console.log(err));
+
+        // Smooth natural delay (~3.0s) for typing animation
+        setTimeout(() => {
+            apiPromise.then(() => {
+                isBotTyping = false;
+                const typing = document.getElementById('chat-typing-indicator');
+                if (typing) typing.remove();
+                loadChatMessages(true);
+            });
+        }, 3000);
+    };
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    // Auto poll when page loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        loadChatMessages(false);
+        pollInterval = setInterval(() => {
+            if (chatIsOpen && !isBotTyping) {
+                loadChatMessages(false);
+            }
+        }, 3500);
+    });
+})();
+</script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>

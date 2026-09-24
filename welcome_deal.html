@@ -1,3 +1,5 @@
+
+Warning: Undefined array key "REQUEST_METHOD" in C:\Users\Windows\Downloads\ALL WORK\ALL WORK\W\2567\Semester 4\WorkShop\CatCyberShop\welcome_deal.php on line 9
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -7,6 +9,33 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+    <!-- Google Analytics 4 (GA4) Simulation Script -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PURRFECTCAT88"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PURRFECTCAT88', {
+            'page_title': document.title,
+            'transport_type': 'beacon'
+        });
+    </script>
+
+    <!-- Meta Pixel (Facebook Pixel) Simulation Script -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '123456789012345');
+        fbq('track', 'PageView');
+    </script>
+
     <script>
         (function() {
             try {
@@ -34,7 +63,7 @@
 
                     <!-- Admin Console Shortcut (Only visible for Admins) -->
                     
-                    <!-- User Account / Profile Badge -->
+                    <!-- User Account / Profile Badge & Paw Points -->
                                             <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                             <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
                             <a href="subscribe.html" class="btn btn-sm " style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="รับข้อมูลข่าวสารโดยยังไม่ต้องสมัครสมาชิก">
@@ -51,16 +80,23 @@
             </div>
         </div>
 
-        <!-- 2. Main Navigation Bar: Brand Logo, Page Links & Shopping Cart -->
+        <!-- 2. Main Branding & Primary Navigation Bar -->
         <div class="main-nav-bar">
             <div class="nav-container">
-                <a href="index.html" class="logo">
+                <a href="index.html" class="site-logo">
                     <img src="assets/images/logo.png" alt="Purrfect Shop Logo" class="logo-img">
-                    <div class="logo-title-group">
-                        <span class="logo-text">Purrfect Shop 🐾</span>
-                        <span class="logo-tagline">เพราะทุกบ้านควรมีเจ้าเหมียว</span>
+                    <div class="logo-text">
+                        <span class="logo-title">Purrfect Shop</span>
+                        <span class="logo-subtitle">Cattery & Boutique</span>
                     </div>
                 </a>
+
+                <!-- 3-Line Hamburger Menu Button (Mobile & Tablet) -->
+                <button type="button" class="mobile-menu-toggle-btn" id="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="เปิดเมนูการนำทางและหมวดหมู่" title="เปิดเมนู ☰">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
                 
                 <nav>
                     <ul class="nav-menu">
@@ -85,7 +121,12 @@
                                 <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
                             </a>
                         </li>
-                                                <li>
+                        <li>
+                            <a href="tracking.html" class="nav-link ">
+                                📍 ติดตามการจัดส่ง
+                            </a>
+                        </li>
+                        <li>
                             <a href="creator.html" class="nav-link ">
                                 👨‍💻 ผู้จัดทำ
                             </a>
@@ -100,2482 +141,1424 @@
             </div>
         </div>
     </header>
+
+    <!-- =========================================================
+         MOBILE NAVIGATION DRAWER (OFF-CANVAS SLIDING MENU)
+         ========================================================= -->
+    <!-- Drawer Backdrop -->
+    <div id="mobile-drawer-backdrop" class="mobile-drawer-backdrop" onclick="closeMobileDrawer()"></div>
+
+    <!-- Mobile Drawer Content -->
+    <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="เมนูหลักสำหรับมือถือ">
+        <div class="drawer-header">
+            <div class="drawer-branding">
+                <img src="assets/images/logo.png" alt="Logo" class="drawer-logo-img">
+                <div>
+                    <strong class="drawer-title">Purrfect Shop</strong>
+                    <span class="drawer-subtitle">เมนูด่วน & หมวดหมู่บริการ</span>
+                </div>
+            </div>
+            <button type="button" class="drawer-close-btn" onclick="closeMobileDrawer()" aria-label="ปิดเมนู">✕</button>
+        </div>
+
+        <div class="drawer-body">
+            <!-- หมวดที่ 1: บัญชีผู้ใช้ & การตั้งค่า -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>⚙️ หมวดที่ 1: บัญชีผู้ใช้ & การตั้งค่า</span>
+                </div>
+                <div class="drawer-grid">
+                    <!-- Theme Loop Switcher -->
+                    <button type="button" class="drawer-action-btn theme-drawer-btn" onclick="cycleTheme(); updateDrawerThemeName();" title="กดเพื่อสลับธีมสี">
+                        <span class="drawer-btn-icon">🎨</span>
+                        <span class="drawer-btn-label">ธีม: <strong id="drawer-theme-current-name">อบอุ่น คอรัล</strong></span>
+                        <span class="drawer-btn-badge">🔄 สลับสี</span>
+                    </button>
+
+                    <!-- User Profile / Login / Register -->
+                                            <a href="subscribe.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                            <span class="drawer-link-icon">📬</span>
+                            <div class="drawer-link-info">
+                                <span class="drawer-link-title">รับข้อมูลข่าวสาร</span>
+                                <span class="drawer-link-sub">รับสิทธิ์โปรโมชัน & ข่าวกิจกรรม</span>
+                            </div>
+                        </a>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="text-align: center; justify-content: center; font-size: 0.85rem; padding: 0.5rem;" onclick="closeMobileDrawer()">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="text-align: center; justify-content: center; font-size: 0.85rem; padding: 0.5rem;" onclick="closeMobileDrawer()">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                    
+                    <a href="index.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🏠</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">หน้าแรก (Home)</span>
+                            <span class="drawer-link-sub">ศูนย์รวมน้องแมว & โปรโมชันเด่น</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- หมวดที่ 2: เมนูหลัก & บริการร้านค้า -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>🐱 หมวดที่ 2: เมนูบริการ & เลือกชมน้องแมว</span>
+                </div>
+                <div class="drawer-grid">
+                    <a href="products.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🐱</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">น้องแมวทั้งหมด</span>
+                            <span class="drawer-link-sub">สายพันธุ์แท้ 100% พร้อมย้ายบ้าน</span>
+                        </div>
+                    </a>
+
+                    <a href="recommend.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🌟</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">แนะนำสำหรับคุณ</span>
+                            <span class="drawer-link-sub">ระบบค้นหาสายพันธุ์ตามไลฟ์สไตล์</span>
+                        </div>
+                    </a>
+
+                    <a href="welcome_deal.html" class="drawer-link-item active" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🎁</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ดีลสมาชิกใหม่</span>
+                            <span class="drawer-link-sub">คูปองส่วนลดพิเศษ & Starter Kit</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FF5A5F; color: #FFFFFF; font-weight: 800;">HOT</span>
+                    </a>
+
+                    <a href="tracking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">📍</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ติดตามการจัดส่ง</span>
+                            <span class="drawer-link-sub">ระบบติดตามสถานะสด 4 ขั้นตอน</span>
+                        </div>
+                    </a>
+
+                    <a href="creator.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">👨‍💻</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ผู้จัดทำ</span>
+                            <span class="drawer-link-sub">ประวัติ & ข้อมูลโครงงาน</span>
+                        </div>
+                    </a>
+
+                    <a href="cart.html" class="drawer-link-item " style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🛒</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
+                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
+                        </div>
+                                            </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <script>
+    function toggleMobileDrawer() {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (!drawer || !backdrop) return;
+        
+        const isOpen = drawer.classList.contains('open');
+        if (isOpen) {
+            closeMobileDrawer();
+        } else {
+            drawer.classList.add('open');
+            backdrop.classList.add('open');
+            if (btn) btn.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            updateDrawerThemeName();
+        }
+    }
+
+    function closeMobileDrawer() {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (drawer) drawer.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('open');
+        if (btn) btn.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function updateDrawerThemeName() {
+        const currentNameEl = document.getElementById('theme-current-name');
+        const drawerThemeEl = document.getElementById('drawer-theme-current-name');
+        if (currentNameEl && drawerThemeEl) {
+            drawerThemeEl.textContent = currentNameEl.textContent;
+        }
+    }
+
+    // Sync theme label on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+        updateDrawerThemeName();
+    });
+    </script>
+
+    <script>
+    window.trackPurrfectBehavior = function(type, target, category) {
+        try {
+            const formData = new FormData();
+            formData.append('action', 'track');
+            formData.append('event_type', type);
+            formData.append('target', target);
+            formData.append('category', category || 'general');
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon('api_analytics.php', formData);
+            } else {
+                fetch('api_analytics.php', { method: 'POST', body: formData });
+            }
+        } catch (e) {}
+    };
+    </script>
     <main>
                 
-
 <style>
-
 /* Scoped Styling for Welcome Deal Sales Page */
-
 .welcome-sales-page {
-
     max-width: 1200px;
-
     margin: 0 auto 4rem auto;
-
 }
-
-
 
 /* Hero Section */
-
 .welcome-hero {
-
     background: linear-gradient(135deg, rgba(255, 117, 86, 0.12) 0%, rgba(255, 154, 139, 0.08) 50%, rgba(255, 238, 232, 0.15) 100%);
-
     border: 2px solid rgba(255, 117, 86, 0.25);
-
     border-radius: var(--radius-xl);
-
     padding: 3rem 2rem;
-
     text-align: center;
-
     position: relative;
-
     overflow: hidden;
-
     margin-bottom: 2.5rem;
-
     box-shadow: var(--shadow-md);
-
 }
-
-
 
 [data-theme="dark"] .welcome-hero {
-
     background: linear-gradient(135deg, rgba(255, 117, 86, 0.15) 0%, rgba(23, 32, 48, 0.8) 100%);
-
     border-color: rgba(255, 117, 86, 0.35);
-
 }
-
-
 
 .welcome-hero::before {
-
     content: "🐱";
-
     position: absolute;
-
     top: -20px;
-
     right: -20px;
-
     font-size: 8rem;
-
     opacity: 0.08;
-
     pointer-events: none;
-
 }
-
-
 
 .vip-pill-badge {
-
     display: inline-flex;
-
     align-items: center;
-
     gap: 0.5rem;
-
     background: linear-gradient(135deg, #FF7556, #FF9A8B);
-
     color: #FFFFFF;
-
     font-size: 0.85rem;
-
     font-weight: 800;
-
     letter-spacing: 0.5px;
-
     padding: 0.4rem 1.2rem;
-
     border-radius: var(--radius-full);
-
     margin-bottom: 1.2rem;
-
     box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);
-
 }
-
-
 
 .welcome-title {
-
     font-size: 2.5rem;
-
     font-weight: 800;
-
     color: var(--text-primary);
-
     margin-bottom: 0.8rem;
-
     line-height: 1.25;
-
 }
-
-
 
 .welcome-subtitle {
-
     font-size: 1.15rem;
-
     color: var(--text-secondary);
-
     max-width: 780px;
-
     margin: 0 auto 1.8rem auto;
-
     line-height: 1.6;
-
 }
-
-
 
 /* Countdown Bar */
-
 .deal-timer-banner {
-
     display: inline-flex;
-
     align-items: center;
-
     gap: 0.8rem;
-
     background: var(--bg-card);
-
     border: 1px dashed var(--primary-coral);
-
     padding: 0.75rem 1.8rem;
-
     border-radius: var(--radius-lg);
-
     box-shadow: var(--shadow-sm);
-
     margin-bottom: 1.5rem;
-
 }
-
-
 
 .timer-box {
-
     display: flex;
-
     gap: 0.4rem;
-
     font-weight: 800;
-
     color: #FF5A5F;
-
     font-size: 1.2rem;
-
     font-variant-numeric: tabular-nums;
-
 }
-
-
 
 /* Vouchers Grid */
-
 .vouchers-grid {
-
     display: grid;
-
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-
     gap: 1.5rem;
-
     margin-bottom: 3rem;
-
 }
-
-
 
 .voucher-card {
-
     background: var(--bg-card);
-
     border: 2px dashed rgba(255, 117, 86, 0.4);
-
     border-radius: var(--radius-lg);
-
     padding: 1.5rem;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: space-between;
-
     position: relative;
-
     box-shadow: var(--shadow-sm);
-
     transition: transform 0.3s ease, border-color 0.3s ease;
-
 }
-
-
 
 .voucher-card:hover {
-
     transform: translateY(-4px);
-
     border-color: var(--primary-coral);
-
     box-shadow: var(--shadow-md);
-
 }
-
-
 
 .voucher-badge {
-
     position: absolute;
-
     top: 12px;
-
     right: 12px;
-
     background: #FFF1EE;
-
     color: var(--primary-coral);
-
     font-size: 0.75rem;
-
     font-weight: 700;
-
     padding: 0.25rem 0.65rem;
-
     border-radius: var(--radius-full);
-
 }
-
-
 
 [data-theme="dark"] .voucher-badge {
-
     background: rgba(255, 117, 86, 0.2);
-
     color: #FFA48E;
-
 }
-
-
 
 .voucher-code-box {
-
     background: var(--bg-page);
-
     border: 1px solid var(--border-color);
-
     border-radius: var(--radius-md);
-
     padding: 0.6rem 1rem;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     margin-top: 1rem;
-
 }
-
-
 
 .voucher-code-text {
-
     font-family: monospace;
-
     font-size: 1.15rem;
-
     font-weight: 800;
-
     color: var(--primary-coral);
-
     letter-spacing: 1px;
-
 }
-
-
 
 /* Storytelling 4 Pillars */
-
 .story-pillars {
-
     display: grid;
-
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-
     gap: 1.5rem;
-
     margin-bottom: 3.5rem;
-
 }
-
-
 
 .pillar-card {
-
     background: var(--bg-card);
-
     border: 1px solid var(--border-color);
-
     border-radius: var(--radius-lg);
-
     padding: 1.8rem 1.4rem;
-
     text-align: center;
-
     box-shadow: var(--shadow-sm);
-
     transition: transform 0.3s ease;
-
 }
-
-
 
 .pillar-card:hover {
-
     transform: translateY(-5px);
-
     border-color: var(--primary-coral);
-
 }
-
-
 
 .pillar-icon {
-
     font-size: 2.5rem;
-
     margin-bottom: 0.8rem;
-
 }
-
-
 
 .pillar-title {
-
     font-size: 1.1rem;
-
     font-weight: 700;
-
     color: var(--text-primary);
-
     margin-bottom: 0.5rem;
-
 }
-
-
 
 .pillar-desc {
-
     font-size: 0.88rem;
-
     color: var(--text-secondary);
-
     line-height: 1.5;
-
 }
-
-
 
 /* Bundle Cards */
-
 .bundles-section {
-
     margin-bottom: 4rem;
-
 }
-
-
 
 .bundles-grid {
-
     display: grid;
-
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-
     gap: 1.8rem;
-
 }
-
-
 
 .bundle-card {
-
     background: var(--bg-card);
-
     border: 2px solid var(--border-color);
-
     border-radius: var(--radius-xl);
-
     padding: 2rem 1.6rem;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: space-between;
-
     position: relative;
-
     box-shadow: var(--shadow-sm);
-
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-
 }
-
-
 
 .bundle-card.popular-bundle {
-
     border-color: var(--primary-coral);
-
     box-shadow: 0 8px 24px rgba(255, 117, 86, 0.18);
-
     transform: scale(1.02);
-
 }
-
-
 
 .bundle-card:hover {
-
     transform: translateY(-6px) scale(1.02);
-
     border-color: var(--primary-coral);
-
 }
-
-
 
 .bundle-badge {
-
     position: absolute;
-
     top: -12px;
-
     left: 50%;
-
     transform: translateX(-50%);
-
     background: linear-gradient(135deg, #FF7556, #FF9A8B);
-
     color: #FFFFFF;
-
     font-size: 0.75rem;
-
     font-weight: 800;
-
     padding: 0.3rem 1.2rem;
-
     border-radius: var(--radius-full);
-
     white-space: nowrap;
-
     box-shadow: 0 4px 10px rgba(255, 117, 86, 0.3);
-
 }
-
-
 
 .bundle-price-wrap {
-
     margin: 1.2rem 0;
-
     padding: 1rem;
-
     background: var(--bg-page);
-
     border-radius: var(--radius-md);
-
     text-align: center;
-
 }
-
-
 
 .bundle-old-price {
-
     text-decoration: line-through;
-
     color: var(--text-muted);
-
     font-size: 0.95rem;
-
     margin-right: 0.5rem;
-
 }
-
-
 
 .bundle-new-price {
-
     font-size: 2rem;
-
     font-weight: 800;
-
     color: var(--primary-coral);
-
 }
-
-
 
 .bundle-features {
-
     list-style: none;
-
     padding: 0;
-
     margin: 1.2rem 0;
-
     font-size: 0.9rem;
-
     color: var(--text-secondary);
-
 }
-
-
 
 .bundle-features li {
-
     padding: 0.45rem 0;
-
     display: flex;
-
     align-items: flex-start;
-
     gap: 0.5rem;
-
     border-bottom: 1px dashed var(--border-color);
-
 }
-
-
 
 .bundle-features li:last-child {
-
     border-bottom: none;
-
 }
-
-
 
 /* FAQ Accordion */
-
 .faq-section {
-
     background: var(--bg-card);
-
     border: 1px solid var(--border-color);
-
     border-radius: var(--radius-xl);
-
     padding: 2.5rem 2rem;
-
     margin-bottom: 3.5rem;
-
     box-shadow: var(--shadow-sm);
-
 }
-
-
 
 .faq-item {
-
     border-bottom: 1px solid var(--border-color);
-
     padding: 1.2rem 0;
-
 }
-
-
 
 .faq-item:last-child {
-
     border-bottom: none;
-
     padding-bottom: 0;
-
 }
-
-
 
 .faq-question {
-
     font-weight: 700;
-
     font-size: 1.05rem;
-
     color: var(--text-primary);
-
     cursor: pointer;
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     user-select: none;
-
 }
-
-
 
 .faq-answer {
-
     margin-top: 0.8rem;
-
     font-size: 0.92rem;
-
     color: var(--text-secondary);
-
     line-height: 1.6;
-
     display: none;
-
 }
-
-
 
 .faq-item.active .faq-answer {
-
     display: block;
-
 }
-
-
 
 .faq-icon {
-
     transition: transform 0.3s ease;
-
 }
-
-
 
 .faq-item.active .faq-icon {
-
     transform: rotate(180deg);
-
 }
-
-
 
 /* Reviews Grid */
-
 .reviews-grid {
-
     display: grid;
-
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-
     gap: 1.5rem;
-
     margin-bottom: 3.5rem;
-
 }
-
-
 
 .review-card {
-
     background: var(--bg-card);
-
     border: 1px solid var(--border-color);
-
     border-radius: var(--radius-lg);
-
     padding: 1.5rem;
-
     box-shadow: var(--shadow-sm);
-
 }
-
-
 
 .review-stars {
-
     color: #FFB800;
-
     font-size: 1.1rem;
-
     margin-bottom: 0.6rem;
-
 }
-
-
 
 .review-text {
-
     font-size: 0.9rem;
-
     color: var(--text-secondary);
-
     line-height: 1.5;
-
     margin-bottom: 1rem;
-
 }
-
-
 
 .reviewer-meta {
-
     display: flex;
-
     align-items: center;
-
     gap: 0.8rem;
-
 }
-
-
 
 .reviewer-avatar {
-
     width: 42px;
-
     height: 42px;
-
     border-radius: 50%;
-
     object-fit: cover;
-
     border: 2px solid var(--primary-coral);
-
 }
-
-
 
 /* Toast */
-
 #toast-notification {
-
     position: fixed;
-
     bottom: 80px;
-
     right: 25px;
-
     background: #10B981;
-
     color: #FFFFFF;
-
     padding: 0.75rem 1.4rem;
-
     border-radius: var(--radius-full);
-
     font-weight: 700;
-
     box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-
     display: none;
-
     align-items: center;
-
     gap: 0.5rem;
-
     z-index: 9999;
-
     animation: fadeInToast 0.3s ease;
-
 }
-
-
 
 @keyframes fadeInToast {
-
     from { opacity: 0; transform: translateY(10px); }
-
     to { opacity: 1; transform: translateY(0); }
-
 }
-
-
 
 /* Sticky Bottom Action Bar */
-
 .sticky-sales-bar {
-
     position: fixed;
-
     bottom: 0;
-
     left: 0;
-
     right: 0;
-
     background: rgba(255, 255, 255, 0.95);
-
     backdrop-filter: blur(12px);
-
     border-top: 1px solid rgba(255, 117, 86, 0.3);
-
     padding: 0.8rem 1.5rem;
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
-
     box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
-
     z-index: 990;
-
 }
-
-
 
 [data-theme="dark"] .sticky-sales-bar {
-
     background: rgba(23, 32, 48, 0.95);
-
     border-top-color: rgba(255, 117, 86, 0.3);
-
 }
-
-
 
 /* Celebration Modal */
-
 .modal-overlay {
-
     position: fixed;
-
     top: 0;
-
     left: 0;
-
     right: 0;
-
     bottom: 0;
-
     background: rgba(0, 0, 0, 0.65);
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     z-index: 10000;
-
     padding: 1.5rem;
-
 }
-
-
 
 .modal-content-box {
-
     background: var(--bg-card);
-
     border: 2px solid var(--primary-coral);
-
     border-radius: var(--radius-xl);
-
     max-width: 520px;
-
     width: 100%;
-
     padding: 2.5rem 2rem;
-
     text-align: center;
-
     box-shadow: var(--shadow-xl);
-
     position: relative;
-
     animation: zoomInModal 0.3s ease;
-
 }
-
-
 
 @keyframes zoomInModal {
-
     from { transform: scale(0.85); opacity: 0; }
-
     to { transform: scale(1); opacity: 1; }
-
 }
-
 </style>
-
-
 
 <div class="welcome-sales-page">
 
-
-
     <!-- New Member Registration VIP Email Dispatch Banner -->
-
     
-
     <!-- Added To Cart Alert -->
-
     
-
     <!-- Hero Section -->
-
     <div class="welcome-hero">
-
         <div class="vip-pill-badge">
-
             <span>✨</span>
-
             <span>EXCLUSIVE VIP WELCOME OFFER</span>
-
             <span>🐾</span>
-
         </div>
-
         <h1 class="welcome-title">
-
             ยินดีต้อนรับสู่ครอบครัวทาสแมว Cat Boutique! 🎉
-
         </h1>
-
         <p class="welcome-subtitle">
-
                             ขอต้อนรับสมาชิกใหม่ทุกท่าน สิทธิพิเศษต้อนรับมูลค่ากว่า <strong>5,500 บาท</strong> ถูกเปิดใช้งานแล้วสำหรับคุณ รับเลี้ยงน้องแมวสายพันธุ์แท้พร้อมชุดของแถมและประกันสุขภาพฟรี!
-
                     </p>
-
-
 
         <!-- Limited Time Timer -->
-
         <div class="deal-timer-banner">
-
             <span style="font-size: 1.3rem;">⏳</span>
-
             <span style="font-weight: 600; color: var(--text-primary);">สิทธิพิเศษสมาชิกใหม่สิ้นสุดใน:</span>
-
             <div class="timer-box" id="welcome-countdown">
-
                 <span id="hours">47</span>:<span id="minutes">59</span>:<span id="seconds">30</span>
-
             </div>
-
         </div>
-
-
 
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-
             <a href="#vouchers-anchor" class="btn btn-primary btn-lg" style="box-shadow: 0 4px 15px rgba(255,117,86,0.35);">
-
                 🎁 กดรับโค้ดส่วนลด 15%
-
             </a>
-
             <a href="#bundles-anchor" class="btn btn-secondary btn-lg">
-
                 📦 ดูชุด Starter Pack มือใหม่
-
             </a>
-
                     </div>
-
     </div>
-
-
 
     <!-- 1. Vouchers Section -->
-
     <div id="vouchers-anchor" style="scroll-margin-top: 90px; margin-bottom: 3.5rem;">
-
         <div class="section-header" style="margin-bottom: 1.8rem;">
-
             <span class="section-tag">🎟️ WELCOME VOUCHERS</span>
-
             <h2 class="section-title">คูปองของขวัญต้อนรับสมาชิกใหม่</h2>
-
             <p class="section-subtitle">กดคัดลอกโค้ดเพื่อนำไปกรอกหรือใช้เป็นส่วนลดในการสั่งจองน้องแมวและสินค้าในระบบ</p>
-
         </div>
-
-
 
         <div class="vouchers-grid">
-
             <!-- Voucher 1 -->
-
             <div class="voucher-card">
-
                 <span class="voucher-badge">ลดสูงสุด 15%</span>
-
                 <div>
-
                     <div style="font-size: 2rem; margin-bottom: 0.4rem;">🐱</div>
-
                     <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.3rem;">
-
                         ส่วนลดรับเลี้ยงน้องแมวตัวแรก
-
                     </h3>
-
                     <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
-
                         ลดทันที 15% จากค่าสินสอดน้องแมวทุกสายพันธุ์ในร้าน สำหรับสมาชิกที่รับเลี้ยงครั้งแรก
-
                     </p>
-
                 </div>
-
                 <div class="voucher-code-box">
-
                     <div>
-
                         <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">โค้ดส่วนลดของคุณ:</span>
-
                         <span class="voucher-code-text">WELCOME15</span>
-
                     </div>
-
                     <button type="button" class="btn btn-primary btn-sm" onclick="copyVoucher('WELCOME15', this)">
-
                         คัดลอก 📋
-
                     </button>
-
                 </div>
-
             </div>
-
-
 
             <!-- Voucher 2 -->
-
             <div class="voucher-card">
-
                 <span class="voucher-badge">ฟรี 2,500.-</span>
-
                 <div>
-
                     <div style="font-size: 2rem; margin-bottom: 0.4rem;">🩺</div>
-
                     <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.3rem;">
-
                         ฟรี! ตรวจสุขภาพ & วัคซีนครบ
-
                     </h3>
-
                     <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
-
                         รับสิทธิ์ตรวจสุขภาพเบื้องต้น ตรวจแล็บไวรัส FIV/FeLV ฟรี + ฝังไมโครชิปสากลก่อนส่งมอบ
-
                     </p>
-
                 </div>
-
                 <div class="voucher-code-box">
-
                     <div>
-
                         <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">โค้ดสิทธิ์ตรวจสุขภาพ:</span>
-
                         <span class="voucher-code-text">HEALTHKITVIP</span>
-
                     </div>
-
                     <button type="button" class="btn btn-primary btn-sm" onclick="copyVoucher('HEALTHKITVIP', this)">
-
                         คัดลอก 📋
-
                     </button>
-
                 </div>
-
             </div>
-
-
 
             <!-- Voucher 3 -->
-
             <div class="voucher-card">
-
                 <span class="voucher-badge">ฟรี 1,500.-</span>
-
                 <div>
-
                     <div style="font-size: 2rem; margin-bottom: 0.4rem;">🚐</div>
-
                     <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.3rem;">
-
                         ฟรี! ส่งด่วนแอร์ปรับอุณหภูมิ
-
                     </h3>
-
                     <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.5;">
-
                         บริการส่งมอบน้องแมวด้วยรถยนต์ปรับอุณหภูมิพิเศษ พร้อมพี่เลี้ยงดูแลตลอดเส้นทางถึงหน้าบ้าน
-
                     </p>
-
                 </div>
-
                 <div class="voucher-code-box">
-
                     <div>
-
                         <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">โค้ดจัดส่งฟรี:</span>
-
                         <span class="voucher-code-text">FREESHIPVIP</span>
-
                     </div>
-
                     <button type="button" class="btn btn-primary btn-sm" onclick="copyVoucher('FREESHIPVIP', this)">
-
                         คัดลอก 📋
-
                     </button>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
-
 
     <!-- 2. Storytelling / Sales Pitch -->
-
     <div style="margin-bottom: 4rem;">
-
         <div class="section-header" style="margin-bottom: 2rem;">
-
             <span class="section-tag">🌟 WHY CHOOSE US</span>
-
             <h2 class="section-title">ทำไมทาสแมวกว่า 5,200+ คน จึงเลือกรับเลี้ยงกับเรา?</h2>
-
             <p class="section-subtitle">
-
                 เราเข้าใจว่าการรับสมาชิกใหม่เข้าบ้านคือการตัดสินใจครั้งสำคัญ Cat Boutique จึงคัดสรรสิ่งที่ดีที่สุดเพื่อความสุขระยะยาวของคุณและน้องแมว
-
             </p>
-
         </div>
-
-
 
         <div class="story-pillars">
-
             <div class="pillar-card">
-
                 <div class="pillar-icon">🏆</div>
-
                 <h3 class="pillar-title">สายพันธุ์แท้ 100% มีใบเพ็ดดีกรี</h3>
-
                 <p class="pillar-desc">
-
                     พัฒนาสายพันธุ์ตามมาตรฐานสมาคมแมวสากล WCF / CFA / TICA ลำดับเครือญาติชัดเจน ปราศจากปัญหาเลือดชิด
-
                 </p>
-
             </div>
 
-
-
             <div class="pillar-card">
-
                 <div class="pillar-icon">🩺</div>
-
                 <h3 class="pillar-title">ตรวจสุขภาพ & ไวรัส FeLV/FIV ลบ</h3>
-
                 <p class="pillar-desc">
-
                     น้องแมวได้รับการตรวจสุขภาพจากสัตวแพทย์ทุกสัปดาห์ วัคซีนรวมครบ ถ่ายพยาธิ และมีสมุดประจำตัวเล่มจริง
-
                 </p>
-
             </div>
 
-
-
             <div class="pillar-card">
-
                 <div class="pillar-icon">🛡️</div>
-
                 <h3 class="pillar-title">รับประกันสุขภาพยาวนาน 180 วัน</h3>
-
                 <p class="pillar-desc">
-
                     การันตีคุ้มครองโรคทางพันธุกรรม (FIP, PKD, HCM) ยาวนานถึง 180 วัน เปลี่ยนตัวใหม่หรือยินดีคืนเงินเต็มจำนวน
-
                 </p>
-
             </div>
-
-
 
             <div class="pillar-card">
-
                 <div class="pillar-icon">💬</div>
-
                 <h3 class="pillar-title">ที่ปรึกษาการเลี้ยงดูฟรีตลอดชีพ</h3>
-
                 <p class="pillar-desc">
-
                     ไม่ว่าจะมือใหม่หรือมีคำถาม ทีมงานผู้เชี่ยวชาญและสัตวแพทย์พร้อมให้คำแนะนำและช่วยเหลือตลอด 24 ชั่วโมง
-
                 </p>
-
             </div>
-
         </div>
-
     </div>
-
-
 
     <!-- 3. Member Starter Bundles -->
-
     <div id="bundles-anchor" class="bundles-section" style="scroll-margin-top: 90px;">
-
         <div class="section-header" style="margin-bottom: 2.2rem;">
-
             <span class="section-tag">📦 STARTER CARE PACKAGES</span>
-
             <h2 class="section-title">3 ชุดของใช้และดูแลสุขภาพสุดคุ้มสำหรับสมาชิกใหม่</h2>
-
             <p class="section-subtitle">จัดเซ็ตครบ จบในที่เดียว ไม่ต้องเสียเวลาเลือกซื้อทีละชิ้น พร้อมส่วนลดพิเศษเฉพาะสมาชิก</p>
-
         </div>
-
-
 
         <div class="bundles-grid">
-
                                             <div class="bundle-card popular-bundle">
-
                                             <div class="bundle-badge">🔥 ขายดีอันดับ 1</div>
-
                     
-
                     <div>
-
                         <div style="font-size: 2.2rem; margin-bottom: 0.5rem; text-align: center;">
-
                             🏡                        </div>
-
                         <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary); text-align: center; margin-bottom: 0.3rem;">
-
                             ชุดทาสแมวมือใหม่ (Newborn Starter Kit)                        </h3>
-
                         <p style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-bottom: 0.5rem;">
-
                             คอนโดแมว 3 ชั้นบุนวมนุ่ม + กระบะทรายอัตโนมัติ + ชามน้ำพุกรองไอออน + อาหารโฮลิสติก 5kg + ขนมแมวเลีย 1 โหล                        </p>
 
-
-
                         <div class="bundle-price-wrap">
-
                             <div>
-
                                 <span class="bundle-old-price">4,990 ฿</span>
-
                                 <span style="color: #10B981; font-weight: 700; font-size: 0.85rem;">ประหยัด 2,500 ฿</span>
-
                             </div>
-
                             <div class="bundle-new-price">2,490 ฿</div>
-
                             <span style="font-size: 0.78rem; color: var(--text-muted);">ราคาพิเศษเฉพาะสมาชิกใหม่</span>
-
                         </div>
 
-
-
                         <ul class="bundle-features">
-
                                                             <li><span>✅</span> คอนโดแมว 3 ชั้น นุ่มสบาย รับน้ำหนักได้ดี</li>
-
                                 <li><span>✅</span> กระบะทรายขนาดใหญ่ + ที่ตักทรายแถมฟรี</li>
-
                                 <li><span>✅</span> ชามน้ำพุไอออน กรองน้ำเงียบกริบ 2.5L</li>
-
                                 <li><span>✅</span> อาหารเม็ดเกรด Holistic Grain-Free 5kg</li>
-
                                 <li><span>✅</span> ขนมแมวเลียพรีเมียม 1 โหล (12 ซอง)</li>
-
                                 <li><span>✅</span> ไม้ล่อแมวขนนก + ลูกบอลกระดิ่ง</li>
-
                                                     </ul>
-
                     </div>
 
-
-
-                    <form method="POST" action="#" onsubmit="return false;" style="margin-top: 1.5rem;">
-
+                    <form method="POST" action="welcome_deal.php" style="margin-top: 1.5rem;">
                         <input type="hidden" name="action" value="add_item">
-
                         <input type="hidden" name="item_id" value="bundle_starter">
-
                         <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem;">
-
                             สั่งซื้อแพ็กเกจนี้ 🛒
-
                         </button>
-
                     </form>
-
                 </div>
-
                                             <div class="bundle-card ">
-
                                             <div class="bundle-badge">⭐ แนะนำสำหรับสมาชิก</div>
-
                     
-
                     <div>
-
                         <div style="font-size: 2.2rem; margin-bottom: 0.5rem; text-align: center;">
-
                             🛁                        </div>
-
                         <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary); text-align: center; margin-bottom: 0.3rem;">
-
                             ชุดสปา &amp; สุขภาพพรีเมียม (Royal Spa &amp; Wellness Kit)                        </h3>
-
                         <p style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-bottom: 0.5rem;">
-
                             บัตรสปา กรูมมิ่ง อาบน้ำตัดขน 3 ครั้ง + ประกันสุขภาพ 1 ปี + ชุดวิตามินบำรุงขน + แปรงนวดสแตนเลส                        </p>
 
-
-
                         <div class="bundle-price-wrap">
-
                             <div>
-
                                 <span class="bundle-old-price">6,500 ฿</span>
-
                                 <span style="color: #10B981; font-weight: 700; font-size: 0.85rem;">ประหยัด 3,010 ฿</span>
-
                             </div>
-
                             <div class="bundle-new-price">3,490 ฿</div>
-
                             <span style="font-size: 0.78rem; color: var(--text-muted);">ราคาพิเศษเฉพาะสมาชิกใหม่</span>
-
                         </div>
 
-
-
                         <ul class="bundle-features">
-
                                                             <li><span>✅</span> บัตรกรูมมิ่ง อาบน้ำตัดแต่งขนพรีเมียม 3 ครั้ง</li>
-
                                 <li><span>✅</span> ประกันสุขภาพและอุบัติเหตุสัตว์เลี้ยง 1 ปี</li>
-
                                 <li><span>✅</span> เจลวิตามินบำรุงขนและลดก้อนขนนำเข้า</li>
-
                                 <li><span>✅</span> แปรงสแตนเลสนวดผิวหนังป้องกันขนพันกัน</li>
-
                                 <li><span>✅</span> น้ำยาเช็ดหูและชุดตัดเล็บแมวนิรภัย</li>
-
                                 <li><span>✅</span> ปรึกษาสัตวแพทย์ทางโทรศัพท์ฟรี 1 ปี</li>
-
                                                     </ul>
-
                     </div>
 
-
-
-                    <form method="POST" action="#" onsubmit="return false;" style="margin-top: 1.5rem;">
-
+                    <form method="POST" action="welcome_deal.php" style="margin-top: 1.5rem;">
                         <input type="hidden" name="action" value="add_item">
-
                         <input type="hidden" name="item_id" value="bundle_spa">
-
                         <button type="submit" class="btn btn-secondary" style="width: 100%; padding: 0.75rem;">
-
                             สั่งซื้อแพ็กเกจนี้ 🛒
-
                         </button>
-
                     </form>
-
                 </div>
-
                                             <div class="bundle-card ">
-
                                             <div class="bundle-badge">👑 คุ้มค่าที่สุด</div>
-
                     
-
                     <div>
-
                         <div style="font-size: 2.2rem; margin-bottom: 0.5rem; text-align: center;">
-
                             👑                        </div>
-
                         <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary); text-align: center; margin-bottom: 0.3rem;">
-
                             แพ็กเกจพร้อมอยู่ All-Inclusive (Ultimate VIP Pack)                        </h3>
-
                         <p style="font-size: 0.85rem; color: var(--text-secondary); text-align: center; margin-bottom: 0.5rem;">
-
                             รวมเซ็ต 1+2 พร้อมกรงเดินทางขึ้นเครื่องบินมาตรฐาน IATA + ปลอกคอ GPS ติดตามตำแหน่ง + เครื่องให้อาหาร Wi-Fi                        </p>
 
-
-
                         <div class="bundle-price-wrap">
-
                             <div>
-
                                 <span class="bundle-old-price">11,500 ฿</span>
-
                                 <span style="color: #10B981; font-weight: 700; font-size: 0.85rem;">ประหยัด 5,510 ฿</span>
-
                             </div>
-
                             <div class="bundle-new-price">5,990 ฿</div>
-
                             <span style="font-size: 0.78rem; color: var(--text-muted);">ราคาพิเศษเฉพาะสมาชิกใหม่</span>
-
                         </div>
-
-
 
                         <ul class="bundle-features">
-
                                                             <li><span>✅</span> รวมของใช้และบริการทั้งหมดในเซ็ต 1 + เซ็ต 2</li>
-
                                 <li><span>✅</span> กรงเดินทางขึ้นเครื่องบินมาตรฐาน IATA</li>
-
                                 <li><span>✅</span> ปลอกคอ GPS อัจฉริยะ ติดตามตำแหน่งผ่านมือถือ</li>
-
                                 <li><span>✅</span> เครื่องให้อาหารอัตโนมัติตั้งเวลาผ่าน Wi-Fi</li>
-
                                 <li><span>✅</span> กล้องวงจรปิด Pet Cam ดูน้องแมวผ่านแอป 24 ชม.</li>
-
                                 <li><span>✅</span> รับสิทธิ์บริการพี่เลี้ยงและฝากเลี้ยงฟรี 5 วัน</li>
-
                                                     </ul>
-
                     </div>
 
-
-
-                    <form method="POST" action="#" onsubmit="return false;" style="margin-top: 1.5rem;">
-
+                    <form method="POST" action="welcome_deal.php" style="margin-top: 1.5rem;">
                         <input type="hidden" name="action" value="add_item">
-
                         <input type="hidden" name="item_id" value="bundle_vip">
-
                         <button type="submit" class="btn btn-secondary" style="width: 100%; padding: 0.75rem;">
-
                             สั่งซื้อแพ็กเกจนี้ 🛒
-
                         </button>
-
                     </form>
-
                 </div>
-
                     </div>
-
     </div>
-
-
 
     <!-- 4. Curated Hot Cats for New Adopters -->
-
     <div style="margin-bottom: 4rem;">
-
         <div class="section-header" style="margin-bottom: 2rem;">
-
             <span class="section-tag">🐱 BEST FOR BEGINNERS</span>
-
             <h2 class="section-title">น้องแมวยอดฮิตที่เหมาะที่สุดสำหรับมือใหม่</h2>
-
             <p class="section-subtitle">นิสัยอ่อนโยน เลี้ยงง่าย ปรับตัวเข้ากับครอบครัวได้อย่างรวดเร็ว พร้อมย้ายบ้านทันที</p>
-
         </div>
-
-
 
         <div class="products-grid">
-
                                             <div class="cat-card">
-
                     <div class="cat-card-img-wrap">
-
                         <img src="assets/images/cat_british.jpg" alt="น้องสโนว์ (British Shorthair)" class="cat-card-img" loading="lazy">
-
                         <span class="cat-card-badge">✨ พร้อมย้ายบ้าน</span>
-
                         <span class="cat-card-gender">ผู้ (Male)</span>
-
                     </div>
 
-
-
                     <div class="cat-card-body">
-
                         <div class="cat-card-breed">บริติช ช็อตแฮร์ (British Shorthair)</div>
-
                         <h3 class="cat-card-name">น้องสโนว์ (British Shorthair)</h3>
-
                         <p class="cat-card-desc">น้องแมวสายพันธุ์ผู้ดีอังกฤษ หน้ากลมแก้มป่อง ขนแน่นนุ่มเหมือนกำมะหยี่ อารมณ์ดี เรียบร้อย เลี้ยงง่าย และเป็นมิตรกับทุกคนในครอบครัว</p>
 
-
-
                         <div class="cat-tags-row">
-
                             <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
-
                             <span class="cat-pill-tag">🧶 ขนสั้นแน่นนุ่ม</span>
-
                             <span class="cat-pill-tag">📜 ใบเพ็ดดีกรีแท้</span>
-
                         </div>
-
-
 
                         <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.5rem 0.8rem; margin-bottom: 1rem; font-size: 0.78rem; color: #10B981; font-weight: 600;">
-
                             🎁 สิทธิ์สมาชิก: ส่งฟรีแอร์ + ประกัน 180 วัน
-
                         </div>
-
-
 
                         <div class="cat-card-footer">
-
                             <div class="cat-price-box">
-
                                 <span class="cat-price-label" style="text-decoration: line-through; color: var(--text-muted); font-size: 0.75rem;">
-
                                     ปกติ 18,000 ฿
-
                                 </span>
-
                                 <span class="cat-price-val" style="color: var(--primary-coral); font-size: 1.25rem;">
-
                                     17,100 ฿
-
                                 </span>
-
                             </div>
 
-
-
-                            <form method="POST" action="#" onsubmit="return false;">
-
+                            <form method="POST" action="welcome_deal.php">
                                 <input type="hidden" name="action" value="add_item">
-
                                 <input type="hidden" name="item_id" value="cat_british">
-
                                 <button type="submit" class="btn btn-primary btn-sm">
-
                                     รับเลี้ยงน้อง 🐾
-
                                 </button>
-
                             </form>
-
                         </div>
-
                     </div>
-
                 </div>
-
                                             <div class="cat-card">
-
                     <div class="cat-card-img-wrap">
-
                         <img src="assets/images/cat_scottish.jpg" alt="น้องพุดดิ้ง (Scottish Fold)" class="cat-card-img" loading="lazy">
-
                         <span class="cat-card-badge">✨ พร้อมย้ายบ้าน</span>
-
                         <span class="cat-card-gender">เมีย (Female)</span>
-
                     </div>
-
-
 
                     <div class="cat-card-body">
-
                         <div class="cat-card-breed">สก็อตติช โฟลด์ (Scottish Fold)</div>
-
                         <h3 class="cat-card-name">น้องพุดดิ้ง (Scottish Fold)</h3>
-
                         <p class="cat-card-desc">เจ้าเหมียวหูพับ หน้ากลมแป้นเหมือนนกฮูก ขี้อ้อน ชอบนั่งท่านั่งพุงพลุ้ย (Buddha Position) น่ารักน่าเอ็นดู เข้ากับทุกคนได้ง่ายดาย</p>
 
-
-
                         <div class="cat-tags-row">
-
                             <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
-
                             <span class="cat-pill-tag">🧶 ขนสั้นนุ่มหนา</span>
-
                             <span class="cat-pill-tag">📜 ใบเพ็ดดีกรีแท้</span>
-
                         </div>
-
-
 
                         <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.5rem 0.8rem; margin-bottom: 1rem; font-size: 0.78rem; color: #10B981; font-weight: 600;">
-
                             🎁 สิทธิ์สมาชิก: ส่งฟรีแอร์ + ประกัน 180 วัน
-
                         </div>
-
-
 
                         <div class="cat-card-footer">
-
                             <div class="cat-price-box">
-
                                 <span class="cat-price-label" style="text-decoration: line-through; color: var(--text-muted); font-size: 0.75rem;">
-
                                     ปกติ 21,000 ฿
-
                                 </span>
-
                                 <span class="cat-price-val" style="color: var(--primary-coral); font-size: 1.25rem;">
-
                                     19,950 ฿
-
                                 </span>
-
                             </div>
 
-
-
-                            <form method="POST" action="#" onsubmit="return false;">
-
+                            <form method="POST" action="welcome_deal.php">
                                 <input type="hidden" name="action" value="add_item">
-
                                 <input type="hidden" name="item_id" value="cat_scottish">
-
                                 <button type="submit" class="btn btn-primary btn-sm">
-
                                     รับเลี้ยงน้อง 🐾
-
                                 </button>
-
                             </form>
-
                         </div>
-
                     </div>
-
                 </div>
-
                                             <div class="cat-card">
-
                     <div class="cat-card-img-wrap">
-
                         <img src="assets/images/cat_ragdoll.jpg" alt="น้องคอตตอน (Ragdoll)" class="cat-card-img" loading="lazy">
-
                         <span class="cat-card-badge">✨ พร้อมย้ายบ้าน</span>
-
                         <span class="cat-card-gender">เมีย (Female)</span>
-
                     </div>
-
-
 
                     <div class="cat-card-body">
-
                         <div class="cat-card-breed">แร็กดอลล์ (Ragdoll)</div>
-
                         <h3 class="cat-card-name">น้องคอตตอน (Ragdoll)</h3>
-
                         <p class="cat-card-desc">เจ้าหญิงดวงตาสีฟ้าคราม ตัวนุ่มปวกเปียกเหมือนตุ๊กตาผ้าเวลาอุ้ม อ่อนโยน รักความสงบ ขนนุ่มดั่งปุยฝ้าย ไม่กางเล็บ เหมาะกับครอบครัวที่มีเด็ก</p>
 
-
-
                         <div class="cat-tags-row">
-
                             <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
-
                             <span class="cat-pill-tag">🧶 ขนกึ่งยาวนุ่มลื่น</span>
-
                             <span class="cat-pill-tag">📜 ใบเพ็ดดีกรีแท้</span>
-
                         </div>
-
-
 
                         <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.5rem 0.8rem; margin-bottom: 1rem; font-size: 0.78rem; color: #10B981; font-weight: 600;">
-
                             🎁 สิทธิ์สมาชิก: ส่งฟรีแอร์ + ประกัน 180 วัน
-
                         </div>
-
-
 
                         <div class="cat-card-footer">
-
                             <div class="cat-price-box">
-
                                 <span class="cat-price-label" style="text-decoration: line-through; color: var(--text-muted); font-size: 0.75rem;">
-
                                     ปกติ 29,000 ฿
-
                                 </span>
-
                                 <span class="cat-price-val" style="color: var(--primary-coral); font-size: 1.25rem;">
-
                                     27,550 ฿
-
                                 </span>
-
                             </div>
 
-
-
-                            <form method="POST" action="#" onsubmit="return false;">
-
+                            <form method="POST" action="welcome_deal.php">
                                 <input type="hidden" name="action" value="add_item">
-
                                 <input type="hidden" name="item_id" value="cat_ragdoll">
-
                                 <button type="submit" class="btn btn-primary btn-sm">
-
                                     รับเลี้ยงน้อง 🐾
-
                                 </button>
-
                             </form>
-
                         </div>
-
                     </div>
-
                 </div>
-
                                             <div class="cat-card">
-
                     <div class="cat-card-img-wrap">
-
                         <img src="assets/images/cat_khao_manee.jpg" alt="น้องมณีเพชร (ขาวมณี / Khao Manee)" class="cat-card-img" loading="lazy">
-
                         <span class="cat-card-badge">✨ พร้อมย้ายบ้าน</span>
-
                         <span class="cat-card-gender">เมีย (Female)</span>
-
                     </div>
-
-
 
                     <div class="cat-card-body">
-
                         <div class="cat-card-breed">ขาวมณี (Khao Manee - ประเทศไทย)</div>
-
                         <h3 class="cat-card-name">น้องมณีเพชร (ขาวมณี / Khao Manee)</h3>
-
                         <p class="cat-card-desc">อัญมณีมีชีวิตแห่งสยาม ขนขาวปลอดดั่งหิมะ ดวงตาสองสี (ฟ้า-เหลืองอำพัน) ส่องประกายดั่งเพชร ฉลาด ขี้เล่น และนำพาโชคลาภวาสนา</p>
 
-
-
                         <div class="cat-tags-row">
-
                             <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
-
                             <span class="cat-pill-tag">🧶 ขนสั้นสีขาวบริสุทธิ์ 100%</span>
-
                             <span class="cat-pill-tag">📜 ใบเพ็ดดีกรีแท้</span>
-
                         </div>
-
-
 
                         <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.5rem 0.8rem; margin-bottom: 1rem; font-size: 0.78rem; color: #10B981; font-weight: 600;">
-
                             🎁 สิทธิ์สมาชิก: ส่งฟรีแอร์ + ประกัน 180 วัน
-
                         </div>
-
-
 
                         <div class="cat-card-footer">
-
                             <div class="cat-price-box">
-
                                 <span class="cat-price-label" style="text-decoration: line-through; color: var(--text-muted); font-size: 0.75rem;">
-
                                     ปกติ 25,000 ฿
-
                                 </span>
-
                                 <span class="cat-price-val" style="color: var(--primary-coral); font-size: 1.25rem;">
-
                                     23,750 ฿
-
                                 </span>
-
                             </div>
 
-
-
-                            <form method="POST" action="#" onsubmit="return false;">
-
+                            <form method="POST" action="welcome_deal.php">
                                 <input type="hidden" name="action" value="add_item">
-
                                 <input type="hidden" name="item_id" value="cat_khao_manee">
-
                                 <button type="submit" class="btn btn-primary btn-sm">
-
                                     รับเลี้ยงน้อง 🐾
-
                                 </button>
-
                             </form>
-
                         </div>
-
                     </div>
-
                 </div>
-
                                             <div class="cat-card">
-
                     <div class="cat-card-img-wrap">
-
                         <img src="assets/images/cat_americanshorthair.jpg" alt="น้องการ์ฟิลด์ (American Shorthair)" class="cat-card-img" loading="lazy">
-
                         <span class="cat-card-badge">✨ พร้อมย้ายบ้าน</span>
-
                         <span class="cat-card-gender">ผู้ (Male)</span>
-
                     </div>
-
-
 
                     <div class="cat-card-body">
-
                         <div class="cat-card-breed">อเมริกัน ช็อตแฮร์ (American Shorthair)</div>
-
                         <h3 class="cat-card-name">น้องการ์ฟิลด์ (American Shorthair)</h3>
-
                         <p class="cat-card-desc">แมวลายเสือสีเงินคลาสสิก ลายชัดเจน สุขภาพแข็งแรง อึด ทน ไม่ป่วยง่าย เลี้ยงง่าย อารมณ์ดี เป็นมิตรกับทั้งคนแปลกหน้าและสัตว์เลี้ยงอื่น</p>
 
-
-
                         <div class="cat-tags-row">
-
                             <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
-
                             <span class="cat-pill-tag">🧶 ขนสั้นแน่นลายชัดเจน</span>
-
                             <span class="cat-pill-tag">📜 ใบเพ็ดดีกรีแท้</span>
-
                         </div>
-
-
 
                         <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.5rem 0.8rem; margin-bottom: 1rem; font-size: 0.78rem; color: #10B981; font-weight: 600;">
-
                             🎁 สิทธิ์สมาชิก: ส่งฟรีแอร์ + ประกัน 180 วัน
-
                         </div>
-
-
 
                         <div class="cat-card-footer">
-
                             <div class="cat-price-box">
-
                                 <span class="cat-price-label" style="text-decoration: line-through; color: var(--text-muted); font-size: 0.75rem;">
-
                                     ปกติ 15,000 ฿
-
                                 </span>
-
                                 <span class="cat-price-val" style="color: var(--primary-coral); font-size: 1.25rem;">
-
                                     14,250 ฿
-
                                 </span>
-
                             </div>
 
-
-
-                            <form method="POST" action="#" onsubmit="return false;">
-
+                            <form method="POST" action="welcome_deal.php">
                                 <input type="hidden" name="action" value="add_item">
-
                                 <input type="hidden" name="item_id" value="cat_americanshorthair">
-
                                 <button type="submit" class="btn btn-primary btn-sm">
-
                                     รับเลี้ยงน้อง 🐾
-
                                 </button>
-
                             </form>
-
                         </div>
-
                     </div>
-
                 </div>
-
                                             <div class="cat-card">
-
                     <div class="cat-card-img-wrap">
-
                         <img src="assets/images/cat_japanese_bobtail.jpg" alt="น้องซากุระ (Japanese Bobtail Mi-Ke)" class="cat-card-img" loading="lazy">
-
                         <span class="cat-card-badge">✨ พร้อมย้ายบ้าน</span>
-
                         <span class="cat-card-gender">เมีย (Female)</span>
-
                     </div>
-
-
 
                     <div class="cat-card-body">
-
                         <div class="cat-card-breed">เจแปนนิส บ็อบเทล (Japanese Bobtail - ญี่ปุ่น)</div>
-
                         <h3 class="cat-card-name">น้องซากุระ (Japanese Bobtail Mi-Ke)</h3>
-
                         <p class="cat-card-desc">ต้นกำเนิดแมวกวักนำโชค (Maneki-Neko) ของญี่ปุ่น หางกุดรูปพู่กลม ลายสามสีมงคล สดใส ช่างพูด เป็นมิตรและซื่อสัตย์</p>
 
-
-
                         <div class="cat-tags-row">
-
                             <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
-
                             <span class="cat-pill-tag">🧶 ขนสั้นลวดลายสามสี มิเกะ</span>
-
                             <span class="cat-pill-tag">📜 ใบเพ็ดดีกรีแท้</span>
-
                         </div>
-
-
 
                         <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.5rem 0.8rem; margin-bottom: 1rem; font-size: 0.78rem; color: #10B981; font-weight: 600;">
-
                             🎁 สิทธิ์สมาชิก: ส่งฟรีแอร์ + ประกัน 180 วัน
-
                         </div>
-
-
 
                         <div class="cat-card-footer">
-
                             <div class="cat-price-box">
-
                                 <span class="cat-price-label" style="text-decoration: line-through; color: var(--text-muted); font-size: 0.75rem;">
-
                                     ปกติ 23,000 ฿
-
                                 </span>
-
                                 <span class="cat-price-val" style="color: var(--primary-coral); font-size: 1.25rem;">
-
                                     21,850 ฿
-
                                 </span>
-
                             </div>
 
-
-
-                            <form method="POST" action="#" onsubmit="return false;">
-
+                            <form method="POST" action="welcome_deal.php">
                                 <input type="hidden" name="action" value="add_item">
-
                                 <input type="hidden" name="item_id" value="cat_japanese_bobtail">
-
                                 <button type="submit" class="btn btn-primary btn-sm">
-
                                     รับเลี้ยงน้อง 🐾
-
                                 </button>
-
                             </form>
-
                         </div>
-
                     </div>
-
                 </div>
-
                     </div>
-
-
 
         <div style="text-align: center; margin-top: 2rem;">
-
             <a href="products.html" class="btn btn-secondary btn-lg">
-
                 ดูน้องแมวสายพันธุ์อื่นทั้งหมดในร้าน (32 ตัว) 🐾
-
             </a>
-
         </div>
-
     </div>
-
-
 
     <!-- 5. Real Adopter Testimonials -->
-
     <div style="margin-bottom: 4rem;">
-
         <div class="section-header" style="margin-bottom: 2rem;">
-
             <span class="section-tag">💬 REAL REVIEWS</span>
-
             <h2 class="section-title">เสียงตอบรับจากครอบครัวทาสแมวตัวจริง</h2>
-
             <p class="section-subtitle">ความสุขและความมั่นใจของลูกค้าที่รับเลี้ยงน้องแมวไปดูแลจริง</p>
-
         </div>
-
-
 
         <div class="reviews-grid">
-
             <div class="review-card">
-
                 <div class="review-stars">⭐⭐⭐⭐⭐</div>
-
                 <p class="review-text">
-
                     "ประทับใจตั้งแต่สมัครสมาชิกเลยค่ะ ได้โค้ดส่วนลด 15% คุ้มมาก น้องสก็อตติชสุขภาพแข็งแรง ร่าเริงตั้งแต่วันแรก ทีมงานให้คำปรึกษาดีมากเรื่องเตรียมอาหารและกระบะทราย ประทับใจมากค่ะ!"
-
                 </p>
-
                 <div class="reviewer-meta">
-
                     <img src="assets/images/cat_scottish.jpg" alt="Reviewer" class="reviewer-avatar">
-
                     <div>
-
                         <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">คุณแพรวา ม.</div>
-
                         <div style="font-size: 0.78rem; color: var(--text-muted);">รับเลี้ยงน้องโมจิ (Scottish Fold) • กรุงเทพฯ</div>
-
                     </div>
-
                 </div>
-
             </div>
 
-
-
             <div class="review-card">
-
                 <div class="review-stars">⭐⭐⭐⭐⭐</div>
-
                 <p class="review-text">
-
                     "อยู่เชียงใหม่ ตอนแรกกังวลเรื่องการจัดส่ง แต่ทางร้านส่งด้วยรถตู้ปรับอุณหภูมิพิเศษ น้องบริติชมาถึงอย่างปลอดภัย ไม่ตื่นกลัวเลย มีใบเพ็ดดีกรีและสมุดวัคซีนส่งมาพร้อม แนะนำเลยครับ"
-
                 </p>
-
                 <div class="reviewer-meta">
-
                     <img src="assets/images/cat_british.jpg" alt="Reviewer" class="reviewer-avatar">
-
                     <div>
-
                         <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">คุณกิตติศักดิ์ ภ.</div>
-
                         <div style="font-size: 0.78rem; color: var(--text-muted);">รับเลี้ยงน้องบราวนี่ (British Shorthair) • เชียงใหม่</div>
-
                     </div>
-
                 </div>
-
             </div>
-
-
 
             <div class="review-card">
-
                 <div class="review-stars">⭐⭐⭐⭐⭐</div>
-
                 <p class="review-text">
-
                     "สั่งซื้อชุด Starter Pack ไปด้วย คุ้มมาก ไม่ต้องไปวิ่งหาซื้อของเอง ขาดตกอะไรทางร้านจัดมาให้ครบ น้องแร็กดอลล์ขนนุ่มฟูเหมือนก้อนเมฆ ขี้อ้อนสุดๆ แฟนชอบมาก ขอบคุณทีมงาน Cat Boutique ครับ"
-
                 </p>
-
                 <div class="reviewer-meta">
-
                     <img src="assets/images/cat_ragdoll.jpg" alt="Reviewer" class="reviewer-avatar">
-
                     <div>
-
                         <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">คุณณภัทร ว.</div>
-
                         <div style="font-size: 0.78rem; color: var(--text-muted);">รับเลี้ยงน้องสโนว์ (Ragdoll) • นนทบุรี</div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
-
 
     <!-- 6. FAQ Section -->
-
     <div class="faq-section">
-
         <div class="section-header" style="margin-bottom: 1.5rem; text-align: left;">
-
             <span class="section-tag">❓ FAQ FOR NEW ADOPTERS</span>
-
             <h2 class="section-title">คำถามที่พบบ่อยสำหรับทาสแมวมือใหม่</h2>
-
         </div>
-
-
 
         <div class="faq-item active">
-
             <div class="faq-question" onclick="toggleFaq(this)">
-
                 <span>1. มือใหม่ไม่เคยเลี้ยงแมวมาก่อน จะเริ่มต้นอย่างไรดี?</span>
-
                 <span class="faq-icon">▼</span>
-
             </div>
-
             <div class="faq-answer">
-
                 ไม่ต้องกังวลเลยครับ! ทางร้านมีทีมงานสัตวแพทย์และผู้เชี่ยวชาญช่วยแนะนำสายพันธุ์ที่เข้ากับไลฟ์สไตล์ของคุณ พร้อมคู่มือการเตรียมบ้าน และแนะนำให้เลือกซื้อชุด Starter Pack ที่มีอุปกรณ์จำเป็นครบถ้วนตั้งแต่วันแรกที่น้องย้ายเข้าบ้านครับ
-
             </div>
-
         </div>
 
-
-
         <div class="faq-item">
-
             <div class="faq-question" onclick="toggleFaq(this)">
-
                 <span>2. การจัดส่งน้องแมวปลอดภัยหรือไม่ และมีบริการส่งถึงที่บ้านไหม?</span>
-
                 <span class="faq-icon">▼</span>
-
             </div>
-
             <div class="faq-answer">
-
                 เราจัดส่งด้วยรถยนต์เฉพาะทางที่มีระบบควบคุมอุณหภูมิและความชื้น (Climate-Controlled) พร้อมพี่เลี้ยงดูแลน้ำ อาหาร และความสะอาดตลอดทาง ส่งตรงถึงหน้าบ้านทุกจังหวัดในประเทศไทย ปลอดภัย 100% ครับ
-
             </div>
-
         </div>
 
-
-
         <div class="faq-item">
-
             <div class="faq-question" onclick="toggleFaq(this)">
-
                 <span>3. ใบเพ็ดดีกรีและเอกสารตรวจสุขภาพจะได้รับเมื่อไหร่?</span>
-
                 <span class="faq-icon">▼</span>
-
             </div>
-
             <div class="faq-answer">
-
                 สมุดวัคซีน ผลตรวจแล็บ FIV/FeLV และใบรับประกันสุขภาพจะส่งมอบพร้อมตัวน้องแมวในวันรับมอบ ส่วนใบเพ็ดดีกรีอย่างเป็นทางการจากสมาคม WCF หรือ CFA จะส่งตามไปให้ภายใน 30-45 วันหลังจากขึ้นทะเบียนเรียบร้อยครับ
-
             </div>
-
         </div>
-
-
 
         <div class="faq-item">
-
             <div class="faq-question" onclick="toggleFaq(this)">
-
                 <span>4. โค้ดส่วนลดสมาชิกใหม่สามารถใช้ร่วมกับอะไรได้บ้าง?</span>
-
                 <span class="faq-icon">▼</span>
-
             </div>
-
             <div class="faq-answer">
-
                 โค้ด <code>WELCOME15</code> สามารถใช้ลดค่าสินสอดน้องแมวได้ทันที 15% และสมาชิกทุกคนจะได้รับสิทธิ์ส่งฟรีแอร์และบริการตรวจสุขภาพฟรีโดยอัตโนมัติครับ!
-
             </div>
-
         </div>
-
     </div>
 
-
-
 </div>
-
-
 
 <!-- Sticky Bottom CTA Bar -->
-
 <div class="sticky-sales-bar">
-
     <div style="display: flex; align-items: center; gap: 1rem;">
-
         <span style="font-size: 1.5rem; display: none; @media(min-width: 600px){display:inline;}">🎁</span>
-
         <div>
-
             <div style="font-weight: 800; font-size: 0.95rem; color: var(--text-primary);">
-
                 โค้ดสมาชิกใหม่: <span style="color: var(--primary-coral); font-family: monospace;">WELCOME15</span> (ลด 15%)
-
             </div>
-
             <div style="font-size: 0.78rem; color: var(--text-muted);">
-
                 หมดเขตในอีก <span id="bar-timer">47:59:30</span>
-
             </div>
-
         </div>
-
     </div>
-
     <div style="display: flex; gap: 0.8rem; align-items: center;">
-
         <button type="button" class="btn btn-secondary btn-sm" onclick="copyVoucher('WELCOME15', this)">
-
             คัดลอกโค้ด 📋
-
         </button>
-
         <a href="cart.html" class="btn btn-primary btn-sm" style="box-shadow: 0 4px 12px rgba(255,117,86,0.3);">
-
             ไปที่ตะกร้า 🛒
-
         </a>
-
     </div>
-
 </div>
-
-
 
 <!-- Toast Notification -->
-
 <div id="toast-notification">
-
     <span>✅</span>
-
     <span id="toast-msg">คัดลอกโค้ดสำเร็จแล้ว!</span>
-
 </div>
-
-
 
 <!-- Confetti Celebration Modal for New Registrants -->
 
-
-
 <script>
-
 // Clipboard Copy with Toast
-
 function copyVoucher(code, btn) {
-
     navigator.clipboard.writeText(code).then(() => {
-
         const originalText = btn.innerHTML;
-
         btn.innerHTML = "คัดลอกแล้ว! ✅";
-
         btn.classList.add('btn-success');
-
         
-
         showToast("คัดลอกโค้ด " + code + " เรียบร้อยแล้ว! นำไปใช้ในตะกร้าได้เลย");
 
-
-
         setTimeout(() => {
-
             btn.innerHTML = originalText;
-
             btn.classList.remove('btn-success');
-
         }, 2500);
-
     }).catch(err => {
-
         alert("โค้ดของคุณคือ: " + code);
-
     });
-
 }
-
-
 
 function showToast(msg) {
-
     const toast = document.getElementById('toast-notification');
-
     const toastMsg = document.getElementById('toast-msg');
-
     if (toast && toastMsg) {
-
         toastMsg.textContent = msg;
-
         toast.style.display = 'flex';
-
         setTimeout(() => {
-
             toast.style.display = 'none';
-
         }, 3000);
-
     }
-
 }
-
-
 
 // Countdown Timer with localStorage persistence
-
 (function initTimer() {
-
     let endTime = localStorage.getItem('cat_welcome_endtime');
-
     if (!endTime) {
-
         // 48 hours from now
-
         endTime = Date.now() + (48 * 60 * 60 * 1000);
-
         localStorage.setItem('cat_welcome_endtime', endTime);
-
     } else {
-
         endTime = parseInt(endTime);
-
     }
-
-
 
     function updateTimer() {
-
         const now = Date.now();
-
         let remaining = Math.max(0, Math.floor((endTime - now) / 1000));
 
-
-
         if (remaining <= 0) {
-
             // Reset for another loop
-
             endTime = Date.now() + (48 * 60 * 60 * 1000);
-
             localStorage.setItem('cat_welcome_endtime', endTime);
-
             remaining = 48 * 3600;
-
         }
 
-
-
         const hrs = String(Math.floor(remaining / 3600)).padStart(2, '0');
-
         const mins = String(Math.floor((remaining % 3600) / 60)).padStart(2, '0');
-
         const secs = String(remaining % 60).padStart(2, '0');
 
-
-
         const hoursEl = document.getElementById('hours');
-
         const minutesEl = document.getElementById('minutes');
-
         const secondsEl = document.getElementById('seconds');
-
         const barTimerEl = document.getElementById('bar-timer');
 
-
-
         if (hoursEl) hoursEl.textContent = hrs;
-
         if (minutesEl) minutesEl.textContent = mins;
-
         if (secondsEl) secondsEl.textContent = secs;
-
         if (barTimerEl) barTimerEl.textContent = hrs + ':' + mins + ':' + secs;
-
     }
-
-
 
     updateTimer();
-
     setInterval(updateTimer, 1000);
-
 })();
 
-
-
 // Toggle FAQ
-
 function toggleFaq(el) {
-
     const item = el.parentElement;
-
     item.classList.toggle('active');
-
 }
-
-
 
 // Close Welcome Modal
-
 function closeWelcomeModal() {
-
     const modal = document.getElementById('welcome-modal');
-
     if (modal) {
-
         modal.style.display = 'none';
-
     }
-
 }
-
 </script>
-
-
 
     <footer>
         <!-- Newsletter Subscription Ribbon -->
@@ -2592,7 +1575,7 @@ function closeWelcomeModal() {
                         </p>
                     </div>
                 </div>
-                <form action="subscribe.html" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
+                <form action="subscribe.html" onsubmit="event.preventDefault(); alert('ขอบคุณที่สมัครรับข่าวสาร Purrfect Shop 🐾');" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
                     <input type="email" name="subscriber_email" placeholder="กรอกอีเมลของคุณ เช่น name@gmail.com" required style="flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
                     <button type="submit" class="btn btn-primary" style="border-radius: 999px; padding: 10px 22px; font-weight: 800; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);">
                         ติดตามข่าวสาร ✨
@@ -2620,11 +1603,11 @@ function closeWelcomeModal() {
             <div class="footer-col">
                 <h4>หมวดหมู่แนะนำ</h4>
                 <ul>
-                    <li><a href="recommend.html?cat=popular">🔥 สายพันธุ์ยอดนิยม</a></li>
-                    <li><a href="recommend.html?cat=condo">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
-                    <li><a href="recommend.html?cat=fluffy">🧸 แมวขนยาวนุ่มฟู</a></li>
-                    <li><a href="recommend.html?cat=short_hair">✨ แมวขนสั้นดูแลง่าย</a></li>
-                    <li><a href="recommend.html?cat=beginner">👶 มือใหม่เลี้ยงง่าย</a></li>
+                    <li><a href="recommend.html">🔥 สายพันธุ์ยอดนิยม</a></li>
+                    <li><a href="recommend.html">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
+                    <li><a href="recommend.html">🧸 แมวขนยาวนุ่มฟู</a></li>
+                    <li><a href="recommend.html">✨ แมวขนสั้นดูแลง่าย</a></li>
+                    <li><a href="recommend.html">👶 มือใหม่เลี้ยงง่าย</a></li>
                 </ul>
             </div>
 
@@ -2647,6 +1630,429 @@ function closeWelcomeModal() {
             </p>
         </div>
     </footer>
+    <!-- chat_widget.php - Floating Live Chat Widget with Popup Quick Menu -->
+<div id="purrfect-chat-root">
+    <!-- 1. Floating Launcher Button (Fixed Bottom-Right) -->
+    <button id="chat-launcher-btn" type="button" onclick="togglePurrfectChat()" title="ปรึกษาแอดมิน & แชทบอทแนะนำน้องแมว 🐾">
+        <span class="launcher-icon">💬</span>
+        <span class="launcher-cat-icon">🐾</span>
+        <span class="launcher-close-icon">✕</span>
+        <span class="launcher-status-dot"></span>
+        <span id="chat-unread-badge" class="chat-unread-badge" style="display: none;">0</span>
+    </button>
+
+    <!-- 2. Chat Popup Window -->
+    <div id="purrfect-chat-window" class="chat-window-hidden">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar-wrapper">
+                    <img src="assets/images/logo.png" alt="Purrfect Advisor" class="chat-header-avatar">
+                    <span class="chat-online-badge"></span>
+                </div>
+                <div>
+                    <div class="chat-header-title">Purrfect Live Chat 🐾</div>
+                    <div class="chat-header-subtitle">
+                        <span class="status-pulse-dot"></span> เจ้าหน้าที่ & AI แนะนำสายพันธุ์ (ออนไลน์)
+                    </div>
+                </div>
+            </div>
+            <div class="chat-header-actions">
+                <button type="button" class="chat-btn-icon" onclick="togglePurrfectChat()" title="ย่อหน้าต่าง">✕</button>
+            </div>
+        </div>
+
+        <!-- Current User Info Strip -->
+        <div id="chat-user-strip" class="chat-user-strip">
+            <span id="chat-user-label">กำลังโหลดข้อมูลผู้ใช้...</span>
+        </div>
+
+        <!-- Chat Messages Body -->
+        <div id="chat-messages-container" class="chat-messages-container">
+            <div class="chat-loading-spinner" id="chat-loading">
+                <span>🐾 กำลังโหลดการสนทนา...</span>
+            </div>
+        </div>
+
+        <!-- Pop-up Quick Questions Menu Overlay (Toggled by "⚡ คำถาม" button) -->
+        <div id="chat-quick-menu-popup" class="chat-quick-popup-hidden">
+            <div class="chat-quick-popup-header">
+                <span>⚡ เลือกคำถามด่วน (บอทแนะนำทันที)</span>
+                <button type="button" class="quick-popup-close-btn" onclick="toggleQuickMenuPopup()">✕</button>
+            </div>
+            <div class="chat-quick-popup-grid">
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(1)">
+                    <span class="popup-item-icon">🐱</span>
+                    <span class="popup-item-text">1. น้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(2)">
+                    <span class="popup-item-icon">🏢</span>
+                    <span class="popup-item-text">2. เหมาะกับเลี้ยงในคอนโด / รักความสงบ</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(3)">
+                    <span class="popup-item-icon">🤧</span>
+                    <span class="popup-item-text">3. คนเป็นภูมิแพ้ ขนไม่ร่วง / ผลัดขน 0%</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(4)">
+                    <span class="popup-item-icon">👑</span>
+                    <span class="popup-item-text">4. สายพันธุ์พรีเมียม ขนฟู มีใบเพ็ดดีกรี</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(5)">
+                    <span class="popup-item-icon">🎁</span>
+                    <span class="popup-item-text">5. โปรโมชั่น & ดีลส่วนลดสมาชิกใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(6)">
+                    <span class="popup-item-icon">🩺</span>
+                    <span class="popup-item-text">6. การรับประกันสุขภาพ 180 วัน & ขนส่ง</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Input Bar (With ⚡ คำถาม button beside input) -->
+        <form id="chat-input-form" onsubmit="handleSendChatMessage(event)" class="chat-input-form">
+            <button type="button" id="chat-quick-trigger-btn" class="chat-quick-trigger-btn" onclick="toggleQuickMenuPopup()" title="คลิกเพื่อเปิดคำถามด่วน 6 ข้อ">
+                <span>⚡ คำถาม</span>
+            </button>
+            <input type="text" id="chat-input-text" placeholder="พิมพ์ข้อความคุยกับแอดมิน..." autocomplete="off" maxlength="500">
+            <button type="submit" id="chat-send-btn" class="chat-send-btn" title="ส่งข้อความ">
+                <span>➤</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+(function() {
+    let chatIsOpen = false;
+    let quickPopupIsOpen = false;
+    let lastMessageCount = 0;
+    let pollInterval = null;
+    let currentUserId = '';
+    let isBotTyping = false;
+    let lastRenderedSig = '';
+
+    window.togglePurrfectChat = function() {
+        const win = document.getElementById('purrfect-chat-window');
+        const launcher = document.getElementById('chat-launcher-btn');
+        if (!win || !launcher) return;
+
+        // Trigger dynamic bounce click animation
+        launcher.classList.remove('anim-pulse');
+        void launcher.offsetWidth; // Force reflow
+        launcher.classList.add('anim-pulse');
+
+        chatIsOpen = !chatIsOpen;
+
+        if (chatIsOpen) {
+            win.classList.remove('chat-window-hidden', 'chat-window-closing');
+            win.classList.add('chat-window-visible');
+            launcher.classList.add('launcher-active');
+            const unread = document.getElementById('chat-unread-badge');
+            if (unread) {
+                unread.style.display = 'none';
+                unread.innerText = '0';
+            }
+            loadChatMessages(true);
+            setTimeout(() => {
+                const input = document.getElementById('chat-input-text');
+                if (input) input.focus();
+            }, 300);
+        } else {
+            launcher.classList.remove('launcher-active');
+            closeQuickMenuPopup();
+
+            // Trigger smooth closing animation
+            win.classList.remove('chat-window-visible');
+            win.classList.add('chat-window-closing');
+            setTimeout(() => {
+                if (!chatIsOpen) {
+                    win.classList.remove('chat-window-closing');
+                    win.classList.add('chat-window-hidden');
+                }
+            }, 260);
+        }
+    };
+
+    window.toggleQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = !quickPopupIsOpen;
+        if (quickPopupIsOpen) {
+            popup.classList.remove('chat-quick-popup-hidden');
+            popup.classList.add('chat-quick-popup-visible');
+        } else {
+            popup.classList.remove('chat-quick-popup-visible');
+            popup.classList.add('chat-quick-popup-hidden');
+        }
+    };
+
+    window.closeQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = false;
+        popup.classList.remove('chat-quick-popup-visible');
+        popup.classList.add('chat-quick-popup-hidden');
+    };
+
+    window.sendQuickReplyFromPopup = function(option) {
+        closeQuickMenuPopup();
+        sendQuickReply(option);
+    };
+
+    window.loadChatMessages = function(forceScroll = false) {
+        if (isBotTyping && !forceScroll) {
+            return; // Don't interrupt typing indicator during delay
+        }
+
+        fetch('api_chat.php?action=get_messages')
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success' && data.conversation) {
+                    const conv = data.conversation;
+                    const u = data.current_user;
+                    currentUserId = u.id;
+
+                    // Update user strip
+                    const strip = document.getElementById('chat-user-label');
+                    if (u.is_member) {
+                        strip.innerHTML = `👤 สนทนาในนามสมาชิก: <strong>${escapeHtml(u.name)}</strong> (ส่วนลด 5% 🐾)`;
+                    } else {
+                        strip.innerHTML = `👤 สนทนาในนาม: <strong>${escapeHtml(u.name)}</strong> • <a href="login.html" style="color:var(--primary-coral); text-decoration:underline;">เข้าสู่ระบบ</a> เพื่อสะสมแต้ม`;
+                    }
+
+                    if (!isBotTyping) {
+                        renderMessages(conv.messages || [], forceScroll);
+                    }
+                }
+            })
+            .catch(err => console.log('Chat load error:', err));
+    };
+
+    function getCurrentTimeFormatted() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    function renderMessages(messages, forceScroll = false) {
+        const container = document.getElementById('chat-messages-container');
+        if (!container) return;
+
+        const currentSig = messages.length + '_' + (messages.length > 0 ? (messages[messages.length - 1].id || messages[messages.length - 1].text) : '');
+        if (currentSig === lastRenderedSig && !forceScroll) {
+            return; // Avoid unnecessary re-rendering to prevent scroll bounce or flickering
+        }
+        lastRenderedSig = currentSig;
+
+        let html = '';
+        messages.forEach(msg => {
+            const isCustomer = msg.sender === 'customer';
+            const senderClass = isCustomer ? 'msg-customer' : (msg.sender === 'admin' ? 'msg-admin' : 'msg-bot');
+            const senderBadge = isCustomer ? 'คุณ' : (msg.sender === 'admin' ? '👨‍💼 แอดมิน' : '🤖 ผู้ช่วย AI');
+
+            let cardHtml = '';
+            if (msg.cards && msg.cards.length > 0) {
+                cardHtml += `
+                    <div class="chat-carousel-wrapper">
+                        <button type="button" class="carousel-nav-btn nav-prev" onclick="scrollChatCarousel(this, -180)" title="เลื่อนดูน้องแมวก่อนหน้า">◀</button>
+                        <div class="chat-cards-carousel">
+                `;
+                msg.cards.forEach(card => {
+                    cardHtml += `
+                        <div class="chat-cat-card">
+                            <img src="${card.image}" alt="${escapeHtml(card.name)}" class="chat-cat-img" onerror="this.src='assets/images/logo.png'">
+                            <div class="chat-cat-info">
+                                <div class="chat-cat-name">${escapeHtml(card.name)}</div>
+                                <div class="chat-cat-breed">${escapeHtml(card.breed)}</div>
+                                <div class="chat-cat-highlight">${escapeHtml(card.highlight || '')}</div>
+                                <div class="chat-cat-price">${escapeHtml(card.price_fmt || card.price)}</div>
+                                <a href="${card.link || 'products.php'}" class="btn btn-primary btn-sm chat-card-action">
+                                    ดูน้องตัวนี้ 🐾
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                });
+                cardHtml += `
+                        </div>
+                        <button type="button" class="carousel-nav-btn nav-next" onclick="scrollChatCarousel(this, 180)" title="เลื่อนดูน้องแมวถัดไป">▶</button>
+                    </div>
+                `;
+            }
+
+            let formattedTime = '';
+            if (msg.timestamp) {
+                const tParts = msg.timestamp.split(' ');
+                if (tParts[1]) {
+                    formattedTime = tParts[1].substring(0, 5);
+                } else {
+                    formattedTime = msg.timestamp;
+                }
+            }
+
+            html += `
+                <div class="chat-message-row ${senderClass}">
+                    ${!isCustomer ? `<div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>` : ''}
+                    <div class="chat-bubble-content">
+                        <div class="chat-sender-header">
+                            <span class="chat-sender-name">${escapeHtml(msg.sender_name || senderBadge)}</span>
+                            <span class="chat-time">${formattedTime}</span>
+                        </div>
+                        <div class="chat-text">${escapeHtml(msg.text).replace(/\\n/g, '<br>')}</div>
+                        ${cardHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+        lastMessageCount = messages.length;
+    }
+
+    window.scrollChatCarousel = function(btn, delta) {
+        if (!btn) return;
+        const wrapper = btn.closest('.chat-carousel-wrapper');
+        if (wrapper) {
+            const carousel = wrapper.querySelector('.chat-cards-carousel');
+            if (carousel) {
+                carousel.scrollBy({ left: delta, behavior: 'smooth' });
+            }
+        }
+    };
+
+    const quickPromptsMap = {
+        1: '🐱 แนะนำน้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่',
+        2: '🏢 มีน้องแมวพันธุ์ไหนที่เหมาะกับเลี้ยงในคอนโด/ห้องพักบ้าง?',
+        3: '🤧 เป็นภูมิแพ้ แนะนำน้องแมวขนไม่ร่วง/ผลัดขนน้อยหน่อยครับ',
+        4: '👑 ขอดูแมวสายพันธุ์พรีเมียม ขนฟูหน้าหวาน มีใบเพ็ดดีกรี',
+        5: '🎁 ตอนนี้มีโปรโมชั่นหรือดีลส่วนลดสมาชิกใหม่อะไรบ้าง?',
+        6: '🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?'
+    };
+
+    function showTypingIndicator(userText) {
+        const container = document.getElementById('chat-messages-container');
+        if (!container) return;
+
+        const currentTime = getCurrentTimeFormatted();
+
+        // 1. Immediately append user's bubble
+        if (userText) {
+            const customerRow = document.createElement('div');
+            customerRow.className = 'chat-message-row msg-customer';
+            customerRow.innerHTML = `
+                <div class="chat-bubble-content">
+                    <div class="chat-sender-header">
+                        <span class="chat-sender-name">คุณ</span>
+                        <span class="chat-time">${currentTime}</span>
+                    </div>
+                    <div class="chat-text">${escapeHtml(userText)}</div>
+                </div>
+            `;
+            container.appendChild(customerRow);
+        }
+
+        // 2. Append typing animation indicator
+        const oldTyping = document.getElementById('chat-typing-indicator');
+        if (oldTyping) oldTyping.remove();
+
+        const typingRow = document.createElement('div');
+        typingRow.id = 'chat-typing-indicator';
+        typingRow.className = 'chat-message-row msg-bot';
+        typingRow.innerHTML = `
+            <div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>
+            <div class="chat-bubble-content">
+                <div class="chat-sender-header">
+                    <span class="chat-sender-name">🤖 ผู้ช่วย AI</span>
+                    <span class="chat-time">${currentTime}</span>
+                </div>
+                <div class="chat-typing-bubble">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span style="font-size:0.75rem; color:#888; margin-left:6px; font-weight:600;">กำลังพิมพ์ข้อความ... 💬</span>
+                </div>
+            </div>
+        `;
+        container.appendChild(typingRow);
+        container.scrollTop = container.scrollHeight;
+        isBotTyping = true;
+    }
+
+    window.sendQuickReply = function(option) {
+        closeQuickMenuPopup();
+        const userText = quickPromptsMap[option] || 'คำถามด่วน';
+        showTypingIndicator(userText);
+
+        const formData = new FormData();
+        formData.append('action', 'quick_reply');
+        formData.append('option', option);
+
+        const apiPromise = fetch('api_chat.php', {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json()).catch(err => console.log(err));
+
+        // Smooth natural delay (~3.0s) for typing animation
+        setTimeout(() => {
+            apiPromise.then(() => {
+                isBotTyping = false;
+                const typing = document.getElementById('chat-typing-indicator');
+                if (typing) typing.remove();
+                loadChatMessages(true);
+            });
+        }, 3000);
+    };
+
+    window.handleSendChatMessage = function(e) {
+        e.preventDefault();
+        const input = document.getElementById('chat-input-text');
+        const text = input.value.trim();
+        if (!text) return;
+
+        input.value = '';
+        showTypingIndicator(text);
+
+        const formData = new FormData();
+        formData.append('action', 'send_message');
+        formData.append('message', text);
+
+        const apiPromise = fetch('api_chat.php', {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json()).catch(err => console.log(err));
+
+        // Smooth natural delay (~3.0s) for typing animation
+        setTimeout(() => {
+            apiPromise.then(() => {
+                isBotTyping = false;
+                const typing = document.getElementById('chat-typing-indicator');
+                if (typing) typing.remove();
+                loadChatMessages(true);
+            });
+        }, 3000);
+    };
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    // Auto poll when page loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        loadChatMessages(false);
+        pollInterval = setInterval(() => {
+            if (chatIsOpen && !isBotTyping) {
+                loadChatMessages(false);
+            }
+        }, 3500);
+    });
+})();
+</script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>

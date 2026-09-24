@@ -332,7 +332,7 @@ Warning: Undefined array key "REQUEST_METHOD" in C:\Users\Windows\Downloads\ALL 
         </div>
 
         
-        <form onsubmit="handleStaticLogin(event)"><script>function handleStaticLogin(e){e.preventDefault();var id=document.getElementById('identifier').value;var pass=document.getElementById('password').value;var res=clientLogin(id,pass);if(res.success){alert('✓ เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับคุณ ' + res.user.username + ' 🐾');window.location.href='index.html';}else{alert('⚠️ ' + res.message);}}</script>
+        <form id="login-form" onsubmit="handleStaticLogin(event)"><script>function handleStaticLogin(e){if(e)e.preventDefault();var id=document.getElementById("identifier").value.trim();var pass=document.getElementById("password").value.trim();var res=clientLogin(id,pass);var oldAlert=document.querySelector(".auth-alert-box");if(oldAlert)oldAlert.remove();var card=document.querySelector(".auth-card")||document.querySelector(".auth-container");var alertBox=document.createElement("div");alertBox.className="auth-alert-box alert-box "+(res.success?"alert-success":"alert-danger");alertBox.style.marginBottom="1.2rem";if(res.success){alertBox.innerHTML='<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">🎉</span><div><strong style="color:#059669;font-size:1.05rem;">เข้าสู่ระบบสำเร็จเรียบร้อย!</strong><div style="font-size:0.88rem;color:#065F46;margin-top:2px;">ยินดีต้อนรับ <strong>คุณ'+res.user.username+'</strong> 🐾 กำลังพาท่านไปหน้าหลัก...</div></div></div>';if(card)card.insertBefore(alertBox,document.getElementById("login-form"));syncHeaderUserUI();setTimeout(function(){window.location.href="index.html?login=success";},800);}else{alertBox.innerHTML='<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">⚠️</span><div><strong style="color:#DC2626;font-size:0.98rem;">เข้าสู่ระบบไม่สำเร็จ:</strong><div style="font-size:0.88rem;color:#991B1B;margin-top:2px;">'+res.message+'</div></div></div>';if(card)card.insertBefore(alertBox,document.getElementById("login-form"));}}</script>
             <div class="form-group">
                 <label for="identifier">อีเมล หรือ ชื่อผู้ใช้</label>
                 <input type="text" id="identifier" name="identifier" class="form-control" 
@@ -350,9 +350,7 @@ Warning: Undefined array key "REQUEST_METHOD" in C:\Users\Windows\Downloads\ALL 
                 💡 <em>บัญชีสำหรับทดสอบ: Username: <code>catlover</code> / รหัสผ่าน: <code>123456</code></em>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem;">
-                เข้าสู่ระบบ 🐾
-            </button>
+            <button type="button" onclick="handleStaticLogin(event)" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem; cursor: pointer;">เข้าสู่ระบบ 🐾</button>
         </form>
 
         <div style="text-align: center; margin-top: 1.8rem; padding-top: 1.2rem; border-top: 1px solid var(--border-color); font-size: 0.92rem; color: var(--text-secondary);">

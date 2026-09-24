@@ -67,8 +67,10 @@ function convertPhpToHtmlLinks($html) {
         '/href="order_letter\.php(\?[^"]*)?(#[^"]*)?"/' => 'href="order_letter.html$2"',
         '/href="profile\.php(\?[^"]*)?(#[^"]*)?"/' => 'href="index.html#profile"',
         '/href="admin\.php(\?[^"]*)?(#[^"]*)?"/' => 'href="index.html#admin"',
-        '/<form method="POST" action="login\.php">/' => '<form onsubmit="handleStaticLogin(event)"><script>function handleStaticLogin(e){e.preventDefault();var id=document.getElementById(\'identifier\').value;var pass=document.getElementById(\'password\').value;var res=clientLogin(id,pass);if(res.success){alert(\'✓ เข้าสู่ระบบสำเร็จ! ยินดีต้อนรับคุณ \' + res.user.username + \' 🐾\');window.location.href=\'index.html\';}else{alert(\'⚠️ \' + res.message);}}</script>',
-        '/<form method="POST" action="register\.php">/' => '<form onsubmit="handleStaticRegister(event)"><script>function handleStaticRegister(e){e.preventDefault();var fn=document.getElementById(\'fullname\').value;var un=document.getElementById(\'username\').value;var em=document.getElementById(\'email\').value;var ph=document.getElementById(\'phone\').value;var pw=document.getElementById(\'password\').value;var res=clientRegister(fn,un,em,ph,pw);if(res.success){alert(\'✓ สมัครสมาชิกสำเร็จ! ยินดีต้อนรับคุณ \' + res.user.username + \' 🐾 (รับส่วนลด 5% ทันที)\');window.location.href=\'welcome_deal.html\';}else{alert(\'⚠️ \' + res.message);}}</script>',
+        '/<form method="POST" action="login\.php">/' => '<form id="login-form" onsubmit="handleStaticLogin(event)"><script>function handleStaticLogin(e){if(e)e.preventDefault();var id=document.getElementById("identifier").value.trim();var pass=document.getElementById("password").value.trim();var res=clientLogin(id,pass);var oldAlert=document.querySelector(".auth-alert-box");if(oldAlert)oldAlert.remove();var card=document.querySelector(".auth-card")||document.querySelector(".auth-container");var alertBox=document.createElement("div");alertBox.className="auth-alert-box alert-box "+(res.success?"alert-success":"alert-danger");alertBox.style.marginBottom="1.2rem";if(res.success){alertBox.innerHTML=\'<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">🎉</span><div><strong style="color:#059669;font-size:1.05rem;">เข้าสู่ระบบสำเร็จเรียบร้อย!</strong><div style="font-size:0.88rem;color:#065F46;margin-top:2px;">ยินดีต้อนรับ <strong>คุณ\'+res.user.username+\'</strong> 🐾 กำลังพาท่านไปหน้าหลัก...</div></div></div>\';if(card)card.insertBefore(alertBox,document.getElementById("login-form"));syncHeaderUserUI();setTimeout(function(){window.location.href="index.html?login=success";},800);}else{alertBox.innerHTML=\'<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">⚠️</span><div><strong style="color:#DC2626;font-size:0.98rem;">เข้าสู่ระบบไม่สำเร็จ:</strong><div style="font-size:0.88rem;color:#991B1B;margin-top:2px;">\'+res.message+\'</div></div></div>\';if(card)card.insertBefore(alertBox,document.getElementById("login-form"));}}</script>',
+        '/<form method="POST" action="register\.php">/' => '<form id="register-form" onsubmit="handleStaticRegister(event)"><script>function handleStaticRegister(e){if(e)e.preventDefault();var fn=document.getElementById("fullname").value;var un=document.getElementById("username").value;var em=document.getElementById("email").value;var ph=document.getElementById("phone").value;var pw=document.getElementById("password").value;var cp=document.getElementById("confirm_password").value;var oldAlert=document.querySelector(".auth-alert-box");if(oldAlert)oldAlert.remove();var card=document.querySelector(".auth-card")||document.querySelector(".auth-container");if(pw!==cp){var alertBox=document.createElement("div");alertBox.className="auth-alert-box alert-box alert-danger";alertBox.style.marginBottom="1.2rem";alertBox.innerHTML=\'<div><strong>⚠️ รหัสผ่านไม่ตรงกัน:</strong> กรุณาตรวจสอบรหัสผ่านทั้งสองช่องให้ตรงกัน</div>\';if(card)card.insertBefore(alertBox,document.getElementById("register-form"));return;}var res=clientRegister(fn,un,em,ph,pw);var alertBox=document.createElement("div");alertBox.className="auth-alert-box alert-box "+(res.success?"alert-success":"alert-danger");alertBox.style.marginBottom="1.2rem";if(res.success){alertBox.innerHTML=\'<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">🎁</span><div><strong style="color:#059669;font-size:1.05rem;">สมัครสมาชิกสำเร็จ! ยินดีต้อนรับสู่ Purrfect Shop</strong><div style="font-size:0.88rem;color:#065F46;margin-top:2px;">คุณได้รับส่วนลดสมาชิก 5% และ 100 Paw Points เรียบร้อยแล้วค่ะ</div></div></div>\';if(card)card.insertBefore(alertBox,document.getElementById("register-form"));syncHeaderUserUI();setTimeout(function(){window.location.href="welcome_deal.html";},1000);}else{alertBox.innerHTML=\'<div><strong>⚠️ ไม่สามารถสมัครสมาชิกได้:</strong> \'+res.message+\'</div>\';if(card)card.insertBefore(alertBox,document.getElementById("register-form"));}}</script>',
+        '/<button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem;">\s*เข้าสู่ระบบ 🐾\s*<\/button>/' => '<button type="button" onclick="handleStaticLogin(event)" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem; cursor: pointer;">เข้าสู่ระบบ 🐾</button>',
+        '/<button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem;">\s*ยืนยันการสมัครสมาชิก 🐾\s*<\/button>/' => '<button type="button" onclick="handleStaticRegister(event)" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem; cursor: pointer;">ยืนยันการสมัครสมาชิก 🐾</button>',
         '/action="index\.php(#[^"]*)?"/' => 'action="index.html$1" onsubmit="event.preventDefault(); alert(\'ระบบเดโมบน GitHub Pages: บันทึกข้อมูลจำลองสำเร็จ 🐾\');"',
         '/action="products\.php(#[^"]*)?"/' => 'action="products.html$1" onsubmit="event.preventDefault(); alert(\'เพิ่มน้องแมวลงตะกร้าจำลองเรียบร้อยแล้ว 🐾\');"',
         '/action="recommend\.php(#[^"]*)?"/' => 'action="recommend.html$1"',
@@ -106,18 +108,16 @@ foreach ($pages as $phpFile => $htmlFile) {
     if ($renderedHtml) {
         $convertedHtml = convertPhpToHtmlLinks($renderedHtml);
 
-        // Save to GITHUB_PAGES_EXPORT
+        // 1. Save to GITHUB_PAGES_EXPORT
         file_put_contents($exportDir . '/' . $htmlFile, $convertedHtml);
 
-        // Save to docs/
+        // 2. Save to docs/
         file_put_contents($docsDir . '/' . $htmlFile, $convertedHtml);
 
-        // Also save to root if it's index.html
-        if ($htmlFile === 'index.html' || $htmlFile === 'products.html' || $htmlFile === 'recommend.html') {
-            file_put_contents($rootDir . '/' . $htmlFile, $convertedHtml);
-        }
+        // 3. Save to root directory (Ensures GitHub Pages works whether source is root or /docs)
+        file_put_contents($rootDir . '/' . $htmlFile, $convertedHtml);
 
-        echo "✓ Exported: {$phpFile} -> {$htmlFile}\n";
+        echo "✓ Exported & Synchronized: {$phpFile} -> {$htmlFile} (Root, docs/, GITHUB_PAGES_EXPORT/)\n";
     }
 }
 

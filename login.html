@@ -1,3 +1,5 @@
+
+Warning: Undefined array key "REQUEST_METHOD" in C:\Users\Windows\Downloads\ALL WORK\ALL WORK\W\2567\Semester 4\WorkShop\CatCyberShop\login.php on line 12
 <!DOCTYPE html>
 <html lang="th">
 <head>
@@ -7,6 +9,33 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+    <!-- Google Analytics 4 (GA4) Simulation Script -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PURRFECTCAT88"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PURRFECTCAT88', {
+            'page_title': document.title,
+            'transport_type': 'beacon'
+        });
+    </script>
+
+    <!-- Meta Pixel (Facebook Pixel) Simulation Script -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '123456789012345');
+        fbq('track', 'PageView');
+    </script>
+
     <script>
         (function() {
             try {
@@ -34,7 +63,7 @@
 
                     <!-- Admin Console Shortcut (Only visible for Admins) -->
                     
-                    <!-- User Account / Profile Badge -->
+                    <!-- User Account / Profile Badge & Paw Points -->
                                             <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                             <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
                             <a href="subscribe.html" class="btn btn-sm " style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="รับข้อมูลข่าวสารโดยยังไม่ต้องสมัครสมาชิก">
@@ -51,16 +80,23 @@
             </div>
         </div>
 
-        <!-- 2. Main Navigation Bar: Brand Logo, Page Links & Shopping Cart -->
+        <!-- 2. Main Branding & Primary Navigation Bar -->
         <div class="main-nav-bar">
             <div class="nav-container">
-                <a href="index.html" class="logo">
+                <a href="index.html" class="site-logo">
                     <img src="assets/images/logo.png" alt="Purrfect Shop Logo" class="logo-img">
-                    <div class="logo-title-group">
-                        <span class="logo-text">Purrfect Shop 🐾</span>
-                        <span class="logo-tagline">เพราะทุกบ้านควรมีเจ้าเหมียว</span>
+                    <div class="logo-text">
+                        <span class="logo-title">Purrfect Shop</span>
+                        <span class="logo-subtitle">Cattery & Boutique</span>
                     </div>
                 </a>
+
+                <!-- 3-Line Hamburger Menu Button (Mobile & Tablet) -->
+                <button type="button" class="mobile-menu-toggle-btn" id="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="เปิดเมนูการนำทางและหมวดหมู่" title="เปิดเมนู ☰">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
                 
                 <nav>
                     <ul class="nav-menu">
@@ -85,7 +121,12 @@
                                 <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
                             </a>
                         </li>
-                                                <li>
+                        <li>
+                            <a href="tracking.html" class="nav-link ">
+                                📍 ติดตามการจัดส่ง
+                            </a>
+                        </li>
+                        <li>
                             <a href="creator.html" class="nav-link ">
                                 👨‍💻 ผู้จัดทำ
                             </a>
@@ -100,6 +141,186 @@
             </div>
         </div>
     </header>
+
+    <!-- =========================================================
+         MOBILE NAVIGATION DRAWER (OFF-CANVAS SLIDING MENU)
+         ========================================================= -->
+    <!-- Drawer Backdrop -->
+    <div id="mobile-drawer-backdrop" class="mobile-drawer-backdrop" onclick="closeMobileDrawer()"></div>
+
+    <!-- Mobile Drawer Content -->
+    <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="เมนูหลักสำหรับมือถือ">
+        <div class="drawer-header">
+            <div class="drawer-branding">
+                <img src="assets/images/logo.png" alt="Logo" class="drawer-logo-img">
+                <div>
+                    <strong class="drawer-title">Purrfect Shop</strong>
+                    <span class="drawer-subtitle">เมนูด่วน & หมวดหมู่บริการ</span>
+                </div>
+            </div>
+            <button type="button" class="drawer-close-btn" onclick="closeMobileDrawer()" aria-label="ปิดเมนู">✕</button>
+        </div>
+
+        <div class="drawer-body">
+            <!-- หมวดที่ 1: บัญชีผู้ใช้ & การตั้งค่า -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>⚙️ หมวดที่ 1: บัญชีผู้ใช้ & การตั้งค่า</span>
+                </div>
+                <div class="drawer-grid">
+                    <!-- Theme Loop Switcher -->
+                    <button type="button" class="drawer-action-btn theme-drawer-btn" onclick="cycleTheme(); updateDrawerThemeName();" title="กดเพื่อสลับธีมสี">
+                        <span class="drawer-btn-icon">🎨</span>
+                        <span class="drawer-btn-label">ธีม: <strong id="drawer-theme-current-name">อบอุ่น คอรัล</strong></span>
+                        <span class="drawer-btn-badge">🔄 สลับสี</span>
+                    </button>
+
+                    <!-- User Profile / Login / Register -->
+                                            <a href="subscribe.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                            <span class="drawer-link-icon">📬</span>
+                            <div class="drawer-link-info">
+                                <span class="drawer-link-title">รับข้อมูลข่าวสาร</span>
+                                <span class="drawer-link-sub">รับสิทธิ์โปรโมชัน & ข่าวกิจกรรม</span>
+                            </div>
+                        </a>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="text-align: center; justify-content: center; font-size: 0.85rem; padding: 0.5rem;" onclick="closeMobileDrawer()">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="text-align: center; justify-content: center; font-size: 0.85rem; padding: 0.5rem;" onclick="closeMobileDrawer()">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                    
+                    <a href="index.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🏠</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">หน้าแรก (Home)</span>
+                            <span class="drawer-link-sub">ศูนย์รวมน้องแมว & โปรโมชันเด่น</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- หมวดที่ 2: เมนูหลัก & บริการร้านค้า -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>🐱 หมวดที่ 2: เมนูบริการ & เลือกชมน้องแมว</span>
+                </div>
+                <div class="drawer-grid">
+                    <a href="products.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🐱</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">น้องแมวทั้งหมด</span>
+                            <span class="drawer-link-sub">สายพันธุ์แท้ 100% พร้อมย้ายบ้าน</span>
+                        </div>
+                    </a>
+
+                    <a href="recommend.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🌟</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">แนะนำสำหรับคุณ</span>
+                            <span class="drawer-link-sub">ระบบค้นหาสายพันธุ์ตามไลฟ์สไตล์</span>
+                        </div>
+                    </a>
+
+                    <a href="welcome_deal.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🎁</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ดีลสมาชิกใหม่</span>
+                            <span class="drawer-link-sub">คูปองส่วนลดพิเศษ & Starter Kit</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FF5A5F; color: #FFFFFF; font-weight: 800;">HOT</span>
+                    </a>
+
+                    <a href="tracking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">📍</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ติดตามการจัดส่ง</span>
+                            <span class="drawer-link-sub">ระบบติดตามสถานะสด 4 ขั้นตอน</span>
+                        </div>
+                    </a>
+
+                    <a href="creator.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">👨‍💻</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ผู้จัดทำ</span>
+                            <span class="drawer-link-sub">ประวัติ & ข้อมูลโครงงาน</span>
+                        </div>
+                    </a>
+
+                    <a href="cart.html" class="drawer-link-item " style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🛒</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
+                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
+                        </div>
+                                            </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <script>
+    function toggleMobileDrawer() {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (!drawer || !backdrop) return;
+        
+        const isOpen = drawer.classList.contains('open');
+        if (isOpen) {
+            closeMobileDrawer();
+        } else {
+            drawer.classList.add('open');
+            backdrop.classList.add('open');
+            if (btn) btn.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            updateDrawerThemeName();
+        }
+    }
+
+    function closeMobileDrawer() {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (drawer) drawer.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('open');
+        if (btn) btn.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function updateDrawerThemeName() {
+        const currentNameEl = document.getElementById('theme-current-name');
+        const drawerThemeEl = document.getElementById('drawer-theme-current-name');
+        if (currentNameEl && drawerThemeEl) {
+            drawerThemeEl.textContent = currentNameEl.textContent;
+        }
+    }
+
+    // Sync theme label on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+        updateDrawerThemeName();
+    });
+    </script>
+
+    <script>
+    window.trackPurrfectBehavior = function(type, target, category) {
+        try {
+            const formData = new FormData();
+            formData.append('action', 'track');
+            formData.append('event_type', type);
+            formData.append('target', target);
+            formData.append('category', category || 'general');
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon('api_analytics.php', formData);
+            } else {
+                fetch('api_analytics.php', { method: 'POST', body: formData });
+            }
+        } catch (e) {}
+    };
+    </script>
     <main>
                 
 <div class="auth-container">
@@ -111,7 +332,7 @@
         </div>
 
         
-        <form method="POST" action="#" onsubmit="return false;">
+        <form id="login-form" onsubmit="handleStaticLogin(event)"><script>function handleStaticLogin(e){if(e)e.preventDefault();var id=document.getElementById("identifier").value.trim();var pass=document.getElementById("password").value.trim();var res=clientLogin(id,pass);var oldAlert=document.querySelector(".auth-alert-box");if(oldAlert)oldAlert.remove();var card=document.querySelector(".auth-card")||document.querySelector(".auth-container");var alertBox=document.createElement("div");alertBox.className="auth-alert-box alert-box "+(res.success?"alert-success":"alert-danger");alertBox.style.marginBottom="1.2rem";if(res.success){alertBox.innerHTML='<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">🎉</span><div><strong style="color:#059669;font-size:1.05rem;">เข้าสู่ระบบสำเร็จเรียบร้อย!</strong><div style="font-size:0.88rem;color:#065F46;margin-top:2px;">ยินดีต้อนรับ <strong>คุณ'+res.user.username+'</strong> 🐾 กำลังพาท่านไปหน้าหลัก...</div></div></div>';if(card)card.insertBefore(alertBox,document.getElementById("login-form"));syncHeaderUserUI();setTimeout(function(){window.location.href="index.html?login=success";},800);}else{alertBox.innerHTML='<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">⚠️</span><div><strong style="color:#DC2626;font-size:0.98rem;">เข้าสู่ระบบไม่สำเร็จ:</strong><div style="font-size:0.88rem;color:#991B1B;margin-top:2px;">'+res.message+'</div></div></div>';if(card)card.insertBefore(alertBox,document.getElementById("login-form"));}}</script>
             <div class="form-group">
                 <label for="identifier">อีเมล หรือ ชื่อผู้ใช้</label>
                 <input type="text" id="identifier" name="identifier" class="form-control" 
@@ -129,9 +350,7 @@
                 💡 <em>บัญชีสำหรับทดสอบ: Username: <code>catlover</code> / รหัสผ่าน: <code>123456</code></em>
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem;">
-                เข้าสู่ระบบ 🐾
-            </button>
+            <button type="button" onclick="handleStaticLogin(event)" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem; cursor: pointer;">เข้าสู่ระบบ 🐾</button>
         </form>
 
         <div style="text-align: center; margin-top: 1.8rem; padding-top: 1.2rem; border-top: 1px solid var(--border-color); font-size: 0.92rem; color: var(--text-secondary);">
@@ -155,7 +374,7 @@
                         </p>
                     </div>
                 </div>
-                <form action="subscribe.html" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
+                <form action="subscribe.html" onsubmit="event.preventDefault(); alert('ขอบคุณที่สมัครรับข่าวสาร Purrfect Shop 🐾');" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
                     <input type="email" name="subscriber_email" placeholder="กรอกอีเมลของคุณ เช่น name@gmail.com" required style="flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
                     <button type="submit" class="btn btn-primary" style="border-radius: 999px; padding: 10px 22px; font-weight: 800; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);">
                         ติดตามข่าวสาร ✨
@@ -183,11 +402,11 @@
             <div class="footer-col">
                 <h4>หมวดหมู่แนะนำ</h4>
                 <ul>
-                    <li><a href="recommend.html?cat=popular">🔥 สายพันธุ์ยอดนิยม</a></li>
-                    <li><a href="recommend.html?cat=condo">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
-                    <li><a href="recommend.html?cat=fluffy">🧸 แมวขนยาวนุ่มฟู</a></li>
-                    <li><a href="recommend.html?cat=short_hair">✨ แมวขนสั้นดูแลง่าย</a></li>
-                    <li><a href="recommend.html?cat=beginner">👶 มือใหม่เลี้ยงง่าย</a></li>
+                    <li><a href="recommend.html">🔥 สายพันธุ์ยอดนิยม</a></li>
+                    <li><a href="recommend.html">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
+                    <li><a href="recommend.html">🧸 แมวขนยาวนุ่มฟู</a></li>
+                    <li><a href="recommend.html">✨ แมวขนสั้นดูแลง่าย</a></li>
+                    <li><a href="recommend.html">👶 มือใหม่เลี้ยงง่าย</a></li>
                 </ul>
             </div>
 
@@ -210,6 +429,429 @@
             </p>
         </div>
     </footer>
+    <!-- chat_widget.php - Floating Live Chat Widget with Popup Quick Menu -->
+<div id="purrfect-chat-root">
+    <!-- 1. Floating Launcher Button (Fixed Bottom-Right) -->
+    <button id="chat-launcher-btn" type="button" onclick="togglePurrfectChat()" title="ปรึกษาแอดมิน & แชทบอทแนะนำน้องแมว 🐾">
+        <span class="launcher-icon">💬</span>
+        <span class="launcher-cat-icon">🐾</span>
+        <span class="launcher-close-icon">✕</span>
+        <span class="launcher-status-dot"></span>
+        <span id="chat-unread-badge" class="chat-unread-badge" style="display: none;">0</span>
+    </button>
+
+    <!-- 2. Chat Popup Window -->
+    <div id="purrfect-chat-window" class="chat-window-hidden">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar-wrapper">
+                    <img src="assets/images/logo.png" alt="Purrfect Advisor" class="chat-header-avatar">
+                    <span class="chat-online-badge"></span>
+                </div>
+                <div>
+                    <div class="chat-header-title">Purrfect Live Chat 🐾</div>
+                    <div class="chat-header-subtitle">
+                        <span class="status-pulse-dot"></span> เจ้าหน้าที่ & AI แนะนำสายพันธุ์ (ออนไลน์)
+                    </div>
+                </div>
+            </div>
+            <div class="chat-header-actions">
+                <button type="button" class="chat-btn-icon" onclick="togglePurrfectChat()" title="ย่อหน้าต่าง">✕</button>
+            </div>
+        </div>
+
+        <!-- Current User Info Strip -->
+        <div id="chat-user-strip" class="chat-user-strip">
+            <span id="chat-user-label">กำลังโหลดข้อมูลผู้ใช้...</span>
+        </div>
+
+        <!-- Chat Messages Body -->
+        <div id="chat-messages-container" class="chat-messages-container">
+            <div class="chat-loading-spinner" id="chat-loading">
+                <span>🐾 กำลังโหลดการสนทนา...</span>
+            </div>
+        </div>
+
+        <!-- Pop-up Quick Questions Menu Overlay (Toggled by "⚡ คำถาม" button) -->
+        <div id="chat-quick-menu-popup" class="chat-quick-popup-hidden">
+            <div class="chat-quick-popup-header">
+                <span>⚡ เลือกคำถามด่วน (บอทแนะนำทันที)</span>
+                <button type="button" class="quick-popup-close-btn" onclick="toggleQuickMenuPopup()">✕</button>
+            </div>
+            <div class="chat-quick-popup-grid">
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(1)">
+                    <span class="popup-item-icon">🐱</span>
+                    <span class="popup-item-text">1. น้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(2)">
+                    <span class="popup-item-icon">🏢</span>
+                    <span class="popup-item-text">2. เหมาะกับเลี้ยงในคอนโด / รักความสงบ</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(3)">
+                    <span class="popup-item-icon">🤧</span>
+                    <span class="popup-item-text">3. คนเป็นภูมิแพ้ ขนไม่ร่วง / ผลัดขน 0%</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(4)">
+                    <span class="popup-item-icon">👑</span>
+                    <span class="popup-item-text">4. สายพันธุ์พรีเมียม ขนฟู มีใบเพ็ดดีกรี</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(5)">
+                    <span class="popup-item-icon">🎁</span>
+                    <span class="popup-item-text">5. โปรโมชั่น & ดีลส่วนลดสมาชิกใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(6)">
+                    <span class="popup-item-icon">🩺</span>
+                    <span class="popup-item-text">6. การรับประกันสุขภาพ 180 วัน & ขนส่ง</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Input Bar (With ⚡ คำถาม button beside input) -->
+        <form id="chat-input-form" onsubmit="handleSendChatMessage(event)" class="chat-input-form">
+            <button type="button" id="chat-quick-trigger-btn" class="chat-quick-trigger-btn" onclick="toggleQuickMenuPopup()" title="คลิกเพื่อเปิดคำถามด่วน 6 ข้อ">
+                <span>⚡ คำถาม</span>
+            </button>
+            <input type="text" id="chat-input-text" placeholder="พิมพ์ข้อความคุยกับแอดมิน..." autocomplete="off" maxlength="500">
+            <button type="submit" id="chat-send-btn" class="chat-send-btn" title="ส่งข้อความ">
+                <span>➤</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+(function() {
+    let chatIsOpen = false;
+    let quickPopupIsOpen = false;
+    let lastMessageCount = 0;
+    let pollInterval = null;
+    let currentUserId = '';
+    let isBotTyping = false;
+    let lastRenderedSig = '';
+
+    window.togglePurrfectChat = function() {
+        const win = document.getElementById('purrfect-chat-window');
+        const launcher = document.getElementById('chat-launcher-btn');
+        if (!win || !launcher) return;
+
+        // Trigger dynamic bounce click animation
+        launcher.classList.remove('anim-pulse');
+        void launcher.offsetWidth; // Force reflow
+        launcher.classList.add('anim-pulse');
+
+        chatIsOpen = !chatIsOpen;
+
+        if (chatIsOpen) {
+            win.classList.remove('chat-window-hidden', 'chat-window-closing');
+            win.classList.add('chat-window-visible');
+            launcher.classList.add('launcher-active');
+            const unread = document.getElementById('chat-unread-badge');
+            if (unread) {
+                unread.style.display = 'none';
+                unread.innerText = '0';
+            }
+            loadChatMessages(true);
+            setTimeout(() => {
+                const input = document.getElementById('chat-input-text');
+                if (input) input.focus();
+            }, 300);
+        } else {
+            launcher.classList.remove('launcher-active');
+            closeQuickMenuPopup();
+
+            // Trigger smooth closing animation
+            win.classList.remove('chat-window-visible');
+            win.classList.add('chat-window-closing');
+            setTimeout(() => {
+                if (!chatIsOpen) {
+                    win.classList.remove('chat-window-closing');
+                    win.classList.add('chat-window-hidden');
+                }
+            }, 260);
+        }
+    };
+
+    window.toggleQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = !quickPopupIsOpen;
+        if (quickPopupIsOpen) {
+            popup.classList.remove('chat-quick-popup-hidden');
+            popup.classList.add('chat-quick-popup-visible');
+        } else {
+            popup.classList.remove('chat-quick-popup-visible');
+            popup.classList.add('chat-quick-popup-hidden');
+        }
+    };
+
+    window.closeQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = false;
+        popup.classList.remove('chat-quick-popup-visible');
+        popup.classList.add('chat-quick-popup-hidden');
+    };
+
+    window.sendQuickReplyFromPopup = function(option) {
+        closeQuickMenuPopup();
+        sendQuickReply(option);
+    };
+
+    window.loadChatMessages = function(forceScroll = false) {
+        if (isBotTyping && !forceScroll) {
+            return; // Don't interrupt typing indicator during delay
+        }
+
+        fetch('api_chat.php?action=get_messages')
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'success' && data.conversation) {
+                    const conv = data.conversation;
+                    const u = data.current_user;
+                    currentUserId = u.id;
+
+                    // Update user strip
+                    const strip = document.getElementById('chat-user-label');
+                    if (u.is_member) {
+                        strip.innerHTML = `👤 สนทนาในนามสมาชิก: <strong>${escapeHtml(u.name)}</strong> (ส่วนลด 5% 🐾)`;
+                    } else {
+                        strip.innerHTML = `👤 สนทนาในนาม: <strong>${escapeHtml(u.name)}</strong> • <a href="login.html" style="color:var(--primary-coral); text-decoration:underline;">เข้าสู่ระบบ</a> เพื่อสะสมแต้ม`;
+                    }
+
+                    if (!isBotTyping) {
+                        renderMessages(conv.messages || [], forceScroll);
+                    }
+                }
+            })
+            .catch(err => console.log('Chat load error:', err));
+    };
+
+    function getCurrentTimeFormatted() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    function renderMessages(messages, forceScroll = false) {
+        const container = document.getElementById('chat-messages-container');
+        if (!container) return;
+
+        const currentSig = messages.length + '_' + (messages.length > 0 ? (messages[messages.length - 1].id || messages[messages.length - 1].text) : '');
+        if (currentSig === lastRenderedSig && !forceScroll) {
+            return; // Avoid unnecessary re-rendering to prevent scroll bounce or flickering
+        }
+        lastRenderedSig = currentSig;
+
+        let html = '';
+        messages.forEach(msg => {
+            const isCustomer = msg.sender === 'customer';
+            const senderClass = isCustomer ? 'msg-customer' : (msg.sender === 'admin' ? 'msg-admin' : 'msg-bot');
+            const senderBadge = isCustomer ? 'คุณ' : (msg.sender === 'admin' ? '👨‍💼 แอดมิน' : '🤖 ผู้ช่วย AI');
+
+            let cardHtml = '';
+            if (msg.cards && msg.cards.length > 0) {
+                cardHtml += `
+                    <div class="chat-carousel-wrapper">
+                        <button type="button" class="carousel-nav-btn nav-prev" onclick="scrollChatCarousel(this, -180)" title="เลื่อนดูน้องแมวก่อนหน้า">◀</button>
+                        <div class="chat-cards-carousel">
+                `;
+                msg.cards.forEach(card => {
+                    cardHtml += `
+                        <div class="chat-cat-card">
+                            <img src="${card.image}" alt="${escapeHtml(card.name)}" class="chat-cat-img" onerror="this.src='assets/images/logo.png'">
+                            <div class="chat-cat-info">
+                                <div class="chat-cat-name">${escapeHtml(card.name)}</div>
+                                <div class="chat-cat-breed">${escapeHtml(card.breed)}</div>
+                                <div class="chat-cat-highlight">${escapeHtml(card.highlight || '')}</div>
+                                <div class="chat-cat-price">${escapeHtml(card.price_fmt || card.price)}</div>
+                                <a href="${card.link || 'products.php'}" class="btn btn-primary btn-sm chat-card-action">
+                                    ดูน้องตัวนี้ 🐾
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                });
+                cardHtml += `
+                        </div>
+                        <button type="button" class="carousel-nav-btn nav-next" onclick="scrollChatCarousel(this, 180)" title="เลื่อนดูน้องแมวถัดไป">▶</button>
+                    </div>
+                `;
+            }
+
+            let formattedTime = '';
+            if (msg.timestamp) {
+                const tParts = msg.timestamp.split(' ');
+                if (tParts[1]) {
+                    formattedTime = tParts[1].substring(0, 5);
+                } else {
+                    formattedTime = msg.timestamp;
+                }
+            }
+
+            html += `
+                <div class="chat-message-row ${senderClass}">
+                    ${!isCustomer ? `<div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>` : ''}
+                    <div class="chat-bubble-content">
+                        <div class="chat-sender-header">
+                            <span class="chat-sender-name">${escapeHtml(msg.sender_name || senderBadge)}</span>
+                            <span class="chat-time">${formattedTime}</span>
+                        </div>
+                        <div class="chat-text">${escapeHtml(msg.text).replace(/\\n/g, '<br>')}</div>
+                        ${cardHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+        lastMessageCount = messages.length;
+    }
+
+    window.scrollChatCarousel = function(btn, delta) {
+        if (!btn) return;
+        const wrapper = btn.closest('.chat-carousel-wrapper');
+        if (wrapper) {
+            const carousel = wrapper.querySelector('.chat-cards-carousel');
+            if (carousel) {
+                carousel.scrollBy({ left: delta, behavior: 'smooth' });
+            }
+        }
+    };
+
+    const quickPromptsMap = {
+        1: '🐱 แนะนำน้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่',
+        2: '🏢 มีน้องแมวพันธุ์ไหนที่เหมาะกับเลี้ยงในคอนโด/ห้องพักบ้าง?',
+        3: '🤧 เป็นภูมิแพ้ แนะนำน้องแมวขนไม่ร่วง/ผลัดขนน้อยหน่อยครับ',
+        4: '👑 ขอดูแมวสายพันธุ์พรีเมียม ขนฟูหน้าหวาน มีใบเพ็ดดีกรี',
+        5: '🎁 ตอนนี้มีโปรโมชั่นหรือดีลส่วนลดสมาชิกใหม่อะไรบ้าง?',
+        6: '🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?'
+    };
+
+    function showTypingIndicator(userText) {
+        const container = document.getElementById('chat-messages-container');
+        if (!container) return;
+
+        const currentTime = getCurrentTimeFormatted();
+
+        // 1. Immediately append user's bubble
+        if (userText) {
+            const customerRow = document.createElement('div');
+            customerRow.className = 'chat-message-row msg-customer';
+            customerRow.innerHTML = `
+                <div class="chat-bubble-content">
+                    <div class="chat-sender-header">
+                        <span class="chat-sender-name">คุณ</span>
+                        <span class="chat-time">${currentTime}</span>
+                    </div>
+                    <div class="chat-text">${escapeHtml(userText)}</div>
+                </div>
+            `;
+            container.appendChild(customerRow);
+        }
+
+        // 2. Append typing animation indicator
+        const oldTyping = document.getElementById('chat-typing-indicator');
+        if (oldTyping) oldTyping.remove();
+
+        const typingRow = document.createElement('div');
+        typingRow.id = 'chat-typing-indicator';
+        typingRow.className = 'chat-message-row msg-bot';
+        typingRow.innerHTML = `
+            <div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>
+            <div class="chat-bubble-content">
+                <div class="chat-sender-header">
+                    <span class="chat-sender-name">🤖 ผู้ช่วย AI</span>
+                    <span class="chat-time">${currentTime}</span>
+                </div>
+                <div class="chat-typing-bubble">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span style="font-size:0.75rem; color:#888; margin-left:6px; font-weight:600;">กำลังพิมพ์ข้อความ... 💬</span>
+                </div>
+            </div>
+        `;
+        container.appendChild(typingRow);
+        container.scrollTop = container.scrollHeight;
+        isBotTyping = true;
+    }
+
+    window.sendQuickReply = function(option) {
+        closeQuickMenuPopup();
+        const userText = quickPromptsMap[option] || 'คำถามด่วน';
+        showTypingIndicator(userText);
+
+        const formData = new FormData();
+        formData.append('action', 'quick_reply');
+        formData.append('option', option);
+
+        const apiPromise = fetch('api_chat.php', {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json()).catch(err => console.log(err));
+
+        // Smooth natural delay (~3.0s) for typing animation
+        setTimeout(() => {
+            apiPromise.then(() => {
+                isBotTyping = false;
+                const typing = document.getElementById('chat-typing-indicator');
+                if (typing) typing.remove();
+                loadChatMessages(true);
+            });
+        }, 3000);
+    };
+
+    window.handleSendChatMessage = function(e) {
+        e.preventDefault();
+        const input = document.getElementById('chat-input-text');
+        const text = input.value.trim();
+        if (!text) return;
+
+        input.value = '';
+        showTypingIndicator(text);
+
+        const formData = new FormData();
+        formData.append('action', 'send_message');
+        formData.append('message', text);
+
+        const apiPromise = fetch('api_chat.php', {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json()).catch(err => console.log(err));
+
+        // Smooth natural delay (~3.0s) for typing animation
+        setTimeout(() => {
+            apiPromise.then(() => {
+                isBotTyping = false;
+                const typing = document.getElementById('chat-typing-indicator');
+                if (typing) typing.remove();
+                loadChatMessages(true);
+            });
+        }, 3000);
+    };
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    // Auto poll when page loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        loadChatMessages(false);
+        pollInterval = setInterval(() => {
+            if (chatIsOpen && !isBotTyping) {
+                loadChatMessages(false);
+            }
+        }, 3500);
+    });
+})();
+</script>
     <script src="assets/js/main.js"></script>
 </body>
 </html>
