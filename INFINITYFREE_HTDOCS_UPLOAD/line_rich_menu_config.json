@@ -1,0 +1,63 @@
+{
+  "size": {
+    "width": 2500,
+    "height": 1686
+  },
+  "selected": true,
+  "name": "Purrfect Shop 4-Block Menu",
+  "chatBarText": "🐾 เมนูร้าน Purrfect Shop",
+  "areas": [
+    {
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 2500,
+        "height": 843
+      },
+      "action": {
+        "type": "uri",
+        "label": "A. เข้าชมหน้าร้าน Purrfect Shop",
+        "uri": "https://patches660.github.io/Purrfect-Shop/index.html"
+      }
+    },
+    {
+      "bounds": {
+        "x": 0,
+        "y": 843,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "uri",
+        "label": "B. สมัครสมาชิก รับส่วนลด 5%",
+        "uri": "https://patches660.github.io/Purrfect-Shop/register.html"
+      }
+    },
+    {
+      "bounds": {
+        "x": 833,
+        "y": 843,
+        "width": 834,
+        "height": 843
+      },
+      "action": {
+        "type": "uri",
+        "label": "C. คูปองส่วนลด & ดีลสมาชิกใหม่",
+        "uri": "https://patches660.github.io/Purrfect-Shop/welcome_deal.html"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1667,
+        "y": 843,
+        "width": 833,
+        "height": 843
+      },
+      "action": {
+        "type": "uri",
+        "label": "D. สินค้า / แคตตาล็อกน้องแมวทั้งหมด",
+        "uri": "https://patches660.github.io/Purrfect-Shop/products.html"
+      }
+    }
+  ]
+}
