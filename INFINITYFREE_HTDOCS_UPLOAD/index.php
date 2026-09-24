@@ -3,7 +3,7 @@ require_once __DIR__ . '/header.php';
 
 // Handle Add to Cart from index
 $added_message = "";
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_cat') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_cat') {
     $cat_id = $_POST['cat_id'] ?? '';
     if (addToCart($cat_id)) {
         $cat_name = $cats[$cat_id]['name'] ?? 'น้องแมว';

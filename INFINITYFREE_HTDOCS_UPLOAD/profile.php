@@ -13,7 +13,7 @@ $error_msg = "";
 $active_tab = $_GET['tab'] ?? 'profile';
 
 // Handle Profile Updates (POST)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
 
     if ($action === 'update_profile') {

@@ -6,7 +6,7 @@ $is_new_register = isset($_GET['registered']) && $_GET['registered'] == '1';
 
 // Handle Add Item to Cart (both cats and starter bundles)
 $added_message = "";
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_item') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_item') {
     $item_id = $_POST['item_id'] ?? '';
     if (addToCart($item_id)) {
         $item_name = $cats[$item_id]['name'] ?? ($starter_bundles[$item_id]['name'] ?? 'สินค้า');

@@ -308,7 +308,7 @@ if (basename(__FILE__) === basename($_SERVER['SCRIPT_FILENAME'] ?? '')) {
     $success_msg = "";
     $error_msg = "";
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_test_subscriber_email') {
+    if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_test_subscriber_email') {
         $target_email = trim($_POST['target_email'] ?? $recipient_email);
         $target_name = trim($_POST['target_name'] ?? $recipient_name);
 

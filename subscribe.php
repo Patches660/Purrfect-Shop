@@ -12,7 +12,7 @@ if ($currUser) {
     $subscriber_email = $currUser['email'] ?? '';
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST') {
     $subscriber_email = trim($_POST['subscriber_email'] ?? '');
     $subscriber_name = trim($_POST['subscriber_name'] ?? '');
 

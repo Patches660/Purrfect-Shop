@@ -37,7 +37,7 @@ $emailjs_test_logs = [];
 // -------------------------------------------------------------
 // POST Handler 1: Save SMTP Settings
 // -------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_smtp_config') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_smtp_config') {
     $enabled = !empty($_POST['smtp_enabled']) ? true : false;
     $host = trim($_POST['smtp_host'] ?? 'smtp.gmail.com');
     $port = intval($_POST['smtp_port'] ?? 587);
@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // -------------------------------------------------------------
 // POST Handler 2: Test Live SMTP Email Delivery
 // -------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'test_smtp_email') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) && $_POST['action'] === 'test_smtp_email') {
     $test_email = trim($_POST['test_email'] ?? '');
     $test_name = trim($_POST['test_name'] ?? 'ผู้ทดสอบระบบ');
 
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // -------------------------------------------------------------
 // POST Handler 2.1: Save EmailJS Settings (Dual Templates Supported)
 // -------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_emailjs_config') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_emailjs_config') {
     $enabled = !empty($_POST['emailjs_enabled']);
     $service_id = trim($_POST['emailjs_service_id'] ?? '');
     $template_welcome = trim($_POST['emailjs_template_welcome'] ?? ($_POST['emailjs_template_id'] ?? 'template_xt7cq3g'));
@@ -172,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // -------------------------------------------------------------
 // POST Handler 2.2: Test Live EmailJS Delivery (Supports Both Templates)
 // -------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'test_emailjs_email') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) && $_POST['action'] === 'test_emailjs_email') {
     $test_email = trim($_POST['test_email'] ?? '');
     $test_name = trim($_POST['test_name'] ?? 'ผู้ทดสอบ EmailJS');
     // Ensure we check ui_template_choice first (native radio selection) then test_template_type
@@ -294,7 +294,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // -------------------------------------------------------------
 // POST Handler 2.3: Retry Failed Order Confirmation Emails (Queue)
 // -------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'retry_order_emails') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) && $_POST['action'] === 'retry_order_emails') {
     $retryResult = retryPendingOrderEmails();
     if ($retryResult['success'] > 0) {
         $success_msg = "✅ Retry สำเร็จ! ส่งอีเมลยืนยันออเดอร์ได้ {$retryResult['success']} จาก {$retryResult['retried']} ฉบับ";
@@ -308,7 +308,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // -------------------------------------------------------------
 // POST Handler 3: Send Actual Email & Dispatch to Customer Inbox
 // -------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_real_email') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) && $_POST['action'] === 'send_real_email') {
     $send_mode = $_POST['send_mode'] ?? 'single'; // 'single', 'multiple', 'all'
     $voucher_code = trim($_POST['code'] ?? 'WELCOME15');
     $recipients_to_send = [];

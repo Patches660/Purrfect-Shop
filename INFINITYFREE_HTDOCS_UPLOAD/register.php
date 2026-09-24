@@ -18,7 +18,7 @@ $consent_email = true;
 $consent_phone = false;
 $consent_terms = false;
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST') {
     $fullname = trim($_POST['fullname'] ?? '');
     $username = trim($_POST['username'] ?? '');
     $email = trim($_POST['email'] ?? '');

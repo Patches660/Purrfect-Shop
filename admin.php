@@ -28,7 +28,7 @@ $error_msg = "";
 // -------------------------------------------------------------
 // POST Handlers
 // -------------------------------------------------------------
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
 
     // 1. Update Order Status & Sync Tracking Email

@@ -55,7 +55,7 @@ if (isset($_GET['action'])) {
 }
 
 // Handle Cart POST Checkout Action
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'checkout') {
+if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) && $_POST['action'] === 'checkout') {
     if (!empty($_SESSION['cart'])) {
         $is_test_checkout = isset($_POST['is_test_mode']);
         
