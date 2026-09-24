@@ -1117,20 +1117,105 @@ function reverseGeocodeAddress(lat, lng) {
 (function() {
     let chatIsOpen = false;
     let quickPopupIsOpen = false;
-    let lastMessageCount = 0;
     let pollInterval = null;
-    let currentUserId = '';
     let isBotTyping = false;
     let lastRenderedSig = '';
+
+    const quickPromptsMap = {
+        1: '🐱 แนะนำน้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่',
+        2: '🏢 มีน้องแมวพันธุ์ไหนที่เหมาะกับเลี้ยงในคอนโด/ห้องพักบ้าง?',
+        3: '🤧 เป็นภูมิแพ้ แนะนำน้องแมวขนไม่ร่วง/ผลัดขนน้อยหน่อยครับ',
+        4: '👑 ขอดูแมวสายพันธุ์พรีเมียม ขนฟูหน้าหวาน มีใบเพ็ดดีกรี',
+        5: '🎁 ตอนนี้มีโปรโมชั่นหรือดีลส่วนลดสมาชิกใหม่อะไรบ้าง?',
+        6: '🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?'
+    };
+
+    // Client-Side Fallback Knowledge Base & Quick Replies for Static GitHub Pages
+    const BOT_RESPONSES = {
+        1: {
+            text: "นี่คือน้องแมวยอดนิยมอันดับ 1 เลี้ยงง่าย เป็นมิตร สุขภาพแข็งแรง เหมาะสำหรับมือใหม่ที่เพิ่งเริ่มเลี้ยงที่สุดครับ 🐾",
+            cards: [
+                { id: 'cat_british', name: 'น้องบริติช บลู', breed: 'British Shorthair', price: '฿35,000', image: 'assets/images/cat_british.jpg', highlight: 'นิสัยสุขุม น่ารัก ขี้อ้อน', link: 'products.html' },
+                { id: 'cat_americanshorthair', name: 'น้องอเมริกัน ซิลเวอร์', breed: 'American Shorthair', price: '฿28,000', image: 'assets/images/cat_americanshorthair.jpg', highlight: 'ลายคมชัด ขี้เล่น เลี้ยงง่าย', link: 'products.html' },
+                { id: 'cat_scottish', name: 'น้องสกอตติช โฟลด์', breed: 'Scottish Fold', price: '฿32,000', image: 'assets/images/cat_scottish.jpg', highlight: 'หูพับหน้ากลม น่ารักติดคน', link: 'products.html' }
+            ]
+        },
+        2: {
+            text: "สำหรับเพื่อนๆ ที่พักอาศัยในคอนโดหรือห้องพัก แนะนำสายพันธุ์ที่รักความสงบ ไม่ส่งเสียงดังรบกวนข้างห้อง และปรับตัวเก่งครับ 🏢✨",
+            cards: [
+                { id: 'cat_persian', name: 'น้องเปอร์เซีย ขาวสำลี', breed: 'Persian', price: '฿29,000', image: 'assets/images/cat_persian.jpg', highlight: 'เงียบสงบ สุภาพ เรียบร้อย', link: 'recommend.html' },
+                { id: 'cat_russian', name: 'น้องรัสเซียน บลู', breed: 'Russian Blue', price: '฿38,000', image: 'assets/images/cat_russian.jpg', highlight: 'ฉลาด รักความเงียบสงบ', link: 'recommend.html' },
+                { id: 'cat_ragdoll', name: 'น้องแร็กดอลล์ ตาฟ้า', breed: 'Ragdoll', price: '฿45,000', image: 'assets/images/cat_ragdoll.jpg', highlight: 'ตัวใหญ่นุ่มนิ่ม อ่อนโยน', link: 'recommend.html' }
+            ]
+        },
+        3: {
+            text: "ผู้ที่เป็นโรคภูมิแพ้ขนสัตว์ หรือไม่ชอบกวาดขนแมว แนะนำกลุ่มสายพันธุ์ Hypoallergenic / ขนสั้นพิเศษ หรือไร้ขน 100% เหล่านี้ครับ 🤧🌿",
+            cards: [
+                { id: 'cat_sphynx', name: 'น้องสฟิงซ์ ชมพู', breed: 'Sphynx', price: '฿42,000', image: 'assets/images/cat_sphynx.jpg', highlight: 'ขนร่วง 0% ไร้ภูมิแพ้ อบอุ่น', link: 'recommend.html' },
+                { id: 'cat_devon_rex', name: 'น้องเดวอน เร็กซ์', breed: 'Devon Rex', price: '฿39,000', image: 'assets/images/cat_devon_rex.jpg', highlight: 'ขนหยักนุ่ม ผลัดขนน้อยมาก', link: 'recommend.html' },
+                { id: 'cat_cornish_rex', name: 'น้องคอร์นิช เร็กซ์', breed: 'Cornish Rex', price: '฿36,000', image: 'assets/images/cat_cornish_rex.jpg', highlight: 'ขนสั้นลอนสวย ไฮโปอัลเลอร์เจนิก', link: 'recommend.html' }
+            ]
+        },
+        4: {
+            text: "ขอนำเสนอน้องแมวเกรดพรีเมียม ขนฟูอลังการ หน้าหวาน และมีใบเพ็ดดีกรี CFA/WCF สายเลือดแชมป์สากล 100% ครับ 👑💎",
+            cards: [
+                { id: 'cat_mainecoon', name: 'น้องเมนคูน ไจแอนท์', breed: 'Maine Coon', price: '฿55,000', image: 'assets/images/cat_mainecoon.jpg', highlight: 'ยักษ์ใหญ่ใจดี มีใบเพ็ด CFA', link: 'products.html' },
+                { id: 'cat_ragdoll', name: 'น้องแร็กดอลล์ บลูพอยท์', breed: 'Ragdoll', price: '฿45,000', image: 'assets/images/cat_ragdoll.jpg', highlight: 'ขนฟูสวย หรูหราระดับท็อป', link: 'products.html' },
+                { id: 'cat_siberian', name: 'น้องไซบีเรียน ฟอเรสต์', breed: 'Siberian', price: '฿48,000', image: 'assets/images/cat_siberian.jpg', highlight: 'ขนหนานุ่ม 3 ชั้น สายพันธุ์แท้', link: 'products.html' }
+            ]
+        },
+        5: {
+            text: "🎉 สิทธิพิเศษและโค้ดส่วนลดสุดฮอตประจำเดือนนี้:\n\n" +
+                  "• 🏷️ โค้ด CAT10OFF: รับส่วนลด 10% เมื่อช้อปขั้นต่ำ 300.- (ใช้ได้ 1 ครั้ง/1 เดือน)\n" +
+                  "• 🏷️ โค้ด NEWMEMBER5: รับส่วนลด 5% ทุกรายการสำหรับสมาชิกใหม่\n" +
+                  "• 🏷️ โค้ด CATNEWS10: ส่วนลด 10% เมื่อสมัครรับจดหมายข่าว\n" +
+                  "• 🎁 ฟรี! Starter Kit เซ็ตของขวัญต้อนรับน้องแมว 11 รายการ มูลค่า 4,500 บาท ฟรีทุกออเดอร์!",
+            cards: [
+                { id: 'cat_british', name: 'น้องบริติช บลู', breed: 'British Shorthair', price: '฿35,000', image: 'assets/images/cat_british.jpg', highlight: 'ใช้โค้ด CAT10OFF ลด 10%', link: 'welcome_deal.html' },
+                { id: 'cat_munchkin', name: 'น้องมันช์กิ้น ขาสั้น', breed: 'Munchkin', price: '฿38,000', image: 'assets/images/cat_munchkin.jpg', highlight: 'แถมฟรี Starter Kit 11 ชิ้น', link: 'welcome_deal.html' }
+            ]
+        },
+        6: {
+            text: "🩺 การันตีมาตรฐานสุขภาพระดับสากลจาก Purrfect Cattery:\n\n" +
+                  "1. 💉 วัคซีนครบ 2 เข็ม + ถ่ายพยาธิ + หยดยาป้องกันเห็บหมัด\n" +
+                  "2. 🔬 ตรวจผลแล็บ ปลอดโรคลิวคีเมีย (FeLV) และเอดส์แมว (FIV) 100%\n" +
+                  "3. 🛡️ การันตีคุ้มครองสุขภาพโรคร้ายแรงนานถึง 180 วันเต็ม\n" +
+                  "4. 🚗 บริการจัดส่งด้วยรถ Pet Taxi ควบคุมอุณหภูมิถึงหน้าบ้านทั่วประเทศ\n" +
+                  "5. 👨‍⚕️ ปรึกษาสัตวแพทย์ประจำฟาร์มฟรีตลอดอายุขัยของน้องแมวครับ!",
+            cards: []
+        }
+    };
+
+    function getLocalChatMessages() {
+        try {
+            const raw = localStorage.getItem('purrfect_chat_history');
+            if (raw) return JSON.parse(raw);
+        } catch(e) {}
+        return [
+            {
+                id: 'msg_init_static',
+                sender: 'bot',
+                sender_name: 'Purrfect Bot 🐾',
+                text: 'สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ',
+                cards: [],
+                timestamp: getCurrentTimeFormatted()
+            }
+        ];
+    }
+
+    function saveLocalChatMessages(msgs) {
+        try {
+            localStorage.setItem('purrfect_chat_history', JSON.stringify(msgs));
+        } catch(e) {}
+    }
 
     window.togglePurrfectChat = function() {
         const win = document.getElementById('purrfect-chat-window');
         const launcher = document.getElementById('chat-launcher-btn');
         if (!win || !launcher) return;
 
-        // Trigger dynamic bounce click animation
         launcher.classList.remove('anim-pulse');
-        void launcher.offsetWidth; // Force reflow
+        void launcher.offsetWidth;
         launcher.classList.add('anim-pulse');
 
         chatIsOpen = !chatIsOpen;
@@ -1152,8 +1237,6 @@ function reverseGeocodeAddress(lat, lng) {
         } else {
             launcher.classList.remove('launcher-active');
             closeQuickMenuPopup();
-
-            // Trigger smooth closing animation
             win.classList.remove('chat-window-visible');
             win.classList.add('chat-window-closing');
             setTimeout(() => {
@@ -1190,33 +1273,45 @@ function reverseGeocodeAddress(lat, lng) {
     };
 
     window.loadChatMessages = function(forceScroll = false) {
-        if (isBotTyping && !forceScroll) {
-            return; // Don't interrupt typing indicator during delay
+        if (isBotTyping && !forceScroll) return;
+
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+
+        if (isPhpServer) {
+            fetch('api_chat.php?action=get_messages')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success' && data.conversation) {
+                        const conv = data.conversation;
+                        const u = data.current_user;
+                        updateUserStrip(u);
+                        if (!isBotTyping) {
+                            renderMessages(conv.messages || [], forceScroll);
+                        }
+                    }
+                })
+                .catch(() => fallbackClientLoad(forceScroll));
+        } else {
+            fallbackClientLoad(forceScroll);
         }
-
-        fetch('api_chat.php?action=get_messages')
-            .then(res => res.json())
-            .then(data => {
-                if (data.status === 'success' && data.conversation) {
-                    const conv = data.conversation;
-                    const u = data.current_user;
-                    currentUserId = u.id;
-
-                    // Update user strip
-                    const strip = document.getElementById('chat-user-label');
-                    if (u.is_member) {
-                        strip.innerHTML = `👤 สนทนาในนามสมาชิก: <strong>${escapeHtml(u.name)}</strong> (ส่วนลด 5% 🐾)`;
-                    } else {
-                        strip.innerHTML = `👤 สนทนาในนาม: <strong>${escapeHtml(u.name)}</strong> • <a href="login.html" style="color:var(--primary-coral); text-decoration:underline;">เข้าสู่ระบบ</a> เพื่อสะสมแต้ม`;
-                    }
-
-                    if (!isBotTyping) {
-                        renderMessages(conv.messages || [], forceScroll);
-                    }
-                }
-            })
-            .catch(err => console.log('Chat load error:', err));
     };
+
+    function fallbackClientLoad(forceScroll) {
+        const user = typeof getClientLoggedUser === 'function' ? getClientLoggedUser() : null;
+        updateUserStrip(user ? { name: user.username, is_member: true } : { name: 'ผู้เยี่ยมชม', is_member: false });
+        const msgs = getLocalChatMessages();
+        renderMessages(msgs, forceScroll);
+    }
+
+    function updateUserStrip(u) {
+        const strip = document.getElementById('chat-user-label');
+        if (!strip) return;
+        if (u && u.is_member) {
+            strip.innerHTML = `👤 สนทนาในนามสมาชิก: <strong>${escapeHtml(u.name)}</strong> (ส่วนลด 5% 🐾)`;
+        } else {
+            strip.innerHTML = `👤 สนทนาในนาม: <strong>${escapeHtml(u ? u.name : 'ผู้เยี่ยมชม')}</strong> • <a href="login.html" style="color:var(--primary-coral); text-decoration:underline;">เข้าสู่ระบบ</a> เพื่อสะสมแต้ม`;
+        }
+    }
 
     function getCurrentTimeFormatted() {
         const now = new Date();
@@ -1231,7 +1326,7 @@ function reverseGeocodeAddress(lat, lng) {
 
         const currentSig = messages.length + '_' + (messages.length > 0 ? (messages[messages.length - 1].id || messages[messages.length - 1].text) : '');
         if (currentSig === lastRenderedSig && !forceScroll) {
-            return; // Avoid unnecessary re-rendering to prevent scroll bounce or flickering
+            return;
         }
         lastRenderedSig = currentSig;
 
@@ -1257,7 +1352,7 @@ function reverseGeocodeAddress(lat, lng) {
                                 <div class="chat-cat-breed">${escapeHtml(card.breed)}</div>
                                 <div class="chat-cat-highlight">${escapeHtml(card.highlight || '')}</div>
                                 <div class="chat-cat-price">${escapeHtml(card.price_fmt || card.price)}</div>
-                                <a href="${card.link || 'products.php'}" class="btn btn-primary btn-sm chat-card-action">
+                                <a href="${card.link || 'products.html'}" class="btn btn-primary btn-sm chat-card-action">
                                     ดูน้องตัวนี้ 🐾
                                 </a>
                             </div>
@@ -1298,7 +1393,6 @@ function reverseGeocodeAddress(lat, lng) {
 
         container.innerHTML = html;
         container.scrollTop = container.scrollHeight;
-        lastMessageCount = messages.length;
     }
 
     window.scrollChatCarousel = function(btn, delta) {
@@ -1312,22 +1406,12 @@ function reverseGeocodeAddress(lat, lng) {
         }
     };
 
-    const quickPromptsMap = {
-        1: '🐱 แนะนำน้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่',
-        2: '🏢 มีน้องแมวพันธุ์ไหนที่เหมาะกับเลี้ยงในคอนโด/ห้องพักบ้าง?',
-        3: '🤧 เป็นภูมิแพ้ แนะนำน้องแมวขนไม่ร่วง/ผลัดขนน้อยหน่อยครับ',
-        4: '👑 ขอดูแมวสายพันธุ์พรีเมียม ขนฟูหน้าหวาน มีใบเพ็ดดีกรี',
-        5: '🎁 ตอนนี้มีโปรโมชั่นหรือดีลส่วนลดสมาชิกใหม่อะไรบ้าง?',
-        6: '🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?'
-    };
-
     function showTypingIndicator(userText) {
         const container = document.getElementById('chat-messages-container');
         if (!container) return;
 
         const currentTime = getCurrentTimeFormatted();
 
-        // 1. Immediately append user's bubble
         if (userText) {
             const customerRow = document.createElement('div');
             customerRow.className = 'chat-message-row msg-customer';
@@ -1343,7 +1427,6 @@ function reverseGeocodeAddress(lat, lng) {
             container.appendChild(customerRow);
         }
 
-        // 2. Append typing animation indicator
         const oldTyping = document.getElementById('chat-typing-indicator');
         if (oldTyping) oldTyping.remove();
 
@@ -1375,25 +1458,62 @@ function reverseGeocodeAddress(lat, lng) {
         const userText = quickPromptsMap[option] || 'คำถามด่วน';
         showTypingIndicator(userText);
 
-        const formData = new FormData();
-        formData.append('action', 'quick_reply');
-        formData.append('option', option);
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
 
-        const apiPromise = fetch('api_chat.php', {
-            method: 'POST',
-            body: formData
-        }).then(res => res.json()).catch(err => console.log(err));
+        if (isPhpServer) {
+            const formData = new FormData();
+            formData.append('action', 'quick_reply');
+            formData.append('option', option);
 
-        // Smooth natural delay (~3.0s) for typing animation
-        setTimeout(() => {
-            apiPromise.then(() => {
-                isBotTyping = false;
-                const typing = document.getElementById('chat-typing-indicator');
-                if (typing) typing.remove();
-                loadChatMessages(true);
-            });
-        }, 3000);
+            fetch('api_chat.php', { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(() => {
+                    setTimeout(() => {
+                        isBotTyping = false;
+                        const typing = document.getElementById('chat-typing-indicator');
+                        if (typing) typing.remove();
+                        loadChatMessages(true);
+                    }, 1200);
+                })
+                .catch(() => triggerClientQuickReply(option, userText));
+        } else {
+            triggerClientQuickReply(option, userText);
+        }
     };
+
+    function triggerClientQuickReply(option, userText) {
+        setTimeout(() => {
+            isBotTyping = false;
+            const typing = document.getElementById('chat-typing-indicator');
+            if (typing) typing.remove();
+
+            const botData = BOT_RESPONSES[option] || {
+                text: "สวัสดีครับ! สนใจสอบถามข้อมูลน้องแมวตัวไหนเป็นพิเศษ ทักแชทบอกแอดมินได้เลยครับ 🐾",
+                cards: []
+            };
+
+            const msgs = getLocalChatMessages();
+            msgs.push({
+                id: 'msg_c_' + Date.now(),
+                sender: 'customer',
+                sender_name: 'คุณ',
+                text: userText,
+                cards: [],
+                timestamp: getCurrentTimeFormatted()
+            });
+            msgs.push({
+                id: 'msg_b_' + Date.now(),
+                sender: 'bot',
+                sender_name: 'Purrfect Advisor 🐾',
+                text: botData.text,
+                cards: botData.cards || [],
+                timestamp: getCurrentTimeFormatted()
+            });
+
+            saveLocalChatMessages(msgs);
+            renderMessages(msgs, true);
+        }, 1200);
+    }
 
     window.handleSendChatMessage = function(e) {
         e.preventDefault();
@@ -1404,25 +1524,77 @@ function reverseGeocodeAddress(lat, lng) {
         input.value = '';
         showTypingIndicator(text);
 
-        const formData = new FormData();
-        formData.append('action', 'send_message');
-        formData.append('message', text);
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
 
-        const apiPromise = fetch('api_chat.php', {
-            method: 'POST',
-            body: formData
-        }).then(res => res.json()).catch(err => console.log(err));
+        if (isPhpServer) {
+            const formData = new FormData();
+            formData.append('action', 'send_message');
+            formData.append('message', text);
 
-        // Smooth natural delay (~3.0s) for typing animation
-        setTimeout(() => {
-            apiPromise.then(() => {
-                isBotTyping = false;
-                const typing = document.getElementById('chat-typing-indicator');
-                if (typing) typing.remove();
-                loadChatMessages(true);
-            });
-        }, 3000);
+            fetch('api_chat.php', { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(() => {
+                    setTimeout(() => {
+                        isBotTyping = false;
+                        const typing = document.getElementById('chat-typing-indicator');
+                        if (typing) typing.remove();
+                        loadChatMessages(true);
+                    }, 1200);
+                })
+                .catch(() => triggerClientChatMessage(text));
+        } else {
+            triggerClientChatMessage(text);
+        }
     };
+
+    function triggerClientChatMessage(text) {
+        setTimeout(() => {
+            isBotTyping = false;
+            const typing = document.getElementById('chat-typing-indicator');
+            if (typing) typing.remove();
+
+            let replyText = "ขอบคุณสำหรับข้อความครับ! 🐾 เจ้าหน้าที่หรือผู้ช่วย AI กำลังตรวจสอบข้อมูลน้องแมวและจะแนะนำให้คุณลูกค้าทันทีครับ หากต้องการดูคำถามด่วนสามารถกดปุ่ม ⚡ คำถาม ได้เลยครับ";
+            let cards = [];
+
+            const lower = text.toLowerCase();
+            if (lower.includes('ราคา') || lower.includes('เท่าไหร่') || lower.includes('โปรโมชั่น') || lower.includes('ส่วนลด') || lower.includes('คูปอง') || lower.includes('cat10off')) {
+                replyText = "🎉 ตอนนี้มีโปรโมชั่นพิเศษ:\n• โค้ด CAT10OFF ลดทันที 10% (ขั้นต่ำ 300.-)\n• โค้ด NEWMEMBER5 ลด 5% สำหรับสมาชิกใหม่\n• แถมฟรี Starter Kit 11 ชิ้นมูลค่า 4,500.- ทุกออเดอร์ครับ!";
+                cards = BOT_RESPONSES[5].cards;
+            } else if (lower.includes('คอนโด') || lower.includes('ห้องพัก')) {
+                replyText = BOT_RESPONSES[2].text;
+                cards = BOT_RESPONSES[2].cards;
+            } else if (lower.includes('แพ้') || lower.includes('ภูมิแพ้') || lower.includes('ขนร่วง')) {
+                replyText = BOT_RESPONSES[3].text;
+                cards = BOT_RESPONSES[3].cards;
+            } else if (lower.includes('ส่ง') || lower.includes('ประกัน') || lower.includes('วัคซีน')) {
+                replyText = BOT_RESPONSES[6].text;
+            } else if (lower.includes('สวัสดี') || lower.includes('หวัดดี') || lower.includes('hello') || lower.includes('hi')) {
+                replyText = "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 สนใจน้องแมวพันธุ์ไหนเป็นพิเศษ หรือสอบถามการดูแล สามารถเลือกคำถามด่วนด้านล่างหรือพิมพ์คุยได้เลยครับ";
+                cards = BOT_RESPONSES[1].cards;
+            }
+
+            const msgs = getLocalChatMessages();
+            msgs.push({
+                id: 'msg_c_' + Date.now(),
+                sender: 'customer',
+                sender_name: 'คุณ',
+                text: text,
+                cards: [],
+                timestamp: getCurrentTimeFormatted()
+            });
+            msgs.push({
+                id: 'msg_b_' + Date.now(),
+                sender: 'bot',
+                sender_name: 'Purrfect Advisor 🐾',
+                text: replyText,
+                cards: cards,
+                timestamp: getCurrentTimeFormatted()
+            });
+
+            saveLocalChatMessages(msgs);
+            renderMessages(msgs, true);
+        }, 1200);
+    }
 
     function escapeHtml(str) {
         if (!str) return '';
@@ -1434,14 +1606,16 @@ function reverseGeocodeAddress(lat, lng) {
             .replace(/'/g, '&#039;');
     }
 
-    // Auto poll when page loaded
     document.addEventListener('DOMContentLoaded', () => {
         loadChatMessages(false);
-        pollInterval = setInterval(() => {
-            if (chatIsOpen && !isBotTyping) {
-                loadChatMessages(false);
-            }
-        }, 3500);
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+        if (isPhpServer) {
+            pollInterval = setInterval(() => {
+                if (chatIsOpen && !isBotTyping) {
+                    loadChatMessages(false);
+                }
+            }, 3500);
+        }
     });
 })();
 </script>
