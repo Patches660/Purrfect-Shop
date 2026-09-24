@@ -4,7 +4,7 @@
     "height": 1686
   },
   "selected": true,
-  "name": "Purrfect Shop 4-Block Menu",
+  "name": "Purrfect Shop Orange Cat Rich Menu",
   "chatBarText": "🐾 เมนูร้าน Purrfect Shop",
   "areas": [
     {
@@ -16,7 +16,7 @@
       },
       "action": {
         "type": "uri",
-        "label": "A. เข้าชมหน้าร้าน Purrfect Shop",
+        "label": "เข้าชมหน้าร้าน Purrfect Shop",
         "uri": "https://patches660.github.io/Purrfect-Shop/index.html"
       }
     },
@@ -29,7 +29,7 @@
       },
       "action": {
         "type": "uri",
-        "label": "B. สมัครสมาชิก รับส่วนลด 5%",
+        "label": "สมัครสมาชิก รับส่วนลด 5%",
         "uri": "https://patches660.github.io/Purrfect-Shop/register.html"
       }
     },
@@ -42,7 +42,7 @@
       },
       "action": {
         "type": "uri",
-        "label": "C. คูปองส่วนลด & ดีลสมาชิกใหม่",
+        "label": "คูปองส่วนลด & ดีลพิเศษ",
         "uri": "https://patches660.github.io/Purrfect-Shop/welcome_deal.html"
       }
     },
@@ -55,7 +55,7 @@
       },
       "action": {
         "type": "uri",
-        "label": "D. สินค้า / แคตตาล็อกน้องแมวทั้งหมด",
+        "label": "สินค้า / น้องแมวทั้งหมด",
         "uri": "https://patches660.github.io/Purrfect-Shop/products.html"
       }
     }
