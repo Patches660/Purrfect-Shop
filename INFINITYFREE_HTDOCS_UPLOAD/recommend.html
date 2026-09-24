@@ -1,0 +1,3701 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purrfect Shop - เพราะทุกบ้านควรมีเจ้าเหมียว 🐾</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/favicon.png">
+    <script>
+        (function() {
+            try {
+                const savedTheme = localStorage.getItem('cat_shop_theme') || 'warm';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } catch(e) {}
+        })();
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <!-- 1. Top Utility Bar: Announcements, Theme Switcher, Admin Console & User Profile -->
+        <div class="top-utility-bar">
+            <div class="top-utility-container">
+                <div class="top-utility-left">
+                    <span class="top-badge-pill">🐾 Purrfect Cattery & Boutique</span>
+                    <span class="top-utility-tagline">ฟาร์มเพาะพันธุ์น้องแมวสายพันธุ์แท้มาตรฐานสากล • การันตีสุขภาพ 180 วัน</span>
+                </div>
+                
+                <div class="top-utility-right">
+                    <!-- Theme Loop Switcher Button -->
+                    <button type="button" class="theme-loop-btn" onclick="cycleTheme()" title="กดเพื่อสลับสีพื้นหลังแบบวนลูป (Loop)">
+                        🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
+                    </button>
+
+                    <!-- Admin Console Shortcut (Only visible for Admins) -->
+                    
+                    <!-- User Account / Profile Badge -->
+                                            <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                            <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
+                            <a href="subscribe.html" class="btn btn-sm " style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="รับข้อมูลข่าวสารโดยยังไม่ต้องสมัครสมาชิก">
+                                📬 รับข้อมูลข่าวสาร
+                            </a>
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.85rem; font-size: 0.82rem;">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.9rem; font-size: 0.82rem;">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+
+        <!-- 2. Main Navigation Bar: Brand Logo, Page Links & Shopping Cart -->
+        <div class="main-nav-bar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <img src="assets/images/logo.png" alt="Purrfect Shop Logo" class="logo-img">
+                    <div class="logo-title-group">
+                        <span class="logo-text">Purrfect Shop 🐾</span>
+                        <span class="logo-tagline">เพราะทุกบ้านควรมีเจ้าเหมียว</span>
+                    </div>
+                </a>
+                
+                <nav>
+                    <ul class="nav-menu">
+                        <li>
+                            <a href="index.html" class="nav-link ">
+                                🏠 หน้าแรก
+                            </a>
+                        </li>
+                        <li>
+                            <a href="products.html" class="nav-link ">
+                                🐱 น้องแมวทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="recommend.html" class="nav-link active">
+                                🌟 แนะนำสำหรับคุณ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="welcome_deal.html" class="nav-link " style="position: relative;">
+                                🎁 ดีลสมาชิกใหม่
+                                <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
+                            </a>
+                        </li>
+                                                <li>
+                            <a href="creator.html" class="nav-link ">
+                                👨‍💻 ผู้จัดทำ
+                            </a>
+                        </li>
+                        <li class="cart-badge-container">
+                            <a href="cart.html" class="nav-link nav-cart-btn ">
+                                🛒 ตะกร้า
+                                                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+                
+
+<!-- Added Alert Banner -->
+
+
+
+<!-- Section Header -->
+
+<div class="section-header">
+
+    <span class="section-tag">🌟 PERSONALIZED RECOMMENDATIONS</span>
+
+    <h1 class="section-title">แนะนำสายพันธุ์น้องแมวสำหรับคุณ</h1>
+
+    <p class="section-subtitle">
+
+        ค้นหาน้องแมวคู่หูที่ตอบโจทย์ชีวิตของคุณมากที่สุด คัดกรองตามแบบประเมิน 6 มิติ หรือเลือกชมตามหมวดหมู่ไลฟ์สไตล์ 🐾
+
+    </p>
+
+</div>
+
+
+
+<div class="recommendation-wrapper" style="max-width: 1150px; margin: 0 auto; padding: 0 15px;">
+
+
+
+    <!-- =========================================================
+
+         1. SMART CAT MATCHER 6-QUESTION QUIZ WIDGET
+
+         ========================================================= -->
+
+    <div class="matcher-widget" style="background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-card-subtle) 100%); border: 2px solid var(--primary-coral); border-radius: var(--radius-lg); padding: 2rem 2.2rem; box-shadow: var(--shadow-md); margin-bottom: 3.5rem;">
+
+        <div class="matcher-header" style="text-align: center; margin-bottom: 2rem;">
+
+            <span style="background: var(--primary-coral-soft); color: var(--primary-coral); font-size: 0.82rem; font-weight: 800; padding: 0.3rem 0.9rem; border-radius: 9999px; display: inline-block; margin-bottom: 0.6rem; border: 1px solid rgba(255, 117, 86, 0.3);">
+
+                🧬 6-DIMENSION SMART CAT MATCHER
+
+            </span>
+
+            <h2 style="font-size: 1.65rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem;">
+
+                🎯 แบบประเมินค้นหาน้องแมวที่ตรงใจ (6 คำถาม)
+
+            </h2>
+
+            <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 680px; margin: 0 auto;">
+
+                ตอบคำถาม 6 ข้อเกี่ยวกับที่อยู่อาศัย เวลาว่าง ประสบการณ์ การดูแลขน นิสัย และงบประมาณ ระบบจะประมวลผลจับคู่กับน้องแมวทั้ง 32 สายพันธุ์แบบเรียลไทม์!
+
+            </p>
+
+        </div>
+
+
+
+        <form id="catMatcherForm" onsubmit="runComprehensiveCatMatcher(event)">
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.4rem; margin-bottom: 2rem;">
+
+                
+
+                <!-- Q1: ที่อยู่อาศัย -->
+
+                <div class="matcher-group" style="background: var(--bg-card); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+
+                    <label for="q_home" style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.6rem;">
+
+                        🏡 1. สถานที่อยู่อาศัยของคุณเป็นแบบไหน?
+
+                    </label>
+
+                    <select id="q_home" class="matcher-select" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-card-subtle); color: var(--text-main); font-size: 0.9rem;">
+
+                        <option value="condo">🏢 คอนโด / อพาร์ตเมนต์ (พื้นที่จำกัด ต้องการแมวเงียบสงบ)</option>
+
+                        <option value="townhouse">🏘️ ทาวน์โฮม / บ้านแฝด (มีพื้นที่ปานกลาง แมวเล่นสนุกได้)</option>
+
+                        <option value="house">🏡 บ้านเดี่ยวมีบริเวณ / มีสวน (พื้นที่กว้างขวาง สายพันธุ์แอคทีฟ)</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Q2: เวลาว่างต่อวัน -->
+
+                <div class="matcher-group" style="background: var(--bg-card); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+
+                    <label for="q_time" style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.6rem;">
+
+                        ⏰ 2. เวลาว่างในการอยู่กับน้องแมวต่อวัน?
+
+                    </label>
+
+                    <select id="q_time" class="matcher-select" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-card-subtle); color: var(--text-main); font-size: 0.9rem;">
+
+                        <option value="limited">💼 มีเวลาจำกัด (1-3 ชม./วัน ทำงานนอกบ้าน แมวดูแลตัวเองได้)</option>
+
+                        <option value="medium" selected>⏳ มีเวลาปานกลาง (3-6 ชม./วัน ว่างช่วงเช้า-เย็นและวันหยุด)</option>
+
+                        <option value="high">🛋️ มีเวลาเยอะมาก / Work From Home (อยู่บ้านทั้งวัน ต้องการแมวขี้อ้อน)</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Q3: ประสบการณ์การเลี้ยง -->
+
+                <div class="matcher-group" style="background: var(--bg-card); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+
+                    <label for="q_exp" style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.6rem;">
+
+                        🔰 3. ประสบการณ์ในการเลี้ยงน้องแมว?
+
+                    </label>
+
+                    <select id="q_exp" class="matcher-select" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-card-subtle); color: var(--text-main); font-size: 0.9rem;">
+
+                        <option value="beginner">🌱 มือใหม่ป้ายแดง เพิ่งเริ่มเลี้ยง (ต้องการแมวเลี้ยงง่าย ปรับตัวเก่ง)</option>
+
+                        <option value="intermediate">🐾 พอมีประสบการณ์ (เคยเลี้ยงแมวหรือสัตว์เลี้ยงมาก่อน)</option>
+
+                        <option value="expert">👑 ทาสแมวระดับโปร (เชี่ยวชาญ รับมือสายพันธุ์พิเศษได้)</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Q4: การดูแลเส้นขน & ภูมิแพ้ -->
+
+                <div class="matcher-group" style="background: var(--bg-card); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+
+                    <label for="q_hair" style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.6rem;">
+
+                        🧶 4. ความพร้อมเรื่องการดูแลขน & อาการภูมิแพ้?
+
+                    </label>
+
+                    <select id="q_hair" class="matcher-select" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-card-subtle); color: var(--text-main); font-size: 0.9rem;">
+
+                        <option value="short">✨ ขนสั้น ดูแลง่าย ขนร่วงน้อย แปรงขนอาทิตย์ละครั้ง</option>
+
+                        <option value="long">☁️ ชอบแมวขนยาว ฟูนุ่ม เหมือนตุ๊กตา (พร้อมแปรงขนทุกวัน)</option>
+
+                        <option value="medium">🦁 ขนปานกลาง / กึ่งยาว นุ่มแน่น กรูมมิ่งสบายๆ</option>
+
+                        <option value="hypoallergenic">🌿 มีคนเป็นภูมิแพ้ / กังวลเรื่องขนร่วง (ไร้ขน หรือพันธุ์ขนร่วงน้อย)</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Q5: บุคลิกนิสัยที่ต้องการ -->
+
+                <div class="matcher-group" style="background: var(--bg-card); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+
+                    <label for="q_personality" style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.6rem;">
+
+                        💖 5. ลักษณะนิสัยของน้องแมวที่คุณใฝ่ฝัน?
+
+                    </label>
+
+                    <select id="q_personality" class="matcher-select" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-card-subtle); color: var(--text-main); font-size: 0.9rem;">
+
+                        <option value="cuddly">🥰 ขี้อ้อนสุดใจ ติดเจ้าของ เดินตามเหมือนเงา ชอบให้อุ้ม</option>
+
+                        <option value="calm">🍵 สุภาพ เรียบร้อย สงบนิ่ง เป็นตัวของตัวเอง ไม่ส่งเสียงดัง</option>
+
+                        <option value="playful">🎾 ร่าเริง ซุกซน พลังงานสูง ชวนเล่นเกม คาบของเล่น</option>
+
+                        <option value="smart">🧠 ฉลาด ช่างสังเกต ช่างพูด ช่างคุย สื่อสารเก่ง</option>
+
+                    </select>
+
+                </div>
+
+
+
+                <!-- Q6: งบประมาณ -->
+
+                <div class="matcher-group" style="background: var(--bg-card); padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+
+                    <label for="q_budget" style="display: block; font-weight: 700; font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.6rem;">
+
+                        💰 6. งบประมาณที่ตั้งไว้สำหรับการรับเลี้ยง?
+
+                    </label>
+
+                    <select id="q_budget" class="matcher-select" style="width: 100%; padding: 10px 14px; border-radius: 8px; border: 1.5px solid var(--border-color); background: var(--bg-card-subtle); color: var(--text-main); font-size: 0.9rem;">
+
+                        <option value="any">💎 ไม่จำกัดงบประมาณ (เน้นสายพันธุ์ที่เหมาะสมที่สุด)</option>
+
+                        <option value="eco">🪙 สบายกระเป๋า (ไม่เกิน 20,000 บาท)</option>
+
+                        <option value="mid">💳 มาตรฐานกำลังดี (20,000 - 30,000 บาท)</option>
+
+                        <option value="prem">👑 พรีเมียม / ประกวด (มากกว่า 30,000 บาท ขึ้นไป)</option>
+
+                    </select>
+
+                </div>
+
+
+
+            </div>
+
+
+
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-primary matcher-submit-btn">
+                    <span class="btn-text-desktop">🎯 ประมวลผลค้นหาน้องแมวที่ใช่สำหรับฉัน (6 มิติ) 🐾</span>
+                    <span class="btn-text-mobile">🎯 ค้นหาน้องแมวที่ใช่สำหรับคุณ 🐾</span>
+                </button>
+            </div>
+
+        </form>
+
+
+
+        <!-- Match Results Section (Hidden until submitted) -->
+
+        <div id="matcher-results" style="display: none; margin-top: 2.5rem; padding-top: 2rem; border-top: 2px dashed var(--primary-coral);">
+
+            <div style="text-align: center; margin-bottom: 2rem;">
+
+                <span class="section-tag" style="background: #10B981; color: #FFFFFF;">🎉 ผลการประมวลผลจับคู่ 6 มิติ</span>
+
+                <h3 style="font-size: 1.6rem; font-weight: 800; color: var(--primary-coral); margin: 0.4rem 0;" id="match-title">
+
+                    สายพันธุ์ที่ตรงใจคุณมากที่สุด
+
+                </h3>
+
+                <p style="font-size: 0.95rem; color: var(--text-secondary);" id="match-score">
+
+                    ระบบได้วิเคราะห์สายพันธุ์ทั้งหมดเทียบกับไลฟ์สไตล์ของคุณเรียบร้อยแล้ว
+
+                </p>
+
+            </div>
+
+
+
+            <div class="cats-grid" id="matched-cats-container">
+
+                <!-- Dynamically populated by JS -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- =========================================================
+
+         2. MANUAL CATEGORY TAB SELECTOR & BROWSER
+
+         ========================================================= -->
+
+    <div style="border-top: 2px solid var(--border-color); padding-top: 2.5rem; margin-bottom: 2rem;">
+
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+
+            <span class="section-tag">🐾 BROWSE BY CATEGORY</span>
+
+            <h2 style="font-size: 1.45rem; font-weight: 800; color: var(--text-main);">
+
+                หรือเลือกชมน้องแมวตามหมวดหมู่ไลฟ์สไตล์
+
+            </h2>
+
+        </div>
+
+
+
+        <!-- Category Nav -->
+
+        <div class="category-nav" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem;">
+
+                            <button type="button" 
+
+                        class="cat-filter-btn active" 
+
+                        onclick="selectCategory('popular', this)">
+
+                    🔥 สายพันธุ์ยอดฮิต                </button>
+
+                            <button type="button" 
+
+                        class="cat-filter-btn " 
+
+                        onclick="selectCategory('condo', this)">
+
+                    🏢 เหมาะเลี้ยงในคอนโด                </button>
+
+                            <button type="button" 
+
+                        class="cat-filter-btn " 
+
+                        onclick="selectCategory('fluffy', this)">
+
+                    🧸 ขนยาว นุ่มฟูน่ากอด                </button>
+
+                            <button type="button" 
+
+                        class="cat-filter-btn " 
+
+                        onclick="selectCategory('short_hair', this)">
+
+                    ✨ ขนสั้น ดูแลง่าย                </button>
+
+                            <button type="button" 
+
+                        class="cat-filter-btn " 
+
+                        onclick="selectCategory('playful', this)">
+
+                    ⚡ ร่าเริง ขี้เล่น ซุกซน                </button>
+
+                            <button type="button" 
+
+                        class="cat-filter-btn " 
+
+                        onclick="selectCategory('beginner', this)">
+
+                    👶 มือใหม่เลี้ยงง่าย                </button>
+
+                            <button type="button" 
+
+                        class="cat-filter-btn " 
+
+                        onclick="selectCategory('low_shed', this)">
+
+                    🌿 ขนร่วงน้อย / ภูมิแพ้                </button>
+
+                    </div>
+
+
+
+        <!-- Specific Breed Selector Pills -->
+
+        <div class="breed-selector-row" style="margin-bottom: 1.5rem;">
+
+            <span class="breed-selector-label" style="font-weight: 700; font-size: 0.9rem;">🐾 เจาะจงเฉพาะสายพันธุ์:</span>
+
+            <div class="breed-pills-wrap">
+
+                <button type="button" class="breed-pill-btn active" onclick="selectSpecificBreed('all_in_cat', this)">
+
+                    ทั้งหมดในหมวดนี้
+
+                </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_british', this)">
+
+                        บริติช ช็อตแฮร์ (British Shorthair)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_persian', this)">
+
+                        เปอร์เซีย (Persian)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_sphynx', this)">
+
+                        สฟิงซ์ (Sphynx)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_siamese', this)">
+
+                        วิเชียรมาศ (Siamese Cat)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_mainecoon', this)">
+
+                        เมนคูน (Maine Coon)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_ragdoll', this)">
+
+                        แร็กดอลล์ (Ragdoll)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_bengal', this)">
+
+                        เบงกอล (Bengal)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_scottish', this)">
+
+                        สก็อตติช โฟลด์ (Scottish Fold)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_munchkin', this)">
+
+                        มันช์กิ้น ขาสั้น (Munchkin)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_russian', this)">
+
+                        รัสเซียน บลู (Russian Blue)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_abyssinian', this)">
+
+                        อบิสซิเนียน (Abyssinian)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_americanshorthair', this)">
+
+                        อเมริกัน ช็อตแฮร์ (American Shorthair)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_norwegian', this)">
+
+                        นอร์วีเจียน ฟอเรสต์ (Norwegian Forest Cat - นอร์เวย์)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_japanese_bobtail', this)">
+
+                        เจแปนนิส บ็อบเทล (Japanese Bobtail - ญี่ปุ่น)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_siberian', this)">
+
+                        ไซบีเรียน (Siberian Cat - รัสเซีย)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_turkish_angora', this)">
+
+                        เตอร์กิช แองโกรา (Turkish Angora - ตุรกี)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_turkish_van', this)">
+
+                        เตอร์กิช แวน (Turkish Van - ตุรกี)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_cornish_rex', this)">
+
+                        คอร์นิช เร็กซ์ (Cornish Rex - อังกฤษ)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_devon_rex', this)">
+
+                        เดวอน เร็กซ์ (Devon Rex - อังกฤษ)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_singapura', this)">
+
+                        สิงกาปุระ (Singapura - สิงคโปร์)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_american_curl', this)">
+
+                        อเมริกัน เคิร์ล (American Curl - สหรัฐอเมริกา)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_bombay', this)">
+
+                        บอมเบย์ (Bombay Cat - สหรัฐอเมริกา)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_burmese', this)">
+
+                        เบอร์มีส (Burmese - เมียนมา / พม่า)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_chartreux', this)">
+
+                        ชาร์ตรู (Chartreux - ฝรั่งเศส)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_khao_manee', this)">
+
+                        ขาวมณี (Khao Manee - ประเทศไทย)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_korat', this)">
+
+                        โคราช / สีสวาด (Korat Cat - ประเทศไทย)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_savannah', this)">
+
+                        ซาวันนาห์ (Savannah - สหรัฐอเมริกา / แอฟริกา)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_egyptian_mau', this)">
+
+                        อียิปเชียน มัว (Egyptian Mau - อียิปต์)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_scottish_straight', this)">
+
+                        สก็อตติช สเตรท (Scottish Straight - สก็อตแลนด์)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_somali', this)">
+
+                        โซมาลี (Somali Cat - โซมาเลีย / สหรัฐอเมริกา)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_australian_mist', this)">
+
+                        ออสเตรเลียน มิสต์ (Australian Mist - ออสเตรเลีย)                    </button>
+
+                                    <button type="button" class="breed-pill-btn" onclick="selectSpecificBreed('cat_kurilian_bobtail', this)">
+
+                        คูริเลียน บ็อบเทล (Kurilian Bobtail - หมู่เกาะคูริล / รัสเซีย-ญี่ปุ่น)                    </button>
+
+                            </div>
+
+        </div>
+
+
+
+        <!-- Category Banner -->
+
+        <div class="category-banner" id="category-banner" style="margin-bottom: 2rem;">
+
+            <div>
+
+                <div class="category-banner-title" id="cat-banner-title">
+
+                    🔥 สายพันธุ์ยอดนิยมอันดับ 1                </div>
+
+                <div class="category-banner-desc" id="cat-banner-desc">
+
+                    น้องแมวสายพันธุ์ท็อปฮิตที่ได้รับความนิยมสูงสุด นิสัยน่ารัก เข้ากับทุกคนง่าย                </div>
+
+            </div>
+
+            <div class="cat-filter-count-badge">
+
+                แสดงเฉพาะหมวดนี้: <strong id="cat-banner-count">4</strong> ตัว
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Recommended Cats Grid -->
+
+        <div class="cats-grid" id="recommended-cats-grid">
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_british"
+
+                     data-categories="popular,condo,beginner,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_british.jpg" alt="น้องสโนว์ (British Shorthair)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">บริติช ช็อตแฮร์ (British Shorthair)</div>
+
+                        <h3 class="cat-card-name">น้องสโนว์ (British Shorthair)</h3>
+
+                        <p class="cat-card-desc">น้องแมวสายพันธุ์ผู้ดีอังกฤษ หน้ากลมแก้มป่อง ขนแน่นนุ่มเหมือนกำมะหยี่ อารมณ์ดี เรียบร้อย เลี้ยงง่าย และเป็นมิตรกับทุกคนในครอบครัว</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นแน่นนุ่ม</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>เรียบร้อย อ่อนโยน เข้ากับคนง่าย</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">18,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_british">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_persian"
+
+                     data-categories="fluffy,condo,long_hair" 
+
+                     data-hair="long">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_persian.jpg" alt="น้องปุยหิมะ (Persian Classic)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">เปอร์เซีย (Persian)</div>
+
+                        <h3 class="cat-card-name">น้องปุยหิมะ (Persian Classic)</h3>
+
+                        <p class="cat-card-desc">ราชินีแห่งแมวขนยาว หน้าหวาน ขนฟูยาวหนานุ่มสง่างาม นิสัยสุภาพ นิ่งสงบ ไม่ส่งเสียงรบกวน ชอบนอนซุกผ้าห่มและคลอเคลียเจ้าของ</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนยาวฟูหนา</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>รักสงบ นิ่งเงียบ อ่อนโยนมาก</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">16,500 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_persian">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_sphynx"
+
+                     data-categories="low_shed" 
+
+                     data-hair="hairless">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_sphynx.jpg" alt="น้องซีซาร์ (Canadian Sphynx)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">สฟิงซ์ (Sphynx)</div>
+
+                        <h3 class="cat-card-name">น้องซีซาร์ (Canadian Sphynx)</h3>
+
+                        <p class="cat-card-desc">แมวไร้ขนสุดเท่ ผิวสัมผัสนุ่มอุ่นดั่งลูกพีช ไร้ขนร่วง 100% เหมาะสำหรับผู้ที่เป็นโรคภูมิแพ้ขนสัตว์ ฉลาดมาก ขี้อ้อนติดคนเหมือนสุนัขตัวน้อย</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ไร้ขน (ผิวสัมผัสพีช)</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ขี้อ้อนมาก ติดเจ้าของ เป็นมิตรสุดๆ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">28,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_sphynx">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_siamese"
+
+                     data-categories="beginner,playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_siamese.jpg" alt="น้องมงคล (Siamese / วิเชียรมาศ)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">วิเชียรมาศ (Siamese Cat)</div>
+
+                        <h3 class="cat-card-name">น้องมงคล (Siamese / วิเชียรมาศ)</h3>
+
+                        <p class="cat-card-desc">แมวมงคลไทยโบราณ แต้มสี 9 จุดคมชัด ตาสีฟ้าครามเปล่งประกาย สติปัญญาเฉลียวฉลาด ช่างพูดช่างคุย ซื่อสัตย์และรักเจ้าของสุดหัวใจ</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นเรียบเนียน</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ช่างพูด เฉลียวฉลาด ร่าเริง ผูกพันกับเจ้าของ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">12,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_siamese">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_mainecoon"
+
+                     data-categories="fluffy,playful,long_hair" 
+
+                     data-hair="long">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_mainecoon.jpg" alt="น้องไททัน (Maine Coon)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">เมนคูน (Maine Coon)</div>
+
+                        <h3 class="cat-card-name">น้องไททัน (Maine Coon)</h3>
+
+                        <p class="cat-card-desc">ยักษ์ใหญ่ใจดี สายพันธุ์แมวที่ตัวใหญ่ที่สุดในโลก ขนแผงคอสง่างามราวสิงโต นิสัยอ่อนโยน ขี้เล่น เป็นมิตรกับเด็กและสัตว์เลี้ยงอื่นๆ</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนยาวสองชั้นฟูหนา</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ใจดี อ่อนโยน เข้ากับทุกคนได้ง่าย</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">35,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_mainecoon">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_ragdoll"
+
+                     data-categories="popular,fluffy,condo,long_hair" 
+
+                     data-hair="long">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_ragdoll.jpg" alt="น้องคอตตอน (Ragdoll)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">แร็กดอลล์ (Ragdoll)</div>
+
+                        <h3 class="cat-card-name">น้องคอตตอน (Ragdoll)</h3>
+
+                        <p class="cat-card-desc">เจ้าหญิงดวงตาสีฟ้าคราม ตัวนุ่มปวกเปียกเหมือนตุ๊กตาผ้าเวลาอุ้ม อ่อนโยน รักความสงบ ขนนุ่มดั่งปุยฝ้าย ไม่กางเล็บ เหมาะกับครอบครัวที่มีเด็ก</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนกึ่งยาวนุ่มลื่น</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ยอมคน อ่อนหวาน นุ่มนวล ไม่ดุร้าย</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">29,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_ragdoll">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_bengal"
+
+                     data-categories="playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_bengal.jpg" alt="น้องจากัวร์ (Bengal Rosetted)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">เบงกอล (Bengal)</div>
+
+                        <h3 class="cat-card-name">น้องจากัวร์ (Bengal Rosetted)</h3>
+
+                        <p class="cat-card-desc">เสือดาวจิ๋วประจำบ้าน ลวดลายดอกกุหลาบ (Rosette) สีทองเด่นชัด กล้ามเนื้อแข็งแรง ปราดเปรียว ชื่นชอบการปีนป่ายและเล่นน้ำ</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นประกายกลิตเตอร์ทอง</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>พลังงานสูง ปราดเปรียว รักการผจญภัย</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">26,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_bengal">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_scottish"
+
+                     data-categories="popular,condo,beginner,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_scottish.jpg" alt="น้องพุดดิ้ง (Scottish Fold)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">สก็อตติช โฟลด์ (Scottish Fold)</div>
+
+                        <h3 class="cat-card-name">น้องพุดดิ้ง (Scottish Fold)</h3>
+
+                        <p class="cat-card-desc">เจ้าเหมียวหูพับ หน้ากลมแป้นเหมือนนกฮูก ขี้อ้อน ชอบนั่งท่านั่งพุงพลุ้ย (Buddha Position) น่ารักน่าเอ็นดู เข้ากับทุกคนได้ง่ายดาย</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นนุ่มหนา</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ขี้อ้อน อารมณ์ดี ชอบอยู่ใกล้ชิดเจ้าของ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">21,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_scottish">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_munchkin"
+
+                     data-categories="popular,playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_munchkin.jpg" alt="น้องชอร์ตตี้ (Munchkin Short Legs)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">มันช์กิ้น ขาสั้น (Munchkin)</div>
+
+                        <h3 class="cat-card-name">น้องชอร์ตตี้ (Munchkin Short Legs)</h3>
+
+                        <p class="cat-card-desc">แมวขาสั้นเตี้ยดุ๊กดิ๊กสุดน่ารัก วิ่งดุ๊กดิ๊กไปมาเรียกเสียงหัวเราะได้ตลอดวัน กระตือรือร้น ชอบสำรวจ เป็นมิตรและปรับตัวเข้ากับสภาพแวดล้อมได้เร็ว</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นนุ่มฟูนิดๆ</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ร่าเริง สดใส ตื่นตัว ชอบเล่นกับของเล่น</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">24,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_munchkin">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_russian"
+
+                     data-categories="condo,low_shed,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_russian.jpg" alt="น้องบลูสกาย (Russian Blue)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">รัสเซียน บลู (Russian Blue)</div>
+
+                        <h3 class="cat-card-name">น้องบลูสกาย (Russian Blue)</h3>
+
+                        <p class="cat-card-desc">แมวชั้นสูงสีเทาเงินสะท้อนแสง ดวงตาสีเขียวมรกต เรียบร้อย สะอาด สุภาพ ไม่ส่งเสียงดัง ผลัดขนน้อยมาก เหมาะสำหรับคนทำงานที่ชอบความสงบ</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นสีเทาเงินประกาย</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>สุภาพ เรียบร้อย ไม่ส่งเสียงดัง รักสงบ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">22,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_russian">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_abyssinian"
+
+                     data-categories="playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_abyssinian.jpg" alt="น้องแอมเบอร์ (Abyssinian)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">อบิสซิเนียน (Abyssinian)</div>
+
+                        <h3 class="cat-card-name">น้องแอมเบอร์ (Abyssinian)</h3>
+
+                        <p class="cat-card-desc">แมวอียิปต์โบราณ ขนสีส้มอบเชยไล่เฉดสวยงาม ล่ำสัน ปราดเปรียวและฉลาดหลักแหลม ชอบมีส่วนร่วมกับทุกกิจกรรมของเจ้าของ รักการกระโดดสูง</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นลวดลาย Ticked Tabby</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>คล่องแคล่ว เฉลียวฉลาด ร่าเริง ชอบเล่น</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">19,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_abyssinian">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_americanshorthair"
+
+                     data-categories="beginner,condo,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_americanshorthair.jpg" alt="น้องการ์ฟิลด์ (American Shorthair)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">อเมริกัน ช็อตแฮร์ (American Shorthair)</div>
+
+                        <h3 class="cat-card-name">น้องการ์ฟิลด์ (American Shorthair)</h3>
+
+                        <p class="cat-card-desc">แมวลายเสือสีเงินคลาสสิก ลายชัดเจน สุขภาพแข็งแรง อึด ทน ไม่ป่วยง่าย เลี้ยงง่าย อารมณ์ดี เป็นมิตรกับทั้งคนแปลกหน้าและสัตว์เลี้ยงอื่น</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นแน่นลายชัดเจน</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>อารมณ์ดี เข้ากับทุกคนง่าย เลี้ยงง่ายที่สุด</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">15,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_americanshorthair">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_norwegian"
+
+                     data-categories="fluffy,playful,long_hair" 
+
+                     data-hair="long">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_norwegian.jpg" alt="น้องธอร์ (Norwegian Forest Cat)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">นอร์วีเจียน ฟอเรสต์ (Norwegian Forest Cat - นอร์เวย์)</div>
+
+                        <h3 class="cat-card-name">น้องธอร์ (Norwegian Forest Cat)</h3>
+
+                        <p class="cat-card-desc">แมวไวกิ้งโบราณแห่งสแกนดิเนเวีย ขนสองชั้นกันน้ำหนานุ่ม แผงคอใหญ่สง่างาม ร่างกายกำยำ ปีนป่ายเก่งและรักความสงบ</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนยาวสองชั้นหนานุ่ม</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>สุขุม อ่อนโยน ฉลาด รักการสำรวจ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">32,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_norwegian">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_japanese_bobtail"
+
+                     data-categories="popular,beginner,playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_japanese_bobtail.jpg" alt="น้องซากุระ (Japanese Bobtail Mi-Ke)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">เจแปนนิส บ็อบเทล (Japanese Bobtail - ญี่ปุ่น)</div>
+
+                        <h3 class="cat-card-name">น้องซากุระ (Japanese Bobtail Mi-Ke)</h3>
+
+                        <p class="cat-card-desc">ต้นกำเนิดแมวกวักนำโชค (Maneki-Neko) ของญี่ปุ่น หางกุดรูปพู่กลม ลายสามสีมงคล สดใส ช่างพูด เป็นมิตรและซื่อสัตย์</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นลวดลายสามสี มิเกะ</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ร่าเริง ฉลาด ช่างเจรจา ซื่อสัตย์</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">23,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_japanese_bobtail">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_siberian"
+
+                     data-categories="fluffy,low_shed,playful,long_hair" 
+
+                     data-hair="long">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_siberian.jpg" alt="น้องวลาดิเมียร์ (Siberian Forest Cat)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">ไซบีเรียน (Siberian Cat - รัสเซีย)</div>
+
+                        <h3 class="cat-card-name">น้องวลาดิเมียร์ (Siberian Forest Cat)</h3>
+
+                        <p class="cat-card-desc">แมวแห่งผืนป่าไซบีเรีย ขนสามชั้นทนหนาวจัด สารก่อภูมิแพ้ต่ำ (Hypoallergenic) กระโดดสูง ใจดี ขี้เล่น และรักทุกคนในบ้าน</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนยาวสามชั้น Hypoallergenic</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ใจดี รักสนุก ฉลาด ขี้อ้อน</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">34,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_siberian">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_turkish_angora"
+
+                     data-categories="fluffy,condo,long_hair" 
+
+                     data-hair="long">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_turkish_angora.jpg" alt="น้องสุลต่าน (Turkish Angora)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">เตอร์กิช แองโกรา (Turkish Angora - ตุรกี)</div>
+
+                        <h3 class="cat-card-name">น้องสุลต่าน (Turkish Angora)</h3>
+
+                        <p class="cat-card-desc">สมบัติแห่งชาติตุรกี ขนสีขาวบริสุทธิ์พริ้วไหวดั่งผ้าไหม ดวงตาสีฟ้าและสีอำพัน (Odd-Eyes) เฉลียวฉลาด สง่างามและช่างประจบ</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนกึ่งยาวสัมผัสไหมนุ่ม</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>สง่างาม ปราดเปรียว ช่างเอาใจ ฉลาด</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">27,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_turkish_angora">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_turkish_van"
+
+                     data-categories="playful,long_hair" 
+
+                     data-hair="long">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_turkish_van.jpg" alt="น้องคาราเมล (Turkish Van Swimming Cat)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">เตอร์กิช แวน (Turkish Van - ตุรกี)</div>
+
+                        <h3 class="cat-card-name">น้องคาราเมล (Turkish Van Swimming Cat)</h3>
+
+                        <p class="cat-card-desc">แมวว่ายน้ำแห่งทะเลสาบแวน ลวดลายสีเฉพาะที่หัวและหาง (Van Pattern) ขนกันน้ำ ชอบเล่นน้ำและผจญภัย ร่างกายล่ำสันแข็งแรง</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนกึ่งยาวกันน้ำพิเศษ</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>รักการว่ายน้ำ พลังงานสูง ฉลาด มั่นใจ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">26,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_turkish_van">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_cornish_rex"
+
+                     data-categories="low_shed,playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_cornish_rex.jpg" alt="น้องซิกแซก (Cornish Rex)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">คอร์นิช เร็กซ์ (Cornish Rex - อังกฤษ)</div>
+
+                        <h3 class="cat-card-name">น้องซิกแซก (Cornish Rex)</h3>
+
+                        <p class="cat-card-desc">แมวขนลอนคลื่นแปลกตาจากคอร์นวอลล์ สัมผัสนุ่มเหมือนกำมะหยี่ ขนแทบไม่ร่วง รูปร่างเพรียวระหงดั่งเกรย์ฮาวด์ กระโดดเก่งและขี้อ้อน</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นหยิกเป็นลอนคลื่น</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ขี้เล่น กระตือรือร้น รักความอบอุ่น</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">25,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_cornish_rex">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_devon_rex"
+
+                     data-categories="popular,low_shed,playful,condo,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_devon_rex.jpg" alt="น้องพิ๊กซี่ (Devon Rex)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">เดวอน เร็กซ์ (Devon Rex - อังกฤษ)</div>
+
+                        <h3 class="cat-card-name">น้องพิ๊กซี่ (Devon Rex)</h3>
+
+                        <p class="cat-card-desc">แมวเอลฟ์หูใหญ่ ตาโต ขนสั้นหยิกนุ่มเหมือนขนนก ฉลาดหลักแหลม ชอบเกาะบนไหล่และเรียนรู้ทริคใหม่ๆ ได้อย่างรวดเร็ว</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นลอนละเอียดนุ่ม</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ขี้เล่น ช่างสังเกต ชอบนั่งบนไหล่</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">27,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_devon_rex">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_singapura"
+
+                     data-categories="condo,beginner,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_singapura.jpg" alt="น้องเปี๊ยก (Singapura)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">สิงกาปุระ (Singapura - สิงคโปร์)</div>
+
+                        <h3 class="cat-card-name">น้องเปี๊ยก (Singapura)</h3>
+
+                        <p class="cat-card-desc">สายพันธุ์แมวบ้านที่มีขนาดตัวเล็กที่สุดในโลก ตาโตสีเฮเซล ขนสีน้ำตาลเซเปียอบอุ่น น่ารักทะนุถนอม ขี้อ้อนและเข้ากับคนง่าย</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นละเอียดสีเซเปีย</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ตัวเล็กขี้อ้อน อ่อนหวาน ช่างสังเกต</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">28,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_singapura">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_american_curl"
+
+                     data-categories="beginner,playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_american_curl.jpg" alt="น้องเคิร์ลลี่ (American Curl)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">อเมริกัน เคิร์ล (American Curl - สหรัฐอเมริกา)</div>
+
+                        <h3 class="cat-card-name">น้องเคิร์ลลี่ (American Curl)</h3>
+
+                        <p class="cat-card-desc">แมวหูดัดม้วนไปข้างหลังอย่างมีเอกลักษณ์ นิสัยเหมือนลูกแมวตลอดชีวิต (Peter Pan of Cats) อารมณ์ดี ฉลาด เป็นมิตรกับทุกคน</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นนุ่มแน่น</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ขี้เล่น สดใส เข้ากับเด็กๆ ได้ดีเยี่ยม</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">24,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_american_curl">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_bombay"
+
+                     data-categories="condo,beginner,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_bombay.jpg" alt="น้องแพนเธอร์ (Bombay Cat)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">บอมเบย์ (Bombay Cat - สหรัฐอเมริกา)</div>
+
+                        <h3 class="cat-card-name">น้องแพนเธอร์ (Bombay Cat)</h3>
+
+                        <p class="cat-card-desc">เสือดำจิ๋วประจำห้องนั่งเล่น ขนสีดำขลับเงาวับดั่งผ้าซาติน ดวงตาสีทองแดงเปล่งประกาย สุภาพ ขี้อ้อน และรักความอบอุ่น</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นสีดำเงาวับ</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>สุขุม อ่อนหวาน ติดคน รักความสงบ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">21,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_bombay">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_burmese"
+
+                     data-categories="beginner,playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_burmese.jpg" alt="น้องโกโก้ (Burmese Cat)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">เบอร์มีส (Burmese - เมียนมา / พม่า)</div>
+
+                        <h3 class="cat-card-name">น้องโกโก้ (Burmese Cat)</h3>
+
+                        <p class="cat-card-desc">แมวทองแดงโบราณ รูปร่างกลมกลืน ขนสีน้ำตาลเข้มซาติน ตาสีเหลืองทอง นิสัยขี้เล่น เชื่อมโยงจิตใจกับเจ้าของอย่างลึกซึ้ง</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นเงางามสีน้ำตาลช็อกโกแลต</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ซื่อสัตย์ ช่างเอาใจ ขี้เล่น ผูกพันกับคน</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">19,500 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_burmese">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_chartreux"
+
+                     data-categories="condo,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_chartreux.jpg" alt="น้องมอนเต้ (Chartreux)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">ชาร์ตรู (Chartreux - ฝรั่งเศส)</div>
+
+                        <h3 class="cat-card-name">น้องมอนเต้ (Chartreux)</h3>
+
+                        <p class="cat-card-desc">แมวประวัติศาสตร์ของพระคริสต์ในฝรั่งเศส ขนสีเทาเงินอมฟ้าหนานุ่ม ตาสีส้มอำพัน ยิ้มหวานตลอดเวลา เงียบสงบ ไม่ส่งเสียงรบกวน</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นสองชั้นสีเทาเงินอมฟ้า</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>สงบนิ่ง สุภาพ ไม่ส่งเสียงดัง ยิ้มหวาน</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">29,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_chartreux">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_khao_manee"
+
+                     data-categories="popular,beginner,playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_khao_manee.jpg" alt="น้องมณีเพชร (ขาวมณี / Khao Manee)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">ขาวมณี (Khao Manee - ประเทศไทย)</div>
+
+                        <h3 class="cat-card-name">น้องมณีเพชร (ขาวมณี / Khao Manee)</h3>
+
+                        <p class="cat-card-desc">อัญมณีมีชีวิตแห่งสยาม ขนขาวปลอดดั่งหิมะ ดวงตาสองสี (ฟ้า-เหลืองอำพัน) ส่องประกายดั่งเพชร ฉลาด ขี้เล่น และนำพาโชคลาภวาสนา</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นสีขาวบริสุทธิ์ 100%</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ฉลาด ร่าเริง ช่างสังเกต ขี้ประจบ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">25,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_khao_manee">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_korat"
+
+                     data-categories="condo,beginner,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_korat.jpg" alt="น้องสีเงิน (โคราช / แมวสีสวาด)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">โคราช / สีสวาด (Korat Cat - ประเทศไทย)</div>
+
+                        <h3 class="cat-card-name">น้องสีเงิน (โคราช / แมวสีสวาด)</h3>
+
+                        <p class="cat-card-desc">แมวแห่งความรักและโชคลาภ หน้าทรงรูปหัวใจ ขนสีสวาดปลายเงินประกาย (Silver-tipped) ตาสีเขียวมรกต ฉลาดและผูกพันกับเจ้าของเป็นเลิศ</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นประกายสีเงินเหลือบเมฆ</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ซื่อสัตย์ อ่อนหวาน จดจำเจ้าของแม่นยำ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">16,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_korat">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_savannah"
+
+                     data-categories="playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_savannah.jpg" alt="น้องซิมบ้า (Savannah Cat F4)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">ซาวันนาห์ (Savannah - สหรัฐอเมริกา / แอฟริกา)</div>
+
+                        <h3 class="cat-card-name">น้องซิมบ้า (Savannah Cat F4)</h3>
+
+                        <p class="cat-card-desc">แมวขายาวสง่างาม ลวดลายจุดเสือป่าแอฟริกัน ร่างกายสูงเพรียว ฉลาดเทียบเท่าสุนัข เดินด้วยสายจูงได้ และชื่นชอบการเล่นน้ำ</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นลายจุดเสือป่า</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>พลังงานสูง ฉลาดล้ำเลิศ คล่องแคล่ว รักน้ำ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">45,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_savannah">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_egyptian_mau"
+
+                     data-categories="playful,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_egyptian_mau.jpg" alt="น้องฟาโรห์ (Egyptian Mau)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">อียิปเชียน มัว (Egyptian Mau - อียิปต์)</div>
+
+                        <h3 class="cat-card-name">น้องฟาโรห์ (Egyptian Mau)</h3>
+
+                        <p class="cat-card-desc">แมวโบราณลายจุดธรรมชาติแท้หนึ่งเดียวจากลุ่มแม่น้ำไนล์ วิ่งเร็วที่สุดในโลก (สูงสุด 48 กม./ชม.) ตาสีกูสเบอร์รี่เขียวสดใส ซื่อสัตย์และรักเจ้าของ</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นลายจุดธรรมชาติคมชัด</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ว่องไว ซื่อสัตย์ อ่อนโยนกับครอบครัว</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">28,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_egyptian_mau">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_scottish_straight"
+
+                     data-categories="popular,condo,beginner,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_scottish_straight.jpg" alt="น้องมาร์ชเมลโล่ (Scottish Straight)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">สก็อตติช สเตรท (Scottish Straight - สก็อตแลนด์)</div>
+
+                        <h3 class="cat-card-name">น้องมาร์ชเมลโล่ (Scottish Straight)</h3>
+
+                        <p class="cat-card-desc">พี่น้องหูตั้งของสก็อตติช โฟลด์ หน้ากลมแป้น แก้มยุ้ย โครงสร้างกระดูกแข็งแรงสมบูรณ์ ขี้อ้อน ใจดี เหมาะสำหรับครอบครัว</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นแน่นนุ่มฟู</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>อารมณ์ดี ขี้อ้อน เรียบร้อย สบายๆ</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">17,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_scottish_straight">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_somali"
+
+                     data-categories="fluffy,playful,long_hair" 
+
+                     data-hair="long">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_somali.jpg" alt="น้องฟ็อกซี่ (Somali Fox Cat)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">โซมาลี (Somali Cat - โซมาเลีย / สหรัฐอเมริกา)</div>
+
+                        <h3 class="cat-card-name">น้องฟ็อกซี่ (Somali Fox Cat)</h3>
+
+                        <p class="cat-card-desc">จิ้งจอกน้อยแห่งโลกแมว ขนยาวพริ้วสีส้มอบเชย หางพวงฟูสง่างาม ฉลาด คล่องแคล่ว ชอบเล่นซ่อนหาและสร้างรอยยิ้ม</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนยาวพริ้วสีอบเชยหางพวง</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ร่าเริง ฉลาด ช่างเล่น อยากรู้อยากเห็น</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">26,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_somali">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_australian_mist"
+
+                     data-categories="condo,beginner,short_hair" 
+
+                     data-hair="short">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_australian_mist.jpg" alt="น้องโอปอล (Australian Mist)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">เมีย (Female)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">ออสเตรเลียน มิสต์ (Australian Mist - ออสเตรเลีย)</div>
+
+                        <h3 class="cat-card-name">น้องโอปอล (Australian Mist)</h3>
+
+                        <p class="cat-card-desc">แมวสายพันธุ์แรกของออสเตรเลีย ลายหมอกนุ่มนวลเหมือนคลุมด้วยไอหมอก นิสัยผ่อนคลาย รักเด็กและทนทาน เหมาะสำหรับเลี้ยงในบ้าน 100%</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 2.5 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนสั้นลวดลายหมอกนุ่มนวล</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ใจเย็น อ่อนโยน เข้ากับเด็กเล็กได้ยอดเยี่ยม</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">22,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_australian_mist">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                            <div class="cat-card recommend-cat-item" 
+
+                     data-id="cat_kurilian_bobtail"
+
+                     data-categories="fluffy,playful,long_hair" 
+
+                     data-hair="long">
+
+                    <div class="cat-card-img-wrap">
+
+                        <img src="assets/images/cat_kurilian_bobtail.jpg" alt="น้องโมจิ (Kurilian Bobtail)" class="cat-card-img">
+
+                        <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
+
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+
+                    </div>
+
+                    <div class="cat-card-body">
+
+                        <div class="cat-card-breed">คูริเลียน บ็อบเทล (Kurilian Bobtail - หมู่เกาะคูริล / รัสเซีย-ญี่ปุ่น)</div>
+
+                        <h3 class="cat-card-name">น้องโมจิ (Kurilian Bobtail)</h3>
+
+                        <p class="cat-card-desc">แมวเกาะหางกระต่ายธรรมชาติ ขนหนาทนหนาว กล้ามเนื้อแข็งแรง ว่ายน้ำเก่ง ไม่กลัวน้ำ นิสัยสุขุม ซื่อสัตย์ดั่งสุนัข</p>
+
+                        
+
+                        <div class="cat-tags-row">
+
+                            <span class="cat-pill-tag highlight">🩺 3 เดือน</span>
+
+                            <span class="cat-pill-tag">🧶 ขนกึ่งยาวหนานุ่มหางพู่สั้น</span>
+
+                            <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                        </div>
+
+
+
+                        <div style="background: var(--bg-page); border-radius: var(--radius-sm); padding: 0.6rem 0.8rem; margin-bottom: 1.2rem; font-size: 0.78rem; color: var(--text-secondary);">
+
+                            <div style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.2rem;">✨ นิสัย & ความโดดเด่น:</div>
+
+                            <div>ซื่อสัตย์ สุขุม รักน้ำ ว่ายน้ำเก่ง</div>
+
+                        </div>
+
+
+
+                        <div class="cat-card-footer">
+
+                            <div class="cat-price-box">
+
+                                <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+
+                                <span class="cat-price-val">25,000 ฿</span>
+
+                            </div>
+
+                            <form method="POST" action="recommend.php?cat=popular">
+
+                                <input type="hidden" name="action" value="add_cat">
+
+                                <input type="hidden" name="cat_id" value="cat_kurilian_bobtail">
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+
+                                    รับเลี้ยงน้อง 🐾
+
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                    </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- Metadata and Comprehensive Matcher Script -->
+
+<script>
+
+const categoryMeta = {"popular":{"name":"🔥 สายพันธุ์ยอดฮิต","title":"🔥 สายพันธุ์ยอดนิยมอันดับ 1","desc":"น้องแมวสายพันธุ์ท็อปฮิตที่ได้รับความนิยมสูงสุด นิสัยน่ารัก เข้ากับทุกคนง่าย"},"condo":{"name":"🏢 เหมาะเลี้ยงในคอนโด","title":"🏢 แมวรักสงบ เหมาะสำหรับคอนโดและพื้นที่จำกัด","desc":"ไม่ส่งเสียงรบกวนเพื่อนบ้าน ไม่กระโดดรื้อของ รักความเงียบสงบและเป็นระเบียบ"},"fluffy":{"name":"🧸 ขนยาว นุ่มฟูน่ากอด","title":"🧸 น้องแมวขนฟู ปุยเมฆน่ากอด","desc":"ขนนุ่มหนาสง่างามดั่งเจ้าหญิงเจ้าชาย เหมาะสำหรับคนที่หลงใหลในความนุ่มฟู"},"short_hair":{"name":"✨ ขนสั้น ดูแลง่าย","title":"✨ น้องแมวขนสั้น ดูแลง่าย สบายใจ","desc":"หมดกังวลเรื่องการหวีขน ขนแน่นนุ่มไม่พันกัน อาบน้ำแห้งไว เหมาะกับวิถีชีวิตคนยุคใหม่"},"playful":{"name":"⚡ ร่าเริง ขี้เล่น ซุกซน","title":"⚡ น้องแมวสายร่าเริง สดใส พลังงานเต็มเปี่ยม","desc":"ชอบเล่นของเล่น ช่างสำรวจ ปราดเปรียว เติมเต็มเสียงหัวเราะและความมีชีวิตชีวาให้บ้าน"},"beginner":{"name":"👶 มือใหม่เลี้ยงง่าย","title":"👶 น้องแมวสำหรับมือใหม่หัดเลี้ยงแมวตัวแรก","desc":"สุขภาพแข็งแรง ทนทาน เลี้ยงง่าย อารมณ์ดี ไม่จุกจิก ปรับตัวเข้ากับครอบครัวได้รวดเร็ว"},"low_shed":{"name":"🌿 ขนร่วงน้อย \/ ภูมิแพ้","title":"🌿 แมวขนร่วงน้อย ตอบโจทย์คนมีอาการภูมิแพ้","desc":"ขนร่วงน้อยมากหรือไร้ขน ดูแลความสะอาดง่าย หมดกังวลเรื่องฝุ่นและภูมิแพ้ขนสัตว์"}};
+
+const allCatsData = {"cat_british":{"id":"cat_british","name":"น้องสโนว์ (British Shorthair)","breed":"บริติช ช็อตแฮร์ (British Shorthair)","description":"น้องแมวสายพันธุ์ผู้ดีอังกฤษ หน้ากลมแก้มป่อง ขนแน่นนุ่มเหมือนกำมะหยี่ อารมณ์ดี เรียบร้อย เลี้ยงง่าย และเป็นมิตรกับทุกคนในครอบครัว","price":18000,"image":"cat_british.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นแน่นนุ่ม","personality":"เรียบร้อย อ่อนโยน เข้ากับคนง่าย","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิแล้ว","pedigree":"มีใบเพ็ดดีกรี WCF รับรองสายพันธุ์","categories":["popular","condo","beginner","short_hair"],"highlights":["หน้ากลมแก้มยุ้ยน่าฟัด","ขนแน่นไม่ค่อยร่วง","เหมาะกับห้องพักและคอนโด"]},"cat_persian":{"id":"cat_persian","name":"น้องปุยหิมะ (Persian Classic)","breed":"เปอร์เซีย (Persian)","description":"ราชินีแห่งแมวขนยาว หน้าหวาน ขนฟูยาวหนานุ่มสง่างาม นิสัยสุภาพ นิ่งสงบ ไม่ส่งเสียงรบกวน ชอบนอนซุกผ้าห่มและคลอเคลียเจ้าของ","price":16500,"image":"cat_persian.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"long","hair_label":"ขนยาวฟูหนา","personality":"รักสงบ นิ่งเงียบ อ่อนโยนมาก","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพพร้อมย้ายบ้าน","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดแชมป์","categories":["fluffy","condo","long_hair"],"highlights":["ขนนุ่มฟูระดับพรีเมียม","รักความสงบไม่ร้องกวน","ชอบให้อุ้มและแปรงขน"]},"cat_sphynx":{"id":"cat_sphynx","name":"น้องซีซาร์ (Canadian Sphynx)","breed":"สฟิงซ์ (Sphynx)","description":"แมวไร้ขนสุดเท่ ผิวสัมผัสนุ่มอุ่นดั่งลูกพีช ไร้ขนร่วง 100% เหมาะสำหรับผู้ที่เป็นโรคภูมิแพ้ขนสัตว์ ฉลาดมาก ขี้อ้อนติดคนเหมือนสุนัขตัวน้อย","price":28000,"image":"cat_sphynx.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"hairless","hair_label":"ไร้ขน (ผิวสัมผัสพีช)","personality":"ขี้อ้อนมาก ติดเจ้าของ เป็นมิตรสุดๆ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ฝังไมโครชิปแล้ว","pedigree":"มีใบเพ็ดดีกรี WCF สายพันธุ์แท้","categories":["low_shed"],"highlights":["ขนร่วง 0% หมดปัญหาภูมิแพ้","ฉลาดและตอบสนองไว","อ้อนเก่งระดับสิบ"]},"cat_siamese":{"id":"cat_siamese","name":"น้องมงคล (Siamese \/ วิเชียรมาศ)","breed":"วิเชียรมาศ (Siamese Cat)","description":"แมวมงคลไทยโบราณ แต้มสี 9 จุดคมชัด ตาสีฟ้าครามเปล่งประกาย สติปัญญาเฉลียวฉลาด ช่างพูดช่างคุย ซื่อสัตย์และรักเจ้าของสุดหัวใจ","price":12000,"image":"cat_siamese.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นเรียบเนียน","personality":"ช่างพูด เฉลียวฉลาด ร่าเริง ผูกพันกับเจ้าของ","vaccine":"ฉีดวัคซีนรวม + ตรวจลิวคีเมีย\/เอดส์แมวผ่าน","pedigree":"ใบรับรองสายพันธุ์แมวไทยโบราณแท้","categories":["beginner","playful","short_hair"],"highlights":["แมวมงคลนำโชคลาภ","ช่างอ้อนช่างคุย","สุขภาพแข็งแรงเลี้ยงง่าย"]},"cat_mainecoon":{"id":"cat_mainecoon","name":"น้องไททัน (Maine Coon)","breed":"เมนคูน (Maine Coon)","description":"ยักษ์ใหญ่ใจดี สายพันธุ์แมวที่ตัวใหญ่ที่สุดในโลก ขนแผงคอสง่างามราวสิงโต นิสัยอ่อนโยน ขี้เล่น เป็นมิตรกับเด็กและสัตว์เลี้ยงอื่นๆ","price":35000,"image":"cat_mainecoon.jpg","age":"3.5 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวสองชั้นฟูหนา","personality":"ใจดี อ่อนโยน เข้ากับทุกคนได้ง่าย","vaccine":"ฉีดวัคซีนครบ 3 เข็ม + ฝังไมโครชิปมาตรฐาน","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดแชมป์นำเข้า","categories":["fluffy","playful","long_hair"],"highlights":["ขนาดตัวใหญ่สง่างามดั่งสิงโต","นิสัยน่ารักใจดีดั่งสุนัข","รักทุกคนในบ้าน"]},"cat_ragdoll":{"id":"cat_ragdoll","name":"น้องคอตตอน (Ragdoll)","breed":"แร็กดอลล์ (Ragdoll)","description":"เจ้าหญิงดวงตาสีฟ้าคราม ตัวนุ่มปวกเปียกเหมือนตุ๊กตาผ้าเวลาอุ้ม อ่อนโยน รักความสงบ ขนนุ่มดั่งปุยฝ้าย ไม่กางเล็บ เหมาะกับครอบครัวที่มีเด็ก","price":29000,"image":"cat_ragdoll.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"long","hair_label":"ขนกึ่งยาวนุ่มลื่น","personality":"ยอมคน อ่อนหวาน นุ่มนวล ไม่ดุร้าย","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจพันธุกรรมโรคหัวใจ HCM ปกติ","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์","categories":["popular","fluffy","condo","long_hair"],"highlights":["ตาสีฟ้าเปล่งประกายสวยงาม","ตัวนุ่มนิ่มอุ้มง่ายไม่ดิ้น","ปลอดภัยสำหรับเด็ก"]},"cat_bengal":{"id":"cat_bengal","name":"น้องจากัวร์ (Bengal Rosetted)","breed":"เบงกอล (Bengal)","description":"เสือดาวจิ๋วประจำบ้าน ลวดลายดอกกุหลาบ (Rosette) สีทองเด่นชัด กล้ามเนื้อแข็งแรง ปราดเปรียว ชื่นชอบการปีนป่ายและเล่นน้ำ","price":26000,"image":"cat_bengal.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นประกายกลิตเตอร์ทอง","personality":"พลังงานสูง ปราดเปรียว รักการผจญภัย","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิเรียบร้อย","pedigree":"มีใบเพ็ดดีกรี WCF ลายโรเซ็ตต์ชัดเจน","categories":["playful","short_hair"],"highlights":["ลายเสือดาวหายากสวยสง่า","ขนมีประกายทองวิบวับ","รักการเล่นน้ำและวิ่งเล่น"]},"cat_scottish":{"id":"cat_scottish","name":"น้องพุดดิ้ง (Scottish Fold)","breed":"สก็อตติช โฟลด์ (Scottish Fold)","description":"เจ้าเหมียวหูพับ หน้ากลมแป้นเหมือนนกฮูก ขี้อ้อน ชอบนั่งท่านั่งพุงพลุ้ย (Buddha Position) น่ารักน่าเอ็นดู เข้ากับทุกคนได้ง่ายดาย","price":21000,"image":"cat_scottish.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นนุ่มหนา","personality":"ขี้อ้อน อารมณ์ดี ชอบอยู่ใกล้ชิดเจ้าของ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพกระดูกและข้อผ่าน","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["popular","condo","beginner","short_hair"],"highlights":["หูพับแนบสนิทหน้ากลมน่ารัก","ชอบนั่งท่าบุดด้าตลกๆ","รักสงบเหมาะกับคอนโด"]},"cat_munchkin":{"id":"cat_munchkin","name":"น้องชอร์ตตี้ (Munchkin Short Legs)","breed":"มันช์กิ้น ขาสั้น (Munchkin)","description":"แมวขาสั้นเตี้ยดุ๊กดิ๊กสุดน่ารัก วิ่งดุ๊กดิ๊กไปมาเรียกเสียงหัวเราะได้ตลอดวัน กระตือรือร้น ชอบสำรวจ เป็นมิตรและปรับตัวเข้ากับสภาพแวดล้อมได้เร็ว","price":24000,"image":"cat_munchkin.jpg","age":"2 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นนุ่มฟูนิดๆ","personality":"ร่าเริง สดใส ตื่นตัว ชอบเล่นกับของเล่น","vaccine":"ฉีดวัคซีนครบตามช่วงวัย + ถ่ายพยาธิเรียบร้อย","pedigree":"มีใบเพ็ดดีกรี WCF ขาสั้นแท้มาตรฐาน","categories":["popular","playful","short_hair"],"highlights":["ขาสั้นน่ารักดุ๊กดิ๊กสะกดใจ","ปรับตัวเก่งเป็นมิตร","เล่นเก่งไม่เหงาแน่นอน"]},"cat_russian":{"id":"cat_russian","name":"น้องบลูสกาย (Russian Blue)","breed":"รัสเซียน บลู (Russian Blue)","description":"แมวชั้นสูงสีเทาเงินสะท้อนแสง ดวงตาสีเขียวมรกต เรียบร้อย สะอาด สุภาพ ไม่ส่งเสียงดัง ผลัดขนน้อยมาก เหมาะสำหรับคนทำงานที่ชอบความสงบ","price":22000,"image":"cat_russian.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นสีเทาเงินประกาย","personality":"สุภาพ เรียบร้อย ไม่ส่งเสียงดัง รักสงบ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพทั่วไปผ่านฉลุย","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["condo","low_shed","short_hair"],"highlights":["ดวงตาสีเขียวมรกตสะกดสายตา","ขนร่วงน้อยแทบไม่ผลัดขน","รักความสะอาดและความเงียบสงบ"]},"cat_abyssinian":{"id":"cat_abyssinian","name":"น้องแอมเบอร์ (Abyssinian)","breed":"อบิสซิเนียน (Abyssinian)","description":"แมวอียิปต์โบราณ ขนสีส้มอบเชยไล่เฉดสวยงาม ล่ำสัน ปราดเปรียวและฉลาดหลักแหลม ชอบมีส่วนร่วมกับทุกกิจกรรมของเจ้าของ รักการกระโดดสูง","price":19000,"image":"cat_abyssinian.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นลวดลาย Ticked Tabby","personality":"คล่องแคล่ว เฉลียวฉลาด ร่าเริง ชอบเล่น","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดตรวจสุขภาพประจำตัว","pedigree":"มีใบเพ็ดดีกรี WCF รับรองสายพันธุ์","categories":["playful","short_hair"],"highlights":["ขนไล่เฉดสีอบเชยสวยแปลกตา","ฉลาดสามารถฝึกสอนคำสั่งได้","ขี้เล่นสร้างรอยยิ้มได้เสมอ"]},"cat_americanshorthair":{"id":"cat_americanshorthair","name":"น้องการ์ฟิลด์ (American Shorthair)","breed":"อเมริกัน ช็อตแฮร์ (American Shorthair)","description":"แมวลายเสือสีเงินคลาสสิก ลายชัดเจน สุขภาพแข็งแรง อึด ทน ไม่ป่วยง่าย เลี้ยงง่าย อารมณ์ดี เป็นมิตรกับทั้งคนแปลกหน้าและสัตว์เลี้ยงอื่น","price":15000,"image":"cat_americanshorthair.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นแน่นลายชัดเจน","personality":"อารมณ์ดี เข้ากับทุกคนง่าย เลี้ยงง่ายที่สุด","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิเรียบร้อย","pedigree":"มีใบเพ็ดดีกรี WCF ลาย Classic Tabby ชัดเจน","categories":["beginner","condo","short_hair"],"highlights":["ลายเสือคลาสสิกคมชัด","สุขภาพแข็งแรงเลี้ยงง่ายที่สุด","เป็นมิตรกับทุกคนในบ้าน"]},"cat_norwegian":{"id":"cat_norwegian","name":"น้องธอร์ (Norwegian Forest Cat)","breed":"นอร์วีเจียน ฟอเรสต์ (Norwegian Forest Cat - นอร์เวย์)","description":"แมวไวกิ้งโบราณแห่งสแกนดิเนเวีย ขนสองชั้นกันน้ำหนานุ่ม แผงคอใหญ่สง่างาม ร่างกายกำยำ ปีนป่ายเก่งและรักความสงบ","price":32000,"image":"cat_norwegian.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวสองชั้นหนานุ่ม","personality":"สุขุม อ่อนโยน ฉลาด รักการสำรวจ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ฝังไมโครชิปแล้ว","pedigree":"มีใบเพ็ดดีกรี FIFe สายพันธุ์แท้นำเข้า","categories":["fluffy","playful","long_hair"],"highlights":["สายพันธุ์ไวกิ้งหายาก","ขนกันน้ำหนานุ่ม","นิสัยอ่อนโยนรักสงบ"]},"cat_japanese_bobtail":{"id":"cat_japanese_bobtail","name":"น้องซากุระ (Japanese Bobtail Mi-Ke)","breed":"เจแปนนิส บ็อบเทล (Japanese Bobtail - ญี่ปุ่น)","description":"ต้นกำเนิดแมวกวักนำโชค (Maneki-Neko) ของญี่ปุ่น หางกุดรูปพู่กลม ลายสามสีมงคล สดใส ช่างพูด เป็นมิตรและซื่อสัตย์","price":23000,"image":"cat_japanese_bobtail.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นลวดลายสามสี มิเกะ","personality":"ร่าเริง ฉลาด ช่างเจรจา ซื่อสัตย์","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพสมบูรณ์","pedigree":"มีใบเพ็ดดีกรี CFA สายพันธุ์แท้","categories":["popular","beginner","playful","short_hair"],"highlights":["ต้นแบบแมวกวักนำโชค","หางกุดพุ่มน่ารัก","ปรับตัวเก่งเป็นมิตร"]},"cat_siberian":{"id":"cat_siberian","name":"น้องวลาดิเมียร์ (Siberian Forest Cat)","breed":"ไซบีเรียน (Siberian Cat - รัสเซีย)","description":"แมวแห่งผืนป่าไซบีเรีย ขนสามชั้นทนหนาวจัด สารก่อภูมิแพ้ต่ำ (Hypoallergenic) กระโดดสูง ใจดี ขี้เล่น และรักทุกคนในบ้าน","price":34000,"image":"cat_siberian.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวสามชั้น Hypoallergenic","personality":"ใจดี รักสนุก ฉลาด ขี้อ้อน","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดประจำตัว","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดรัสเซียแท้","categories":["fluffy","low_shed","playful","long_hair"],"highlights":["สารก่อภูมิแพ้ต่ำเหมาะคนแพ้ง่าย","ขนฟูสวยสง่า","เป็นมิตรกับสัตว์เลี้ยงอื่น"]},"cat_turkish_angora":{"id":"cat_turkish_angora","name":"น้องสุลต่าน (Turkish Angora)","breed":"เตอร์กิช แองโกรา (Turkish Angora - ตุรกี)","description":"สมบัติแห่งชาติตุรกี ขนสีขาวบริสุทธิ์พริ้วไหวดั่งผ้าไหม ดวงตาสีฟ้าและสีอำพัน (Odd-Eyes) เฉลียวฉลาด สง่างามและช่างประจบ","price":27000,"image":"cat_turkish_angora.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนกึ่งยาวสัมผัสไหมนุ่ม","personality":"สง่างาม ปราดเปรียว ช่างเอาใจ ฉลาด","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจการได้ยินปกติ","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["fluffy","condo","long_hair"],"highlights":["ขนสีขาวประกายไหม","ตาสองสีทรงเสน่ห์","ความสง่างามระดับราชสำนัก"]},"cat_turkish_van":{"id":"cat_turkish_van","name":"น้องคาราเมล (Turkish Van Swimming Cat)","breed":"เตอร์กิช แวน (Turkish Van - ตุรกี)","description":"แมวว่ายน้ำแห่งทะเลสาบแวน ลวดลายสีเฉพาะที่หัวและหาง (Van Pattern) ขนกันน้ำ ชอบเล่นน้ำและผจญภัย ร่างกายล่ำสันแข็งแรง","price":26000,"image":"cat_turkish_van.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"long","hair_label":"ขนกึ่งยาวกันน้ำพิเศษ","personality":"รักการว่ายน้ำ พลังงานสูง ฉลาด มั่นใจ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิแล้ว","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์","categories":["playful","long_hair"],"highlights":["ฉายาแมวชอบว่ายน้ำ","ลวดลายแวนคลาสสิก","สุขภาพแข็งแรงมาก"]},"cat_cornish_rex":{"id":"cat_cornish_rex","name":"น้องซิกแซก (Cornish Rex)","breed":"คอร์นิช เร็กซ์ (Cornish Rex - อังกฤษ)","description":"แมวขนลอนคลื่นแปลกตาจากคอร์นวอลล์ สัมผัสนุ่มเหมือนกำมะหยี่ ขนแทบไม่ร่วง รูปร่างเพรียวระหงดั่งเกรย์ฮาวด์ กระโดดเก่งและขี้อ้อน","price":25000,"image":"cat_cornish_rex.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นหยิกเป็นลอนคลื่น","personality":"ขี้เล่น กระตือรือร้น รักความอบอุ่น","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพผ่าน","pedigree":"มีใบเพ็ดดีกรี GCCF จากอังกฤษ","categories":["low_shed","playful","short_hair"],"highlights":["ขนลอนคลื่นไม่เหมือนใคร","ขนร่วงน้อยมาก","อบอุ่นน่ากอด"]},"cat_devon_rex":{"id":"cat_devon_rex","name":"น้องพิ๊กซี่ (Devon Rex)","breed":"เดวอน เร็กซ์ (Devon Rex - อังกฤษ)","description":"แมวเอลฟ์หูใหญ่ ตาโต ขนสั้นหยิกนุ่มเหมือนขนนก ฉลาดหลักแหลม ชอบเกาะบนไหล่และเรียนรู้ทริคใหม่ๆ ได้อย่างรวดเร็ว","price":27000,"image":"cat_devon_rex.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นลอนละเอียดนุ่ม","personality":"ขี้เล่น ช่างสังเกต ชอบนั่งบนไหล่","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิ","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดแท้","categories":["popular","low_shed","playful","condo","short_hair"],"highlights":["หน้าตาเหมือนเอลฟ์น่ารัก","ชอบคลอเคลียบนไหล่","ขนร่วงน้อยดูแลง่าย"]},"cat_singapura":{"id":"cat_singapura","name":"น้องเปี๊ยก (Singapura)","breed":"สิงกาปุระ (Singapura - สิงคโปร์)","description":"สายพันธุ์แมวบ้านที่มีขนาดตัวเล็กที่สุดในโลก ตาโตสีเฮเซล ขนสีน้ำตาลเซเปียอบอุ่น น่ารักทะนุถนอม ขี้อ้อนและเข้ากับคนง่าย","price":28000,"image":"cat_singapura.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นละเอียดสีเซเปีย","personality":"ตัวเล็กขี้อ้อน อ่อนหวาน ช่างสังเกต","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดสุขภาพ","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์จิ๋ว","categories":["condo","beginner","short_hair"],"highlights":["สายพันธุ์แมวตัวเล็กที่สุดในโลก","ดวงตากลมโตบ้องแบ๊ว","เหมาะกับคอนโดและพื้นที่จำกัด"]},"cat_american_curl":{"id":"cat_american_curl","name":"น้องเคิร์ลลี่ (American Curl)","breed":"อเมริกัน เคิร์ล (American Curl - สหรัฐอเมริกา)","description":"แมวหูดัดม้วนไปข้างหลังอย่างมีเอกลักษณ์ นิสัยเหมือนลูกแมวตลอดชีวิต (Peter Pan of Cats) อารมณ์ดี ฉลาด เป็นมิตรกับทุกคน","price":24000,"image":"cat_american_curl.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นนุ่มแน่น","personality":"ขี้เล่น สดใส เข้ากับเด็กๆ ได้ดีเยี่ยม","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจกระดูกใบหู","pedigree":"มีใบเพ็ดดีกรี CFA สายพันธุ์แท้","categories":["beginner","playful","short_hair"],"highlights":["ใบหูดัดโค้งไปด้านหลังแปลกตา","นิสัยร่าเริงดั่งเด็กน้อยตลอดกาล","สุขภาพแข็งแรง"]},"cat_bombay":{"id":"cat_bombay","name":"น้องแพนเธอร์ (Bombay Cat)","breed":"บอมเบย์ (Bombay Cat - สหรัฐอเมริกา)","description":"เสือดำจิ๋วประจำห้องนั่งเล่น ขนสีดำขลับเงาวับดั่งผ้าซาติน ดวงตาสีทองแดงเปล่งประกาย สุภาพ ขี้อ้อน และรักความอบอุ่น","price":21000,"image":"cat_bombay.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นสีดำเงาวับ","personality":"สุขุม อ่อนหวาน ติดคน รักความสงบ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิ","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์","categories":["condo","beginner","short_hair"],"highlights":["ขนดำเงาดั่งแพรไหม","ตาสีทองแดงโดดเด่น","เชื่องและอ้อนเก่ง"]},"cat_burmese":{"id":"cat_burmese","name":"น้องโกโก้ (Burmese Cat)","breed":"เบอร์มีส (Burmese - เมียนมา \/ พม่า)","description":"แมวทองแดงโบราณ รูปร่างกลมกลืน ขนสีน้ำตาลเข้มซาติน ตาสีเหลืองทอง นิสัยขี้เล่น เชื่อมโยงจิตใจกับเจ้าของอย่างลึกซึ้ง","price":19500,"image":"cat_burmese.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นเงางามสีน้ำตาลช็อกโกแลต","personality":"ซื่อสัตย์ ช่างเอาใจ ขี้เล่น ผูกพันกับคน","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดประจำตัว","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["beginner","playful","short_hair"],"highlights":["ขนเนียนนุ่มสีน้ำตาลหรูหรา","ขี้อ้อนติดเจ้าของ","เลี้ยงง่ายไม่จุกจิก"]},"cat_chartreux":{"id":"cat_chartreux","name":"น้องมอนเต้ (Chartreux)","breed":"ชาร์ตรู (Chartreux - ฝรั่งเศส)","description":"แมวประวัติศาสตร์ของพระคริสต์ในฝรั่งเศส ขนสีเทาเงินอมฟ้าหนานุ่ม ตาสีส้มอำพัน ยิ้มหวานตลอดเวลา เงียบสงบ ไม่ส่งเสียงรบกวน","price":29000,"image":"cat_chartreux.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นสองชั้นสีเทาเงินอมฟ้า","personality":"สงบนิ่ง สุภาพ ไม่ส่งเสียงดัง ยิ้มหวาน","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจโรคทางพันธุกรรม","pedigree":"มีใบเพ็ดดีกรี LOOF จากฝรั่งเศส","categories":["condo","short_hair"],"highlights":["ฉายาแมวยิ้มแห่งฝรั่งเศส","เงียบสงบที่สุดไม่เคยร้องกวน","ขนสองชั้นนุ่มหนา"]},"cat_khao_manee":{"id":"cat_khao_manee","name":"น้องมณีเพชร (ขาวมณี \/ Khao Manee)","breed":"ขาวมณี (Khao Manee - ประเทศไทย)","description":"อัญมณีมีชีวิตแห่งสยาม ขนขาวปลอดดั่งหิมะ ดวงตาสองสี (ฟ้า-เหลืองอำพัน) ส่องประกายดั่งเพชร ฉลาด ขี้เล่น และนำพาโชคลาภวาสนา","price":25000,"image":"cat_khao_manee.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นสีขาวบริสุทธิ์ 100%","personality":"ฉลาด ร่าเริง ช่างสังเกต ขี้ประจบ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจการได้ยินผ่านเกณฑ์","pedigree":"ใบรับรองสายพันธุ์แมวมงคลไทยโบราณ","categories":["popular","beginner","playful","short_hair"],"highlights":["ตาสองสี (Odd-Eyes) หายากทรงคุณค่า","แมวมงคลสยามโบราณ","ขาวบริสุทธิ์ไร้แต้มสี"]},"cat_korat":{"id":"cat_korat","name":"น้องสีเงิน (โคราช \/ แมวสีสวาด)","breed":"โคราช \/ สีสวาด (Korat Cat - ประเทศไทย)","description":"แมวแห่งความรักและโชคลาภ หน้าทรงรูปหัวใจ ขนสีสวาดปลายเงินประกาย (Silver-tipped) ตาสีเขียวมรกต ฉลาดและผูกพันกับเจ้าของเป็นเลิศ","price":16000,"image":"cat_korat.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นประกายสีเงินเหลือบเมฆ","personality":"ซื่อสัตย์ อ่อนหวาน จดจำเจ้าของแม่นยำ","vaccine":"ฉีดวัคซีนรวม + ตรวจสุขภาพเรียบร้อย","pedigree":"ใบรับรองแมวไทยโบราณสายพันธุ์แท้","categories":["condo","beginner","short_hair"],"highlights":["ใบหน้าทรงหัวใจนำความรัก","ขนประกายสีเงินวาววับ","สุขภาพแข็งแรงสายพันธุ์แท้ดั้งเดิม"]},"cat_savannah":{"id":"cat_savannah","name":"น้องซิมบ้า (Savannah Cat F4)","breed":"ซาวันนาห์ (Savannah - สหรัฐอเมริกา \/ แอฟริกา)","description":"แมวขายาวสง่างาม ลวดลายจุดเสือป่าแอฟริกัน ร่างกายสูงเพรียว ฉลาดเทียบเท่าสุนัข เดินด้วยสายจูงได้ และชื่นชอบการเล่นน้ำ","price":45000,"image":"cat_savannah.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นลายจุดเสือป่า","personality":"พลังงานสูง ฉลาดล้ำเลิศ คล่องแคล่ว รักน้ำ","vaccine":"ฉีดวัคซีนครบ 3 เข็ม + ฝังไมโครชิปสากล","pedigree":"มีใบเพ็ดดีกรี TICA จดทะเบียน F4 ถูกกฎหมาย","categories":["playful","short_hair"],"highlights":["รูปร่างสูงเพรียวสง่าดั่งเสือชีตาห์","ฝึกจูงเดินเล่นได้เหมือนสุนัข","ระดับพรีเมียมเอกซ์คลูซีฟ"]},"cat_egyptian_mau":{"id":"cat_egyptian_mau","name":"น้องฟาโรห์ (Egyptian Mau)","breed":"อียิปเชียน มัว (Egyptian Mau - อียิปต์)","description":"แมวโบราณลายจุดธรรมชาติแท้หนึ่งเดียวจากลุ่มแม่น้ำไนล์ วิ่งเร็วที่สุดในโลก (สูงสุด 48 กม.\/ชม.) ตาสีกูสเบอร์รี่เขียวสดใส ซื่อสัตย์และรักเจ้าของ","price":28000,"image":"cat_egyptian_mau.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นลายจุดธรรมชาติคมชัด","personality":"ว่องไว ซื่อสัตย์ อ่อนโยนกับครอบครัว","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดสุขภาพ","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดอียิปต์แท้","categories":["playful","short_hair"],"highlights":["ลายจุดธรรมชาติแท้จากอียิปต์","แมวบ้านที่วิ่งเร็วที่สุดในโลก","รักเจ้าของสุดหัวใจ"]},"cat_scottish_straight":{"id":"cat_scottish_straight","name":"น้องมาร์ชเมลโล่ (Scottish Straight)","breed":"สก็อตติช สเตรท (Scottish Straight - สก็อตแลนด์)","description":"พี่น้องหูตั้งของสก็อตติช โฟลด์ หน้ากลมแป้น แก้มยุ้ย โครงสร้างกระดูกแข็งแรงสมบูรณ์ ขี้อ้อน ใจดี เหมาะสำหรับครอบครัว","price":17000,"image":"cat_scottish_straight.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นแน่นนุ่มฟู","personality":"อารมณ์ดี ขี้อ้อน เรียบร้อย สบายๆ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิ","pedigree":"มีใบเพ็ดดีกรี WCF สายพันธุ์แท้","categories":["popular","condo","beginner","short_hair"],"highlights":["หน้ากลมแก้มยุ้ยน่ารัก","สุขภาพข้อกระดูกแข็งแรงไร้กังวล","เลี้ยงง่ายเป็นมิตร"]},"cat_somali":{"id":"cat_somali","name":"น้องฟ็อกซี่ (Somali Fox Cat)","breed":"โซมาลี (Somali Cat - โซมาเลีย \/ สหรัฐอเมริกา)","description":"จิ้งจอกน้อยแห่งโลกแมว ขนยาวพริ้วสีส้มอบเชย หางพวงฟูสง่างาม ฉลาด คล่องแคล่ว ชอบเล่นซ่อนหาและสร้างรอยยิ้ม","price":26000,"image":"cat_somali.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวพริ้วสีอบเชยหางพวง","personality":"ร่าเริง ฉลาด ช่างเล่น อยากรู้อยากเห็น","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพ","pedigree":"มีใบเพ็ดดีกรี CFA รับรองสายพันธุ์","categories":["fluffy","playful","long_hair"],"highlights":["หางพวงขนฟูเหมือนจิ้งจอก","ขนไล่สีอบเชยเงางาม","ฉลาดฝึกสอนได้"]},"cat_australian_mist":{"id":"cat_australian_mist","name":"น้องโอปอล (Australian Mist)","breed":"ออสเตรเลียน มิสต์ (Australian Mist - ออสเตรเลีย)","description":"แมวสายพันธุ์แรกของออสเตรเลีย ลายหมอกนุ่มนวลเหมือนคลุมด้วยไอหมอก นิสัยผ่อนคลาย รักเด็กและทนทาน เหมาะสำหรับเลี้ยงในบ้าน 100%","price":22000,"image":"cat_australian_mist.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นลวดลายหมอกนุ่มนวล","personality":"ใจเย็น อ่อนโยน เข้ากับเด็กเล็กได้ยอดเยี่ยม","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดตรวจสุขภาพ","pedigree":"มีใบเพ็ดดีกรี WCF สายพันธุ์ออสเตรเลียแท้","categories":["condo","beginner","short_hair"],"highlights":["สายพันธุ์แรกแห่งแดนจิงโจ้","ลายหมอกฟุ้งนุ่มตา","ใจเย็นเข้ากับเด็กเล็กได้ดีที่สุด"]},"cat_kurilian_bobtail":{"id":"cat_kurilian_bobtail","name":"น้องโมจิ (Kurilian Bobtail)","breed":"คูริเลียน บ็อบเทล (Kurilian Bobtail - หมู่เกาะคูริล \/ รัสเซีย-ญี่ปุ่น)","description":"แมวเกาะหางกระต่ายธรรมชาติ ขนหนาทนหนาว กล้ามเนื้อแข็งแรง ว่ายน้ำเก่ง ไม่กลัวน้ำ นิสัยสุขุม ซื่อสัตย์ดั่งสุนัข","price":25000,"image":"cat_kurilian_bobtail.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนกึ่งยาวหนานุ่มหางพู่สั้น","personality":"ซื่อสัตย์ สุขุม รักน้ำ ว่ายน้ำเก่ง","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ฝังไมโครชิป","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดเกาะคูริลแท้","categories":["fluffy","playful","long_hair"],"highlights":["หางพู่ปอมปอมธรรมชาติ","ทนทานไม่ป่วยง่าย","นิสัยซื่อสัตย์ดั่งสุนัข"]}};
+
+
+
+function runComprehensiveCatMatcher(e) {
+
+    if (e) e.preventDefault();
+
+    if (typeof allCatsData === 'undefined') return;
+
+
+
+    const home = document.getElementById('q_home').value;
+
+    const time = document.getElementById('q_time').value;
+
+    const exp = document.getElementById('q_exp').value;
+
+    const hair = document.getElementById('q_hair').value;
+
+    const personality = document.getElementById('q_personality').value;
+
+    const budget = document.getElementById('q_budget').value;
+
+
+
+    const matchedList = [];
+
+
+
+    for (const id in allCatsData) {
+
+        const cat = allCatsData[id];
+
+        let score = 55; // baseline score
+
+        let matchReasons = [];
+
+
+
+        // 1. Home Suitability
+
+        if (home === 'condo') {
+
+            if (cat.categories.includes('condo')) {
+
+                score += 8;
+
+                matchReasons.push('เหมาะกับคอนโด ไม่ส่งเสียงดัง');
+
+            } else if (cat.personality.includes('สงบ')) {
+
+                score += 5;
+
+            }
+
+        } else if (home === 'house') {
+
+            if (cat.categories.includes('playful') || cat.breed.includes('Maine Coon') || cat.breed.includes('Bengal')) {
+
+                score += 8;
+
+                matchReasons.push('มีพื้นที่กว้างขวางวิ่งเล่นสนุก');
+
+            } else {
+
+                score += 6;
+
+            }
+
+        } else { // townhouse
+
+            score += 7;
+
+        }
+
+
+
+        // 2. Time Available
+
+        if (time === 'limited') {
+
+            if (cat.categories.includes('condo') || cat.personality.includes('รักสงบ') || cat.personality.includes('นิ่ง')) {
+
+                score += 8;
+
+                matchReasons.push('ดูแลตัวเองได้ดีเวลาอยู่ตัวเดียว');
+
+            }
+
+        } else if (time === 'high') {
+
+            if (cat.categories.includes('popular') || cat.personality.includes('อ้อน') || cat.personality.includes('ติดคน')) {
+
+                score += 8;
+
+                matchReasons.push('ชอบคลอเคลีย เข้ากับคน WFH');
+
+            }
+
+        } else {
+
+            score += 7;
+
+        }
+
+
+
+        // 3. Experience Level
+
+        if (exp === 'beginner') {
+
+            if (cat.categories.includes('beginner') || cat.highlights.some(h => h.includes('เลี้ยงง่าย'))) {
+
+                score += 8;
+
+                matchReasons.push('เลี้ยงง่าย สุขภาพแข็งแรง');
+
+            }
+
+        } else if (exp === 'expert') {
+
+            if (cat.hair_type === 'hairless' || cat.hair_type === 'long' || cat.breed.includes('Bengal')) {
+
+                score += 8;
+
+                matchReasons.push('สายพันธุ์พิเศษตอบโจทย์มือโปร');
+
+            }
+
+        } else {
+
+            score += 6;
+
+        }
+
+
+
+        // 4. Hair Type & Allergy
+
+        if (hair === 'short' && cat.hair_type === 'short') {
+
+            score += 9;
+
+            matchReasons.push('ขนสั้น ดูแลง่าย ไม่พันกัน');
+
+        } else if (hair === 'long' && cat.hair_type === 'long') {
+
+            score += 9;
+
+            matchReasons.push('ขนยาวนุ่มฟู สวยงามดุจตุ๊กตา');
+
+        } else if (hair === 'medium' && (cat.hair_type === 'medium' || cat.hair_type === 'semi-long')) {
+
+            score += 9;
+
+            matchReasons.push('ขนปานกลางนุ่มแน่น');
+
+        } else if (hair === 'hypoallergenic') {
+
+            if (cat.hair_type === 'hairless' || cat.categories.includes('low_shed') || cat.breed.includes('Sphynx') || cat.breed.includes('Devon')) {
+
+                score += 12;
+
+                matchReasons.push('ขนร่วงน้อย เหมาะกับผู้กังวลภูมิแพ้');
+
+            }
+
+        }
+
+
+
+        // 5. Personality
+
+        if (personality === 'cuddly') {
+
+            if (cat.personality.includes('อ้อน') || cat.personality.includes('คลอเคลีย') || cat.categories.includes('popular')) {
+
+                score += 9;
+
+                matchReasons.push('นิสัยขี้อ้อน ติดเจ้าของมาก');
+
+            }
+
+        } else if (personality === 'calm') {
+
+            if (cat.personality.includes('สงบ') || cat.personality.includes('สุภาพ') || cat.categories.includes('condo')) {
+
+                score += 9;
+
+                matchReasons.push('นิสัยเรียบร้อย สุภาพ ไม่ทำลายของ');
+
+            }
+
+        } else if (personality === 'playful') {
+
+            if (cat.personality.includes('ร่าเริง') || cat.personality.includes('ซน') || cat.categories.includes('playful')) {
+
+                score += 9;
+
+                matchReasons.push('ร่าเริง พลังงานสูง ชวนเล่นสนุก');
+
+            }
+
+        } else if (personality === 'smart') {
+
+            if (cat.personality.includes('ฉลาด') || cat.personality.includes('พูด') || cat.personality.includes('สื่อสาร')) {
+
+                score += 9;
+
+                matchReasons.push('ฉลาด ช่างคุย โต้ตอบเก่ง');
+
+            }
+
+        }
+
+
+
+        // 6. Budget Check
+
+        const price = Number(cat.price) || 0;
+
+        if (budget === 'eco') {
+
+            if (price <= 20000) {
+
+                score += 8;
+
+                matchReasons.push('ราคาอยู่ในงบประมาณสบายกระเป๋า');
+
+            }
+
+        } else if (budget === 'mid') {
+
+            if (price >= 18000 && price <= 30000) {
+
+                score += 8;
+
+                matchReasons.push('ราคาคุ้มค่ามาตรฐาน');
+
+            }
+
+        } else if (budget === 'prem') {
+
+            if (price >= 28000) {
+
+                score += 8;
+
+                matchReasons.push('เกรดพรีเมียมคัดพิเศษ');
+
+            }
+
+        } else {
+
+            score += 6;
+
+        }
+
+
+
+        // Cap score at 99%
+
+        const finalScore = Math.min(score, 99);
+
+        matchedList.push({
+
+            cat: cat,
+
+            score: finalScore,
+
+            reasons: matchReasons.slice(0, 2)
+
+        });
+
+    }
+
+
+
+    // Sort by highest score descending
+
+    matchedList.sort((a, b) => b.score - a.score);
+
+
+
+    // Take top 4 best matches
+
+    const top4 = matchedList.slice(0, 4);
+
+
+
+    const resultBox = document.getElementById('matcher-results');
+
+    const resultContainer = document.getElementById('matched-cats-container');
+
+    const scoreText = document.getElementById('match-score');
+
+
+
+    if (resultContainer && resultBox) {
+
+        resultContainer.innerHTML = '';
+
+        scoreText.innerText = `ความเข้ากันได้สูงสุดถึง ${top4[0].score}% จากการวิเคราะห์ 6 มิติ (ที่อยู่อาศัย, เวลา, ประสบการณ์, ขน, นิสัย, งบประมาณ)`;
+
+
+
+        top4.forEach(item => {
+
+            const cat = item.cat;
+
+            const reasonsHtml = item.reasons.map(r => `<span style="font-size: 0.72rem; background: var(--bg-card-subtle); color: #059669; border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 8px; border-radius: 9999px; font-weight: 600;">✓ ${r}</span>`).join(' ');
+
+
+
+            const card = document.createElement('div');
+
+            card.className = 'cat-card';
+
+            card.style.display = 'flex';
+
+            card.innerHTML = `
+
+                <div class="cat-card-img-wrap">
+
+                    <img src="assets/images/${cat.image}" alt="${cat.name}" class="cat-card-img">
+
+                    <span class="cat-card-badge" style="background: linear-gradient(135deg, #10B981, #059669); color: #FFFFFF; font-weight: 800;">
+
+                        💖 แมตช์ตรงใจ ${item.score}%
+
+                    </span>
+
+                    <span class="cat-card-gender">${cat.gender}</span>
+
+                </div>
+
+                <div class="cat-card-body">
+
+                    <div class="cat-card-breed">${cat.breed}</div>
+
+                    <h3 class="cat-card-name">${cat.name}</h3>
+
+                    <p class="cat-card-desc">${cat.description}</p>
+
+                    
+
+                    <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 0.8rem;">
+
+                        ${reasonsHtml}
+
+                    </div>
+
+
+
+                    <div class="cat-tags-row">
+
+                        <span class="cat-pill-tag highlight">🩺 ${cat.age}</span>
+
+                        <span class="cat-pill-tag">🧶 ${cat.hair_label}</span>
+
+                        <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
+
+                    </div>
+
+
+
+                    <div class="cat-card-footer">
+
+                        <div class="cat-price-box">
+
+                            <span class="cat-price-label">ค่าสินสอด</span>
+
+                            <span class="cat-price-val">${Number(cat.price).toLocaleString()} ฿</span>
+
+                        </div>
+
+                        <form method="POST" action="#" onsubmit="return false;">
+
+                            <input type="hidden" name="action" value="add_cat">
+
+                            <input type="hidden" name="cat_id" value="${cat.id}">
+
+                            <button type="submit" class="btn btn-primary btn-sm">รับเลี้ยงน้อง 🐾</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            `;
+
+            resultContainer.appendChild(card);
+
+        });
+
+
+
+        resultBox.style.display = 'block';
+
+        resultBox.scrollIntoView({ behavior: 'smooth' });
+
+    }
+
+}
+
+
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    selectCategory('popular');
+
+});
+
+</script>
+
+
+
+    <footer>
+        <!-- Newsletter Subscription Ribbon -->
+        <div style="background: linear-gradient(135deg, rgba(255, 117, 86, 0.12) 0%, rgba(254, 243, 199, 0.5) 100%); border-bottom: 1px solid var(--border-color); padding: 1.8rem 1rem;">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <span style="font-size: 2.4rem; line-height: 1;">📬</span>
+                    <div>
+                        <h4 style="margin: 0 0 4px 0; font-size: 1.15rem; color: var(--text-main); font-weight: 800;">
+                            สมัครรับจดหมายข่าว & ดีลลับน้องแมว Purrfect Shop 🐾
+                        </h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">
+                            รับแจ้งเตือนน้องแมวเข้าใหม่ เกร็ดสุขภาพจากสัตวแพทย์ พร้อมรับโค้ดส่วนลด 10% (CATNEWS10) ทันทีทางอีเมล
+                        </p>
+                    </div>
+                </div>
+                <form action="subscribe.html" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
+                    <input type="email" name="subscriber_email" placeholder="กรอกอีเมลของคุณ เช่น name@gmail.com" required style="flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 999px; padding: 10px 22px; font-weight: 800; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);">
+                        ติดตามข่าวสาร ✨
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h3>Purrfect Shop 🐾</h3>
+                <p style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.4rem;">
+                    "เพราะทุกบ้านควรมีเจ้าเหมียว"
+                </p>
+                <p>
+                    ฟาร์มและศูนย์รวมน้องแมวสายพันธุ์แท้ 100% สุขภาพดี ได้รับการดูแลจากสัตวแพทย์อย่างใกล้ชิด
+                    พร้อมบริการตรวจสุขภาพ ฉีดวัคซีน ถ่ายพยาธิ และใบเพ็ดดีกรีรับรองสายพันธุ์ครบถ้วน
+                </p>
+                <div style="margin-top: 1rem; display: flex; gap: 0.8rem; font-size: 0.85rem; color: var(--text-muted);">
+                    <span>📍 บริการจัดส่งทั่วประเทศ</span> &bull; 
+                    <span>⏰ เปิดทุกวัน 09:00 - 20:00 น.</span>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>หมวดหมู่แนะนำ</h4>
+                <ul>
+                    <li><a href="recommend.html?cat=popular">🔥 สายพันธุ์ยอดนิยม</a></li>
+                    <li><a href="recommend.html?cat=condo">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
+                    <li><a href="recommend.html?cat=fluffy">🧸 แมวขนยาวนุ่มฟู</a></li>
+                    <li><a href="recommend.html?cat=short_hair">✨ แมวขนสั้นดูแลง่าย</a></li>
+                    <li><a href="recommend.html?cat=beginner">👶 มือใหม่เลี้ยงง่าย</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>ความปลอดภัย & สมาชิก</h4>
+                <ul>
+                    <li><a href="register.html">✨ สมัครสมาชิกรับส่วนลด 5%</a></li>
+                    <li><a href="creator.html">👨‍💻 ข้อมูลผู้จัดทำโครงการ</a></li>
+                    <li><a href="cart.html">🛒 ตะกร้าการจองน้องแมว</a></li>
+                    <li><a href="recommend.html">🌟 แนะนำสายพันธุ์สำหรับคุณ</a></li>
+                    <li><a href="products.html">🐱 ดูสายพันธุ์น้องแมวทั้งหมด</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 <strong>Purrfect Shop</strong> - คัดสรรและส่งมอบเพื่อนที่ดีที่สุดด้วยหัวใจ 🐾</p>
+            <p>
+                พัฒนาโดย <strong>Purrfect Cattery Team</strong> (TH-CAT-8899 IT) &bull; Purrfect Boutique Cattery
+            </p>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

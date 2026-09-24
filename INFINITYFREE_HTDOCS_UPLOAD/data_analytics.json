@@ -1,0 +1,120 @@
+﻿{
+    "clicks_by_cat": {
+        "cat_scottish": 1420,
+        "cat_british": 1280,
+        "cat_ragdoll": 1150,
+        "cat_mainecoon": 980,
+        "cat_sphynx": 840,
+        "cat_persian": 760,
+        "cat_bengal": 690,
+        "cat_munchkin": 620,
+        "cat_siamese": 540,
+        "cat_abyssinian": 410
+    },
+    "clicks_by_feature": {
+        "chat_quick_questions": 845,
+        "live_chat_admin": 630,
+        "live_tracking_check": 512,
+        "paw_points_loyalty_view": 480,
+        "pet_taxi_shipping_select": 420,
+        "cat_match_quiz": 390,
+        "welcome_deal_voucher": 340,
+        "health_guarantee_click": 290
+    },
+    "search_keywords": {
+        "แมวเลี้ยงคอนโด": 512,
+        "ขนไม่ร่วง / ภูมิแพ้": 438,
+        "แมวสก็อตติชโฟลด์": 395,
+        "แมวขนฟู มีใบเพ็ด": 310,
+        "ราคาไม่เกิน 20,000": 285,
+        "แมวพร้อมย้ายบ้าน": 240,
+        "แมวไซส์ใหญ่ เมนคูน": 195,
+        "โปรโมชั่นสมาชิกใหม่": 160
+    },
+    "member_preferences": {
+        "condo_friendly": 35,
+        "hypoallergenic_low_shed": 25,
+        "beginner_popular": 20,
+        "premium_pedigree": 12,
+        "playful_active": 8
+    },
+    "shipping_preferences": {
+        "pet_taxi": 68,
+        "pet_air_cargo": 22,
+        "farm_pickup": 10
+    },
+    "recent_activities": [
+        {
+            "id": "act_101",
+            "timestamp": "2026-09-18 16:50:12",
+            "user_name": "คุณ Meow (Admin/Member)",
+            "action": "ดูรายละเอียดน้องแมว",
+            "target": "น้องสโนว์ (British Shorthair)",
+            "category": "แมวยอดนิยม / เลี้ยงในคอนโด",
+            "icon": "🐱"
+        },
+        {
+            "id": "act_102",
+            "timestamp": "2026-09-18 16:48:30",
+            "user_name": "คุณ catlover",
+            "action": "คลิกคำถามด่วน AI",
+            "target": "ข้อ 2: เหมาะกับเลี้ยงในคอนโด / รักความสงบ",
+            "category": "แชทบอทแนะนำสายพันธุ์",
+            "icon": "⚡"
+        },
+        {
+            "id": "act_103",
+            "timestamp": "2026-09-18 16:42:15",
+            "user_name": "ผู้เยี่ยมชม (Guest #7712)",
+            "action": "ค้นหาคีย์เวิร์ด",
+            "target": "แมวไม่ผลัดขน คนเป็นภูมิแพ้",
+            "category": "การค้นหาและการกรอง",
+            "icon": "🔍"
+        },
+        {
+            "id": "act_104",
+            "timestamp": "2026-09-18 16:35:04",
+            "user_name": "คุณ สมศรี ใจดี",
+            "action": "ตรวจสอบหลอดแต้ม",
+            "target": "Paw Points & Tiers (Silver Paw 🥈)",
+            "category": "ความภักดีต่อแบรนด์",
+            "icon": "🎁"
+        },
+        {
+            "id": "act_105",
+            "timestamp": "2026-09-18 16:28:40",
+            "user_name": "คุณ พงษ์ศิริ",
+            "action": "เลือกช่องทางจัดส่ง",
+            "target": "รถตู้ปรับอากาศส่งสัตว์เลี้ยง (Pet Taxi)",
+            "category": "การจัดส่งเฉพาะทาง",
+            "icon": "🚐"
+        },
+        {
+            "id": "act_106",
+            "timestamp": "2026-09-18 16:15:22",
+            "user_name": "คุณ ธนวัฒน์",
+            "action": "ดูรายละเอียดน้องแมว",
+            "target": "น้องไททัน (Maine Coon)",
+            "category": "สายพันธุ์พรีเมียม / ใบเพ็ด",
+            "icon": "🦁"
+        },
+        {
+            "id": "act_107",
+            "timestamp": "2026-09-18 16:02:10",
+            "user_name": "ผู้เยี่ยมชม (Guest #9041)",
+            "action": "คลิกคำถามด่วน AI",
+            "target": "ข้อ 1: น้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่",
+            "category": "แชทบอทแนะนำสายพันธุ์",
+            "icon": "⚡"
+        },
+        {
+            "id": "act_108",
+            "timestamp": "2026-09-18 15:45:00",
+            "user_name": "คุณ อารียา",
+            "action": "ติดตามสถานะสด",
+            "target": "Live Tracking: PFC-TRACK-7A2B",
+            "category": "บริการหลังการขาย",
+            "icon": "📍"
+        }
+    ]
+}

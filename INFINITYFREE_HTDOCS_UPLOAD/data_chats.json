@@ -1,0 +1,281 @@
+{
+    "conversations": {
+        "guest_dbecd88a10": {
+            "user_id": "guest_dbecd88a10",
+            "user_name": "ผู้เยี่ยมชม (8a10)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 1,
+            "last_active": "2026-09-18 16:52:18",
+            "messages": [
+                {
+                    "id": "msg_init_1789722215",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:03:35"
+                },
+                {
+                    "id": "msg_q_c_6aad00d41b07a",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (8a10)",
+                    "text": "🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:13:56"
+                },
+                {
+                    "id": "msg_q_b_6aad00d41b089",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Advisor 🐾",
+                    "text": "🩺 การันตีมาตรฐานสุขภาพระดับสากลจาก Purrfect Cattery:\n\n1. 💉 วัคซีนครบ 2 เข็ม + ถ่ายพยาธิ + หยดยาป้องกันเห็บหมัด\n2. 🔬 ตรวจผลแล็บ ปลอดโรคลิวคีเมีย (FeLV) และเอดส์แมว (FIV) 100%\n3. 🛡️ การันตีคุ้มครองสุขภาพโรคร้ายแรงนานถึง 180 วันเต็ม\n4. 🚗 บริการจัดส่งด้วยรถ Pet Taxi ควบคุมอุณหภูมิถึงหน้าบ้านทั่วประเทศ\n5. 👨‍⚕️ ปรึกษาสัตวแพทย์ประจำฟาร์มฟรีตลอดอายุขัยของน้องแมวครับ!",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:13:56"
+                },
+                {
+                    "id": "msg_adm_6aad09d24799c",
+                    "sender": "admin",
+                    "sender_name": "👨‍💼 แอดมิน Purrfect Shop",
+                    "text": "น้องแมวตัวนี้สุขภาพสมบูรณ์มาก มีใบเพ็ดดีกรีและวัคซีนครบ พร้อมย้ายบ้านได้ทันทีครับ ✨",
+                    "cards": [
+                        {
+                            "id": "cat_singapura",
+                            "name": "น้องเปี๊ยก (Singapura)",
+                            "breed": "สิงกาปุระ (Singapura - สิงคโปร์)",
+                            "price": 28000,
+                            "price_fmt": "฿28,000",
+                            "image": "assets\/images\/cat_singapura.jpg",
+                            "hair": "ขนสั้นละเอียดสีเซเปีย",
+                            "highlight": "สายพันธุ์แมวตัวเล็กที่สุดในโลก",
+                            "link": "products.php"
+                        }
+                    ],
+                    "timestamp": "2026-09-18 16:52:18"
+                }
+            ]
+        },
+        "u_6aab71660b2fe": {
+            "user_id": "u_6aab71660b2fe",
+            "user_name": "oavatan@gmail.com",
+            "user_email": "oavatan@gmail.com",
+            "is_member": true,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-09-18 16:19:02",
+            "messages": [
+                {
+                    "id": "msg_init_1789722911",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:15:11"
+                },
+                {
+                    "id": "msg_q_c_6aad01e266279",
+                    "sender": "customer",
+                    "sender_name": "oavatan@gmail.com",
+                    "text": "🎁 ตอนนี้มีโปรโมชั่นหรือดีลส่วนลดสมาชิกใหม่อะไรบ้าง?",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:18:26"
+                },
+                {
+                    "id": "msg_q_b_6aad01e266291",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Advisor 🐾",
+                    "text": "🎉 สิทธิพิเศษและโค้ดส่วนลดสุดฮอตประจำเดือนนี้:\n\n• 🏷️ โค้ด `NEWMEMBER5`: รับส่วนลด 5% ทุกรายการ สำหรับสมาชิกใหม่\n• 🏷️ โค้ด `CATNEWS10`: รับส่วนลด 10% เมื่อสมัครรับจดหมายข่าว\n• 🏷️ โค้ด `PURRFECT10`: ส่วนลด 10% สำหรับยอดสั่งซื้อ 25,000฿ ขึ้นไป\n• 🎁 ฟรี! Starter Kit เซ็ตของขวัญต้อนรับน้องแมว 11 รายการมูลค่า 4,500 บาท ฟรีทุกออเดอร์!",
+                    "cards": [
+                        {
+                            "id": "cat_british",
+                            "name": "น้องสโนว์ (British Shorthair)",
+                            "breed": "บริติช ช็อตแฮร์ (British Shorthair)",
+                            "price": 18000,
+                            "price_fmt": "฿18,000",
+                            "image": "assets\/images\/cat_british.jpg",
+                            "hair": "ดีลพิเศษลด 5-10%",
+                            "highlight": "แถมฟรี Starter Kit 11 ชิ้น",
+                            "link": "welcome_deal.php"
+                        },
+                        {
+                            "id": "cat_munchkin",
+                            "name": "น้องชอร์ตตี้ (Munchkin Short Legs)",
+                            "breed": "มันช์กิ้น ขาสั้น (Munchkin)",
+                            "price": 24000,
+                            "price_fmt": "฿24,000",
+                            "image": "assets\/images\/cat_munchkin.jpg",
+                            "hair": "ดีลพิเศษลด 5-10%",
+                            "highlight": "แถมฟรี Starter Kit 11 ชิ้น",
+                            "link": "welcome_deal.php"
+                        }
+                    ],
+                    "timestamp": "2026-09-18 16:18:26"
+                },
+                {
+                    "id": "msg_q_c_6aad01f7a3629",
+                    "sender": "customer",
+                    "sender_name": "oavatan@gmail.com",
+                    "text": "🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:18:47"
+                },
+                {
+                    "id": "msg_q_b_6aad01f7a3636",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Advisor 🐾",
+                    "text": "🩺 การันตีมาตรฐานสุขภาพระดับสากลจาก Purrfect Cattery:\n\n1. 💉 วัคซีนครบ 2 เข็ม + ถ่ายพยาธิ + หยดยาป้องกันเห็บหมัด\n2. 🔬 ตรวจผลแล็บ ปลอดโรคลิวคีเมีย (FeLV) และเอดส์แมว (FIV) 100%\n3. 🛡️ การันตีคุ้มครองสุขภาพโรคร้ายแรงนานถึง 180 วันเต็ม\n4. 🚗 บริการจัดส่งด้วยรถ Pet Taxi ควบคุมอุณหภูมิถึงหน้าบ้านทั่วประเทศ\n5. 👨‍⚕️ ปรึกษาสัตวแพทย์ประจำฟาร์มฟรีตลอดอายุขัยของน้องแมวครับ!",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:18:47"
+                },
+                {
+                    "id": "msg_q_c_6aad01ff954d9",
+                    "sender": "customer",
+                    "sender_name": "oavatan@gmail.com",
+                    "text": "🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:18:55"
+                },
+                {
+                    "id": "msg_q_b_6aad01ff954e4",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Advisor 🐾",
+                    "text": "🩺 การันตีมาตรฐานสุขภาพระดับสากลจาก Purrfect Cattery:\n\n1. 💉 วัคซีนครบ 2 เข็ม + ถ่ายพยาธิ + หยดยาป้องกันเห็บหมัด\n2. 🔬 ตรวจผลแล็บ ปลอดโรคลิวคีเมีย (FeLV) และเอดส์แมว (FIV) 100%\n3. 🛡️ การันตีคุ้มครองสุขภาพโรคร้ายแรงนานถึง 180 วันเต็ม\n4. 🚗 บริการจัดส่งด้วยรถ Pet Taxi ควบคุมอุณหภูมิถึงหน้าบ้านทั่วประเทศ\n5. 👨‍⚕️ ปรึกษาสัตวแพทย์ประจำฟาร์มฟรีตลอดอายุขัยของน้องแมวครับ!",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:18:55"
+                },
+                {
+                    "id": "msg_q_c_6aad0206d9f8e",
+                    "sender": "customer",
+                    "sender_name": "oavatan@gmail.com",
+                    "text": "🤧 เป็นภูมิแพ้ แนะนำน้องแมวขนไม่ร่วง\/ผลัดขนน้อยหน่อยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:19:02"
+                },
+                {
+                    "id": "msg_q_b_6aad0206d9fa8",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Advisor 🐾",
+                    "text": "ผู้ที่เป็นโรคภูมิแพ้ขนสัตว์ หรือไม่ชอบกวาดขนแมว แนะนำกลุ่มสายพันธุ์ Hypoallergenic \/ ขนสั้นพิเศษ หรือไร้ขน 100% เหล่านี้ครับ 🤧🌿",
+                    "cards": [
+                        {
+                            "id": "cat_sphynx",
+                            "name": "น้องซีซาร์ (Canadian Sphynx)",
+                            "breed": "สฟิงซ์ (Sphynx)",
+                            "price": 28000,
+                            "price_fmt": "฿28,000",
+                            "image": "assets\/images\/cat_sphynx.jpg",
+                            "hair": "ไร้ขน (ผิวสัมผัสพีช)",
+                            "highlight": "ขนร่วง 0% หมดปัญหาภูมิแพ้",
+                            "link": "recommend.php?cat=low_shed"
+                        },
+                        {
+                            "id": "cat_devon_rex",
+                            "name": "น้องพิ๊กซี่ (Devon Rex)",
+                            "breed": "เดวอน เร็กซ์ (Devon Rex - อังกฤษ)",
+                            "price": 27000,
+                            "price_fmt": "฿27,000",
+                            "image": "assets\/images\/cat_devon_rex.jpg",
+                            "hair": "ขนสั้นลอนละเอียดนุ่ม",
+                            "highlight": "หน้าตาเหมือนเอลฟ์น่ารัก",
+                            "link": "recommend.php?cat=low_shed"
+                        },
+                        {
+                            "id": "cat_cornish_rex",
+                            "name": "น้องซิกแซก (Cornish Rex)",
+                            "breed": "คอร์นิช เร็กซ์ (Cornish Rex - อังกฤษ)",
+                            "price": 25000,
+                            "price_fmt": "฿25,000",
+                            "image": "assets\/images\/cat_cornish_rex.jpg",
+                            "hair": "ขนสั้นหยิกเป็นลอนคลื่น",
+                            "highlight": "ขนลอนคลื่นไม่เหมือนใคร",
+                            "link": "recommend.php?cat=low_shed"
+                        }
+                    ],
+                    "timestamp": "2026-09-18 16:19:02"
+                }
+            ]
+        },
+        "u_admin_master": {
+            "user_id": "u_admin_master",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "user_email": "admin@catboutique.shop",
+            "is_member": true,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-09-18 16:51:12",
+            "messages": [
+                {
+                    "id": "msg_init_1789725072",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:51:12"
+                }
+            ]
+        },
+        "u_6aab98b91604f": {
+            "user_id": "u_6aab98b91604f",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "user_email": "admin@catboutique.shop",
+            "is_member": true,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-09-18 16:52:03",
+            "messages": [
+                {
+                    "id": "msg_init_1789725123",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:52:03"
+                }
+            ]
+        },
+        "u_6aab7678b247f": {
+            "user_id": "u_6aab7678b247f",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "user_email": "admin@catboutique.shop",
+            "is_member": true,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-09-18 16:52:04",
+            "messages": [
+                {
+                    "id": "msg_init_1789725124",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:52:04"
+                }
+            ]
+        },
+        "u_6a97f8b17f777": {
+            "user_id": "u_6a97f8b17f777",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "user_email": "admin@catboutique.shop",
+            "is_member": true,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-09-18 16:52:06",
+            "messages": [
+                {
+                    "id": "msg_init_1789725126",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-18 16:52:06"
+                }
+            ]
+        }
+    }
+}

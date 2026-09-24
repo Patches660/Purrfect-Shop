@@ -283,3 +283,158 @@ document.addEventListener('DOMContentLoaded', () => {
     setAppTheme(savedTheme);
 });
 
+// =========================================================
+// 7. Client-Side Authentication (for GitHub Pages / Static Previews)
+// =========================================================
+const DEFAULT_DEMO_USERS = [
+    {
+        id: "u_admin_master",
+        fullname: "ผู้ดูแลระบบสูงสุด (Master Admin)",
+        username: "admin",
+        email: "admin@catboutique.shop",
+        phone: "0891234567",
+        role: "admin",
+        paw_points: 999,
+        avatar: "assets/images/logo.png"
+    },
+    {
+        id: "u_6a97f8b172436",
+        fullname: "คุณกิตติพงษ์ รักแมว",
+        username: "catlover",
+        email: "catlover@example.com",
+        phone: "0891234567",
+        role: "customer",
+        paw_points: 150,
+        avatar: "assets/images/logo.png"
+    },
+    {
+        id: "u_6aab71660b2fe",
+        fullname: "oavatan@gmail.com",
+        username: "oavatan@gmail.com",
+        email: "oavatan@gmail.com",
+        phone: "0634169812",
+        role: "customer",
+        paw_points: 200,
+        avatar: "assets/images/logo.png"
+    }
+];
+
+function getStoredUsers() {
+    try {
+        const localUsers = JSON.parse(localStorage.getItem('cat_shop_users') || '[]');
+        return [...DEFAULT_DEMO_USERS, ...localUsers];
+    } catch(e) {
+        return DEFAULT_DEMO_USERS;
+    }
+}
+
+function getClientLoggedUser() {
+    try {
+        const u = localStorage.getItem('cat_shop_logged_user');
+        return u ? JSON.parse(u) : null;
+    } catch(e) {
+        return null;
+    }
+}
+
+function clientLogin(identifier, password) {
+    const idClean = (identifier || '').trim().toLowerCase();
+    const users = getStoredUsers();
+    const found = users.find(u => u.username.toLowerCase() === idClean || u.email.toLowerCase() === idClean);
+    if (!found) {
+        return { success: false, message: 'ไม่พบบัญชีผู้ใช้นี้ในระบบ' };
+    }
+    localStorage.setItem('cat_shop_logged_user', JSON.stringify(found));
+    return { success: true, user: found };
+}
+
+function clientRegister(fullname, username, email, phone, password) {
+    const users = getStoredUsers();
+    const exists = users.some(u => u.username.toLowerCase() === username.trim().toLowerCase() || u.email.toLowerCase() === email.trim().toLowerCase());
+    if (exists) {
+        return { success: false, message: 'ชื่อผู้ใช้หรืออีเมลนี้ถูกใช้งานแล้ว' };
+    }
+    const newUser = {
+        id: 'u_' + Date.now(),
+        fullname: fullname.trim(),
+        username: username.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        role: 'customer',
+        paw_points: 100,
+        avatar: 'assets/images/logo.png'
+    };
+    try {
+        const localUsers = JSON.parse(localStorage.getItem('cat_shop_users') || '[]');
+        localUsers.push(newUser);
+        localStorage.setItem('cat_shop_users', JSON.stringify(localUsers));
+        localStorage.setItem('cat_shop_logged_user', JSON.stringify(newUser));
+    } catch(e) {}
+    return { success: true, user: newUser };
+}
+
+function clientLogout() {
+    try {
+        localStorage.removeItem('cat_shop_logged_user');
+    } catch(e) {}
+    window.location.reload();
+}
+
+function syncHeaderUserUI() {
+    // Only apply on static HTML pages where server session isn't active
+    const isStaticPage = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (!isStaticPage) return;
+
+    const user = getClientLoggedUser();
+    if (user) {
+        // Update top utility bar right side
+        const topRight = document.querySelector('.top-utility-right');
+        if (topRight) {
+            topRight.innerHTML = `
+                <button type="button" class="theme-loop-btn" onclick="cycleTheme()" title="กดเพื่อสลับสีพื้นหลังแบบวนลูป (Loop)">
+                    🎨 <span id="theme-current-name">${THEME_NAMES[document.documentElement.getAttribute('data-theme') || 'warm'] || 'อบอุ่น คอรัล'}</span> 🔄
+                </button>
+                <div style="display: inline-flex; align-items: center; gap: 0.6rem;">
+                    <a href="index.html#points" class="top-badge-pill" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="ระบบสะสมแต้ม Paw Points">
+                        🐾 ${user.paw_points || 150} พอยท์
+                    </a>
+                    <a href="subscribe.html" class="btn btn-sm" style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                        📬 ข่าวสาร
+                    </a>
+                    <span class="user-badge" style="cursor: default;" title="เข้าสู่ระบบแล้ว">
+                        <img src="${user.avatar || 'assets/images/logo.png'}" alt="Avatar" class="user-avatar-sm" style="width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--primary-coral);">
+                        <span>คุณ${user.username}</span>
+                    </span>
+                    <button type="button" onclick="clientLogout()" class="btn btn-sm" style="background: rgba(239, 68, 68, 0.1); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); font-weight: 700; padding: 0.3rem 0.7rem; font-size: 0.78rem; border-radius: 999px; cursor: pointer;">
+                        🚪 ออกจากระบบ
+                    </button>
+                </div>
+            `;
+        }
+
+        // Update drawer profile section if available
+        const drawerUserSection = document.querySelector('.drawer-user-section');
+        if (drawerUserSection) {
+            drawerUserSection.innerHTML = `
+                <div class="drawer-user-card" style="background: var(--bg-card-subtle); padding: 14px; border-radius: 12px; margin-bottom: 12px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <img src="${user.avatar || 'assets/images/logo.png'}" alt="Avatar" style="width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--primary-coral); object-fit: cover;">
+                        <div>
+                            <strong style="color: var(--text-main); font-size: 0.95rem; display: block;">คุณ${user.username}</strong>
+                            <span style="font-size: 0.75rem; color: var(--accent-mint); font-weight: 600;">🐾 สมาชิกรับส่วนลด 5%</span>
+                        </div>
+                    </div>
+                    <button type="button" onclick="clientLogout()" class="btn btn-sm" style="width: 100%; margin-top: 10px; background: rgba(239, 68, 68, 0.1); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.3); font-weight: 700;">
+                        🚪 ออกจากระบบ
+                    </button>
+                </div>
+            `;
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    syncHeaderUserUI();
+});
+
+

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตะกร้าการรับเลี้ยงน้องแมว — Purrfect Shop 🐾</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+</head>
+<body>
+    <header class="site-header">
+        <div class="top-utility-bar">
+            <div class="top-utility-container">
+                <div class="top-utility-left">
+                    <span class="top-badge-pill">🐾 Purrfect Cattery & Boutique</span>
+                    <span class="top-utility-tagline">ฟาร์มเพาะพันธุ์น้องแมวสายพันธุ์แท้มาตรฐานสากล • การันตีสุขภาพ 180 วัน</span>
+                </div>
+                <div class="top-utility-right">
+                    <a href="subscribe.html" class="btn btn-sm" style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none;">
+                        📬 รับข้อมูลข่าวสาร
+                    </a>
+                    <a href="login.html" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.85rem; font-size: 0.82rem;">เข้าสู่ระบบ 🔑</a>
+                    <a href="register.html" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.9rem; font-size: 0.82rem;">สมัครสมาชิก ✨</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-nav-bar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <img src="assets/images/logo.png" alt="Purrfect Shop Logo" class="logo-img">
+                    <div class="logo-title-group">
+                        <span class="logo-text">Purrfect Shop 🐾</span>
+                        <span class="logo-tagline">เพราะทุกบ้านควรมีเจ้าเหมียว</span>
+                    </div>
+                </a>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="index.html" class="nav-link">🏠 หน้าแรก</a></li>
+                        <li><a href="products.html" class="nav-link">🐱 น้องแมวทั้งหมด</a></li>
+                        <li><a href="recommend.html" class="nav-link">🌟 แนะนำสำหรับคุณ</a></li>
+                        <li><a href="welcome_deal.html" class="nav-link">🎁 ดีลสมาชิกใหม่ <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; margin-left: 2px;">HOT</span></a></li>
+                        <li><a href="creator.html" class="nav-link">👨‍💻 ผู้จัดทำ</a></li>
+                        <li class="cart-badge-container"><a href="cart.html" class="nav-link nav-cart-btn active">🛒 ตะกร้า <span class="cart-count">2</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+        <!-- Stepper -->
+        <div class="checkout-stepper" style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 2.5rem; flex-wrap: wrap;">
+            <div class="step-item active" style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--primary-coral);">
+                <span style="background: var(--primary-coral); color: white; width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">1</span>
+                <span>เลือกน้องแมว</span>
+            </div>
+            <span style="color: var(--border-color);">→</span>
+            <div class="step-item" style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text-muted);">
+                <span style="background: var(--border-color); color: var(--text-main); width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">2</span>
+                <span>ข้อมูลจัดส่ง & ชำระเงิน</span>
+            </div>
+            <span style="color: var(--border-color);">→</span>
+            <div class="step-item" style="display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--text-muted);">
+                <span style="background: var(--border-color); color: var(--text-main); width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.85rem;">3</span>
+                <span>ใบเสร็จ & ใบรับรอง</span>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: start;">
+            <!-- Cart Items Column -->
+            <div>
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: var(--shadow-sm);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; border-bottom: 1.5px solid var(--border-color); padding-bottom: 0.8rem;">
+                        <h2 style="margin: 0; font-size: 1.25rem; font-weight: 800; color: var(--text-main);">
+                            🐾 รายการน้องแมวในตะกร้า (2 ตัว)
+                        </h2>
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">✨ รับประกันสุขภาพและสายพันธุ์ 100%</span>
+                    </div>
+
+                    <!-- Item 1 -->
+                    <div style="display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px dashed var(--border-color); align-items: center; flex-wrap: wrap;">
+                        <img src="assets/images/cat_british.jpg" alt="British Shorthair" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover; border: 1.5px solid var(--border-color);">
+                        <div style="flex: 1; min-width: 200px;">
+                            <h4 style="margin: 0 0 4px; font-size: 1.05rem; color: var(--text-main); font-weight: 800;">
+                                น้องสโนว์ (British Shorthair)
+                            </h4>
+                            <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+                                สายพันธุ์: บริติช ช็อตแฮร์ &bull; เพศ: ผู้ &bull; อายุ: 2.5 เดือน<br>
+                                <span style="color: #059669;">✓ ฉีดวัคซีนครบ 2 เข็ม + มีใบเพ็ดดีกรี WCF</span>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.15rem; font-weight: 800; color: var(--primary-coral);">18,000 ฿</div>
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">จำนวน: 1 ตัว</span>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div style="display: flex; gap: 1rem; padding: 1rem 0; align-items: center; flex-wrap: wrap;">
+                        <img src="assets/images/cat_persian.jpg" alt="Persian Classic" style="width: 80px; height: 80px; border-radius: 12px; object-fit: cover; border: 1.5px solid var(--border-color);">
+                        <div style="flex: 1; min-width: 200px;">
+                            <h4 style="margin: 0 0 4px; font-size: 1.05rem; color: var(--text-main); font-weight: 800;">
+                                น้องปุยหิมะ (Persian Classic)
+                            </h4>
+                            <div style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+                                สายพันธุ์: เปอร์เซียขนยาว &bull; เพศ: เมีย &bull; อายุ: 3 เดือน<br>
+                                <span style="color: #059669;">✓ ฉีดวัคซีนครบ 2 เข็ม + มีใบเพ็ดดีกรี CFA</span>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="font-size: 1.15rem; font-weight: 800; color: var(--primary-coral);">16,500 ฿</div>
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">จำนวน: 1 ตัว</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Shipping & Payment Form Mockup -->
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+                    <h3 style="margin: 0 0 1rem; font-size: 1.15rem; font-weight: 800; color: var(--text-main);">
+                        📍 ข้อมูลผู้รับเลี้ยงและช่องทางชำระเงิน
+                    </h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">ชื่อ-นามสกุล:</label>
+                            <input type="text" value="คุณลูกค้าผู้รักน้องแมว" class="form-control" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-page);">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">เบอร์โทรศัพท์ติดต่อ:</label>
+                            <input type="text" value="081-234-5678" class="form-control" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-page);">
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">อีเมลรับใบเสร็จและใบเพ็ดดีกรี:</label>
+                        <input type="email" value="customer@example.com" class="form-control" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-page);">
+                    </div>
+                    <div style="margin-bottom: 1rem;">
+                        <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); display: block; margin-bottom: 4px;">ที่อยู่จัดส่ง / นัดหมายรับน้องแมว:</label>
+                        <textarea class="form-control" rows="2" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-page);">99/99 หมู่บ้านพรีเมียม ซอยอารีย์ ถนนพหลโยธิน แขวงสามเสนใน เขตพญาไท กรุงเทพฯ 10400</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary Column -->
+            <div>
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-sm); position: sticky; top: 90px;">
+                    <h3 style="margin: 0 0 1.2rem; font-size: 1.15rem; font-weight: 800; color: var(--text-main); border-bottom: 1.5px solid var(--border-color); padding-bottom: 0.6rem;">
+                        🧾 สรุปยอดการสั่งซื้อ
+                    </h3>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.92rem; color: var(--text-muted);">
+                        <span>ยอดรวมน้องแมว (2 ตัว):</span>
+                        <span style="font-weight: 700; color: var(--text-main);">34,500 ฿</span>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.92rem; color: #059669;">
+                        <span>ส่วนลดสมาชิก VIP (5%):</span>
+                        <span style="font-weight: 700;">- 1,725 ฿</span>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.6rem; font-size: 0.92rem; color: var(--text-muted);">
+                        <span>ภาษีมูลค่าเพิ่ม (VAT 7%):</span>
+                        <span>2,294.25 ฿</span>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.92rem; color: var(--text-muted);">
+                        <span>ค่าบริการจัดส่งพิเศษพร้อมพี่เลี้ยง:</span>
+                        <span style="color: #059669; font-weight: 700;">ฟรี (โปรโมชั่น)</span>
+                    </div>
+
+                    <hr style="border: 0; border-top: 1.5px dashed var(--border-color); margin: 1rem 0;">
+
+                    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5rem;">
+                        <span style="font-size: 1.1rem; font-weight: 800; color: var(--text-main);">ยอดชำระสุทธิ:</span>
+                        <span style="font-size: 1.6rem; font-weight: 900; color: var(--primary-coral);">35,069.25 ฿</span>
+                    </div>
+
+                    <!-- Coupon Code Input -->
+                    <div style="display: flex; gap: 8px; margin-bottom: 1.2rem;">
+                        <input type="text" value="WELCOME15" placeholder="ใส่โค้ดส่วนลด" style="flex: 1; padding: 8px 12px; border-radius: 8px; border: 1.5px solid #FDBA74; background: #FFF7ED; font-weight: 700; font-size: 0.88rem; color: #EA580C;">
+                        <button type="button" class="btn btn-secondary" onclick="alert('ใช้โค้ดส่วนลด WELCOME15 สำเร็จ! ลดเพิ่ม 15%');" style="padding: 8px 14px; font-size: 0.85rem; font-weight: 700;">ใช้โค้ด</button>
+                    </div>
+
+                    <!-- Checkout Button -->
+                    <button type="button" onclick="showCheckoutSuccess()" class="btn btn-primary btn-block" style="width: 100%; padding: 14px; font-size: 1.1rem; font-weight: 800; border-radius: 12px; box-shadow: var(--shadow-coral); cursor: pointer;">
+                        ✨ ยืนยันคำสั่งซื้อและรับเลี้ยง 🐾
+                    </button>
+
+                    <div style="margin-top: 1rem; text-align: center; font-size: 0.78rem; color: var(--text-muted);">
+                        🔒 ข้อมูลการชำระเงินปลอดภัยด้วยการเข้ารหัส SSL 256-bit
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Checkout Success Modal -->
+    <div id="successModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
+        <div style="background: white; border-radius: 24px; padding: 2.5rem; max-width: 520px; width: 100%; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,0.3); animation: scaleUp 0.3s ease;">
+            <div style="font-size: 4rem; margin-bottom: 10px;">🎉🐱</div>
+            <h2 style="font-size: 1.6rem; font-weight: 900; color: #1E293B; margin: 0 0 8px;">ยืนยันคำสั่งซื้อสำเร็จ!</h2>
+            <p style="color: #64748B; font-size: 0.95rem; line-height: 1.6; margin: 0 0 1.5rem;">
+                ขอบคุณที่รับเลี้ยงน้องแมวกับ Purrfect Shop! ระบบได้จัดเตรียมการจัดส่งและส่งอีเมลยืนยันคำสั่งซื้อพร้อมรูปภาพสินค้าไปยังอีเมลของคุณเรียบร้อยแล้ว
+            </p>
+            <div style="background: #FFF7ED; border: 1.5px solid #FDBA74; border-radius: 12px; padding: 12px; margin-bottom: 1.5rem; font-size: 0.88rem; color: #C2410C; font-weight: 700;">
+                หมายเลขคำสั่งซื้อ: PFC-260917-8899
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <a href="email_showcase.html" class="btn btn-primary" style="padding: 10px 20px; font-weight: 700; border-radius: 50px; text-decoration: none;">📧 ดูตัวอย่างอีเมลที่ได้รับ</a>
+                <a href="index.html" class="btn btn-secondary" style="padding: 10px 20px; font-weight: 700; border-radius: 50px; text-decoration: none;">🏠 กลับหน้าแรก</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showCheckoutSuccess() {
+            document.getElementById('successModal').style.display = 'flex';
+        }
+    </script>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h3>Purrfect Shop 🐾</h3>
+                <p style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.4rem;">"เพราะทุกบ้านควรมีเจ้าเหมียว"</p>
+                <p>ฟาร์มและศูนย์รวมน้องแมวสายพันธุ์แท้ 100% สุขภาพดี การันตีคุณภาพและใบเพ็ดดีกรีสากล</p>
+            </div>
+            <div class="footer-col">
+                <h4>ลิงก์ด่วน</h4>
+                <ul>
+                    <li><a href="index.html">🏠 หน้าแรก</a></li>
+                    <li><a href="products.html">🐱 น้องแมวทั้งหมด</a></li>
+                    <li><a href="recommend.html">🌟 แนะนำสำหรับคุณ</a></li>
+                    <li><a href="welcome_deal.html">🎁 ดีลสมาชิกใหม่</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>ระบบจำลอง</h4>
+                <ul>
+                    <li><a href="email_showcase.html">📧 แกลเลอรีอีเมล 3 แบบ</a></li>
+                    <li><a href="subscribe.html">📬 สมัครรับข่าวสาร</a></li>
+                    <li><a href="creator.html">👨‍💻 ข้อมูลผู้จัดทำ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 <strong>Purrfect Shop</strong> - คัดสรรและส่งมอบเพื่อนที่ดีที่สุดด้วยหัวใจ 🐾</p>
+        </div>
+    </footer>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
