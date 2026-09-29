@@ -104,14 +104,20 @@ require_once __DIR__ . '/header.php';
              data-hair="<?php echo $cat['hair_type']; ?>"
              data-age="<?php echo htmlspecialchars($cat['age']); ?>">
             <div class="cat-card-img-wrap">
-                <img src="assets/images/<?php echo $cat['image']; ?>" alt="<?php echo $cat['name']; ?>" class="cat-card-img">
+                <a href="cat_detail.php?id=<?php echo $cat['id']; ?>" style="display: block; width: 100%; height: 100%;">
+                    <img src="assets/images/<?php echo $cat['image']; ?>" alt="<?php echo $cat['name']; ?>" class="cat-card-img">
+                </a>
                 <span class="cat-card-badge">✨ พร้อมย้ายบ้าน</span>
                 <span class="cat-card-gender"><?php echo $cat['gender']; ?></span>
             </div>
             
             <div class="cat-card-body">
                 <div class="cat-card-breed"><?php echo $cat['breed']; ?></div>
-                <h3 class="cat-card-name"><?php echo $cat['name']; ?></h3>
+                <h3 class="cat-card-name">
+                    <a href="cat_detail.php?id=<?php echo $cat['id']; ?>" style="color: inherit; text-decoration: none;">
+                        <?php echo $cat['name']; ?>
+                    </a>
+                </h3>
                 <p class="cat-card-desc"><?php echo $cat['description']; ?></p>
                 
                 <div class="cat-tags-row">
@@ -125,18 +131,23 @@ require_once __DIR__ . '/header.php';
                     <div><?php echo $cat['vaccine']; ?></div>
                 </div>
 
-                <div class="cat-card-footer">
-                    <div class="cat-price-box">
-                        <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+                <div class="cat-card-footer" style="gap: 6px; flex-wrap: wrap;">
+                    <div class="cat-price-box" style="margin-right: auto;">
+                        <span class="cat-price-label">ค่าสินสอด</span>
                         <span class="cat-price-val"><?php echo number_format($cat['price']); ?> ฿</span>
                     </div>
-                    <form method="POST" action="products.php">
-                        <input type="hidden" name="action" value="add_cat">
-                        <input type="hidden" name="cat_id" value="<?php echo $cat['id']; ?>">
-                        <button type="submit" class="btn btn-primary btn-sm">
-                            รับเลี้ยงน้อง 🐾
-                        </button>
-                    </form>
+                    <div style="display: flex; gap: 6px; align-items: center;">
+                        <a href="cat_detail.php?id=<?php echo $cat['id']; ?>" class="btn btn-secondary btn-sm" style="padding: 0.45rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">
+                            ดูข้อมูล 🔍
+                        </a>
+                        <form method="POST" action="products.php" style="margin: 0;">
+                            <input type="hidden" name="action" value="add_cat">
+                            <input type="hidden" name="cat_id" value="<?php echo $cat['id']; ?>">
+                            <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.45rem 0.85rem; font-size: 0.8rem; white-space: nowrap;">
+                                รับเลี้ยง 🐾
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

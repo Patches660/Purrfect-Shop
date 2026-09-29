@@ -1,13 +1,30 @@
 <?php
 require_once __DIR__ . '/data.php';
 
-// Check if user is logged in
-if (!isUserLoggedIn()) {
-    header("Location: login.php?redirect=profile.php");
-    exit;
+// Check if user is logged in (with fallback for CLI / static HTML export)
+$currUser = getCurrentUser();
+if (!$currUser) {
+    if (php_sapi_name() === 'cli' || !isset($_SERVER['HTTP_HOST'])) {
+        $currUser = [
+            'id' => 'u_6a97f8b172436',
+            'fullname' => 'คุณรักแมว เหมียวเหมียว',
+            'username' => 'catlover',
+            'email' => 'member@purrfectshop.com',
+            'phone' => '081-234-5678',
+            'role' => 'customer',
+            'paw_points' => 350,
+            'avatar' => 'assets/images/logo.png',
+            'bank_name' => 'กสิกรไทย (KBANK)',
+            'bank_account' => '123-4-56789-0',
+            'bank_account_name' => 'คุณรักแมว เหมียวเหมียว',
+            'delivery_address' => '99/9 หมู่บ้านแมวน่ารัก ซอย 5 แขวงบางแคเหนือ เขตบางแค กรุงเทพมหานคร 10160'
+        ];
+    } else {
+        header("Location: login.php?redirect=profile.php");
+        exit;
+    }
 }
 
-$currUser = getCurrentUser();
 $success_msg = "";
 $error_msg = "";
 $active_tab = $_GET['tab'] ?? 'profile';
@@ -141,18 +158,21 @@ require_once __DIR__ . '/header.php';
                 <span style="position: absolute; bottom: 2px; right: 2px; background: var(--accent-mint); width: 18px; height: 18px; border-radius: 50%; border: 3px solid #FFFFFF;" title="ออนไลน์"></span>
             </div>
             <div>
-                <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.2rem;">
+                <h2 id="profile-fullname-text" style="font-size: 1.6rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.2rem;">
                     <?php echo htmlspecialchars($currUser['fullname']); ?>
                 </h2>
                 <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">
-                    @<?php echo htmlspecialchars($currUser['username']); ?> &bull; <?php echo htmlspecialchars($currUser['email']); ?>
+                    @<span id="profile-username-text"><?php echo htmlspecialchars($currUser['username']); ?></span> &bull; <span id="profile-email-text"><?php echo htmlspecialchars($currUser['email']); ?></span>
                 </div>
                 <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
                     <span style="background: var(--primary-coral-soft); color: var(--primary-coral); font-size: 0.78rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid rgba(255, 117, 86, 0.3);">
                         🌟 สมาชิกทางการ (ส่วนลดพิเศษ 5%)
                     </span>
                     <span style="background: var(--accent-amber-soft); color: #B45309; font-size: 0.78rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px;">
-                        📞 <?php echo htmlspecialchars($currUser['phone']); ?>
+                        📞 <span id="profile-phone-text"><?php echo htmlspecialchars($currUser['phone']); ?></span>
+                    </span>
+                    <span style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-size: 0.78rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 9999px;">
+                        🐾 <span id="profile-points-text"><?php echo number_format($currUser['paw_points'] ?? 150); ?></span> Paw Points
                     </span>
                 </div>
             </div>
@@ -162,19 +182,19 @@ require_once __DIR__ . '/header.php';
         <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
             <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.8rem 1.2rem; text-align: center; min-width: 110px;">
                 <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">รับเลี้ยงน้องแมว</div>
-                <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary-coral); font-family: 'Outfit';">
+                <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary-coral); font-family: 'Outfit';" id="profile-cats-count">
                     <?php echo $total_cats_adopted; ?> ตัว
                 </div>
             </div>
             <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.8rem 1.2rem; text-align: center; min-width: 120px;">
                 <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">ยอดที่ชำระแล้ว</div>
-                <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-mint); font-family: 'Outfit';">
+                <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-mint); font-family: 'Outfit';" id="profile-spent-total">
                     <?php echo number_format($total_spent); ?> ฿
                 </div>
             </div>
             <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.8rem 1.2rem; text-align: center; min-width: 100px;">
                 <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">คำสั่งจอง</div>
-                <div style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); font-family: 'Outfit';">
+                <div style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); font-family: 'Outfit';" id="profile-orders-count">
                     <?php echo count($user_orders); ?> ครั้ง
                 </div>
             </div>
@@ -182,7 +202,7 @@ require_once __DIR__ . '/header.php';
             <!-- Logout Button -->
             <a href="logout.php" 
                class="btn btn-secondary" 
-               onclick="return confirm('คุณต้องการออกจากระบบ Cat Shop ใช่หรือไม่?');" 
+               onclick="if(typeof clientLogout === 'function' && (window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php'))){ event.preventDefault(); clientLogout(); } else { return confirm('คุณต้องการออกจากระบบ Cat Shop ใช่หรือไม่?'); }" 
                style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.3rem; border-color: rgba(239, 68, 68, 0.4); color: #EF4444; font-weight: 700; background: rgba(239, 68, 68, 0.06); border-radius: var(--radius-md); text-decoration: none;" 
                title="กดเพื่อออกจากระบบ">
                 ออกจากระบบ 🚪
@@ -194,26 +214,37 @@ require_once __DIR__ . '/header.php';
     <div style="display: flex; gap: 0.6rem; margin-bottom: 1.8rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.8rem; flex-wrap: wrap;">
         <button type="button" 
                 class="cat-filter-btn <?php echo $active_tab === 'profile' ? 'active' : ''; ?>" 
+                id="btn-tab-profile"
                 onclick="switchProfileTab('profile', this)">
             👤 ข้อมูลส่วนตัว & รูปโปรไฟล์
         </button>
         <button type="button" 
+                class="cat-filter-btn <?php echo $active_tab === 'coupons' ? 'active' : ''; ?>" 
+                id="btn-tab-coupons"
+                onclick="switchProfileTab('coupons', this)">
+            🎁 คูปอง & รางวัลจากวงล้อ <span id="rewards-counter-badge" style="background: var(--primary-coral); color: #fff; font-size: 0.72rem; padding: 2px 7px; border-radius: 999px; margin-left: 4px; display: inline-block;">0</span>
+        </button>
+        <button type="button" 
                 class="cat-filter-btn <?php echo $active_tab === 'payment' ? 'active' : ''; ?>" 
+                id="btn-tab-payment"
                 onclick="switchProfileTab('payment', this)">
             💳 ข้อมูลการชำระเงิน & ที่อยู่จัดส่ง
         </button>
         <button type="button" 
                 class="cat-filter-btn <?php echo $active_tab === 'orders' ? 'active' : ''; ?>" 
+                id="btn-tab-orders"
                 onclick="switchProfileTab('orders', this)">
-            📦 ประวัติการสั่งซื้อ & แมวที่ชำระแล้ว (<?php echo count($user_orders); ?>)
+            📦 ประวัติการสั่งซื้อ & แมวที่ชำระแล้ว (<span id="orders-tab-count"><?php echo count($user_orders); ?></span>)
         </button>
         <button type="button" 
                 class="cat-filter-btn <?php echo $active_tab === 'points' ? 'active' : ''; ?>" 
+                id="btn-tab-points"
                 onclick="switchProfileTab('points', this)">
-            🎁 สะสมแต้ม Paw Points & Tiers
+            🐾 สะสมแต้ม Paw Points & Tiers
         </button>
         <button type="button" 
                 class="cat-filter-btn <?php echo $active_tab === 'inbox' ? 'active' : ''; ?>" 
+                id="btn-tab-inbox"
                 onclick="switchProfileTab('inbox', this)">
             📬 กล่องจดหมาย & ข่าวสารร้านค้า (<?php echo count($user_messages); ?>)
         </button>
@@ -1044,6 +1075,201 @@ require_once __DIR__ . '/header.php';
             <?php endif; ?>
         </div>
     </div>
+
+    <!-- =========================================================
+         TAB 6: คูปองส่วนลด & รางวัลจากวงล้อนำโชค (Lucky Wheel & Coupons)
+         ========================================================= -->
+    <div id="tab-coupons" class="profile-tab-panel" style="<?php echo $active_tab === 'coupons' ? 'display: block;' : 'display: none;'; ?>">
+        <div class="checkout-block">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                <div>
+                    <h3 class="checkout-block-title" style="margin-bottom: 0.3rem;">
+                        🎁 คูปอง & ของรางวัลของคุณ (My Coupons & Lucky Rewards)
+                    </h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">
+                        รวบรวมของรางวัลที่ได้จากการหมุนวงล้อนำโชค และโค้ดส่วนลดสิทธิพิเศษสำหรับสมาชิก Purrfect Shop
+                    </p>
+                </div>
+                <a href="lucky_wheel.php" class="btn btn-primary btn-sm" id="coupons-wheel-link" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700;">
+                    🎡 ไปหมุนวงล้อรับรางวัลฟรี (3 ครั้ง/วัน) ➔
+                </a>
+            </div>
+
+            <!-- ส่วนที่ 1: รางวัลที่ได้รับจากวงล้อนำโชค (Dynamic จาก LocalStorage) -->
+            <div style="margin-bottom: 2.5rem;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 1rem;">
+                    <span style="font-size: 1.3rem;">🎡</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin: 0;">
+                        ของรางวัลที่สุ่มได้จากวงล้อนำโชค (Lucky Wheel Rewards)
+                    </h4>
+                    <span id="lucky-count-pill" style="background: var(--accent-mint); color: #065F46; font-size: 0.75rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">0 รายการ</span>
+                </div>
+
+                <div id="lucky-rewards-container">
+                    <!-- Default Empty State -->
+                    <div id="lucky-rewards-empty" style="background: var(--bg-card-subtle); border: 2px dashed var(--border-color); border-radius: var(--radius-md); padding: 2.5rem 1.5rem; text-align: center; color: var(--text-muted);">
+                        <div style="font-size: 3rem; margin-bottom: 0.6rem;">🎯</div>
+                        <h5 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">ยังไม่มีรายการของรางวัลจากวงล้อ</h5>
+                        <p style="font-size: 0.88rem; max-width: 500px; margin: 0 auto 1.2rem auto;">
+                            คุณมีสิทธิ์หมุนวงล้อนำโชคฟรีวันละ 3 ครั้ง เพื่อลุ้นรับส่วนลดสูงสุด 25%, ขนมฟรีซดราย, ชุด Starter Kit และ Paw Points!
+                        </p>
+                        <a href="lucky_wheel.php" class="btn btn-primary" id="coupons-wheel-empty-link" style="display: inline-flex; align-items: center; gap: 6px;">
+                            🎡 หมุนวงล้อนำโชคเลย (ฟรี 3 ครั้ง/วัน) ➔
+                        </a>
+                    </div>
+                    <!-- Dynamic Grid for Won Prizes -->
+                    <div id="lucky-rewards-grid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;"></div>
+                </div>
+            </div>
+
+            <!-- ส่วนที่ 2: คูปองส่วนลดและสิทธิพิเศษทั้งหมดของร้าน (All Active Store Coupons) -->
+            <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 1rem;">
+                    <span style="font-size: 1.3rem;">🎫</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin: 0;">
+                        คูปองส่วนลดประจำร้าน & สิทธิ์สมาชิก (Active Store Coupons)
+                    </h4>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem;">
+                    <!-- Coupon 1: PURR25NEW -->
+                    <div style="background: linear-gradient(135deg, rgba(255, 107, 74, 0.06) 0%, rgba(255, 140, 66, 0.12) 100%); border: 1.5px dashed var(--primary-coral); border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <span style="position: absolute; top: 12px; right: 12px; background: #FF5A5F; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">HOT DEAL</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.8rem;">🎉</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">ส่วนลดต้อนรับสมาชิก 25%</h5>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">ใช้ได้กับการรับเลี้ยงน้องแมวทุกตัว</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+                                ลดทันที 25% สำหรับการสั่งจองและรับเลี้ยงน้องแมวทุกสายพันธุ์ ไม่มียอดขั้นต่ำ
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสคูปอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: var(--primary-coral); letter-spacing: 1px;">PURR25NEW</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('PURR25NEW', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                                <a href="cart.php?apply_coupon=PURR25NEW" class="btn btn-primary btn-sm coupon-apply-btn" data-code="PURR25NEW" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coupon 2: CAT10OFF -->
+                    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.06) 0%, rgba(37, 99, 235, 0.12) 100%); border: 1.5px dashed #3B82F6; border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <span style="position: absolute; top: 12px; right: 12px; background: #3B82F6; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">FLASH 10%</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.8rem;">⚡</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">Flash Deal ลด 10%</h5>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">ลดทันทีทุกยอดคำสั่งซื้อ</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+                                รับส่วนลด 10% สำหรับการสั่งซื้อน้องแมวและแพ็กเกจดูแลสุขภาพครบวงจร
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสคูปอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: #2563EB; letter-spacing: 1px;">CAT10OFF</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('CAT10OFF', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                                <a href="cart.php?apply_coupon=CAT10OFF" class="btn btn-primary btn-sm coupon-apply-btn" data-code="CAT10OFF" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coupon 3: WELCOME5 -->
+                    <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(5, 150, 105, 0.12) 100%); border: 1.5px dashed #10B981; border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <span style="position: absolute; top: 12px; right: 12px; background: #10B981; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">VIP 5%</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.8rem;">🌟</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">ส่วนลดสมาชิกถาวร 5%</h5>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">สิทธิ์สำหรับสมาชิกทุกคน</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+                                สิทธิพิเศษเฉพาะสมาชิก Purrfect Shop ใช้ลดเพิ่มได้ทุกออเดอร์ไม่มีวันหมดอายุ
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสคูปอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: #059669; letter-spacing: 1px;">WELCOME5</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('WELCOME5', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                                <a href="cart.php?apply_coupon=WELCOME5" class="btn btn-primary btn-sm coupon-apply-btn" data-code="WELCOME5" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coupon 4: KITFREE100 -->
+                    <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.06) 0%, rgba(217, 119, 6, 0.12) 100%); border: 1.5px dashed #F59E0B; border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <span style="position: absolute; top: 12px; right: 12px; background: #F59E0B; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">STARTER SET</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.8rem;">📦</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">รับฟรี Purrfect Starter Kit</h5>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">มูลค่ารวม 2,500 บาท</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+                                รับฟรีเซ็ตของใช้น้องแมวแรกเกิด ชามอาหาร กระบะทรายพรีเมียม และของเล่นเสริมทักษะ
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสคูปอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: #D97706; letter-spacing: 1px;">KITFREE100</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('KITFREE100', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                                <a href="cart.php?apply_coupon=KITFREE100" class="btn btn-primary btn-sm coupon-apply-btn" data-code="KITFREE100" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coupon 5: FREESHIP -->
+                    <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.06) 0%, rgba(124, 58, 237, 0.12) 100%); border: 1.5px dashed #8B5CF6; border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <span style="position: absolute; top: 12px; right: 12px; background: #8B5CF6; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">FREE TAXI</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.8rem;">🚚</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">ฟรี ค่าส่ง VIP Pet Taxi</h5>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">รถตู้ปรับอากาศส่งถึงบ้าน</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+                                บริการส่งมอบน้องแมวถึงหน้าบ้านด้วยรถตู้ควบคุมอุณหภูมิและพี่เลี้ยงดูแลตลอดทาง
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสคูปอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: #7C3AED; letter-spacing: 1px;">FREESHIP</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('FREESHIP', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                                <a href="cart.php?apply_coupon=FREESHIP" class="btn btn-primary btn-sm coupon-apply-btn" data-code="FREESHIP" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -1057,11 +1283,151 @@ function switchProfileTab(tabName, btnElement) {
 
     // Update active button state
     document.querySelectorAll('.cat-filter-btn').forEach(b => b.classList.remove('active'));
-    if (btnElement) btnElement.classList.add('active');
+    
+    if (btnElement) {
+        btnElement.classList.add('active');
+    } else {
+        const btn = document.getElementById('btn-tab-' + tabName);
+        if (btn) btn.classList.add('active');
+    }
 
-    // Update URL hash/query without reload
-    window.history.replaceState(null, null, 'profile.php?tab=' + tabName);
+    // Update URL query string without reload
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    const base = isStatic ? 'profile.html' : 'profile.php';
+    window.history.replaceState(null, null, base + '?tab=' + tabName);
 }
+
+function copyCouponCode(code, btn) {
+    navigator.clipboard.writeText(code).then(() => {
+        const origText = btn.innerHTML;
+        btn.innerHTML = 'คัดลอกแล้ว! ✓';
+        btn.style.background = '#10B981';
+        btn.style.color = '#FFFFFF';
+        btn.style.borderColor = '#10B981';
+        setTimeout(() => {
+            btn.innerHTML = origText;
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+        }, 2000);
+    }).catch(() => {
+        alert('คูปองของคุณคือ: ' + code);
+    });
+}
+
+// Client-side hydration for Profile & Lucky Wheel Rewards
+document.addEventListener('DOMContentLoaded', () => {
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    
+    // Adjust links if static
+    if (isStatic) {
+        const wheelLink = document.getElementById('coupons-wheel-link');
+        if (wheelLink) wheelLink.href = 'lucky_wheel.html';
+        const wheelEmptyLink = document.getElementById('coupons-wheel-empty-link');
+        if (wheelEmptyLink) wheelEmptyLink.href = 'lucky_wheel.html';
+        document.querySelectorAll('.coupon-apply-btn').forEach(btn => {
+            const code = btn.getAttribute('data-code');
+            if (code) btn.href = 'cart.html?apply_coupon=' + encodeURIComponent(code);
+        });
+    }
+
+    // 1. Sync User Profile from LocalStorage
+    try {
+        const loggedUser = JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        if (loggedUser) {
+            if (loggedUser.fullname) {
+                const fn = document.getElementById('profile-fullname-text');
+                if (fn) fn.textContent = loggedUser.fullname;
+            }
+            if (loggedUser.username) {
+                const un = document.getElementById('profile-username-text');
+                if (un) un.textContent = loggedUser.username;
+            }
+            if (loggedUser.email) {
+                const em = document.getElementById('profile-email-text');
+                if (em) em.textContent = loggedUser.email;
+            }
+            if (loggedUser.phone) {
+                const ph = document.getElementById('profile-phone-text');
+                if (ph) ph.textContent = loggedUser.phone;
+            }
+            if (loggedUser.avatar) {
+                const av = document.getElementById('header-avatar-preview');
+                if (av) av.src = loggedUser.avatar;
+            }
+            if (loggedUser.paw_points !== undefined) {
+                const pt = document.getElementById('profile-points-text');
+                if (pt) pt.textContent = Number(loggedUser.paw_points).toLocaleString();
+            }
+        }
+    } catch(e) {}
+
+    // 2. Sync Lucky Wheel Rewards from LocalStorage
+    try {
+        const rewards = JSON.parse(localStorage.getItem('cat_shop_my_rewards') || '[]');
+        const badge = document.getElementById('rewards-counter-badge');
+        const countPill = document.getElementById('lucky-count-pill');
+        const emptyBox = document.getElementById('lucky-rewards-empty');
+        const gridBox = document.getElementById('lucky-rewards-grid');
+
+        if (badge) badge.textContent = rewards.length;
+        if (countPill) countPill.textContent = rewards.length + ' รายการ';
+
+        if (rewards && rewards.length > 0 && gridBox && emptyBox) {
+            emptyBox.style.display = 'none';
+            gridBox.style.display = 'grid';
+            gridBox.innerHTML = '';
+
+            rewards.forEach(rew => {
+                const card = document.createElement('div');
+                card.style.cssText = 'background: linear-gradient(135deg, rgba(254, 243, 199, 0.5) 0%, rgba(253, 230, 138, 0.4) 100%); border: 1.5px solid #F59E0B; border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm); position: relative;';
+                
+                const cartHref = isStatic 
+                    ? 'cart.html?apply_coupon=' + encodeURIComponent(rew.code || '')
+                    : 'cart.php?apply_coupon=' + encodeURIComponent(rew.code || '');
+
+                card.innerHTML = `
+                    <div>
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 0.6rem;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 2rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">${rew.icon || '🎁'}</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">${rew.title}</h5>
+                                    <span style="font-size: 0.72rem; color: #B45309; font-weight: 700;">🎡 รางวัลจากวงล้อนำโชค</span>
+                                </div>
+                            </div>
+                            <span style="background: #D97706; color: #FFFFFF; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 999px; white-space: nowrap;">WON</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem; line-height: 1.4;">
+                            ${rew.desc}
+                        </p>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+                            🕒 ได้รับเมื่อ: ${rew.date_formatted || new Date(rew.date).toLocaleDateString('th-TH')}
+                        </div>
+                    </div>
+                    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                        <div>
+                            <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสรับสิทธิ์:</span>
+                            <strong style="font-family: 'Outfit'; font-size: 1.05rem; color: #D97706; letter-spacing: 0.8px;">${rew.code || 'LUCKYPRIZE'}</strong>
+                        </div>
+                        <div style="display: flex; gap: 6px;">
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('${rew.code || ''}', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                            <a href="${cartHref}" class="btn btn-primary btn-sm" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                        </div>
+                    </div>
+                `;
+                gridBox.appendChild(card);
+            });
+        }
+    } catch(e) {}
+
+    // 3. Handle initial tab selection from URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialTab = urlParams.get('tab');
+    if (initialTab && document.getElementById('tab-' + initialTab)) {
+        switchProfileTab(initialTab, document.getElementById('btn-tab-' + initialTab));
+    }
+});
 </script>
 
 <?php 

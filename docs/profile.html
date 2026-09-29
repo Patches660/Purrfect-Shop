@@ -1,0 +1,2443 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purrfect Shop - เพราะทุกบ้านควรมีเจ้าเหมียว 🐾</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+    <!-- Google Analytics 4 (GA4) Simulation Script -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PURRFECTCAT88"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PURRFECTCAT88', {
+            'page_title': document.title,
+            'transport_type': 'beacon'
+        });
+    </script>
+
+    <!-- Meta Pixel (Facebook Pixel) Simulation Script -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '123456789012345');
+        fbq('track', 'PageView');
+    </script>
+
+    <style>
+        /* Nav Dropdown Menu Styles */
+        .nav-dropdown-wrapper {
+            position: relative;
+        }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+            padding: 0.6rem;
+            min-width: 280px;
+            list-style: none;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .nav-dropdown-wrapper:hover .nav-dropdown-menu,
+        .nav-dropdown-wrapper:focus-within .nav-dropdown-menu {
+            display: flex;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.65rem 0.85rem;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+        .nav-dropdown-menu li a:hover,
+        .nav-dropdown-menu li a.active {
+            background: rgba(255, 107, 74, 0.1);
+            color: var(--primary-coral);
+            transform: translateX(3px);
+        }
+        .nav-dd-icon {
+            font-size: 1.35rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .nav-dd-title {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .nav-dd-sub {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <!-- 1. Top Utility Bar: Announcements, Theme Switcher, Admin Console & User Profile -->
+        <div class="top-utility-bar">
+            <div class="top-utility-container">
+                <div class="top-utility-left">
+                    <span class="top-badge-pill">🐾 Purrfect Cattery & Boutique</span>
+                    <span class="top-utility-tagline">ฟาร์มเพาะพันธุ์น้องแมวสายพันธุ์แท้มาตรฐานสากล • การันตีสุขภาพ 180 วัน</span>
+                </div>
+                
+                <div class="top-utility-right">
+                    <!-- Theme Loop Switcher Button -->
+                    <button type="button" class="theme-loop-btn" onclick="cycleTheme()" title="กดเพื่อสลับสีพื้นหลังแบบวนลูป (Loop)">
+                        🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
+                    </button>
+
+                    <!-- Admin Console Shortcut (Only visible for Admins) -->
+                    
+                    <!-- User Account / Profile Badge & Paw Points -->
+                                            <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                            <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
+                            <a href="subscribe.html" class="btn btn-sm " style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="รับข้อมูลข่าวสารโดยยังไม่ต้องสมัครสมาชิก">
+                                📬 รับข้อมูลข่าวสาร
+                            </a>
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.85rem; font-size: 0.82rem;">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.9rem; font-size: 0.82rem;">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+
+        <!-- 2. Main Branding & Primary Navigation Bar -->
+        <div class="main-nav-bar">
+            <div class="nav-container">
+                <a href="index.html" class="site-logo">
+                    <img src="assets/images/logo.png" alt="Purrfect Shop Logo" class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-title">Purrfect Shop</span>
+                        <span class="logo-subtitle">Cattery & Boutique</span>
+                    </div>
+                </a>
+
+                <!-- 3-Line Hamburger Menu Button (Mobile & Tablet) -->
+                <button type="button" class="mobile-menu-toggle-btn" id="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="เปิดเมนูการนำทางและหมวดหมู่" title="เปิดเมนู ☰">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+                
+                <nav>
+                    <ul class="nav-menu">
+                        <li>
+                            <a href="index.html" class="nav-link ">
+                                🏠 หน้าแรก
+                            </a>
+                        </li>
+                        <li>
+                            <a href="products.html" class="nav-link ">
+                                🐱 น้องแมวทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="recommend.html" class="nav-link ">
+                                🌟 แนะนำสำหรับคุณ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="welcome_deal.html" class="nav-link " style="position: relative;">
+                                🎁 ดีลสมาชิกใหม่
+                                <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
+                            </a>
+                        </li>
+                        <!-- 5 New Features + Services Dropdown Menu -->
+                        <li class="nav-dropdown-wrapper" style="position: relative;">
+                            <a href="#" class="nav-link nav-dropdown-trigger " style="display: inline-flex; align-items: center; gap: 4px;">
+                                ✨ บริการ & กิจกรรม ▾
+                            </a>
+                            <ul class="nav-dropdown-menu">
+                                <li>
+                                    <a href="reviews.html" class="">
+                                        <span class="nav-dd-icon">⭐</span>
+                                        <div>
+                                            <strong class="nav-dd-title">รีวิวน้องแมว & ย้ายบ้าน</strong>
+                                            <small class="nav-dd-sub">ภาพความประทับใจจากลูกค้าจริง</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="booking.html" class="">
+                                        <span class="nav-dd-icon">📅</span>
+                                        <div>
+                                            <strong class="nav-dd-title">จองคิวนัดดูตัว / Video Call</strong>
+                                            <small class="nav-dd-sub">เยี่ยมชมฟาร์ม & นัดดูสดผ่าน LINE</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pedigree.html" class="">
+                                        <span class="nav-dd-icon">🩺</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ตรวจสอบใบเพ็ด & วัคซีน</strong>
+                                            <small class="nav-dd-sub">เช็คเลขไมโครชิป & ประวัติสุขภาพ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="calculator.html" class="">
+                                        <span class="nav-dd-icon">🧮</span>
+                                        <div>
+                                            <strong class="nav-dd-title">คำนวณค่าเลี้ยงดูน้องแมว</strong>
+                                            <small class="nav-dd-sub">วางแผนงบประมาณรายเดือน/ตลอดชีพ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="lucky_wheel.html" class="">
+                                        <span class="nav-dd-icon">🎡</span>
+                                        <div>
+                                            <strong class="nav-dd-title">วงล้อเสี่ยงโชค Paw Spin</strong>
+                                            <small class="nav-dd-sub">หมุนฟรีลุ้นรับคูปองลด 25%</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li style="border-top: 1px dashed var(--border-color); margin-top: 4px; padding-top: 4px;">
+                                    <a href="tracking.html" class="">
+                                        <span class="nav-dd-icon">📍</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ติดตามการจัดส่ง</strong>
+                                            <small class="nav-dd-sub">ตรวจสอบสถานะการขนส่งสด 4 ขั้นตอน</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="creator.html" class="">
+                                        <span class="nav-dd-icon">👨‍💻</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ข้อมูลผู้จัดทำ</strong>
+                                            <small class="nav-dd-sub">ประวัติ & ข้อมูลโครงงาน</small>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="cart-badge-container">
+                            <a href="cart.html" class="nav-link nav-cart-btn ">
+                                🛒 ตะกร้า
+                                                                <span class="cart-badge" id="cart-badge-val" style="display: none;">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================================
+         MOBILE NAVIGATION DRAWER (OFF-CANVAS SLIDING MENU)
+         ========================================================= -->
+    <!-- Drawer Backdrop -->
+    <div id="mobile-drawer-backdrop" class="mobile-drawer-backdrop" onclick="closeMobileDrawer()"></div>
+
+    <!-- Mobile Drawer Content -->
+    <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="เมนูหลักสำหรับมือถือ">
+        <div class="drawer-header">
+            <div class="drawer-branding">
+                <img src="assets/images/logo.png" alt="Logo" class="drawer-logo-img">
+                <div>
+                    <strong class="drawer-title">Purrfect Shop</strong>
+                    <span class="drawer-subtitle">เมนูด่วน & หมวดหมู่บริการ</span>
+                </div>
+            </div>
+            <button type="button" class="drawer-close-btn" onclick="closeMobileDrawer()" aria-label="ปิดเมนู">✕</button>
+        </div>
+
+        <div class="drawer-body">
+            <!-- หมวดที่ 1: บัญชีผู้ใช้ & การตั้งค่า -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>⚙️ หมวดที่ 1: บัญชีผู้ใช้ & การตั้งค่า</span>
+                </div>
+                <div class="drawer-grid">
+                    <!-- Theme Loop Switcher -->
+                    <button type="button" class="drawer-action-btn theme-drawer-btn" onclick="cycleTheme(); updateDrawerThemeName();" title="กดเพื่อสลับธีมสี">
+                        <span class="drawer-btn-icon">🎨</span>
+                        <span class="drawer-btn-label">ธีม: <strong id="drawer-theme-current-name">อบอุ่น คอรัล</strong></span>
+                        <span class="drawer-btn-badge">🔄 สลับสี</span>
+                    </button>
+
+                    <!-- User Profile / Login / Register -->
+                                            <a href="subscribe.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                            <span class="drawer-link-icon">📬</span>
+                            <div class="drawer-link-info">
+                                <span class="drawer-link-title">รับข้อมูลข่าวสาร</span>
+                                <span class="drawer-link-sub">รับสิทธิ์โปรโมชัน & ข่าวกิจกรรม</span>
+                            </div>
+                        </a>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="text-align: center; justify-content: center; font-size: 0.85rem; padding: 0.5rem;" onclick="closeMobileDrawer()">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="text-align: center; justify-content: center; font-size: 0.85rem; padding: 0.5rem;" onclick="closeMobileDrawer()">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                    
+                    <a href="index.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🏠</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">หน้าแรก (Home)</span>
+                            <span class="drawer-link-sub">ศูนย์รวมน้องแมว & โปรโมชันเด่น</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- หมวดที่ 2: เมนูหลัก & บริการร้านค้า -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>🐱 หมวดที่ 2: เมนูบริการ & เลือกชมน้องแมว</span>
+                </div>
+                <div class="drawer-grid">
+                    <a href="products.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🐱</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">น้องแมวทั้งหมด</span>
+                            <span class="drawer-link-sub">สายพันธุ์แท้ 100% พร้อมย้ายบ้าน</span>
+                        </div>
+                    </a>
+
+                    <a href="recommend.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🌟</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">แนะนำสำหรับคุณ</span>
+                            <span class="drawer-link-sub">ระบบค้นหาสายพันธุ์ตามไลฟ์สไตล์</span>
+                        </div>
+                    </a>
+
+                    <a href="welcome_deal.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🎁</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ดีลสมาชิกใหม่</span>
+                            <span class="drawer-link-sub">คูปองส่วนลดพิเศษ & Starter Kit</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FF5A5F; color: #FFFFFF; font-weight: 800;">HOT</span>
+                    </a>
+
+                    <a href="cart.html" class="drawer-link-item " style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🛒</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
+                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
+                        </div>
+                                                <span class="drawer-badge-pill" id="drawer-cart-badge-val" style="display: none; background: var(--primary-coral); color: #FFFFFF; font-weight: 800;">0 ตัว</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- หมวดที่ 3: บริการ & ฟีเจอร์พิเศษสำหรับทาสแมว -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>✨ หมวดที่ 3: บริการ & ฟีเจอร์พิเศษสำหรับทาสแมว</span>
+                </div>
+                <div class="drawer-grid">
+                    <a href="reviews.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">⭐</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">รีวิวน้องแมว & ย้ายบ้าน</span>
+                            <span class="drawer-link-sub">ภาพความประทับใจจากลูกค้าจริง 100%</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FEF3C7; color: #92400E;">5.0 ★</span>
+                    </a>
+
+                    <a href="booking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">📅</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">จองคิวนัดดูตัว / Video Call</span>
+                            <span class="drawer-link-sub">นัดชมฟาร์ม & 1-on-1 LIVE Call</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #DCFCE7; color: #166534;">นัดสด</span>
+                    </a>
+
+                    <a href="pedigree.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🩺</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ตรวจสอบใบเพ็ด & สมุดวัคซีน</span>
+                            <span class="drawer-link-sub">ค้นหาด้วยเลข Microchip ทันที</span>
+                        </div>
+                    </a>
+
+                    <a href="calculator.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🧮</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">เครื่องคำนวณค่าเลี้ยงดู</span>
+                            <span class="drawer-link-sub">คำนวณงบประมาณ รายเดือน/15 ปี</span>
+                        </div>
+                    </a>
+
+                    <a href="lucky_wheel.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🎡</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">วงล้อเสี่ยงโชค Paw Spin</span>
+                            <span class="drawer-link-sub">หมุนฟรีรับส่วนลด 25% & ของแถม</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FEE2E2; color: #991B1B;">หมุนฟรี!</span>
+                    </a>
+
+                    <a href="tracking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">📍</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ติดตามการจัดส่ง</span>
+                            <span class="drawer-link-sub">ระบบติดตามสถานะสด 4 ขั้นตอน</span>
+                        </div>
+                    </a>
+
+                    <a href="creator.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">👨‍💻</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ข้อมูลผู้จัดทำ</span>
+                            <span class="drawer-link-sub">ประวัติ & ข้อมูลโครงงาน</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <script>
+    function toggleMobileDrawer() {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (!drawer || !backdrop) return;
+        
+        const isOpen = drawer.classList.contains('open');
+        if (isOpen) {
+            closeMobileDrawer();
+        } else {
+            drawer.classList.add('open');
+            backdrop.classList.add('open');
+            if (btn) btn.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            updateDrawerThemeName();
+        }
+    }
+
+    function closeMobileDrawer() {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (drawer) drawer.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('open');
+        if (btn) btn.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function updateDrawerThemeName() {
+        const currentNameEl = document.getElementById('theme-current-name');
+        const drawerThemeEl = document.getElementById('drawer-theme-current-name');
+        if (currentNameEl && drawerThemeEl) {
+            drawerThemeEl.textContent = currentNameEl.textContent;
+        }
+    }
+
+    // Sync theme label on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+        updateDrawerThemeName();
+    });
+    </script>
+
+    <script>
+    window.trackPurrfectBehavior = function(type, target, category) {
+        try {
+            const formData = new FormData();
+            formData.append('action', 'track');
+            formData.append('event_type', type);
+            formData.append('target', target);
+            formData.append('category', category || 'general');
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon('api_analytics.php', formData);
+            } else {
+                fetch('api_analytics.php', { method: 'POST', body: formData });
+            }
+        } catch (e) {}
+    };
+    </script>
+    <main>
+                
+<!-- Section Header -->
+<div class="section-header" style="margin-bottom: 2rem;">
+    <span class="section-tag">⚙️ MEMBER DASHBOARD</span>
+    <h1 class="section-title">จัดการโปรไฟล์ & ประวัติการรับเลี้ยง</h1>
+    <p class="section-subtitle">ตั้งค่าข้อมูลส่วนตัว รูปโปรไฟล์ ข้อมูลการชำระเงิน และตรวจสอบรายการรับเลี้ยงน้องแมวของคุณ</p>
+</div>
+
+
+
+<div style="max-width: 1050px; margin: 0 auto 4rem auto;">
+    <!-- Profile Overview Card -->
+    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-md); margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div style="position: relative;">
+                <img src="assets/images/logo.png" 
+                     alt="Profile Avatar" 
+                     id="header-avatar-preview"
+                     style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 4px solid var(--primary-coral); box-shadow: var(--shadow-coral);">
+                <span style="position: absolute; bottom: 2px; right: 2px; background: var(--accent-mint); width: 18px; height: 18px; border-radius: 50%; border: 3px solid #FFFFFF;" title="ออนไลน์"></span>
+            </div>
+            <div>
+                <h2 id="profile-fullname-text" style="font-size: 1.6rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.2rem;">
+                    คุณรักแมว เหมียวเหมียว                </h2>
+                <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                    @<span id="profile-username-text">catlover</span> &bull; <span id="profile-email-text">member@purrfectshop.com</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <span style="background: var(--primary-coral-soft); color: var(--primary-coral); font-size: 0.78rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid rgba(255, 117, 86, 0.3);">
+                        🌟 สมาชิกทางการ (ส่วนลดพิเศษ 5%)
+                    </span>
+                    <span style="background: var(--accent-amber-soft); color: #B45309; font-size: 0.78rem; font-weight: 600; padding: 0.25rem 0.75rem; border-radius: 9999px;">
+                        📞 <span id="profile-phone-text">081-234-5678</span>
+                    </span>
+                    <span style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-size: 0.78rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 9999px;">
+                        🐾 <span id="profile-points-text">350</span> Paw Points
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Summary Counters -->
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.8rem 1.2rem; text-align: center; min-width: 110px;">
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">รับเลี้ยงน้องแมว</div>
+                <div style="font-size: 1.5rem; font-weight: 800; color: var(--primary-coral); font-family: 'Outfit';" id="profile-cats-count">
+                    1 ตัว
+                </div>
+            </div>
+            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.8rem 1.2rem; text-align: center; min-width: 120px;">
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">ยอดที่ชำระแล้ว</div>
+                <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent-mint); font-family: 'Outfit';" id="profile-spent-total">
+                    25,413 ฿
+                </div>
+            </div>
+            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 0.8rem 1.2rem; text-align: center; min-width: 100px;">
+                <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">คำสั่งจอง</div>
+                <div style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); font-family: 'Outfit';" id="profile-orders-count">
+                    1 ครั้ง
+                </div>
+            </div>
+
+            <!-- Logout Button -->
+            <a href="logout.php" 
+               class="btn btn-secondary" 
+               onclick="if(typeof clientLogout === 'function' && (window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php'))){ event.preventDefault(); clientLogout(); } else { return confirm('คุณต้องการออกจากระบบ Cat Shop ใช่หรือไม่?'); }" 
+               style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.3rem; border-color: rgba(239, 68, 68, 0.4); color: #EF4444; font-weight: 700; background: rgba(239, 68, 68, 0.06); border-radius: var(--radius-md); text-decoration: none;" 
+               title="กดเพื่อออกจากระบบ">
+                ออกจากระบบ 🚪
+            </a>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs for Profile -->
+    <div style="display: flex; gap: 0.6rem; margin-bottom: 1.8rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.8rem; flex-wrap: wrap;">
+        <button type="button" 
+                class="cat-filter-btn active" 
+                id="btn-tab-profile"
+                onclick="switchProfileTab('profile', this)">
+            👤 ข้อมูลส่วนตัว & รูปโปรไฟล์
+        </button>
+        <button type="button" 
+                class="cat-filter-btn " 
+                id="btn-tab-coupons"
+                onclick="switchProfileTab('coupons', this)">
+            🎁 คูปอง & รางวัลจากวงล้อ <span id="rewards-counter-badge" style="background: var(--primary-coral); color: #fff; font-size: 0.72rem; padding: 2px 7px; border-radius: 999px; margin-left: 4px; display: inline-block;">0</span>
+        </button>
+        <button type="button" 
+                class="cat-filter-btn " 
+                id="btn-tab-payment"
+                onclick="switchProfileTab('payment', this)">
+            💳 ข้อมูลการชำระเงิน & ที่อยู่จัดส่ง
+        </button>
+        <button type="button" 
+                class="cat-filter-btn " 
+                id="btn-tab-orders"
+                onclick="switchProfileTab('orders', this)">
+            📦 ประวัติการสั่งซื้อ & แมวที่ชำระแล้ว (<span id="orders-tab-count">1</span>)
+        </button>
+        <button type="button" 
+                class="cat-filter-btn " 
+                id="btn-tab-points"
+                onclick="switchProfileTab('points', this)">
+            🐾 สะสมแต้ม Paw Points & Tiers
+        </button>
+        <button type="button" 
+                class="cat-filter-btn " 
+                id="btn-tab-inbox"
+                onclick="switchProfileTab('inbox', this)">
+            📬 กล่องจดหมาย & ข่าวสารร้านค้า (3)
+        </button>
+        <a href="tracking.html" class="cat-filter-btn" style="text-decoration: none; color: var(--primary-coral); border-color: var(--primary-coral);">
+            📍 ติดตามการจัดส่งสด
+        </a>
+            </div>
+
+    <!-- =========================================================
+         TAB 1: ข้อมูลส่วนตัว & รูปโปรไฟล์
+         ========================================================= -->
+    <div id="tab-profile" class="profile-tab-panel" style="display: block;">
+        <div class="checkout-block">
+            <h3 class="checkout-block-title" style="margin-bottom: 1.4rem;">
+                👤 ตั้งค่าข้อมูลส่วนตัว & รูปโปรไฟล์
+            </h3>
+
+            <form method="POST" action="profile.html?tab=profile" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="update_profile">
+
+                <!-- Avatar Selection & Upload Section -->
+                <div style="background: var(--bg-card-subtle); border: 1px dashed var(--border-color); border-radius: var(--radius-md); padding: 1.4rem; margin-bottom: 1.8rem;">
+                    <label style="display: block; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem;">
+                        🖼️ เลือกรูปโปรไฟล์ของคุณ:
+                    </label>
+
+                    <!-- Avatar Presets -->
+                    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.2rem;">
+                                                                            <label style="cursor: pointer; text-align: center;">
+                                <input type="radio" name="selected_avatar" value="assets/images/logo.png" 
+                                       checked                                       onchange="document.getElementById('header-avatar-preview').src = this.value;"
+                                       style="display: none;">
+                                <img src="assets/images/logo.png" alt="โลโก้ร้าน" 
+                                     style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary-coral); transition: var(--transition); padding: 2px;"
+                                     class="preset-avatar-img">
+                                <span style="display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">โลโก้ร้าน</span>
+                            </label>
+                                                    <label style="cursor: pointer; text-align: center;">
+                                <input type="radio" name="selected_avatar" value="assets/images/cat_british.jpg" 
+                                                                              onchange="document.getElementById('header-avatar-preview').src = this.value;"
+                                       style="display: none;">
+                                <img src="assets/images/cat_british.jpg" alt="บริติช" 
+                                     style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border-color); transition: var(--transition); padding: 2px;"
+                                     class="preset-avatar-img">
+                                <span style="display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">บริติช</span>
+                            </label>
+                                                    <label style="cursor: pointer; text-align: center;">
+                                <input type="radio" name="selected_avatar" value="assets/images/cat_ragdoll.jpg" 
+                                                                              onchange="document.getElementById('header-avatar-preview').src = this.value;"
+                                       style="display: none;">
+                                <img src="assets/images/cat_ragdoll.jpg" alt="แร็กดอลล์" 
+                                     style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border-color); transition: var(--transition); padding: 2px;"
+                                     class="preset-avatar-img">
+                                <span style="display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">แร็กดอลล์</span>
+                            </label>
+                                                    <label style="cursor: pointer; text-align: center;">
+                                <input type="radio" name="selected_avatar" value="assets/images/cat_scottishfold.jpg" 
+                                                                              onchange="document.getElementById('header-avatar-preview').src = this.value;"
+                                       style="display: none;">
+                                <img src="assets/images/cat_scottishfold.jpg" alt="สก็อตติช" 
+                                     style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border-color); transition: var(--transition); padding: 2px;"
+                                     class="preset-avatar-img">
+                                <span style="display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">สก็อตติช</span>
+                            </label>
+                                                    <label style="cursor: pointer; text-align: center;">
+                                <input type="radio" name="selected_avatar" value="assets/images/cat_persian.jpg" 
+                                                                              onchange="document.getElementById('header-avatar-preview').src = this.value;"
+                                       style="display: none;">
+                                <img src="assets/images/cat_persian.jpg" alt="เปอร์เซีย" 
+                                     style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border-color); transition: var(--transition); padding: 2px;"
+                                     class="preset-avatar-img">
+                                <span style="display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">เปอร์เซีย</span>
+                            </label>
+                                                    <label style="cursor: pointer; text-align: center;">
+                                <input type="radio" name="selected_avatar" value="assets/images/cat_mainecoon.jpg" 
+                                                                              onchange="document.getElementById('header-avatar-preview').src = this.value;"
+                                       style="display: none;">
+                                <img src="assets/images/cat_mainecoon.jpg" alt="เมนคูน" 
+                                     style="width: 55px; height: 55px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border-color); transition: var(--transition); padding: 2px;"
+                                     class="preset-avatar-img">
+                                <span style="display: block; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">เมนคูน</span>
+                            </label>
+                                            </div>
+
+                    <!-- Custom Image Upload -->
+                    <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                        <span style="font-size: 0.85rem; color: var(--text-muted);">หรืออัปโหลดรูปของคุณเอง:</span>
+                        <input type="file" name="avatar_file" id="avatar_file" accept="image/*" class="form-control" style="width: auto; padding: 0.4rem 0.8rem; font-size: 0.82rem;">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="fullname">ชื่อ - นามสกุล *</label>
+                        <input type="text" name="fullname" id="fullname" class="form-control" 
+                               value="คุณรักแมว เหมียวเหมียว" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="username">ชื่อผู้ใช้งาน (Username)</label>
+                        <input type="text" id="username" class="form-control" 
+                               value="catlover" readonly 
+                               style="background: var(--bg-page); cursor: not-allowed;">
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="email">อีเมลสำหรับติดต่อ & รับใบเสร็จ *</label>
+                        <input type="email" name="email" id="email" class="form-control" 
+                               value="member@purrfectshop.com" required>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="phone">เบอร์โทรศัพท์สำหรับจัดส่งน้องแมว *</label>
+                        <input type="tel" name="phone" id="phone" class="form-control" 
+                               value="081-234-5678" required>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.8rem;">
+                    <label for="new_password">เปลี่ยนรหัสผ่านใหม่ (เว้นว่างไว้หากไม่ต้องการเปลี่ยน)</label>
+                    <input type="password" name="new_password" id="new_password" class="form-control" 
+                           placeholder="ระบุรหัสผ่านใหม่ 6 ตัวอักษรขึ้นไป (ถ้าต้องการเปลี่ยน)">
+                </div>
+
+                <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem;">
+                        💾 บันทึกการเปลี่ยนแปลงข้อมูลโปรไฟล์
+                    </button>
+                    <a href="logout.php" 
+                       class="btn btn-secondary" 
+                       onclick="return confirm('คุณต้องการออกจากระบบ Cat Shop ใช่หรือไม่?');" 
+                       style="color: #EF4444; border-color: rgba(239, 68, 68, 0.4); padding: 0.75rem 1.4rem;">
+                        ออกจากระบบ 🚪
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         TAB 2: ข้อมูลการชำระเงิน & ที่อยู่จัดส่ง
+         ========================================================= -->
+    <div id="tab-payment" class="profile-tab-panel" style="display: none;">
+        <div class="checkout-block">
+            <h3 class="checkout-block-title" style="margin-bottom: 0.4rem;">
+                💳 ข้อมูลที่ใช้ในการชำระเงิน & ที่อยู่จัดส่งประจำ
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.6rem;">
+                บันทึกบัญชีธนาคารและที่อยู่ประจำของคุณ เพื่อให้นำไปกรอกในหน้าชำระเงินตะกร้าสินค้าอัตโนมัติ ไม่ต้องกรอกซ้ำทุกครั้ง 🐾
+            </p>
+
+            <form method="POST" action="profile.html?tab=payment">
+                <input type="hidden" name="action" value="update_payment">
+
+                <!-- Bank Details -->
+                <div style="background: var(--bg-card-subtle); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); padding: 1.4rem; margin-bottom: 1.5rem;">
+                    <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-coral); margin-bottom: 1rem;">
+                        🏦 ข้อมูลบัญชีธนาคารของคุณสำหรับโอนเงิน
+                    </h4>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1rem;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="bank_name">ธนาคารที่ใช้ประจำ</label>
+                                                        <select name="bank_name" id="bank_name" class="form-control">
+                                <option value="ธนาคารกสิกรไทย (KBANK)" >ธนาคารกสิกรไทย (KBANK)</option>
+                                <option value="ธนาคารไทยพาณิชย์ (SCB)" >ธนาคารไทยพาณิชย์ (SCB)</option>
+                                <option value="ธนาคารกรุงเทพ (BBL)" >ธนาคารกรุงเทพ (BBL)</option>
+                                <option value="ธนาคารกรุงไทย (KTB)" >ธนาคารกรุงไทย (KTB)</option>
+                                <option value="ธนาคารทหารไทยธนชาต (TTB)" >ธนาคารทหารไทยธนชาต (TTB)</option>
+                                <option value="พร้อมเพย์ / PromptPay" >พร้อมเพย์ / PromptPay</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="bank_account">เลขที่บัญชีของคุณ</label>
+                            <input type="text" name="bank_account" id="bank_account" class="form-control" 
+                                   placeholder="เช่น 123-4-56789-0 หรือ 0812345678" 
+                                   value="123-4-56789-0">
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="bank_account_name">ชื่อบัญชี (Account Name)</label>
+                        <input type="text" name="bank_account_name" id="bank_account_name" class="form-control" 
+                               placeholder="เช่น นายกิตติพงษ์ รักแมว" 
+                               value="คุณรักแมว เหมียวเหมียว">
+                    </div>
+                </div>
+
+                <!-- Default Delivery Address -->
+                <div class="form-group" style="margin-bottom: 1.8rem;">
+                    <label for="delivery_address">🏠 ที่อยู่สำหรับจัดส่งน้องแมวประจำ</label>
+                    <textarea name="delivery_address" id="delivery_address" class="form-control" rows="3" 
+                              placeholder="เช่น 123/45 หมู่บ้านสุขใจ ซอยอารีย์ ถนนพหลโยธิน แขวงสามเสนใน เขตพญาไท กรุงเทพฯ 10400">99/9 หมู่บ้านแมวน่ารัก ซอย 5 แขวงบางแคเหนือ เขตบางแค กรุงเทพมหานคร 10160</textarea>
+                    <small style="color: var(--text-muted); display: block; margin-top: 0.3rem;">
+                        💡 ที่อยู่นี้จะถูกกรอกลงในหน้าตะกร้าสินค้าอัตโนมัติ สามารถเปลี่ยนแปลงในแต่ละออเดอร์ได้
+                    </small>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="padding: 0.75rem 2rem;">
+                    💾 บันทึกข้อมูลการชำระเงิน & ที่อยู่จัดส่ง
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         TAB 3: รายการที่ทำการสั่งซื้อ & แมวที่ชำระแล้ว
+         ========================================================= -->
+    <div id="tab-orders" class="profile-tab-panel" style="display: none;">
+        <div class="checkout-block">
+            <div class="checkout-block-header">
+                <h3 class="checkout-block-title">
+                    <span>📦 รายการคำสั่งซื้อ & น้องแมวที่ชำระเงินแล้ว</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">(พบ 1 รายการ)</span>
+                </h3>
+                <a href="cart.html" class="btn btn-secondary btn-sm">
+                    ดูตะกร้าปัจจุบัน 🛒
+                </a>
+            </div>
+
+                            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition);">
+                            <!-- Order Header -->
+                            <div style="background: var(--bg-card-subtle); padding: 1rem 1.4rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+                                <div>
+                                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">รหัสคำสั่งจอง:</span>
+                                    <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: var(--primary-coral);">
+                                        PFC-260901-7A2B                                    </strong>
+                                </div>
+                                <div>
+                                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">วันที่ทำรายการ:</span>
+                                    <span style="font-size: 0.88rem; font-weight: 600; color: var(--text-main);">
+                                        2026-09-01 14:30:00 น.
+                                    </span>
+                                </div>
+                                <div>
+                                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">สถานะ:</span>
+                                    <span style="background: var(--accent-mint-soft); color: #065F46; padding: 0.2rem 0.7rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.3);">
+                                        ✓ จัดส่งน้องแมวสำเร็จเรียบร้อยแล้ว (Delivered)                                    </span>
+                                </div>
+                                <div>
+                                    <div style="display: flex; gap: 6px;">
+                                        <a href="tracking.html?track=PFC-260901-7A2B" 
+                                           class="btn btn-primary btn-sm" 
+                                           style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;" 
+                                           title="ติดตามสถานะการส่งมอบสัตว์เลี้ยงแบบเรียลไทม์">
+                                            📍 ติดตามส่งมอบ
+                                        </a>
+                                        <a href="order_letter.html?id=PFC-260901-7A2B" target="_blank" 
+                                           class="btn btn-secondary btn-sm" 
+                                           style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 700; color: #92400E; background: #FEF3C7; border-color: #FCD34D; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;" 
+                                           title="เปิดดูจดหมายตอบรับและใบรับประกันอย่างเป็นทางการ">
+                                            📜 จดหมายตอบรับ
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Order Body: List of Cats -->
+                            <div style="padding: 1.2rem 1.4rem;">
+                                <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem;">
+                                    น้องแมวในรายการนี้ (จำนวน: 1 ตัว)
+                                </div>
+
+                                <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                                                                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem 0; border-bottom: 1px dashed var(--border-color);">
+                                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                                <img src="assets/images/cat_british.jpg" alt="น้องมิลค์กี้ (British Shorthair)" 
+                                                     style="width: 55px; height: 55px; border-radius: 8px; object-fit: cover; border: 1.5px solid var(--border-color);">
+                                                <div>
+                                                    <strong style="color: var(--text-main); font-size: 0.95rem;">น้องมิลค์กี้ (British Shorthair)</strong>
+                                                    <div style="font-size: 0.8rem; color: var(--text-muted);">
+                                                        บริติช ช็อตแฮร์ (British Shorthair) &bull; เพศ: ผู้ (Male) (x1)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span style="font-weight: 700; color: var(--primary-coral); font-family: 'Outfit';">
+                                                25,000 ฿
+                                            </span>
+                                        </div>
+                                                                    </div>
+
+                                <!-- Order Footer: Payment & Total Amount -->
+                                <div style="margin-top: 1.2rem; padding-top: 1rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+                                    <div>
+                                        <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">ช่องทางชำระเงินที่ใช้:</span>
+                                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">
+                                            🏦 โอนเงินผ่านบัญชีธนาคาร                                        </span>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <span style="font-size: 0.82rem; color: var(--text-muted);">ยอดรวมสุทธิ:</span>
+                                        <span style="font-size: 1.3rem; font-weight: 800; color: var(--primary-coral); font-family: 'Outfit'; display: block;">
+                                            25,413 ฿
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                    </div>
+                    </div>
+    </div>
+
+    <!-- =========================================================
+         TAB 4: สะสมแต้ม Paw Points & ระดับสมาชิก (Loyalty & Tiers)
+         ========================================================= -->
+    
+    <div id="tab-points" class="profile-tab-panel" style="display: none;">
+        <div class="checkout-block">
+            <div class="checkout-block-header" style="margin-bottom: 1.5rem;">
+                <h3 class="checkout-block-title">
+                    <span>🎁 ระบบสะสมแต้ม Paw Points & ระดับสมาชิก (Loyalty Tiers)</span>
+                </h3>
+                <span class="badge" style="background: rgba(255,107,74,0.12); color: var(--primary-coral); font-weight: 700;">
+                    🐾 คลับคนรักแมว VIP
+                </span>
+            </div>
+
+            <!-- 1. Hero Summary Card -->
+            <div style="background: linear-gradient(135deg, #FF6B4A 0%, #FF8E72 50%, #FFA885 100%); color: #FFFFFF; border-radius: var(--radius-lg); padding: 2.2rem; box-shadow: 0 12px 30px rgba(255,107,74,0.3); margin-bottom: 2rem; position: relative; overflow: hidden;">
+                <!-- Decorative Paw watermark -->
+                <div style="position: absolute; right: -20px; bottom: -30px; font-size: 10rem; opacity: 0.12; user-select: none; pointer-events: none;">🐾</div>
+
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1.5rem; position: relative; z-index: 1;">
+                    <div>
+                        <span style="font-size: 0.82rem; font-weight: 800; background: rgba(255,255,255,0.25); padding: 4px 14px; border-radius: 999px; letter-spacing: 0.5px; text-transform: uppercase;">
+                            🐾 PURRFECT REWARDS CLUB
+                        </span>
+                        <h2 style="font-size: 2.6rem; font-weight: 900; margin: 0.7rem 0 0.2rem 0; font-family: 'Outfit'; letter-spacing: -0.5px;">
+                            350 <span style="font-size: 1.3rem; font-weight: 600;">Paw Points</span>
+                        </h2>
+                        <p style="margin: 0; font-size: 0.95rem; opacity: 0.95; line-height: 1.5;">
+                            มูลค่าเทียบเท่าส่วนลดเงินสด <strong>฿350 บาท</strong> (อัตรา 100 พอยท์ = 100 บาท)
+                        </p>
+                    </div>
+
+                    <!-- Current Tier Badge Box -->
+                    <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); padding: 1.2rem 1.6rem; border-radius: var(--radius-md); box-shadow: 0 6px 16px rgba(0,0,0,0.1); min-width: 220px; text-align: center;">
+                        <span style="font-size: 0.78rem; color: #64748B; font-weight: 700; display: block; margin-bottom: 4px;">ระดับสมาชิกปัจจุบันของคุณ:</span>
+                        <div style="font-size: 1.4rem; font-weight: 800; color: #B45309; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                            <span>🥉</span>
+                            <span>Bronze Paw</span>
+                        </div>
+                        <div style="font-size: 0.82rem; color: var(--primary-coral); font-weight: 700; margin-top: 4px; background: rgba(255,107,74,0.1); padding: 2px 8px; border-radius: 999px; display: inline-block;">
+                            สิทธิพิเศษ: ส่วนลด 5% ทุกรายการ
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Interactive Progress Tube (หลอดแต้มเลื่อนระดับ) -->
+            <div style="background: var(--bg-card); border: 2px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.8rem; margin-bottom: 2rem; box-shadow: var(--shadow-sm);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1rem;">
+                    <div>
+                        <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin: 0 0 4px 0; display: flex; align-items: center; gap: 6px;">
+                            <span>📊 หลอดแต้มสะสมเพื่อเลื่อนขั้นสู่ระดับถัดไป</span>
+                        </h4>
+                        <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+                                                            คุณมี <strong>350</strong> แต้ม • ขาดอีกเพียง <strong style="color: var(--primary-coral);">150 แต้ม</strong> จะได้เลื่อนขั้นสู่ <strong style="color: #92400E;">Silver Paw 🥈</strong>
+                                                    </p>
+                    </div>
+                    <div style="background: var(--primary-coral-soft); color: var(--primary-coral); font-weight: 800; font-size: 0.9rem; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,107,74,0.3);">
+                        ⚡ เป้าหมายถัดไป: 500 แต้ม (สำเร็จ 70%)
+                    </div>
+                </div>
+
+                <!-- The Visual Animated Progress Bar (หลอดแก้วแต้ม) -->
+                <div style="position: relative; margin: 1.8rem 0 2.6rem 0;">
+                    <!-- Outer Tube Track -->
+                    <div style="background: #E2E8F0; height: 26px; border-radius: 999px; overflow: hidden; position: relative; box-shadow: inset 0 2px 5px rgba(0,0,0,0.12); border: 2px solid #CBD5E1;">
+                        <!-- Inner Gradient Fill -->
+                        <div style="width: 7%; height: 100%; background: linear-gradient(90deg, #FF9E7A 0%, #FF6B4A 45%, #F59E0B 80%, #7C3AED 100%); border-radius: 999px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 12px rgba(255,107,74,0.6); position: relative;">
+                            <!-- Animated Light Shimmer -->
+                            <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); animation: shimmerBar 2.5s infinite;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Milestone Checkpoints along the tube -->
+                    <div style="display: flex; justify-content: space-between; position: absolute; top: -7px; left: 0; right: 0; pointer-events: none;">
+                        <!-- Node 1: Bronze (0) -->
+                        <div style="text-align: center; width: 40px; margin-left: -5px;">
+                            <div style="width: 38px; height: 38px; border-radius: 50%; background: #10B981; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid #FFFFFF; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                                🥉
+                            </div>
+                            <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Bronze</span>
+                            <span style="font-size: 0.68rem; color: var(--text-muted);">0 แต้ม</span>
+                        </div>
+
+                        <!-- Node 2: Silver (500) -->
+                        <div style="text-align: center; width: 50px;">
+                            <div style="width: 38px; height: 38px; border-radius: 50%; background: #FFFFFF; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid #CBD5E1; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                                🥈                            </div>
+                            <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Silver</span>
+                            <span style="font-size: 0.68rem; color: var(--text-muted);">500 แต้ม</span>
+                        </div>
+
+                        <!-- Node 3: Gold VIP (1,500) -->
+                        <div style="text-align: center; width: 60px;">
+                            <div style="width: 38px; height: 38px; border-radius: 50%; background: #FFFFFF; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid #CBD5E1; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                                🥇                            </div>
+                            <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Gold VIP</span>
+                            <span style="font-size: 0.68rem; color: var(--text-muted);">1,500 แต้ม</span>
+                        </div>
+
+                        <!-- Node 4: Diamond VIP (5,000) -->
+                        <div style="text-align: center; width: 70px; margin-right: -10px;">
+                            <div style="width: 38px; height: 38px; border-radius: 50%; background: #FFFFFF; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid #CBD5E1; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                                💎                            </div>
+                            <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Diamond</span>
+                            <span style="font-size: 0.68rem; color: var(--text-muted);">5,000 แต้ม</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--bg-card-subtle); border-radius: var(--radius-sm); padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 0.82rem; color: var(--text-secondary);">
+                    <span>💡 <strong>คำแนะนำ:</strong> ช้อปปิ้งน้องแมวหรือสินค้าทุก 100 บาท จะได้รับ 1 Paw Point ทันทีเพื่อขยับหลอดแต้ม</span>
+                    <a href="products.html" class="btn btn-primary btn-sm" style="padding: 4px 12px; font-size: 0.78rem;">
+                        🛒 ช้อปปิ้งเพื่อสะสมแต้ม
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Tiers Breakdown: สะสมเท่าไรถึงจะเลื่อนขั้น -->
+            <div style="margin-bottom: 2.5rem;">
+                <h4 style="font-size: 1.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                    <span>🏆 เกณฑ์คะแนนสะสม & สิทธิพิเศษของแต่ละระดับสมาชิก</span>
+                </h4>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem;">
+                    <!-- Tier 1: Bronze -->
+                    <div style="background: var(--bg-card); border: 2px solid #B45309; border-radius: var(--radius-md); padding: 1.5rem; position: relative; box-shadow: 0 6px 16px rgba(180,83,9,0.15);">
+                                                    <span style="position: absolute; top: 12px; right: 12px; background: #B45309; color: #FFF; font-size: 0.68rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;">✓ ระดับปัจจุบัน</span>
+                                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 2.2rem; line-height: 1;">🥉</span>
+                            <div>
+                                <h4 style="font-size: 1.15rem; font-weight: 800; color: #B45309; margin: 0;">Bronze Paw</h4>
+                                <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted);">สะสม 0 – 499 แต้ม</span>
+                            </div>
+                        </div>
+                        <div style="background: #FEF3C7; color: #92400E; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px;">
+                            ส่วนลด 5% ทุกรายการ
+                        </div>
+                        <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7;">
+                            <li>✓ สมัครสมาชิกใหม่ รับสิทธิ์ทันที</li>
+                            <li>✓ รับโค้ดส่วนลดต้อนรับ 15% (ใช้ครั้งแรก)</li>
+                            <li>✓ สะสมแต้ม: ทุก 100 บาท = 1 Paw Point</li>
+                            <li>✓ รับข่าวสาร & ดีลลับก่อนใคร</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tier 2: Silver -->
+                    <div style="background: var(--bg-card); border: 2px solid #E2E8F0; border-radius: var(--radius-md); padding: 1.5rem; position: relative; box-shadow: none;">
+                                                    <span style="position: absolute; top: 12px; right: 12px; background: #64748B; color: #FFF; font-size: 0.68rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;">🎯 เป้าหมายถัดไป</span>
+                                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 2.2rem; line-height: 1;">🥈</span>
+                            <div>
+                                <h4 style="font-size: 1.15rem; font-weight: 800; color: #475569; margin: 0;">Silver Paw</h4>
+                                <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted);">สะสม 500 – 1,499 แต้ม</span>
+                            </div>
+                        </div>
+                        <div style="background: #F1F5F9; color: #334155; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px;">
+                            ส่วนลด 7% ทุกรายการ
+                        </div>
+                        <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7;">
+                            <li>✓ <strong>ฟรี! ค่าจัดส่ง Pet Taxi ติดแอร์</strong> 1 ครั้ง</li>
+                            <li>✓ อัตราสะสมแต้มคูณ <strong>1.2 เท่า</strong></li>
+                            <li>✓ รับของขวัญวันเกิด 200 Paw Points</li>
+                            <li>✓ บริการจองคิวตรวจสุขภาพล่วงหน้า</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tier 3: Gold VIP -->
+                    <div style="background: var(--bg-card); border: 2px solid #E2E8F0; border-radius: var(--radius-md); padding: 1.5rem; position: relative; box-shadow: none;">
+                                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 2.2rem; line-height: 1;">🥇</span>
+                            <div>
+                                <h4 style="font-size: 1.15rem; font-weight: 800; color: #C2410C; margin: 0;">Gold Paw VIP</h4>
+                                <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted);">สะสม 1,500 – 4,999 แต้ม</span>
+                            </div>
+                        </div>
+                        <div style="background: #FFEDD5; color: #9A3412; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px;">
+                            ส่วนลด 10% ทุกรายการ
+                        </div>
+                        <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7;">
+                            <li>✓ <strong>ฟรี! บริการตรวจสุขภาพประจำปี 1 ปี</strong></li>
+                            <li>✓ สายด่วนสัตวแพทย์ส่วนตัวให้คำปรึกษา 24 ชม.</li>
+                            <li>✓ อัตราสะสมแต้มคูณ <strong>1.5 เท่า</strong></li>
+                            <li>✓ สิทธิ์เลือกจับจองลูกแมวครอกใหม่ก่อนใคร</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tier 4: Diamond VIP -->
+                    <div style="background: var(--bg-card); border: 2px solid #E2E8F0; border-radius: var(--radius-md); padding: 1.5rem; position: relative; box-shadow: none;">
+                                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <span style="font-size: 2.2rem; line-height: 1;">👑</span>
+                            <div>
+                                <h4 style="font-size: 1.15rem; font-weight: 800; color: #7C3AED; margin: 0;">Diamond VIP</h4>
+                                <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted);">สะสมครบ 5,000+ แต้ม</span>
+                            </div>
+                        </div>
+                        <div style="background: #F3E8FF; color: #6B21A8; font-size: 0.8rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; display: inline-block; margin-bottom: 12px;">
+                            ส่วนลด 15% VIP ตลอดชีพ
+                        </div>
+                        <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.7;">
+                            <li>✓ <strong>ฟรี! จัดส่ง Pet Taxi & เครื่องบิน ตลอดชีพ</strong></li>
+                            <li>✓ สัตวแพทย์ On-Call เยี่ยมตรวจสุขภาพถึงบ้าน</li>
+                            <li>✓ อัตราสะสมแต้มคูณ <strong>2.0 เท่า (Super Points)</strong></li>
+                            <li>✓ ของขวัญพรีเมียม VIP Welcome Set ทุกปี</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. ทำอะไรบ้างถึงจะได้แต้ม (Ways to Earn Points Guide) -->
+            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2rem;">
+                <h4 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px;">
+                    <span>🎯 รวมวิธีสะสมแต้ม Paw Points (ทำอะไรบ้างถึงจะได้แต้ม?)</span>
+                </h4>
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+                    ทำภารกิจง่ายๆ เหล่านี้เพื่อรับคะแนนสะสมเข้ากระเป๋าของคุณทันที:
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
+                    <!-- Action 1: Shopping -->
+                    <div style="border: 1.5px solid #FFE4D6; background: #FFF9F6; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">🛒</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">สั่งซื้อน้องแมว & สินค้า</h5>
+                                <span style="background: var(--primary-coral); color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+1 แต้ม / 100บ.</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                ทุกยอดการสั่งซื้อ 100 บาท รับทันที 1 Paw Point เช่น รับเลี้ยงน้องแมว 25,000 บาท ได้รับทันที <strong>250 แต้ม</strong>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action 2: Register -->
+                    <div style="border: 1.5px solid #FEF3C7; background: #FFFDF5; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">✨</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">สมัครสมาชิกใหม่</h5>
+                                <span style="background: #D97706; color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+100 แต้ม</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                ลงทะเบียนเปิดบัญชีสมาชิกใหม่ รับแต้มโบนัสเริ่มต้นทันที <strong>100 Paw Points</strong> พร้อมโค้ดส่วนลด 15%
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action 3: Review -->
+                    <div style="border: 1.5px solid #E0E7FF; background: #F8FAFF; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">⭐</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">เขียนรีวิวความประทับใจ</h5>
+                                <span style="background: #4F46E5; color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+50 แต้ม</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                รีวิวความน่ารักและการดูแลหลังรับน้องแมวไป พร้อมแนบรูปถ่าย รับทันที <strong>50 Paw Points</strong> ต่อรายการ
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action 4: Birthday -->
+                    <div style="border: 1.5px solid #FCE7F3; background: #FFF5F9; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">🎂</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">ของขวัญเดือนเกิด</h5>
+                                <span style="background: #DB2777; color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+200 แต้ม</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                ฉลองวันเกิดของคุณด้วยแต้มของขวัญพิเศษ <strong>200 Paw Points</strong> โอนเข้าบัญชีอัตโนมัติในเดือนเกิด
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action 5: Referral -->
+                    <div style="border: 1.5px solid #D1FAE5; background: #F6FEFA; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">🤝</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">แนะนำเพื่อนมารับเลี้ยง</h5>
+                                <span style="background: #059669; color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+300 แต้ม</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                ชวนเพื่อนมารับเลี้ยงน้องแมว เมื่อเพื่อนสั่งซื้อครั้งแรก คุณรับ <strong>300 Paw Points</strong> เพื่อนรับส่วนลด 10%
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Action 6: Cat Quiz -->
+                    <div style="border: 1.5px solid #EDE9FE; background: #FBF9FF; border-radius: var(--radius-md); padding: 1.2rem; display: flex; gap: 1rem; align-items: flex-start;">
+                        <span style="font-size: 2.2rem; line-height: 1;">🧭</span>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <h5 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">ทำแบบประเมินค้นหาแมวที่ใช่</h5>
+                                <span style="background: #7C3AED; color: #FFF; font-size: 0.72rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">+20 แต้ม</span>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">
+                                ปรึกษาและตอบคำถามแบบทดสอบความพร้อมในการเลี้ยงน้องแมวผ่านระบบ รับฟรีทันที <strong>20 Paw Points</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Points Calculator Simulator (เครื่องคำนวณแต้มจำลอง) -->
+            <div style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); color: #FFFFFF; border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-md);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.2rem;">
+                    <div>
+                        <h4 style="font-size: 1.2rem; font-weight: 800; margin: 0 0 4px 0; color: #F8FAFC;">
+                            🧮 เครื่องคำนวณแต้มสะสมจากยอดซื้อ (Points Calculator)
+                        </h4>
+                        <p style="font-size: 0.85rem; color: #94A3B8; margin: 0;">
+                            ลองกรอกยอดซื้อที่ต้องการเพื่อดูจำนวน Paw Points ที่คุณจะได้รับทันที:
+                        </p>
+                    </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.2rem;">
+                    <div style="position: relative; max-width: 260px; width: 100%;">
+                        <input type="number" id="sim-amount-input" value="25000" min="0" step="500" class="form-input" style="background: #334155; border: 1.5px solid #475569; color: #FFF; font-size: 1.2rem; font-weight: 800; padding: 10px 45px 10px 14px; border-radius: 8px; width: 100%;" oninput="calculateSimPoints()">
+                        <span style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #94A3B8; font-weight: 700;">฿</span>
+                    </div>
+
+                    <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 8px 18px; display: flex; align-items: center; gap: 12px;">
+                        <span style="font-size: 0.85rem; color: #CBD5E1;">จะได้รับแต้ม:</span>
+                        <span id="sim-points-result" style="font-family: 'Outfit'; font-size: 1.6rem; font-weight: 900; color: #FBBF24;">+250 พอยท์</span>
+                        <span style="font-size: 0.82rem; color: #94A3B8;">(มูลค่าส่วนลด ฿250 บาท)</span>
+                    </div>
+                </div>
+
+                <div style="font-size: 0.8rem; color: #94A3B8;">
+                    * ยิ่งระดับสมาชิกสูงขึ้น คุณจะได้รับตัวคูณแต้มโบนัสพิเศษ (Silver x1.2, Gold VIP x1.5, Diamond x2.0)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function calculateSimPoints() {
+        const input = document.getElementById('sim-amount-input');
+        const result = document.getElementById('sim-points-result');
+        let val = parseFloat(input.value) || 0;
+        if (val < 0) val = 0;
+        const pts = Math.floor(val / 100);
+        result.innerText = `+${pts.toLocaleString()} พอยท์`;
+    }
+    </script>
+
+    <!-- =========================================================
+         TAB 4: กล่องจดหมาย & ข่าวสารจากร้านค้า (Inbox & Newsletters)
+         ========================================================= -->
+    <div id="tab-inbox" class="profile-tab-panel" style="display: none;">
+        <div class="checkout-block">
+            <div class="checkout-block-header">
+                <h3 class="checkout-block-title">
+                    <span>📬 กล่องจดหมาย & ข่าวสารพิเศษสำหรับคุณ</span>
+                    <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">(พบ 3 ข้อความ)</span>
+                </h3>
+                <a href="welcome_deal.html" class="btn btn-primary btn-sm">
+                    🎁 หน้าดีลสมาชิกใหม่
+                </a>
+            </div>
+
+                            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                                            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm);">
+                            <!-- Message Header -->
+                            <div style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); padding: 1rem 1.4rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                        <span style="font-size: 0.75rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 9999px; background: #D97706; color: #FFFFFF;">
+                                            🎉 ต้อนรับสมาชิกใหม่                                        </span>
+                                        <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">
+                                            🎁 [สิทธิพิเศษต้อนรับ] คุณคุณกิตติพงษ์ รักแมว รับส่วนลด 15% (โค้ด: BROADCASTALL) + ชุดของขวัญทาสแมว Purrfect Shop                                        </h4>
+                                    </div>
+                                </div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">
+                                    🕒 2026-09-15 13:14:08                                </div>
+                            </div>
+
+                            <!-- Message Body -->
+                            <div style="padding: 1.4rem;">
+                                <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem;">
+                                    ขอต้อนรับคุณ คุณกิตติพงษ์ รักแมว สู่คอมมูนิตี้คนรักแมวสายพันธุ์แท้! สิทธิพิเศษต้อนรับสมาชิกใหม่ ลดทันที 15% (โค้ด: BROADCASTALL) สำหรับการรับเลี้ยงน้องแมวตัวแรก พร้อมตรวจสุขภาพและจัดส่งรถตู้แอร์ปรับอุณหภูมิฟรีถึงหน้าบ้าน                                </p>
+
+                                
+                                                                    <!-- Voucher Box for Welcome -->
+                                    <div style="background: linear-gradient(135deg, rgba(255,117,86,0.08) 0%, rgba(255,90,95,0.12) 100%); border: 2px dashed var(--primary-coral); border-radius: 10px; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 1rem;">
+                                        <div>
+                                            <div style="font-size: 0.82rem; color: var(--primary-coral); font-weight: 700;">🎁 คูปองส่วนลดพิเศษ 15% ของคุณ:</div>
+                                            <div style="font-family: 'Outfit'; font-size: 1.4rem; font-weight: 900; color: var(--primary-coral); letter-spacing: 1px;">
+                                                BROADCASTALL                                            </div>
+                                        </div>
+                                        <div style="display: flex; gap: 8px;">
+                                            <button type="button" class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText('BROADCASTALL'); alert('✓ คัดลอกโค้ดส่วนลดเรียบร้อยแล้ว!');">
+                                                คัดลอกโค้ด 📋
+                                            </button>
+                                            <a href="welcome_deal.html" class="btn btn-primary btn-sm">
+                                                ใช้โค้ดช้อปเลย 🛒
+                                            </a>
+                                        </div>
+                                    </div>
+                                
+                                <!-- Featured Items Attached to Message -->
+                                                            </div>
+                        </div>
+                                            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm);">
+                            <!-- Message Header -->
+                            <div style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); padding: 1rem 1.4rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                        <span style="font-size: 0.75rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 9999px; background: #D97706; color: #FFFFFF;">
+                                            🎉 ต้อนรับสมาชิกใหม่                                        </span>
+                                        <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">
+                                            🎁 [สิทธิพิเศษต้อนรับ] คุณคุณกิตติพงษ์ รักแมว รับส่วนลด 15% (โค้ด: TESTMULTI15) + ชุดของขวัญทาสแมว Purrfect Shop                                        </h4>
+                                    </div>
+                                </div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">
+                                    🕒 2026-09-15 13:13:23                                </div>
+                            </div>
+
+                            <!-- Message Body -->
+                            <div style="padding: 1.4rem;">
+                                <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem;">
+                                    ขอต้อนรับคุณ คุณกิตติพงษ์ รักแมว สู่คอมมูนิตี้คนรักแมวสายพันธุ์แท้! สิทธิพิเศษต้อนรับสมาชิกใหม่ ลดทันที 15% (โค้ด: TESTMULTI15) สำหรับการรับเลี้ยงน้องแมวตัวแรก พร้อมตรวจสุขภาพและจัดส่งรถตู้แอร์ปรับอุณหภูมิฟรีถึงหน้าบ้าน                                </p>
+
+                                
+                                                                    <!-- Voucher Box for Welcome -->
+                                    <div style="background: linear-gradient(135deg, rgba(255,117,86,0.08) 0%, rgba(255,90,95,0.12) 100%); border: 2px dashed var(--primary-coral); border-radius: 10px; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 1rem;">
+                                        <div>
+                                            <div style="font-size: 0.82rem; color: var(--primary-coral); font-weight: 700;">🎁 คูปองส่วนลดพิเศษ 15% ของคุณ:</div>
+                                            <div style="font-family: 'Outfit'; font-size: 1.4rem; font-weight: 900; color: var(--primary-coral); letter-spacing: 1px;">
+                                                TESTMULTI15                                            </div>
+                                        </div>
+                                        <div style="display: flex; gap: 8px;">
+                                            <button type="button" class="btn btn-secondary btn-sm" onclick="navigator.clipboard.writeText('TESTMULTI15'); alert('✓ คัดลอกโค้ดส่วนลดเรียบร้อยแล้ว!');">
+                                                คัดลอกโค้ด 📋
+                                            </button>
+                                            <a href="welcome_deal.html" class="btn btn-primary btn-sm">
+                                                ใช้โค้ดช้อปเลย 🛒
+                                            </a>
+                                        </div>
+                                    </div>
+                                
+                                <!-- Featured Items Attached to Message -->
+                                                            </div>
+                        </div>
+                                            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm);">
+                            <!-- Message Header -->
+                            <div style="background: var(--bg-card-subtle); padding: 1rem 1.4rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+                                <div>
+                                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                        <span style="font-size: 0.75rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 9999px; background: var(--primary-coral); color: #FFFFFF;">
+                                            📢 ข่าวสารจากร้านค้า                                        </span>
+                                        <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">
+                                            📢 มหกรรมลดกระหน่ำสายพันธุ์ยอดนิยม รับลมหนาว!                                        </h4>
+                                    </div>
+                                </div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">
+                                    🕒 2026-09-02 10:00:00                                </div>
+                            </div>
+
+                            <!-- Message Body -->
+                            <div style="padding: 1.4rem;">
+                                <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem;">
+                                    ร้าน Purrfect Shop ขอมอบส่วนลดพิเศษสูงสุด 15% สำหรับน้องแมวสายพันธุ์ยอดนิยม น้องมิลค์กี้ (British Shorthair) และน้องสโนว์ (Ragdoll Blue Bicolor) พร้อมรับฟรี ชุดทาสแมวมือใหม่ (Starter Kit) เมื่อรับเลี้ยงภายในเดือนนี้!                                </p>
+
+                                
+                                
+                                <!-- Featured Items Attached to Message -->
+                                                                    <div style="margin-top: 1rem; border-top: 1px dashed var(--border-color); padding-top: 1rem;">
+                                        <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.8rem;">
+                                            🐾 สินค้าและน้องแมวที่แนะนำในข่าวสารนี้:
+                                        </div>
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;">
+                                                                                            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; display: flex; align-items: center; gap: 10px;">
+                                                    <img src="assets/images/cat_british.jpg" alt="" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-color);">
+                                                    <div style="overflow: hidden; flex: 1;">
+                                                        <div style="font-weight: 700; font-size: 0.85rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                            น้องสโนว์ (British Shorthair)                                                        </div>
+                                                        <div style="font-size: 0.78rem; color: var(--primary-coral); font-weight: 700;">
+                                                            18,000 ฿
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                                                            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; display: flex; align-items: center; gap: 10px;">
+                                                    <img src="assets/images/cat_ragdoll.jpg" alt="" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-color);">
+                                                    <div style="overflow: hidden; flex: 1;">
+                                                        <div style="font-weight: 700; font-size: 0.85rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                            น้องคอตตอน (Ragdoll)                                                        </div>
+                                                        <div style="font-size: 0.78rem; color: var(--primary-coral); font-weight: 700;">
+                                                            29,000 ฿
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                                                            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; display: flex; align-items: center; gap: 10px;">
+                                                    <img src="assets/images/logo.png" alt="" style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; border: 1px solid var(--border-color);">
+                                                    <div style="overflow: hidden; flex: 1;">
+                                                        <div style="font-weight: 700; font-size: 0.85rem; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                            ชุดทาสแมวมือใหม่ (Newborn Starter Kit)                                                        </div>
+                                                        <div style="font-size: 0.78rem; color: var(--primary-coral); font-weight: 700;">
+                                                            2,490 ฿
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                                                    </div>
+                                    </div>
+                                                            </div>
+                        </div>
+                                    </div>
+                    </div>
+    </div>
+
+    <!-- =========================================================
+         TAB 6: คูปองส่วนลด & รางวัลจากวงล้อนำโชค (Lucky Wheel & Coupons)
+         ========================================================= -->
+    <div id="tab-coupons" class="profile-tab-panel" style="display: none;">
+        <div class="checkout-block">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem;">
+                <div>
+                    <h3 class="checkout-block-title" style="margin-bottom: 0.3rem;">
+                        🎁 คูปอง & ของรางวัลของคุณ (My Coupons & Lucky Rewards)
+                    </h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">
+                        รวบรวมของรางวัลที่ได้จากการหมุนวงล้อนำโชค และโค้ดส่วนลดสิทธิพิเศษสำหรับสมาชิก Purrfect Shop
+                    </p>
+                </div>
+                <a href="lucky_wheel.html" class="btn btn-primary btn-sm" id="coupons-wheel-link" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 700;">
+                    🎡 ไปหมุนวงล้อรับรางวัลฟรี (3 ครั้ง/วัน) ➔
+                </a>
+            </div>
+
+            <!-- ส่วนที่ 1: รางวัลที่ได้รับจากวงล้อนำโชค (Dynamic จาก LocalStorage) -->
+            <div style="margin-bottom: 2.5rem;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 1rem;">
+                    <span style="font-size: 1.3rem;">🎡</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin: 0;">
+                        ของรางวัลที่สุ่มได้จากวงล้อนำโชค (Lucky Wheel Rewards)
+                    </h4>
+                    <span id="lucky-count-pill" style="background: var(--accent-mint); color: #065F46; font-size: 0.75rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">0 รายการ</span>
+                </div>
+
+                <div id="lucky-rewards-container">
+                    <!-- Default Empty State -->
+                    <div id="lucky-rewards-empty" style="background: var(--bg-card-subtle); border: 2px dashed var(--border-color); border-radius: var(--radius-md); padding: 2.5rem 1.5rem; text-align: center; color: var(--text-muted);">
+                        <div style="font-size: 3rem; margin-bottom: 0.6rem;">🎯</div>
+                        <h5 style="font-size: 1.1rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.4rem;">ยังไม่มีรายการของรางวัลจากวงล้อ</h5>
+                        <p style="font-size: 0.88rem; max-width: 500px; margin: 0 auto 1.2rem auto;">
+                            คุณมีสิทธิ์หมุนวงล้อนำโชคฟรีวันละ 3 ครั้ง เพื่อลุ้นรับส่วนลดสูงสุด 25%, ขนมฟรีซดราย, ชุด Starter Kit และ Paw Points!
+                        </p>
+                        <a href="lucky_wheel.html" class="btn btn-primary" id="coupons-wheel-empty-link" style="display: inline-flex; align-items: center; gap: 6px;">
+                            🎡 หมุนวงล้อนำโชคเลย (ฟรี 3 ครั้ง/วัน) ➔
+                        </a>
+                    </div>
+                    <!-- Dynamic Grid for Won Prizes -->
+                    <div id="lucky-rewards-grid" style="display: none; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;"></div>
+                </div>
+            </div>
+
+            <!-- ส่วนที่ 2: คูปองส่วนลดและสิทธิพิเศษทั้งหมดของร้าน (All Active Store Coupons) -->
+            <div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 1rem;">
+                    <span style="font-size: 1.3rem;">🎫</span>
+                    <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin: 0;">
+                        คูปองส่วนลดประจำร้าน & สิทธิ์สมาชิก (Active Store Coupons)
+                    </h4>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.2rem;">
+                    <!-- Coupon 1: PURR25NEW -->
+                    <div style="background: linear-gradient(135deg, rgba(255, 107, 74, 0.06) 0%, rgba(255, 140, 66, 0.12) 100%); border: 1.5px dashed var(--primary-coral); border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <span style="position: absolute; top: 12px; right: 12px; background: #FF5A5F; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">HOT DEAL</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.8rem;">🎉</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">ส่วนลดต้อนรับสมาชิก 25%</h5>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">ใช้ได้กับการรับเลี้ยงน้องแมวทุกตัว</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+                                ลดทันที 25% สำหรับการสั่งจองและรับเลี้ยงน้องแมวทุกสายพันธุ์ ไม่มียอดขั้นต่ำ
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสคูปอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: var(--primary-coral); letter-spacing: 1px;">PURR25NEW</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('PURR25NEW', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                                <a href="cart.html?apply_coupon=PURR25NEW" class="btn btn-primary btn-sm coupon-apply-btn" data-code="PURR25NEW" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coupon 2: CAT10OFF -->
+                    <div style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.06) 0%, rgba(37, 99, 235, 0.12) 100%); border: 1.5px dashed #3B82F6; border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <span style="position: absolute; top: 12px; right: 12px; background: #3B82F6; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">FLASH 10%</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.8rem;">⚡</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">Flash Deal ลด 10%</h5>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">ลดทันทีทุกยอดคำสั่งซื้อ</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+                                รับส่วนลด 10% สำหรับการสั่งซื้อน้องแมวและแพ็กเกจดูแลสุขภาพครบวงจร
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสคูปอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: #2563EB; letter-spacing: 1px;">CAT10OFF</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('CAT10OFF', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                                <a href="cart.html?apply_coupon=CAT10OFF" class="btn btn-primary btn-sm coupon-apply-btn" data-code="CAT10OFF" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coupon 3: WELCOME5 -->
+                    <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(5, 150, 105, 0.12) 100%); border: 1.5px dashed #10B981; border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <span style="position: absolute; top: 12px; right: 12px; background: #10B981; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">VIP 5%</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.8rem;">🌟</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">ส่วนลดสมาชิกถาวร 5%</h5>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">สิทธิ์สำหรับสมาชิกทุกคน</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+                                สิทธิพิเศษเฉพาะสมาชิก Purrfect Shop ใช้ลดเพิ่มได้ทุกออเดอร์ไม่มีวันหมดอายุ
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสคูปอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: #059669; letter-spacing: 1px;">WELCOME5</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('WELCOME5', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                                <a href="cart.html?apply_coupon=WELCOME5" class="btn btn-primary btn-sm coupon-apply-btn" data-code="WELCOME5" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coupon 4: KITFREE100 -->
+                    <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.06) 0%, rgba(217, 119, 6, 0.12) 100%); border: 1.5px dashed #F59E0B; border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <span style="position: absolute; top: 12px; right: 12px; background: #F59E0B; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">STARTER SET</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.8rem;">📦</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">รับฟรี Purrfect Starter Kit</h5>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">มูลค่ารวม 2,500 บาท</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+                                รับฟรีเซ็ตของใช้น้องแมวแรกเกิด ชามอาหาร กระบะทรายพรีเมียม และของเล่นเสริมทักษะ
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสคูปอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: #D97706; letter-spacing: 1px;">KITFREE100</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('KITFREE100', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                                <a href="cart.html?apply_coupon=KITFREE100" class="btn btn-primary btn-sm coupon-apply-btn" data-code="KITFREE100" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coupon 5: FREESHIP -->
+                    <div style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.06) 0%, rgba(124, 58, 237, 0.12) 100%); border: 1.5px dashed #8B5CF6; border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                        <span style="position: absolute; top: 12px; right: 12px; background: #8B5CF6; color: #fff; font-size: 0.7rem; font-weight: 800; padding: 2px 8px; border-radius: 999px;">FREE TAXI</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem;">
+                                <span style="font-size: 1.8rem;">🚚</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">ฟรี ค่าส่ง VIP Pet Taxi</h5>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">รถตู้ปรับอากาศส่งถึงบ้าน</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 1rem; line-height: 1.4;">
+                                บริการส่งมอบน้องแมวถึงหน้าบ้านด้วยรถตู้ควบคุมอุณหภูมิและพี่เลี้ยงดูแลตลอดทาง
+                            </p>
+                        </div>
+                        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div>
+                                <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสคูปอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: #7C3AED; letter-spacing: 1px;">FREESHIP</strong>
+                            </div>
+                            <div style="display: flex; gap: 6px;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('FREESHIP', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                                <a href="cart.html?apply_coupon=FREESHIP" class="btn btn-primary btn-sm coupon-apply-btn" data-code="FREESHIP" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchProfileTab(tabName, btnElement) {
+    // Hide all panels
+    document.querySelectorAll('.profile-tab-panel').forEach(p => p.style.display = 'none');
+    
+    // Show chosen panel
+    const target = document.getElementById('tab-' + tabName);
+    if (target) target.style.display = 'block';
+
+    // Update active button state
+    document.querySelectorAll('.cat-filter-btn').forEach(b => b.classList.remove('active'));
+    
+    if (btnElement) {
+        btnElement.classList.add('active');
+    } else {
+        const btn = document.getElementById('btn-tab-' + tabName);
+        if (btn) btn.classList.add('active');
+    }
+
+    // Update URL query string without reload
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    const base = isStatic ? 'profile.html' : 'profile.php';
+    window.history.replaceState(null, null, base + '?tab=' + tabName);
+}
+
+function copyCouponCode(code, btn) {
+    navigator.clipboard.writeText(code).then(() => {
+        const origText = btn.innerHTML;
+        btn.innerHTML = 'คัดลอกแล้ว! ✓';
+        btn.style.background = '#10B981';
+        btn.style.color = '#FFFFFF';
+        btn.style.borderColor = '#10B981';
+        setTimeout(() => {
+            btn.innerHTML = origText;
+            btn.style.background = '';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+        }, 2000);
+    }).catch(() => {
+        alert('คูปองของคุณคือ: ' + code);
+    });
+}
+
+// Client-side hydration for Profile & Lucky Wheel Rewards
+document.addEventListener('DOMContentLoaded', () => {
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    
+    // Adjust links if static
+    if (isStatic) {
+        const wheelLink = document.getElementById('coupons-wheel-link');
+        if (wheelLink) wheelLink.href = 'lucky_wheel.html';
+        const wheelEmptyLink = document.getElementById('coupons-wheel-empty-link');
+        if (wheelEmptyLink) wheelEmptyLink.href = 'lucky_wheel.html';
+        document.querySelectorAll('.coupon-apply-btn').forEach(btn => {
+            const code = btn.getAttribute('data-code');
+            if (code) btn.href = 'cart.html?apply_coupon=' + encodeURIComponent(code);
+        });
+    }
+
+    // 1. Sync User Profile from LocalStorage
+    try {
+        const loggedUser = JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        if (loggedUser) {
+            if (loggedUser.fullname) {
+                const fn = document.getElementById('profile-fullname-text');
+                if (fn) fn.textContent = loggedUser.fullname;
+            }
+            if (loggedUser.username) {
+                const un = document.getElementById('profile-username-text');
+                if (un) un.textContent = loggedUser.username;
+            }
+            if (loggedUser.email) {
+                const em = document.getElementById('profile-email-text');
+                if (em) em.textContent = loggedUser.email;
+            }
+            if (loggedUser.phone) {
+                const ph = document.getElementById('profile-phone-text');
+                if (ph) ph.textContent = loggedUser.phone;
+            }
+            if (loggedUser.avatar) {
+                const av = document.getElementById('header-avatar-preview');
+                if (av) av.src = loggedUser.avatar;
+            }
+            if (loggedUser.paw_points !== undefined) {
+                const pt = document.getElementById('profile-points-text');
+                if (pt) pt.textContent = Number(loggedUser.paw_points).toLocaleString();
+            }
+        }
+    } catch(e) {}
+
+    // 2. Sync Lucky Wheel Rewards from LocalStorage
+    try {
+        const rewards = JSON.parse(localStorage.getItem('cat_shop_my_rewards') || '[]');
+        const badge = document.getElementById('rewards-counter-badge');
+        const countPill = document.getElementById('lucky-count-pill');
+        const emptyBox = document.getElementById('lucky-rewards-empty');
+        const gridBox = document.getElementById('lucky-rewards-grid');
+
+        if (badge) badge.textContent = rewards.length;
+        if (countPill) countPill.textContent = rewards.length + ' รายการ';
+
+        if (rewards && rewards.length > 0 && gridBox && emptyBox) {
+            emptyBox.style.display = 'none';
+            gridBox.style.display = 'grid';
+            gridBox.innerHTML = '';
+
+            rewards.forEach(rew => {
+                const card = document.createElement('div');
+                card.style.cssText = 'background: linear-gradient(135deg, rgba(254, 243, 199, 0.5) 0%, rgba(253, 230, 138, 0.4) 100%); border: 1.5px solid #F59E0B; border-radius: var(--radius-md); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm); position: relative;';
+                
+                const cartHref = isStatic 
+                    ? 'cart.html?apply_coupon=' + encodeURIComponent(rew.code || '')
+                    : 'cart.php?apply_coupon=' + encodeURIComponent(rew.code || '');
+
+                card.innerHTML = `
+                    <div>
+                        <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 0.6rem;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 2rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">${rew.icon || '🎁'}</span>
+                                <div>
+                                    <h5 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0;">${rew.title}</h5>
+                                    <span style="font-size: 0.72rem; color: #B45309; font-weight: 700;">🎡 รางวัลจากวงล้อนำโชค</span>
+                                </div>
+                            </div>
+                            <span style="background: #D97706; color: #FFFFFF; font-size: 0.65rem; font-weight: 800; padding: 2px 6px; border-radius: 999px; white-space: nowrap;">WON</span>
+                        </div>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.8rem; line-height: 1.4;">
+                            ${rew.desc}
+                        </p>
+                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+                            🕒 ได้รับเมื่อ: ${rew.date_formatted || new Date(rew.date).toLocaleDateString('th-TH')}
+                        </div>
+                    </div>
+                    <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 8px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                        <div>
+                            <span style="font-size: 0.7rem; color: var(--text-muted); display: block;">รหัสรับสิทธิ์:</span>
+                            <strong style="font-family: 'Outfit'; font-size: 1.05rem; color: #D97706; letter-spacing: 0.8px;">${rew.code || 'LUCKYPRIZE'}</strong>
+                        </div>
+                        <div style="display: flex; gap: 6px;">
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="copyCouponCode('${rew.code || ''}', this)" style="padding: 4px 10px; font-size: 0.75rem;">คัดลอก 📋</button>
+                            <a href="${cartHref}" class="btn btn-primary btn-sm" style="padding: 4px 10px; font-size: 0.75rem;">ใช้เลย 🛒</a>
+                        </div>
+                    </div>
+                `;
+                gridBox.appendChild(card);
+            });
+        }
+    } catch(e) {}
+
+    // 3. Handle initial tab selection from URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialTab = urlParams.get('tab');
+    if (initialTab && document.getElementById('tab-' + initialTab)) {
+        switchProfileTab(initialTab, document.getElementById('btn-tab-' + initialTab));
+    }
+});
+</script>
+
+    <footer>
+        <!-- Newsletter Subscription Ribbon -->
+        <div style="background: linear-gradient(135deg, rgba(255, 117, 86, 0.12) 0%, rgba(254, 243, 199, 0.5) 100%); border-bottom: 1px solid var(--border-color); padding: 1.8rem 1rem;">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <span style="font-size: 2.4rem; line-height: 1;">📬</span>
+                    <div>
+                        <h4 style="margin: 0 0 4px 0; font-size: 1.15rem; color: var(--text-main); font-weight: 800;">
+                            สมัครรับจดหมายข่าว & ดีลลับน้องแมว Purrfect Shop 🐾
+                        </h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">
+                            รับแจ้งเตือนน้องแมวเข้าใหม่ เกร็ดสุขภาพจากสัตวแพทย์ พร้อมรับโค้ดส่วนลด 10% (CATNEWS10) ทันทีทางอีเมล
+                        </p>
+                    </div>
+                </div>
+                <form action="subscribe.html" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
+                    <input type="email" name="subscriber_email" placeholder="กรอกอีเมลของคุณ เช่น name@gmail.com" required style="flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 999px; padding: 10px 22px; font-weight: 800; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);">
+                        ติดตามข่าวสาร ✨
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h3>Purrfect Shop 🐾</h3>
+                <p style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.4rem;">
+                    "เพราะทุกบ้านควรมีเจ้าเหมียว"
+                </p>
+                <p>
+                    ฟาร์มและศูนย์รวมน้องแมวสายพันธุ์แท้ 100% สุขภาพดี ได้รับการดูแลจากสัตวแพทย์อย่างใกล้ชิด
+                    พร้อมบริการตรวจสุขภาพ ฉีดวัคซีน ถ่ายพยาธิ และใบเพ็ดดีกรีรับรองสายพันธุ์ครบถ้วน
+                </p>
+                <div style="margin-top: 1rem; display: flex; gap: 0.8rem; font-size: 0.85rem; color: var(--text-muted);">
+                    <span>📍 บริการจัดส่งทั่วประเทศ</span> &bull; 
+                    <span>⏰ เปิดทุกวัน 09:00 - 20:00 น.</span>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>หมวดหมู่แนะนำ</h4>
+                <ul>
+                    <li><a href="recommend.html?cat=popular">🔥 สายพันธุ์ยอดนิยม</a></li>
+                    <li><a href="recommend.html?cat=condo">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
+                    <li><a href="recommend.html?cat=fluffy">🧸 แมวขนยาวนุ่มฟู</a></li>
+                    <li><a href="recommend.html?cat=short_hair">✨ แมวขนสั้นดูแลง่าย</a></li>
+                    <li><a href="recommend.html?cat=beginner">👶 มือใหม่เลี้ยงง่าย</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>ความปลอดภัย & สมาชิก</h4>
+                <ul>
+                    <li><a href="register.html">✨ สมัครสมาชิกรับส่วนลด 5%</a></li>
+                    <li><a href="creator.html">👨‍💻 ข้อมูลผู้จัดทำโครงการ</a></li>
+                    <li><a href="cart.html">🛒 ตะกร้าการจองน้องแมว</a></li>
+                    <li><a href="recommend.html">🌟 แนะนำสายพันธุ์สำหรับคุณ</a></li>
+                    <li><a href="products.html">🐱 ดูสายพันธุ์น้องแมวทั้งหมด</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 <strong>Purrfect Shop</strong> - คัดสรรและส่งมอบเพื่อนที่ดีที่สุดด้วยหัวใจ 🐾</p>
+            <p>
+                พัฒนาโดย <strong>Purrfect Cattery Team</strong> (TH-CAT-8899 IT) &bull; Purrfect Boutique Cattery
+            </p>
+        </div>
+    </footer>
+    <!-- chat_widget.php - Floating Live Chat Widget with Popup Quick Menu -->
+<div id="purrfect-chat-root">
+    <!-- 1. Floating Launcher Button (Fixed Bottom-Right) -->
+    <button id="chat-launcher-btn" type="button" onclick="togglePurrfectChat()" title="ปรึกษาแอดมิน & แชทบอทแนะนำน้องแมว 🐾">
+        <span class="launcher-icon">💬</span>
+        <span class="launcher-cat-icon">🐾</span>
+        <span class="launcher-close-icon">✕</span>
+        <span class="launcher-status-dot"></span>
+        <span id="chat-unread-badge" class="chat-unread-badge" style="display: none;">0</span>
+    </button>
+
+    <!-- 2. Chat Popup Window -->
+    <div id="purrfect-chat-window" class="chat-window-hidden">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar-wrapper">
+                    <img src="assets/images/logo.png" alt="Purrfect Advisor" class="chat-header-avatar">
+                    <span class="chat-online-badge"></span>
+                </div>
+                <div>
+                    <div class="chat-header-title">Purrfect Live Chat 🐾</div>
+                    <div class="chat-header-subtitle">
+                        <span class="status-pulse-dot"></span> เจ้าหน้าที่ & AI แนะนำสายพันธุ์ (ออนไลน์)
+                    </div>
+                </div>
+            </div>
+            <div class="chat-header-actions">
+                <button type="button" class="chat-btn-icon" onclick="togglePurrfectChat()" title="ย่อหน้าต่าง">✕</button>
+            </div>
+        </div>
+
+        <!-- Current User Info Strip -->
+        <div id="chat-user-strip" class="chat-user-strip">
+            <span id="chat-user-label">กำลังโหลดข้อมูลผู้ใช้...</span>
+        </div>
+
+        <!-- Chat Messages Body -->
+        <div id="chat-messages-container" class="chat-messages-container">
+            <div class="chat-loading-spinner" id="chat-loading">
+                <span>🐾 กำลังโหลดการสนทนา...</span>
+            </div>
+        </div>
+
+        <!-- Pop-up Quick Questions Menu Overlay (Toggled by "⚡ คำถาม" button) -->
+        <div id="chat-quick-menu-popup" class="chat-quick-popup-hidden">
+            <div class="chat-quick-popup-header">
+                <span>⚡ เลือกคำถามด่วน (บอทแนะนำทันที)</span>
+                <button type="button" class="quick-popup-close-btn" onclick="toggleQuickMenuPopup()">✕</button>
+            </div>
+            <div class="chat-quick-popup-grid">
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(1)">
+                    <span class="popup-item-icon">🐱</span>
+                    <span class="popup-item-text">1. น้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(2)">
+                    <span class="popup-item-icon">🏢</span>
+                    <span class="popup-item-text">2. เหมาะกับเลี้ยงในคอนโด / รักความสงบ</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(3)">
+                    <span class="popup-item-icon">🤧</span>
+                    <span class="popup-item-text">3. คนเป็นภูมิแพ้ ขนไม่ร่วง / ผลัดขน 0%</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(4)">
+                    <span class="popup-item-icon">👑</span>
+                    <span class="popup-item-text">4. สายพันธุ์พรีเมียม ขนฟู มีใบเพ็ดดีกรี</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(5)">
+                    <span class="popup-item-icon">🎁</span>
+                    <span class="popup-item-text">5. โปรโมชั่น & ดีลส่วนลดสมาชิกใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(6)">
+                    <span class="popup-item-icon">🩺</span>
+                    <span class="popup-item-text">6. การรับประกันสุขภาพ 180 วัน & ขนส่ง</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Input Bar (With ⚡ คำถาม button beside input) -->
+        <form id="chat-input-form" onsubmit="handleSendChatMessage(event)" class="chat-input-form">
+            <button type="button" id="chat-quick-trigger-btn" class="chat-quick-trigger-btn" onclick="toggleQuickMenuPopup()" title="คลิกเพื่อเปิดคำถามด่วน 6 ข้อ">
+                <span>⚡ คำถาม</span>
+            </button>
+            <input type="text" id="chat-input-text" placeholder="พิมพ์ข้อความคุยกับแอดมิน..." autocomplete="off" maxlength="500">
+            <button type="submit" id="chat-send-btn" class="chat-send-btn" title="ส่งข้อความ">
+                <span>➤</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+(function() {
+    let chatIsOpen = false;
+    let quickPopupIsOpen = false;
+    let pollInterval = null;
+    let isBotTyping = false;
+    let lastRenderedSig = '';
+
+    const quickPromptsMap = {
+        1: '🐱 แนะนำน้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่',
+        2: '🏢 มีน้องแมวพันธุ์ไหนที่เหมาะกับเลี้ยงในคอนโด/ห้องพักบ้าง?',
+        3: '🤧 เป็นภูมิแพ้ แนะนำน้องแมวขนไม่ร่วง/ผลัดขนน้อยหน่อยครับ',
+        4: '👑 ขอดูแมวสายพันธุ์พรีเมียม ขนฟูหน้าหวาน มีใบเพ็ดดีกรี',
+        5: '🎁 ตอนนี้มีโปรโมชั่นหรือดีลส่วนลดสมาชิกใหม่อะไรบ้าง?',
+        6: '🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?'
+    };
+
+    // Client-Side Fallback Knowledge Base & Quick Replies for Static GitHub Pages
+    const BOT_RESPONSES = {
+        1: {
+            text: "นี่คือน้องแมวยอดนิยมอันดับ 1 เลี้ยงง่าย เป็นมิตร สุขภาพแข็งแรง เหมาะสำหรับมือใหม่ที่เพิ่งเริ่มเลี้ยงที่สุดครับ 🐾",
+            cards: [
+                { id: 'cat_british', name: 'น้องบริติช บลู', breed: 'British Shorthair', price: '฿35,000', image: 'assets/images/cat_british.jpg', highlight: 'นิสัยสุขุม น่ารัก ขี้อ้อน', link: 'products.html' },
+                { id: 'cat_americanshorthair', name: 'น้องอเมริกัน ซิลเวอร์', breed: 'American Shorthair', price: '฿28,000', image: 'assets/images/cat_americanshorthair.jpg', highlight: 'ลายคมชัด ขี้เล่น เลี้ยงง่าย', link: 'products.html' },
+                { id: 'cat_scottish', name: 'น้องสกอตติช โฟลด์', breed: 'Scottish Fold', price: '฿32,000', image: 'assets/images/cat_scottish.jpg', highlight: 'หูพับหน้ากลม น่ารักติดคน', link: 'products.html' }
+            ]
+        },
+        2: {
+            text: "สำหรับเพื่อนๆ ที่พักอาศัยในคอนโดหรือห้องพัก แนะนำสายพันธุ์ที่รักความสงบ ไม่ส่งเสียงดังรบกวนข้างห้อง และปรับตัวเก่งครับ 🏢✨",
+            cards: [
+                { id: 'cat_persian', name: 'น้องเปอร์เซีย ขาวสำลี', breed: 'Persian', price: '฿29,000', image: 'assets/images/cat_persian.jpg', highlight: 'เงียบสงบ สุภาพ เรียบร้อย', link: 'recommend.html' },
+                { id: 'cat_russian', name: 'น้องรัสเซียน บลู', breed: 'Russian Blue', price: '฿38,000', image: 'assets/images/cat_russian.jpg', highlight: 'ฉลาด รักความเงียบสงบ', link: 'recommend.html' },
+                { id: 'cat_ragdoll', name: 'น้องแร็กดอลล์ ตาฟ้า', breed: 'Ragdoll', price: '฿45,000', image: 'assets/images/cat_ragdoll.jpg', highlight: 'ตัวใหญ่นุ่มนิ่ม อ่อนโยน', link: 'recommend.html' }
+            ]
+        },
+        3: {
+            text: "ผู้ที่เป็นโรคภูมิแพ้ขนสัตว์ หรือไม่ชอบกวาดขนแมว แนะนำกลุ่มสายพันธุ์ Hypoallergenic / ขนสั้นพิเศษ หรือไร้ขน 100% เหล่านี้ครับ 🤧🌿",
+            cards: [
+                { id: 'cat_sphynx', name: 'น้องสฟิงซ์ ชมพู', breed: 'Sphynx', price: '฿42,000', image: 'assets/images/cat_sphynx.jpg', highlight: 'ขนร่วง 0% ไร้ภูมิแพ้ อบอุ่น', link: 'recommend.html' },
+                { id: 'cat_devon_rex', name: 'น้องเดวอน เร็กซ์', breed: 'Devon Rex', price: '฿39,000', image: 'assets/images/cat_devon_rex.jpg', highlight: 'ขนหยักนุ่ม ผลัดขนน้อยมาก', link: 'recommend.html' },
+                { id: 'cat_cornish_rex', name: 'น้องคอร์นิช เร็กซ์', breed: 'Cornish Rex', price: '฿36,000', image: 'assets/images/cat_cornish_rex.jpg', highlight: 'ขนสั้นลอนสวย ไฮโปอัลเลอร์เจนิก', link: 'recommend.html' }
+            ]
+        },
+        4: {
+            text: "ขอนำเสนอน้องแมวเกรดพรีเมียม ขนฟูอลังการ หน้าหวาน และมีใบเพ็ดดีกรี CFA/WCF สายเลือดแชมป์สากล 100% ครับ 👑💎",
+            cards: [
+                { id: 'cat_mainecoon', name: 'น้องเมนคูน ไจแอนท์', breed: 'Maine Coon', price: '฿55,000', image: 'assets/images/cat_mainecoon.jpg', highlight: 'ยักษ์ใหญ่ใจดี มีใบเพ็ด CFA', link: 'products.html' },
+                { id: 'cat_ragdoll', name: 'น้องแร็กดอลล์ บลูพอยท์', breed: 'Ragdoll', price: '฿45,000', image: 'assets/images/cat_ragdoll.jpg', highlight: 'ขนฟูสวย หรูหราระดับท็อป', link: 'products.html' },
+                { id: 'cat_siberian', name: 'น้องไซบีเรียน ฟอเรสต์', breed: 'Siberian', price: '฿48,000', image: 'assets/images/cat_siberian.jpg', highlight: 'ขนหนานุ่ม 3 ชั้น สายพันธุ์แท้', link: 'products.html' }
+            ]
+        },
+        5: {
+            text: "🎉 สิทธิพิเศษและโค้ดส่วนลดสุดฮอตประจำเดือนนี้:\n\n" +
+                  "• 🏷️ โค้ด CAT10OFF: รับส่วนลด 10% เมื่อช้อปขั้นต่ำ 300.- (ใช้ได้ 1 ครั้ง/1 เดือน)\n" +
+                  "• 🏷️ โค้ด NEWMEMBER5: รับส่วนลด 5% ทุกรายการสำหรับสมาชิกใหม่\n" +
+                  "• 🏷️ โค้ด CATNEWS10: ส่วนลด 10% เมื่อสมัครรับจดหมายข่าว\n" +
+                  "• 🎁 ฟรี! Starter Kit เซ็ตของขวัญต้อนรับน้องแมว 11 รายการ มูลค่า 4,500 บาท ฟรีทุกออเดอร์!",
+            cards: [
+                { id: 'cat_british', name: 'น้องบริติช บลู', breed: 'British Shorthair', price: '฿35,000', image: 'assets/images/cat_british.jpg', highlight: 'ใช้โค้ด CAT10OFF ลด 10%', link: 'welcome_deal.html' },
+                { id: 'cat_munchkin', name: 'น้องมันช์กิ้น ขาสั้น', breed: 'Munchkin', price: '฿38,000', image: 'assets/images/cat_munchkin.jpg', highlight: 'แถมฟรี Starter Kit 11 ชิ้น', link: 'welcome_deal.html' }
+            ]
+        },
+        6: {
+            text: "🩺 การันตีมาตรฐานสุขภาพระดับสากลจาก Purrfect Cattery:\n\n" +
+                  "1. 💉 วัคซีนครบ 2 เข็ม + ถ่ายพยาธิ + หยดยาป้องกันเห็บหมัด\n" +
+                  "2. 🔬 ตรวจผลแล็บ ปลอดโรคลิวคีเมีย (FeLV) และเอดส์แมว (FIV) 100%\n" +
+                  "3. 🛡️ การันตีคุ้มครองสุขภาพโรคร้ายแรงนานถึง 180 วันเต็ม\n" +
+                  "4. 🚗 บริการจัดส่งด้วยรถ Pet Taxi ควบคุมอุณหภูมิถึงหน้าบ้านทั่วประเทศ\n" +
+                  "5. 👨‍⚕️ ปรึกษาสัตวแพทย์ประจำฟาร์มฟรีตลอดอายุขัยของน้องแมวครับ!",
+            cards: []
+        }
+    };
+
+    function getLocalChatMessages() {
+        try {
+            const raw = localStorage.getItem('purrfect_chat_history');
+            if (raw) return JSON.parse(raw);
+        } catch(e) {}
+        return [
+            {
+                id: 'msg_init_static',
+                sender: 'bot',
+                sender_name: 'Purrfect Bot 🐾',
+                text: 'สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ',
+                cards: [],
+                timestamp: getCurrentTimeFormatted()
+            }
+        ];
+    }
+
+    function saveLocalChatMessages(msgs) {
+        try {
+            localStorage.setItem('purrfect_chat_history', JSON.stringify(msgs));
+        } catch(e) {}
+    }
+
+    window.togglePurrfectChat = function() {
+        const win = document.getElementById('purrfect-chat-window');
+        const launcher = document.getElementById('chat-launcher-btn');
+        if (!win || !launcher) return;
+
+        launcher.classList.remove('anim-pulse');
+        void launcher.offsetWidth;
+        launcher.classList.add('anim-pulse');
+
+        chatIsOpen = !chatIsOpen;
+
+        if (chatIsOpen) {
+            win.classList.remove('chat-window-hidden', 'chat-window-closing');
+            win.classList.add('chat-window-visible');
+            launcher.classList.add('launcher-active');
+            const unread = document.getElementById('chat-unread-badge');
+            if (unread) {
+                unread.style.display = 'none';
+                unread.innerText = '0';
+            }
+            loadChatMessages(true);
+            setTimeout(() => {
+                const input = document.getElementById('chat-input-text');
+                if (input) input.focus();
+            }, 300);
+        } else {
+            launcher.classList.remove('launcher-active');
+            closeQuickMenuPopup();
+            win.classList.remove('chat-window-visible');
+            win.classList.add('chat-window-closing');
+            setTimeout(() => {
+                if (!chatIsOpen) {
+                    win.classList.remove('chat-window-closing');
+                    win.classList.add('chat-window-hidden');
+                }
+            }, 260);
+        }
+    };
+
+    window.toggleQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = !quickPopupIsOpen;
+        if (quickPopupIsOpen) {
+            popup.classList.remove('chat-quick-popup-hidden');
+            popup.classList.add('chat-quick-popup-visible');
+        } else {
+            popup.classList.remove('chat-quick-popup-visible');
+            popup.classList.add('chat-quick-popup-hidden');
+        }
+    };
+
+    window.closeQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = false;
+        popup.classList.remove('chat-quick-popup-visible');
+        popup.classList.add('chat-quick-popup-hidden');
+    };
+
+    window.sendQuickReplyFromPopup = function(option) {
+        closeQuickMenuPopup();
+        sendQuickReply(option);
+    };
+
+    window.loadChatMessages = function(forceScroll = false) {
+        if (isBotTyping && !forceScroll) return;
+
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+
+        if (isPhpServer) {
+            fetch('api_chat.php?action=get_messages')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success' && data.conversation) {
+                        const conv = data.conversation;
+                        const u = data.current_user;
+                        updateUserStrip(u);
+                        if (!isBotTyping) {
+                            renderMessages(conv.messages || [], forceScroll);
+                        }
+                    }
+                })
+                .catch(() => fallbackClientLoad(forceScroll));
+        } else {
+            fallbackClientLoad(forceScroll);
+        }
+    };
+
+    function fallbackClientLoad(forceScroll) {
+        const user = typeof getClientLoggedUser === 'function' ? getClientLoggedUser() : null;
+        updateUserStrip(user ? { name: user.username, is_member: true } : { name: 'ผู้เยี่ยมชม', is_member: false });
+        const msgs = getLocalChatMessages();
+        renderMessages(msgs, forceScroll);
+    }
+
+    function updateUserStrip(u) {
+        const strip = document.getElementById('chat-user-label');
+        if (!strip) return;
+        if (u && u.is_member) {
+            strip.innerHTML = `👤 สนทนาในนามสมาชิก: <strong>${escapeHtml(u.name)}</strong> (ส่วนลด 5% 🐾)`;
+        } else {
+            strip.innerHTML = `👤 สนทนาในนาม: <strong>${escapeHtml(u ? u.name : 'ผู้เยี่ยมชม')}</strong> • <a href="login.html" style="color:var(--primary-coral); text-decoration:underline;">เข้าสู่ระบบ</a> เพื่อสะสมแต้ม`;
+        }
+    }
+
+    function getCurrentTimeFormatted() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    function renderMessages(messages, forceScroll = false) {
+        const container = document.getElementById('chat-messages-container');
+        if (!container) return;
+
+        const currentSig = messages.length + '_' + (messages.length > 0 ? (messages[messages.length - 1].id || messages[messages.length - 1].text) : '');
+        if (currentSig === lastRenderedSig && !forceScroll) {
+            return;
+        }
+        lastRenderedSig = currentSig;
+
+        let html = '';
+        messages.forEach(msg => {
+            const isCustomer = msg.sender === 'customer';
+            const senderClass = isCustomer ? 'msg-customer' : (msg.sender === 'admin' ? 'msg-admin' : 'msg-bot');
+            const senderBadge = isCustomer ? 'คุณ' : (msg.sender === 'admin' ? '👨‍💼 แอดมิน' : '🤖 ผู้ช่วย AI');
+
+            let cardHtml = '';
+            if (msg.cards && msg.cards.length > 0) {
+                cardHtml += `
+                    <div class="chat-carousel-wrapper">
+                        <button type="button" class="carousel-nav-btn nav-prev" onclick="scrollChatCarousel(this, -180)" title="เลื่อนดูน้องแมวก่อนหน้า">◀</button>
+                        <div class="chat-cards-carousel">
+                `;
+                msg.cards.forEach(card => {
+                    cardHtml += `
+                        <div class="chat-cat-card">
+                            <img src="${card.image}" alt="${escapeHtml(card.name)}" class="chat-cat-img" onerror="this.src='assets/images/logo.png'">
+                            <div class="chat-cat-info">
+                                <div class="chat-cat-name">${escapeHtml(card.name)}</div>
+                                <div class="chat-cat-breed">${escapeHtml(card.breed)}</div>
+                                <div class="chat-cat-highlight">${escapeHtml(card.highlight || '')}</div>
+                                <div class="chat-cat-price">${escapeHtml(card.price_fmt || card.price)}</div>
+                                <a href="${card.link || 'products.html'}" class="btn btn-primary btn-sm chat-card-action">
+                                    ดูน้องตัวนี้ 🐾
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                });
+                cardHtml += `
+                        </div>
+                        <button type="button" class="carousel-nav-btn nav-next" onclick="scrollChatCarousel(this, 180)" title="เลื่อนดูน้องแมวถัดไป">▶</button>
+                    </div>
+                `;
+            }
+
+            let formattedTime = '';
+            if (msg.timestamp) {
+                const tParts = msg.timestamp.split(' ');
+                if (tParts[1]) {
+                    formattedTime = tParts[1].substring(0, 5);
+                } else {
+                    formattedTime = msg.timestamp;
+                }
+            }
+
+            html += `
+                <div class="chat-message-row ${senderClass}">
+                    ${!isCustomer ? `<div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>` : ''}
+                    <div class="chat-bubble-content">
+                        <div class="chat-sender-header">
+                            <span class="chat-sender-name">${escapeHtml(msg.sender_name || senderBadge)}</span>
+                            <span class="chat-time">${formattedTime}</span>
+                        </div>
+                        <div class="chat-text">${escapeHtml(msg.text).replace(/\\n/g, '<br>')}</div>
+                        ${cardHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+    }
+
+    window.scrollChatCarousel = function(btn, delta) {
+        if (!btn) return;
+        const wrapper = btn.closest('.chat-carousel-wrapper');
+        if (wrapper) {
+            const carousel = wrapper.querySelector('.chat-cards-carousel');
+            if (carousel) {
+                carousel.scrollBy({ left: delta, behavior: 'smooth' });
+            }
+        }
+    };
+
+    function showTypingIndicator(userText) {
+        const container = document.getElementById('chat-messages-container');
+        if (!container) return;
+
+        const currentTime = getCurrentTimeFormatted();
+
+        if (userText) {
+            const customerRow = document.createElement('div');
+            customerRow.className = 'chat-message-row msg-customer';
+            customerRow.innerHTML = `
+                <div class="chat-bubble-content">
+                    <div class="chat-sender-header">
+                        <span class="chat-sender-name">คุณ</span>
+                        <span class="chat-time">${currentTime}</span>
+                    </div>
+                    <div class="chat-text">${escapeHtml(userText)}</div>
+                </div>
+            `;
+            container.appendChild(customerRow);
+        }
+
+        const oldTyping = document.getElementById('chat-typing-indicator');
+        if (oldTyping) oldTyping.remove();
+
+        const typingRow = document.createElement('div');
+        typingRow.id = 'chat-typing-indicator';
+        typingRow.className = 'chat-message-row msg-bot';
+        typingRow.innerHTML = `
+            <div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>
+            <div class="chat-bubble-content">
+                <div class="chat-sender-header">
+                    <span class="chat-sender-name">🤖 ผู้ช่วย AI</span>
+                    <span class="chat-time">${currentTime}</span>
+                </div>
+                <div class="chat-typing-bubble">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span style="font-size:0.75rem; color:#888; margin-left:6px; font-weight:600;">กำลังพิมพ์ข้อความ... 💬</span>
+                </div>
+            </div>
+        `;
+        container.appendChild(typingRow);
+        container.scrollTop = container.scrollHeight;
+        isBotTyping = true;
+    }
+
+    window.sendQuickReply = function(option) {
+        closeQuickMenuPopup();
+        const userText = quickPromptsMap[option] || 'คำถามด่วน';
+        showTypingIndicator(userText);
+
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+
+        if (isPhpServer) {
+            const formData = new FormData();
+            formData.append('action', 'quick_reply');
+            formData.append('option', option);
+
+            fetch('api_chat.php', { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(() => {
+                    setTimeout(() => {
+                        isBotTyping = false;
+                        const typing = document.getElementById('chat-typing-indicator');
+                        if (typing) typing.remove();
+                        loadChatMessages(true);
+                    }, 1200);
+                })
+                .catch(() => triggerClientQuickReply(option, userText));
+        } else {
+            triggerClientQuickReply(option, userText);
+        }
+    };
+
+    function triggerClientQuickReply(option, userText) {
+        setTimeout(() => {
+            isBotTyping = false;
+            const typing = document.getElementById('chat-typing-indicator');
+            if (typing) typing.remove();
+
+            const botData = BOT_RESPONSES[option] || {
+                text: "สวัสดีครับ! สนใจสอบถามข้อมูลน้องแมวตัวไหนเป็นพิเศษ ทักแชทบอกแอดมินได้เลยครับ 🐾",
+                cards: []
+            };
+
+            const msgs = getLocalChatMessages();
+            msgs.push({
+                id: 'msg_c_' + Date.now(),
+                sender: 'customer',
+                sender_name: 'คุณ',
+                text: userText,
+                cards: [],
+                timestamp: getCurrentTimeFormatted()
+            });
+            msgs.push({
+                id: 'msg_b_' + Date.now(),
+                sender: 'bot',
+                sender_name: 'Purrfect Advisor 🐾',
+                text: botData.text,
+                cards: botData.cards || [],
+                timestamp: getCurrentTimeFormatted()
+            });
+
+            saveLocalChatMessages(msgs);
+            renderMessages(msgs, true);
+        }, 1200);
+    }
+
+    window.handleSendChatMessage = function(e) {
+        e.preventDefault();
+        const input = document.getElementById('chat-input-text');
+        const text = input.value.trim();
+        if (!text) return;
+
+        input.value = '';
+        showTypingIndicator(text);
+
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+
+        if (isPhpServer) {
+            const formData = new FormData();
+            formData.append('action', 'send_message');
+            formData.append('message', text);
+
+            fetch('api_chat.php', { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(() => {
+                    setTimeout(() => {
+                        isBotTyping = false;
+                        const typing = document.getElementById('chat-typing-indicator');
+                        if (typing) typing.remove();
+                        loadChatMessages(true);
+                    }, 1200);
+                })
+                .catch(() => triggerClientChatMessage(text));
+        } else {
+            triggerClientChatMessage(text);
+        }
+    };
+
+    function triggerClientChatMessage(text) {
+        setTimeout(() => {
+            isBotTyping = false;
+            const typing = document.getElementById('chat-typing-indicator');
+            if (typing) typing.remove();
+
+            let replyText = "ขอบคุณสำหรับข้อความครับ! 🐾 เจ้าหน้าที่หรือผู้ช่วย AI กำลังตรวจสอบข้อมูลน้องแมวและจะแนะนำให้คุณลูกค้าทันทีครับ หากต้องการดูคำถามด่วนสามารถกดปุ่ม ⚡ คำถาม ได้เลยครับ";
+            let cards = [];
+
+            const lower = text.toLowerCase();
+            if (lower.includes('ราคา') || lower.includes('เท่าไหร่') || lower.includes('โปรโมชั่น') || lower.includes('ส่วนลด') || lower.includes('คูปอง') || lower.includes('cat10off')) {
+                replyText = "🎉 ตอนนี้มีโปรโมชั่นพิเศษ:\n• โค้ด CAT10OFF ลดทันที 10% (ขั้นต่ำ 300.-)\n• โค้ด NEWMEMBER5 ลด 5% สำหรับสมาชิกใหม่\n• แถมฟรี Starter Kit 11 ชิ้นมูลค่า 4,500.- ทุกออเดอร์ครับ!";
+                cards = BOT_RESPONSES[5].cards;
+            } else if (lower.includes('คอนโด') || lower.includes('ห้องพัก')) {
+                replyText = BOT_RESPONSES[2].text;
+                cards = BOT_RESPONSES[2].cards;
+            } else if (lower.includes('แพ้') || lower.includes('ภูมิแพ้') || lower.includes('ขนร่วง')) {
+                replyText = BOT_RESPONSES[3].text;
+                cards = BOT_RESPONSES[3].cards;
+            } else if (lower.includes('ส่ง') || lower.includes('ประกัน') || lower.includes('วัคซีน')) {
+                replyText = BOT_RESPONSES[6].text;
+            } else if (lower.includes('สวัสดี') || lower.includes('หวัดดี') || lower.includes('hello') || lower.includes('hi')) {
+                replyText = "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 สนใจน้องแมวพันธุ์ไหนเป็นพิเศษ หรือสอบถามการดูแล สามารถเลือกคำถามด่วนด้านล่างหรือพิมพ์คุยได้เลยครับ";
+                cards = BOT_RESPONSES[1].cards;
+            }
+
+            const msgs = getLocalChatMessages();
+            msgs.push({
+                id: 'msg_c_' + Date.now(),
+                sender: 'customer',
+                sender_name: 'คุณ',
+                text: text,
+                cards: [],
+                timestamp: getCurrentTimeFormatted()
+            });
+            msgs.push({
+                id: 'msg_b_' + Date.now(),
+                sender: 'bot',
+                sender_name: 'Purrfect Advisor 🐾',
+                text: replyText,
+                cards: cards,
+                timestamp: getCurrentTimeFormatted()
+            });
+
+            saveLocalChatMessages(msgs);
+            renderMessages(msgs, true);
+        }, 1200);
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadChatMessages(false);
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+        if (isPhpServer) {
+            pollInterval = setInterval(() => {
+                if (chatIsOpen && !isBotTyping) {
+                    loadChatMessages(false);
+                }
+            }, 3500);
+        }
+    });
+})();
+</script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

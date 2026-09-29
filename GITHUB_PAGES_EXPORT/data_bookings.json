@@ -1,0 +1,32 @@
+[
+    {
+        "id": "BK-20260930-881",
+        "name": "คุณศิรินภา วรโชติ",
+        "phone": "081-456-7890",
+        "email": "sirinapa@gmail.com",
+        "service_type": "farm_visit",
+        "service_name": "เยี่ยมชมฟาร์ม & อุ้มน้องตัวจริง (Farm Visit VIP)",
+        "breed_interest": "บริติช ช็อตแฮร์ (น้องสโนว์)",
+        "booking_date": "2026-10-02",
+        "time_slot": "ช่วงบ่าย (14:00 - 15:30 น.)",
+        "guests_count": 2,
+        "special_request": "อยากพาน้องแมวตัวเดิมมาลองดมกลิ่นทำความรู้จัก",
+        "status": "confirmed",
+        "created_at": "2026-09-28 14:20:00"
+    },
+    {
+        "id": "BK-20261001-992",
+        "name": "คุณกิตติศักดิ์ อานนท์",
+        "phone": "089-888-2345",
+        "email": "kittisak@yahoo.com",
+        "service_type": "video_call",
+        "service_name": "นัด Video Call ชมความน่ารักสด 1-on-1",
+        "breed_interest": "แร็กดอลล์ (น้องคอตตอน)",
+        "booking_date": "2026-10-03",
+        "time_slot": "ช่วงค่ำ (18:00 - 19:00 น.)",
+        "guests_count": 1,
+        "special_request": "ขอดูคลิปตอนน้องทานอาหารและวิ่งเล่นสดๆ ผ่าน LINE",
+        "status": "confirmed",
+        "created_at": "2026-09-29 09:15:00"
+    }
+]

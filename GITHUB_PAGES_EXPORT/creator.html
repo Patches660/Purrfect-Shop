@@ -34,14 +34,70 @@
         fbq('track', 'PageView');
     </script>
 
-    <script>
-        (function() {
-            try {
-                const savedTheme = localStorage.getItem('cat_shop_theme') || 'warm';
-                document.documentElement.setAttribute('data-theme', savedTheme);
-            } catch(e) {}
-        })();
-    </script>
+    <style>
+        /* Nav Dropdown Menu Styles */
+        .nav-dropdown-wrapper {
+            position: relative;
+        }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+            padding: 0.6rem;
+            min-width: 280px;
+            list-style: none;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .nav-dropdown-wrapper:hover .nav-dropdown-menu,
+        .nav-dropdown-wrapper:focus-within .nav-dropdown-menu {
+            display: flex;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.65rem 0.85rem;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+        .nav-dropdown-menu li a:hover,
+        .nav-dropdown-menu li a.active {
+            background: rgba(255, 107, 74, 0.1);
+            color: var(--primary-coral);
+            transform: translateX(3px);
+        }
+        .nav-dd-icon {
+            font-size: 1.35rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .nav-dd-title {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .nav-dd-sub {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
@@ -119,20 +175,82 @@
                                 <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="tracking.html" class="nav-link ">
-                                📍 ติดตามการจัดส่ง
+                        <!-- 5 New Features + Services Dropdown Menu -->
+                        <li class="nav-dropdown-wrapper" style="position: relative;">
+                            <a href="#" class="nav-link nav-dropdown-trigger active" style="display: inline-flex; align-items: center; gap: 4px;">
+                                ✨ บริการ & กิจกรรม ▾
                             </a>
-                        </li>
-                        <li>
-                            <a href="creator.html" class="nav-link active">
-                                👨‍💻 ผู้จัดทำ
-                            </a>
+                            <ul class="nav-dropdown-menu">
+                                <li>
+                                    <a href="reviews.html" class="">
+                                        <span class="nav-dd-icon">⭐</span>
+                                        <div>
+                                            <strong class="nav-dd-title">รีวิวน้องแมว & ย้ายบ้าน</strong>
+                                            <small class="nav-dd-sub">ภาพความประทับใจจากลูกค้าจริง</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="booking.html" class="">
+                                        <span class="nav-dd-icon">📅</span>
+                                        <div>
+                                            <strong class="nav-dd-title">จองคิวนัดดูตัว / Video Call</strong>
+                                            <small class="nav-dd-sub">เยี่ยมชมฟาร์ม & นัดดูสดผ่าน LINE</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pedigree.html" class="">
+                                        <span class="nav-dd-icon">🩺</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ตรวจสอบใบเพ็ด & วัคซีน</strong>
+                                            <small class="nav-dd-sub">เช็คเลขไมโครชิป & ประวัติสุขภาพ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="calculator.html" class="">
+                                        <span class="nav-dd-icon">🧮</span>
+                                        <div>
+                                            <strong class="nav-dd-title">คำนวณค่าเลี้ยงดูน้องแมว</strong>
+                                            <small class="nav-dd-sub">วางแผนงบประมาณรายเดือน/ตลอดชีพ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="lucky_wheel.html" class="">
+                                        <span class="nav-dd-icon">🎡</span>
+                                        <div>
+                                            <strong class="nav-dd-title">วงล้อเสี่ยงโชค Paw Spin</strong>
+                                            <small class="nav-dd-sub">หมุนฟรีลุ้นรับคูปองลด 25%</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li style="border-top: 1px dashed var(--border-color); margin-top: 4px; padding-top: 4px;">
+                                    <a href="tracking.html" class="">
+                                        <span class="nav-dd-icon">📍</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ติดตามการจัดส่ง</strong>
+                                            <small class="nav-dd-sub">ตรวจสอบสถานะการขนส่งสด 4 ขั้นตอน</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="creator.html" class="active">
+                                        <span class="nav-dd-icon">👨‍💻</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ข้อมูลผู้จัดทำ</strong>
+                                            <small class="nav-dd-sub">ประวัติ & ข้อมูลโครงงาน</small>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="cart-badge-container">
                             <a href="cart.html" class="nav-link nav-cart-btn ">
                                 🛒 ตะกร้า
-                                                            </a>
+                                                                <span class="cart-badge" id="cart-badge-val" style="display: none;">0</span>
+                            </a>
                         </li>
                     </ul>
                 </nav>
@@ -232,6 +350,66 @@
                         <span class="drawer-badge-pill" style="background: #FF5A5F; color: #FFFFFF; font-weight: 800;">HOT</span>
                     </a>
 
+                    <a href="cart.html" class="drawer-link-item " style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🛒</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
+                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
+                        </div>
+                                                <span class="drawer-badge-pill" id="drawer-cart-badge-val" style="display: none; background: var(--primary-coral); color: #FFFFFF; font-weight: 800;">0 ตัว</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- หมวดที่ 3: บริการ & ฟีเจอร์พิเศษสำหรับทาสแมว -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>✨ หมวดที่ 3: บริการ & ฟีเจอร์พิเศษสำหรับทาสแมว</span>
+                </div>
+                <div class="drawer-grid">
+                    <a href="reviews.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">⭐</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">รีวิวน้องแมว & ย้ายบ้าน</span>
+                            <span class="drawer-link-sub">ภาพความประทับใจจากลูกค้าจริง 100%</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FEF3C7; color: #92400E;">5.0 ★</span>
+                    </a>
+
+                    <a href="booking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">📅</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">จองคิวนัดดูตัว / Video Call</span>
+                            <span class="drawer-link-sub">นัดชมฟาร์ม & 1-on-1 LIVE Call</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #DCFCE7; color: #166534;">นัดสด</span>
+                    </a>
+
+                    <a href="pedigree.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🩺</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ตรวจสอบใบเพ็ด & สมุดวัคซีน</span>
+                            <span class="drawer-link-sub">ค้นหาด้วยเลข Microchip ทันที</span>
+                        </div>
+                    </a>
+
+                    <a href="calculator.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🧮</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">เครื่องคำนวณค่าเลี้ยงดู</span>
+                            <span class="drawer-link-sub">คำนวณงบประมาณ รายเดือน/15 ปี</span>
+                        </div>
+                    </a>
+
+                    <a href="lucky_wheel.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🎡</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">วงล้อเสี่ยงโชค Paw Spin</span>
+                            <span class="drawer-link-sub">หมุนฟรีรับส่วนลด 25% & ของแถม</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FEE2E2; color: #991B1B;">หมุนฟรี!</span>
+                    </a>
+
                     <a href="tracking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
                         <span class="drawer-link-icon">📍</span>
                         <div class="drawer-link-info">
@@ -243,18 +421,10 @@
                     <a href="creator.html" class="drawer-link-item active" onclick="closeMobileDrawer()">
                         <span class="drawer-link-icon">👨‍💻</span>
                         <div class="drawer-link-info">
-                            <span class="drawer-link-title">ผู้จัดทำ</span>
+                            <span class="drawer-link-title">ข้อมูลผู้จัดทำ</span>
                             <span class="drawer-link-sub">ประวัติ & ข้อมูลโครงงาน</span>
                         </div>
                     </a>
-
-                    <a href="cart.html" class="drawer-link-item " style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
-                        <span class="drawer-link-icon">🛒</span>
-                        <div class="drawer-link-info">
-                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
-                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
-                        </div>
-                                            </a>
                 </div>
             </div>
         </div>
@@ -393,7 +563,7 @@
                         </p>
                     </div>
                 </div>
-                <form action="subscribe.html" onsubmit="event.preventDefault(); alert('ขอบคุณที่สมัครรับข่าวสาร Purrfect Shop 🐾');" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
+                <form action="subscribe.html" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
                     <input type="email" name="subscriber_email" placeholder="กรอกอีเมลของคุณ เช่น name@gmail.com" required style="flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
                     <button type="submit" class="btn btn-primary" style="border-radius: 999px; padding: 10px 22px; font-weight: 800; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);">
                         ติดตามข่าวสาร ✨
@@ -421,11 +591,11 @@
             <div class="footer-col">
                 <h4>หมวดหมู่แนะนำ</h4>
                 <ul>
-                    <li><a href="recommend.html">🔥 สายพันธุ์ยอดนิยม</a></li>
-                    <li><a href="recommend.html">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
-                    <li><a href="recommend.html">🧸 แมวขนยาวนุ่มฟู</a></li>
-                    <li><a href="recommend.html">✨ แมวขนสั้นดูแลง่าย</a></li>
-                    <li><a href="recommend.html">👶 มือใหม่เลี้ยงง่าย</a></li>
+                    <li><a href="recommend.html?cat=popular">🔥 สายพันธุ์ยอดนิยม</a></li>
+                    <li><a href="recommend.html?cat=condo">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
+                    <li><a href="recommend.html?cat=fluffy">🧸 แมวขนยาวนุ่มฟู</a></li>
+                    <li><a href="recommend.html?cat=short_hair">✨ แมวขนสั้นดูแลง่าย</a></li>
+                    <li><a href="recommend.html?cat=beginner">👶 มือใหม่เลี้ยงง่าย</a></li>
                 </ul>
             </div>
 

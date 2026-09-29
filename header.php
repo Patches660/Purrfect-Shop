@@ -44,14 +44,70 @@ $logged_user = getCurrentUser();
         fbq('track', 'PageView');
     </script>
 
-    <script>
-        (function() {
-            try {
-                const savedTheme = localStorage.getItem('cat_shop_theme') || 'warm';
-                document.documentElement.setAttribute('data-theme', savedTheme);
-            } catch(e) {}
-        })();
-    </script>
+    <style>
+        /* Nav Dropdown Menu Styles */
+        .nav-dropdown-wrapper {
+            position: relative;
+        }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+            padding: 0.6rem;
+            min-width: 280px;
+            list-style: none;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .nav-dropdown-wrapper:hover .nav-dropdown-menu,
+        .nav-dropdown-wrapper:focus-within .nav-dropdown-menu {
+            display: flex;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.65rem 0.85rem;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+        .nav-dropdown-menu li a:hover,
+        .nav-dropdown-menu li a.active {
+            background: rgba(255, 107, 74, 0.1);
+            color: var(--primary-coral);
+            transform: translateX(3px);
+        }
+        .nav-dd-icon {
+            font-size: 1.35rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .nav-dd-title {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .nav-dd-sub {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
@@ -150,25 +206,82 @@ $logged_user = getCurrentUser();
                                 <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="tracking.php" class="nav-link <?php echo $current_page == 'tracking.php' ? 'active' : ''; ?>">
-                                📍 ติดตามการจัดส่ง
+                        <!-- 5 New Features + Services Dropdown Menu -->
+                        <li class="nav-dropdown-wrapper" style="position: relative;">
+                            <a href="#" class="nav-link nav-dropdown-trigger <?php echo in_array($current_page, ['reviews.php', 'booking.php', 'pedigree.php', 'calculator.php', 'lucky_wheel.php', 'tracking.php', 'creator.php']) ? 'active' : ''; ?>" style="display: inline-flex; align-items: center; gap: 4px;">
+                                ✨ บริการ & กิจกรรม ▾
                             </a>
-                        </li>
-                        <li>
-                            <a href="creator.php" class="nav-link <?php echo $current_page == 'creator.php' ? 'active' : ''; ?>">
-                                👨‍💻 ผู้จัดทำ
-                            </a>
+                            <ul class="nav-dropdown-menu">
+                                <li>
+                                    <a href="reviews.php" class="<?php echo $current_page == 'reviews.php' ? 'active' : ''; ?>">
+                                        <span class="nav-dd-icon">⭐</span>
+                                        <div>
+                                            <strong class="nav-dd-title">รีวิวน้องแมว & ย้ายบ้าน</strong>
+                                            <small class="nav-dd-sub">ภาพความประทับใจจากลูกค้าจริง</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="booking.php" class="<?php echo $current_page == 'booking.php' ? 'active' : ''; ?>">
+                                        <span class="nav-dd-icon">📅</span>
+                                        <div>
+                                            <strong class="nav-dd-title">จองคิวนัดดูตัว / Video Call</strong>
+                                            <small class="nav-dd-sub">เยี่ยมชมฟาร์ม & นัดดูสดผ่าน LINE</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pedigree.php" class="<?php echo $current_page == 'pedigree.php' ? 'active' : ''; ?>">
+                                        <span class="nav-dd-icon">🩺</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ตรวจสอบใบเพ็ด & วัคซีน</strong>
+                                            <small class="nav-dd-sub">เช็คเลขไมโครชิป & ประวัติสุขภาพ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="calculator.php" class="<?php echo $current_page == 'calculator.php' ? 'active' : ''; ?>">
+                                        <span class="nav-dd-icon">🧮</span>
+                                        <div>
+                                            <strong class="nav-dd-title">คำนวณค่าเลี้ยงดูน้องแมว</strong>
+                                            <small class="nav-dd-sub">วางแผนงบประมาณรายเดือน/ตลอดชีพ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="lucky_wheel.php" class="<?php echo $current_page == 'lucky_wheel.php' ? 'active' : ''; ?>">
+                                        <span class="nav-dd-icon">🎡</span>
+                                        <div>
+                                            <strong class="nav-dd-title">วงล้อเสี่ยงโชค Paw Spin</strong>
+                                            <small class="nav-dd-sub">หมุนฟรีลุ้นรับคูปองลด 25%</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li style="border-top: 1px dashed var(--border-color); margin-top: 4px; padding-top: 4px;">
+                                    <a href="tracking.php" class="<?php echo $current_page == 'tracking.php' ? 'active' : ''; ?>">
+                                        <span class="nav-dd-icon">📍</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ติดตามการจัดส่ง</strong>
+                                            <small class="nav-dd-sub">ตรวจสอบสถานะการขนส่งสด 4 ขั้นตอน</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="creator.php" class="<?php echo $current_page == 'creator.php' ? 'active' : ''; ?>">
+                                        <span class="nav-dd-icon">👨‍💻</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ข้อมูลผู้จัดทำ</strong>
+                                            <small class="nav-dd-sub">ประวัติ & ข้อมูลโครงงาน</small>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="cart-badge-container">
                             <a href="cart.php" class="nav-link nav-cart-btn <?php echo $current_page == 'cart.php' ? 'active' : ''; ?>">
                                 🛒 ตะกร้า
-                                <?php 
-                                $count = getCartCount();
-                                if ($count > 0): 
-                                ?>
-                                    <span class="cart-badge" id="cart-badge-val"><?php echo $count; ?></span>
-                                <?php endif; ?>
+                                <?php $count = getCartCount(); ?>
+                                <span class="cart-badge" id="cart-badge-val" style="<?php echo $count > 0 ? '' : 'display: none;'; ?>"><?php echo $count > 0 ? $count : '0'; ?></span>
                             </a>
                         </li>
                     </ul>
@@ -307,6 +420,67 @@ $logged_user = getCurrentUser();
                         <span class="drawer-badge-pill" style="background: #FF5A5F; color: #FFFFFF; font-weight: 800;">HOT</span>
                     </a>
 
+                    <a href="cart.php" class="drawer-link-item <?php echo $current_page == 'cart.php' ? 'active' : ''; ?>" style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🛒</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
+                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
+                        </div>
+                        <?php $drawer_cart_count = getCartCount(); ?>
+                        <span class="drawer-badge-pill" id="drawer-cart-badge-val" style="<?php echo $drawer_cart_count > 0 ? '' : 'display: none;'; ?> background: var(--primary-coral); color: #FFFFFF; font-weight: 800;"><?php echo $drawer_cart_count > 0 ? $drawer_cart_count . ' ตัว' : '0 ตัว'; ?></span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- หมวดที่ 3: บริการ & ฟีเจอร์พิเศษสำหรับทาสแมว -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>✨ หมวดที่ 3: บริการ & ฟีเจอร์พิเศษสำหรับทาสแมว</span>
+                </div>
+                <div class="drawer-grid">
+                    <a href="reviews.php" class="drawer-link-item <?php echo $current_page == 'reviews.php' ? 'active' : ''; ?>" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">⭐</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">รีวิวน้องแมว & ย้ายบ้าน</span>
+                            <span class="drawer-link-sub">ภาพความประทับใจจากลูกค้าจริง 100%</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FEF3C7; color: #92400E;">5.0 ★</span>
+                    </a>
+
+                    <a href="booking.php" class="drawer-link-item <?php echo $current_page == 'booking.php' ? 'active' : ''; ?>" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">📅</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">จองคิวนัดดูตัว / Video Call</span>
+                            <span class="drawer-link-sub">นัดชมฟาร์ม & 1-on-1 LIVE Call</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #DCFCE7; color: #166534;">นัดสด</span>
+                    </a>
+
+                    <a href="pedigree.php" class="drawer-link-item <?php echo $current_page == 'pedigree.php' ? 'active' : ''; ?>" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🩺</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ตรวจสอบใบเพ็ด & สมุดวัคซีน</span>
+                            <span class="drawer-link-sub">ค้นหาด้วยเลข Microchip ทันที</span>
+                        </div>
+                    </a>
+
+                    <a href="calculator.php" class="drawer-link-item <?php echo $current_page == 'calculator.php' ? 'active' : ''; ?>" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🧮</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">เครื่องคำนวณค่าเลี้ยงดู</span>
+                            <span class="drawer-link-sub">คำนวณงบประมาณ รายเดือน/15 ปี</span>
+                        </div>
+                    </a>
+
+                    <a href="lucky_wheel.php" class="drawer-link-item <?php echo $current_page == 'lucky_wheel.php' ? 'active' : ''; ?>" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🎡</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">วงล้อเสี่ยงโชค Paw Spin</span>
+                            <span class="drawer-link-sub">หมุนฟรีรับส่วนลด 25% & ของแถม</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FEE2E2; color: #991B1B;">หมุนฟรี!</span>
+                    </a>
+
                     <a href="tracking.php" class="drawer-link-item <?php echo $current_page == 'tracking.php' ? 'active' : ''; ?>" onclick="closeMobileDrawer()">
                         <span class="drawer-link-icon">📍</span>
                         <div class="drawer-link-info">
@@ -318,23 +492,9 @@ $logged_user = getCurrentUser();
                     <a href="creator.php" class="drawer-link-item <?php echo $current_page == 'creator.php' ? 'active' : ''; ?>" onclick="closeMobileDrawer()">
                         <span class="drawer-link-icon">👨‍💻</span>
                         <div class="drawer-link-info">
-                            <span class="drawer-link-title">ผู้จัดทำ</span>
+                            <span class="drawer-link-title">ข้อมูลผู้จัดทำ</span>
                             <span class="drawer-link-sub">ประวัติ & ข้อมูลโครงงาน</span>
                         </div>
-                    </a>
-
-                    <a href="cart.php" class="drawer-link-item <?php echo $current_page == 'cart.php' ? 'active' : ''; ?>" style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
-                        <span class="drawer-link-icon">🛒</span>
-                        <div class="drawer-link-info">
-                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
-                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
-                        </div>
-                        <?php 
-                        $drawer_cart_count = getCartCount();
-                        if ($drawer_cart_count > 0): 
-                        ?>
-                            <span class="drawer-badge-pill" style="background: var(--primary-coral); color: #FFFFFF; font-weight: 800;"><?php echo $drawer_cart_count; ?> ตัว</span>
-                        <?php endif; ?>
                     </a>
                 </div>
             </div>

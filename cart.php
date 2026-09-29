@@ -34,10 +34,39 @@ $default_bank = $currUser ? ($currUser['bank_name'] ?? 'ธนาคารกส
 $default_bank_account = $currUser ? ($currUser['bank_account'] ?? '') : '';
 $user_points = $currUser ? intval($currUser['paw_points'] ?? 150) : 150;
 
-// Handle Cart GET Actions (remove, clear)
+// Handle Add to Cart action (POST & GET)
+if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_cat') {
+    $cat_id = $_POST['cat_id'] ?? '';
+    if (!empty($cat_id)) {
+        addToCart($cat_id);
+    }
+}
+if (isset($_GET['add'])) {
+    $cat_id = $_GET['add'];
+    if (!empty($cat_id)) {
+        addToCart($cat_id);
+    }
+}
+
+// Handle Cart GET Actions (remove, clear, update_qty)
 if (isset($_GET['action'])) {
     $action = $_GET['action'];
     
+    if ($action === 'update_qty' && isset($_GET['id']) && isset($_GET['delta'])) {
+        $update_id = $_GET['id'];
+        $delta = intval($_GET['delta']);
+        if (isset($_SESSION['cart'][$update_id])) {
+            $new_qty = ($_SESSION['cart'][$update_id]['qty'] ?? 1) + $delta;
+            if ($new_qty <= 0) {
+                unset($_SESSION['cart'][$update_id]);
+            } else {
+                $_SESSION['cart'][$update_id]['qty'] = $new_qty;
+            }
+        }
+        header("Location: cart.php");
+        exit;
+    }
+
     if ($action === 'remove' && isset($_GET['id'])) {
         $remove_id = $_GET['id'];
         if (isset($_SESSION['cart'][$remove_id])) {
@@ -147,8 +176,36 @@ if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) &&
         if ($checkout_success) {
             $invoice_data = $_SESSION['cart'];
             $invoice_subtotal = getCartSubtotal();
-            $invoice_discount = getMemberDiscount($invoice_subtotal);
-            $after_discount = $invoice_subtotal - $invoice_discount;
+            
+            $applied_coupon = trim($_POST['applied_coupon'] ?? '');
+            $coupon_discount = 0;
+            $coupon_title = "";
+            if (!empty($applied_coupon)) {
+                $coupon_upper = strtoupper($applied_coupon);
+                if (in_array($coupon_upper, ['PURR25NEW', 'LUCKY25', 'MEOWKIT25', 'TREAT25'])) {
+                    $coupon_discount = round($invoice_subtotal * 0.25);
+                    $coupon_title = "ส่วนลด 25% ({$coupon_upper})";
+                } elseif (in_array($coupon_upper, ['WELCOME15', 'VIPPAW15'])) {
+                    $coupon_discount = round($invoice_subtotal * 0.15);
+                    $coupon_title = "ส่วนลด 15% ({$coupon_upper})";
+                } elseif (in_array($coupon_upper, ['CATNEWS10'])) {
+                    $coupon_discount = round($invoice_subtotal * 0.10);
+                    $coupon_title = "ส่วนลด 10% ({$coupon_upper})";
+                } elseif ($coupon_upper === 'LUCKY500') {
+                    $coupon_discount = min($invoice_subtotal, 500);
+                    $coupon_title = "ส่วนลดเงินสด ฿500 ({$coupon_upper})";
+                } elseif ($coupon_upper === 'LUCKY1000') {
+                    $coupon_discount = min($invoice_subtotal, 1000);
+                    $coupon_title = "ส่วนลดเงินสด ฿1,000 ({$coupon_upper})";
+                } else {
+                    $coupon_discount = round($invoice_subtotal * 0.10);
+                    $coupon_title = "คูปองส่วนลด ({$coupon_upper})";
+                }
+            }
+
+            $member_discount = getMemberDiscount($invoice_subtotal);
+            $invoice_discount = $member_discount + $coupon_discount;
+            $after_discount = max(0, $invoice_subtotal - $invoice_discount);
             $invoice_vat = round($after_discount * 0.07, 2);
             $invoice_total = $after_discount + $invoice_vat;
             $invoice_id = 'PFC-' . date('ymd') . '-' . strtoupper(substr(md5(uniqid()), 0, 4));
@@ -176,6 +233,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) &&
                 'items' => array_values($invoice_data),
                 'cat_count' => count($invoice_data),
                 'subtotal' => $invoice_subtotal,
+                'member_discount' => $member_discount,
+                'coupon_code' => $applied_coupon,
+                'coupon_title' => $coupon_title,
+                'coupon_discount' => $coupon_discount,
                 'discount' => $invoice_discount,
                 'vat' => $invoice_vat,
                 'total' => $invoice_total,
@@ -391,10 +452,16 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                     <span><?php echo number_format($invoice_subtotal); ?> ฿</span>
                 </div>
                 
-                <?php if ($invoice_discount > 0): ?>
+                <?php if (!empty($coupon_discount) && $coupon_discount > 0): ?>
+                    <div class="summary-row" style="color: #059669; font-weight: 700;">
+                        <span>🎟️ ส่วนลดคูปอง & รางวัล (<?php echo htmlspecialchars($coupon_title); ?>):</span>
+                        <span>-<?php echo number_format($coupon_discount); ?> ฿</span>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($member_discount) && $member_discount > 0): ?>
                     <div class="summary-row" style="color: var(--accent-mint); font-weight: 600;">
                         <span>ส่วนลดสมาชิกพิเศษ (5%):</span>
-                        <span>-<?php echo number_format($invoice_discount); ?> ฿</span>
+                        <span>-<?php echo number_format($member_discount); ?> ฿</span>
                     </div>
                 <?php endif; ?>
 
@@ -455,30 +522,28 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
 
 <?php else: ?>
 
-    <?php if (empty($_SESSION['cart'])): ?>
-        <!-- Empty Cart -->
-        <div style="text-align: center; padding: 4rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 580px; margin: 0 auto; box-shadow: var(--shadow-sm);">
-            <div style="font-size: 4.5rem; margin-bottom: 1rem;">🧺</div>
-            <h2 style="font-size: 1.7rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem;">
-                ยังไม่มีน้องแมวในตะกร้าของคุณ
-            </h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.6;">
-                ค้นหาน้องแมวสายพันธุ์ที่ใช่เพื่อมอบความรักและความอบอุ่นให้กับบ้านของคุณ
-            </p>
-            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                <a href="products.php" class="btn btn-primary btn-lg">
-                    เลือกชมน้องแมวทั้งหมด 🐾
-                </a>
-                <a href="recommend.php" class="btn btn-secondary btn-lg">
-                    ดูระบบแนะนำสายพันธุ์ 🌟
-                </a>
-            </div>
+    <!-- 1. Empty Cart State Container -->
+    <div id="cart-empty-view" style="<?php echo empty($_SESSION['cart']) ? 'display: block;' : 'display: none;'; ?> text-align: center; padding: 4rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 580px; margin: 0 auto; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 4.5rem; margin-bottom: 1rem;">🧺</div>
+        <h2 style="font-size: 1.7rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem;">
+            ยังไม่มีน้องแมวในตะกร้าของคุณ
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.6;">
+            ค้นหาน้องแมวสายพันธุ์ที่ใช่เพื่อมอบความรักและความอบอุ่นให้กับบ้านของคุณ
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <a href="products.php" class="btn btn-primary btn-lg">
+                เลือกชมน้องแมวทั้งหมด 🐾
+            </a>
+            <a href="recommend.php" class="btn btn-secondary btn-lg">
+                ดูระบบแนะนำสายพันธุ์ 🌟
+            </a>
         </div>
-    <?php else: ?>
-        <!-- =========================================================
-             2-COLUMN PROFESSIONAL CHECKOUT FORM
-             ========================================================= -->
-        <form method="POST" action="cart.php" id="checkout-form">
+    </div>
+
+    <!-- 2. Active Cart / Checkout Form Container -->
+    <div id="cart-form-view" style="<?php echo !empty($_SESSION['cart']) ? 'display: block;' : 'display: none;'; ?>">
+        <form method="POST" action="cart.php" id="checkout-form" onsubmit="handleCheckoutFormSubmit(event)">
             <input type="hidden" name="action" value="checkout">
 
             <div class="cart-layout">
@@ -496,15 +561,16 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                         <div class="checkout-block-header">
                             <h3 class="checkout-block-title">
                                 <span>🐾 1. รายการน้องแมวที่เลือกรับเลี้ยง</span>
-                                <span style="font-size: 0.82rem; font-weight: 500; color: var(--text-muted);">(<?php echo getCartCount(); ?> ตัว)</span>
+                                <span style="font-size: 0.82rem; font-weight: 500; color: var(--text-muted);" id="cartCountBadge">(<?php echo getCartCount(); ?> ตัว)</span>
                             </h3>
-                            <a href="cart.php?action=clear" style="font-size: 0.82rem; color: #EF4444; text-decoration: none; font-weight: 600;">
+                            <a href="cart.php?action=clear" onclick="clearCartClient(event)" style="font-size: 0.82rem; color: #EF4444; text-decoration: none; font-weight: 600; cursor: pointer;">
                                 ล้างตะกร้าทั้งหมด 🧹
                             </a>
                         </div>
 
+                        <div id="cart-items-wrapper">
                         <?php foreach ($_SESSION['cart'] as $id => $item): ?>
-                            <div class="cart-item">
+                            <div class="cart-item" data-id="<?php echo htmlspecialchars($id); ?>">
                                 <div class="cart-item-left">
                                     <img src="assets/images/<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>" class="cart-item-thumb">
                                     <div>
@@ -520,18 +586,31 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                                     </div>
                                 </div>
 
-                                <div style="display: flex; align-items: center; gap: 1.5rem;">
-                                    <div class="cart-item-price">
+                                <div class="cart-item-right" style="display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;">
+                                    <!-- Quantity Stepper Controls -->
+                                    <div class="cart-qty-stepper" title="ปรับจำนวนการรับเลี้ยง">
+                                        <a href="cart.php?action=update_qty&id=<?php echo urlencode($id); ?>&delta=-1" 
+                                           onclick="updateCartQtyClient(event, '<?php echo htmlspecialchars($id); ?>', -1)"
+                                           class="qty-btn" title="ลดจำนวน">-</a>
+                                        <span class="qty-val"><?php echo $item['qty'] ?? 1; ?></span>
+                                        <a href="cart.php?action=update_qty&id=<?php echo urlencode($id); ?>&delta=1" 
+                                           onclick="updateCartQtyClient(event, '<?php echo htmlspecialchars($id); ?>', 1)"
+                                           class="qty-btn" title="เพิ่มจำนวน">+</a>
+                                    </div>
+
+                                    <div class="cart-item-price" style="min-width: 95px; text-align: right;">
                                         <?php echo number_format($item['price'] * $item['qty']); ?> ฿
                                     </div>
                                     <a href="cart.php?action=remove&id=<?php echo urlencode($id); ?>" 
-                                       style="color: #EF4444; text-decoration: none; font-size: 1.1rem; padding: 0.4rem;" 
+                                       onclick="removeCartItemClient(event, '<?php echo htmlspecialchars($id); ?>')"
+                                       style="color: #EF4444; text-decoration: none; font-size: 1.1rem; padding: 0.4rem; cursor: pointer;" 
                                        title="ลบรายการ">
                                         🗑️
                                     </a>
                                 </div>
                             </div>
                         <?php endforeach; ?>
+                        </div>
 
                         <!-- Free Welcome Kit Banner -->
                         <div style="background: var(--bg-card-subtle); border: 1px dashed var(--border-hover); border-radius: var(--radius-md); padding: 0.9rem 1.2rem; margin-top: 1.2rem; display: flex; align-items: center; gap: 0.8rem; font-size: 0.85rem;">
@@ -1012,31 +1091,76 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                             </div>
                         <?php endif; ?>
 
-                        <div class="summary-row">
-                            <span>ราคาสินสอดรวม:</span>
-                            <span><?php echo number_format($cart_subtotal); ?> ฿</span>
+                        <!-- Coupon & Lucky Wheel Rewards Selector Box -->
+                        <div class="coupon-section-box" style="background: var(--bg-card-subtle); border: 1.5px dashed var(--primary-coral); border-radius: var(--radius-md); padding: 1.1rem; margin-bottom: 1.2rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+                                <label for="couponCodeInput" style="font-size: 0.85rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 5px; margin: 0;">
+                                    <span>🎟️ คูปองส่วนลด & ของรางวัล</span>
+                                </label>
+                                <span id="active-coupon-badge" style="display: none; background: #DCFCE7; color: #166534; font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 999px;">
+                                    ✓ ใช้งานอยู่
+                                </span>
+                            </div>
+
+                            <!-- Input Form + Apply / Remove button -->
+                            <div style="display: flex; gap: 6px; margin-bottom: 0.6rem;">
+                                <input type="hidden" name="applied_coupon" id="applied_coupon_input" value="">
+                                <input type="text" id="couponCodeInput" class="form-control" placeholder="กรอกโค้ดส่วนลด..." style="padding: 0.5rem 0.8rem; font-size: 0.85rem; text-transform: uppercase; font-weight: 700; flex: 1;">
+                                <button type="button" class="btn btn-primary btn-sm" id="btnApplyCoupon" onclick="applyCouponManual()" style="padding: 0.5rem 0.9rem; font-size: 0.82rem; font-weight: 700; white-space: nowrap;">
+                                    ใช้โค้ด ➔
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-sm" id="btnRemoveCoupon" onclick="removeCouponClient()" style="display: none; padding: 0.5rem 0.75rem; font-size: 0.82rem; color: #EF4444; border-color: #FCA5A5; background: #FEF2F2; font-weight: 700;">
+                                    ❌ ลบ
+                                </button>
+                            </div>
+
+                            <!-- Quick Select Drawer / Accordion of Available Coupons -->
+                            <div style="border-top: 1px dashed var(--border-color); padding-top: 0.6rem; margin-top: 0.6rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="font-size: 0.78rem; font-weight: 800; color: var(--text-secondary);">🎁 เลือกคูปองจากที่คุณมี:</span>
+                                    <button type="button" onclick="toggleAvailableCoupons()" style="background: none; border: none; font-size: 0.75rem; color: var(--primary-coral); font-weight: 800; cursor: pointer; padding: 0;" id="toggleCouponsBtn">
+                                        ดูทั้งหมด (▾)
+                                    </button>
+                                </div>
+                                <div id="availableCouponsList" style="display: grid; gap: 6px; max-height: 240px; overflow-y: auto; padding-right: 2px;">
+                                    <!-- Dynamic items from LocalStorage and store presets will be rendered here -->
+                                </div>
+                            </div>
                         </div>
 
-                        <?php if ($cart_discount > 0): ?>
-                            <div class="summary-row" style="color: var(--accent-mint); font-weight: 600;">
-                                <span>ส่วนลดสมาชิก (5%):</span>
-                                <span>-<?php echo number_format($cart_discount); ?> ฿</span>
-                            </div>
-                        <?php endif; ?>
+                        <div class="summary-row" style="padding-bottom: 0.4rem; border-bottom: 1px dashed var(--border-color); margin-bottom: 0.6rem;">
+                            <span>จำนวนน้องแมวที่เลือกรับเลี้ยง:</span>
+                            <strong id="summaryCatCountVal" style="color: var(--primary-coral); font-size: 1rem;"><?php echo getCartCount(); ?> ตัว</strong>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>ราคาสินสอดรวม:</span>
+                            <span id="summarySubtotalVal"><?php echo number_format($cart_subtotal); ?> ฿</span>
+                        </div>
+
+                        <div class="summary-row" id="summaryCouponRow" style="display: none; color: #059669; font-weight: 700;">
+                            <span>🎟️ ส่วนลดคูปอง (<span id="summaryCouponName"></span>):</span>
+                            <span id="summaryCouponVal">-0 ฿</span>
+                        </div>
+
+                        <div class="summary-row" id="summaryDiscountRow" style="<?php echo ($cart_discount > 0) ? 'color: var(--accent-mint); font-weight: 600;' : 'display: none; color: var(--accent-mint); font-weight: 600;'; ?>">
+                            <span>ส่วนลดสมาชิก (5%):</span>
+                            <span id="summaryDiscountVal">-<?php echo number_format($cart_discount); ?> ฿</span>
+                        </div>
 
                         <div class="summary-row">
                             <span>ค่าจัดส่งรถตู้ปรับอากาศ (Pet Transport):</span>
-                            <span style="color: var(--accent-mint); font-weight: 600;">ฟรีโปรโมชั่น (0 ฿)</span>
+                            <span style="color: var(--accent-mint); font-weight: 600;" id="summaryShippingVal">ฟรีโปรโมชั่น (0 ฿)</span>
                         </div>
 
                         <div class="summary-row">
                             <span>ภาษีมูลค่าเพิ่ม (VAT 7%):</span>
-                            <span><?php echo number_format($cart_vat, 2); ?> ฿</span>
+                            <span id="summaryVatVal"><?php echo number_format($cart_vat, 2); ?> ฿</span>
                         </div>
 
                         <div class="summary-row total">
                             <span>ยอดชำระสุทธิ:</span>
-                            <span><?php echo number_format($cart_grand_total, 2); ?> ฿</span>
+                            <span id="summaryGrandTotalVal"><?php echo number_format($cart_grand_total, 2); ?> ฿</span>
                         </div>
 
                         <div style="margin-top: 1.5rem;">
@@ -1073,7 +1197,7 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                 </div>
             </div>
         </form>
-    <?php endif; ?>
+    </div>
 
 <?php endif; ?>
 
@@ -1600,6 +1724,557 @@ function reverseGeocodeAddress(lat, lng) {
         })
         .catch(err => console.error(err));
 }
+
+// =========================================================
+// Client-Side Cart Storage & Synchronization (Static HTML Support)
+// =========================================================
+// =========================================================
+// Coupon & Discount System (Supports Wheel Rewards & Store Coupons)
+// =========================================================
+let currentAppliedCoupon = null; // { code, title, discountRate, isCash }
+
+const officialStoreCoupons = [
+    { code: 'PURR25NEW', title: 'ส่วนลดต้อนรับสมาชิก 25%', desc: 'ลด 25% สำหรับการสั่งจองน้องแมวทุกสายพันธุ์', discountRate: 0.25, isCash: false, icon: '🎉', tag: 'สมาชิกใหม่' },
+    { code: 'WELCOME15', title: 'ส่วนลดต้อนรับ 15%', desc: 'ลด 15% สำหรับการรับเลี้ยงน้องแมวตัวแรก', discountRate: 0.15, isCash: false, icon: '✨', tag: 'ต้อนรับ' },
+    { code: 'CATNEWS10', title: 'ส่วนลดจดหมายข่าว 10%', desc: 'สิทธิ์ลด 10% สำหรับผู้ติดตามข่าวสาร', discountRate: 0.10, isCash: false, icon: '📬', tag: 'Newsletter' },
+    { code: 'VIPPAW15', title: 'สิทธิพิเศษ Diamond VIP 15%', desc: 'ส่วนลด 15% ตลอดชีพสำหรับสมาชิกระดับ VIP', discountRate: 0.15, isCash: false, icon: '👑', tag: 'VIP Club' },
+    { code: 'MEOWKIT25', title: 'ส่วนลดเซ็ตของแถม 25%', desc: 'ลด 25% สำหรับแพ็กเกจของใช้และอาหารลูกแมว', discountRate: 0.25, isCash: false, icon: '🎁', tag: 'Starter Kit' }
+];
+
+function toggleAvailableCoupons() {
+    const list = document.getElementById('availableCouponsList');
+    const btn = document.getElementById('toggleCouponsBtn');
+    if (!list) return;
+    if (list.style.display === 'none' || list.style.display === '') {
+        list.style.display = 'grid';
+        if (btn) btn.textContent = 'ย่อ (▴)';
+    } else {
+        list.style.display = 'none';
+        if (btn) btn.textContent = 'ดูทั้งหมด (▾)';
+    }
+}
+
+function getAllUserCoupons() {
+    let list = [];
+    // 1. Won from Lucky Wheel (localStorage: cat_shop_my_rewards)
+    try {
+        const wheelRewards = JSON.parse(localStorage.getItem('cat_shop_my_rewards') || '[]');
+        wheelRewards.forEach(r => {
+            let discountRate = 0.25;
+            let isCash = false;
+            let code = r.code || 'LUCKYPRIZE';
+            if (code.includes('500') || r.title.includes('500')) {
+                discountRate = 500;
+                isCash = true;
+            } else if (code.includes('1000') || r.title.includes('1000')) {
+                discountRate = 1000;
+                isCash = true;
+            } else if (code.includes('15') || r.title.includes('15%')) {
+                discountRate = 0.15;
+            } else if (code.includes('10') || r.title.includes('10%')) {
+                discountRate = 0.10;
+            }
+            list.push({
+                code: code,
+                title: r.title,
+                desc: r.desc || 'รางวัลที่คุณหมุนได้จากวงล้อนำโชค',
+                discountRate: discountRate,
+                isCash: isCash,
+                icon: r.icon || '🎡',
+                tag: '🎡 รางวัลจากวงล้อ',
+                isWheel: true
+            });
+        });
+    } catch(e) {}
+
+    // 2. Official store coupons
+    officialStoreCoupons.forEach(c => {
+        if (!list.some(existing => existing.code.toUpperCase() === c.code.toUpperCase())) {
+            list.push(c);
+        }
+    });
+
+    return list;
+}
+
+function renderAvailableCouponsList() {
+    const container = document.getElementById('availableCouponsList');
+    if (!container) return;
+
+    const coupons = getAllUserCoupons();
+    if (coupons.length === 0) {
+        container.innerHTML = '<div style="font-size:0.8rem; color:var(--text-muted); text-align:center; padding:0.5rem;">ไม่มีคูปองที่ใช้ได้ในขณะนี้</div>';
+        return;
+    }
+
+    container.innerHTML = coupons.map(c => {
+        const isActive = currentAppliedCoupon && currentAppliedCoupon.code.toUpperCase() === c.code.toUpperCase();
+        const discountLabel = c.isCash ? `ลด ฿${c.discountRate.toLocaleString()}` : `ลด ${Math.round(c.discountRate * 100)}%`;
+        
+        return `
+            <div style="background: ${isActive ? '#ECFDF5' : '#FFFFFF'}; border: 1.5px solid ${isActive ? '#10B981' : '#E2E8F0'}; border-radius: 10px; padding: 8px 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; transition: all 0.2s;">
+                <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+                    <span style="font-size: 1.3rem;">${c.icon}</span>
+                    <div style="min-width: 0;">
+                        <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap;">
+                            <strong style="font-size: 0.82rem; color: var(--text-main);">${c.code}</strong>
+                            <span style="background: ${c.isWheel ? '#FEF3C7' : '#EFF6FF'}; color: ${c.isWheel ? '#92400E' : '#1E40AF'}; font-size: 0.68rem; font-weight: 800; padding: 1px 6px; border-radius: 999px;">${c.tag}</span>
+                            <span style="background: #DCFCE7; color: #166534; font-size: 0.68rem; font-weight: 800; padding: 1px 6px; border-radius: 999px;">${discountLabel}</span>
+                        </div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px;">
+                            ${c.title}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    ${isActive 
+                        ? `<button type="button" onclick="removeCouponClient()" style="background: #EF4444; color: #FFF; border: none; border-radius: 6px; font-size: 0.72rem; font-weight: 800; padding: 4px 8px; cursor: pointer;">ยกเลิก</button>`
+                        : `<button type="button" onclick="applyCouponClient('${c.code}', '${c.title}', ${c.discountRate}, ${c.isCash})" style="background: var(--primary-coral); color: #FFF; border: none; border-radius: 6px; font-size: 0.72rem; font-weight: 800; padding: 4px 8px; cursor: pointer; white-space: nowrap;">เลือกใช้</button>`
+                    }
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function applyCouponClient(code, title, discountRate, isCash) {
+    if (!code) return;
+    code = code.trim().toUpperCase();
+    
+    // If rate/cash not provided, look up or calculate
+    if (discountRate === undefined) {
+        if (['PURR25NEW', 'LUCKY25', 'MEOWKIT25', 'TREAT25'].includes(code)) {
+            discountRate = 0.25;
+            isCash = false;
+            title = 'ส่วนลด 25%';
+        } else if (['WELCOME15', 'VIPPAW15'].includes(code)) {
+            discountRate = 0.15;
+            isCash = false;
+            title = 'ส่วนลด 15%';
+        } else if (['CATNEWS10'].includes(code)) {
+            discountRate = 0.10;
+            isCash = false;
+            title = 'ส่วนลด 10%';
+        } else if (code === 'LUCKY500') {
+            discountRate = 500;
+            isCash = true;
+            title = 'ส่วนลดเงินสด ฿500';
+        } else if (code === 'LUCKY1000') {
+            discountRate = 1000;
+            isCash = true;
+            title = 'ส่วนลดเงินสด ฿1,000';
+        } else {
+            discountRate = 0.10;
+            isCash = false;
+            title = 'คูปองส่วนลด';
+        }
+    }
+
+    currentAppliedCoupon = {
+        code: code,
+        title: title || code,
+        discountRate: discountRate,
+        isCash: isCash || false
+    };
+
+    const input = document.getElementById('couponCodeInput');
+    if (input) input.value = code;
+
+    const hiddenInput = document.getElementById('applied_coupon_input');
+    if (hiddenInput) hiddenInput.value = code;
+
+    const badge = document.getElementById('active-coupon-badge');
+    if (badge) {
+        badge.style.display = 'inline-block';
+        badge.textContent = `✓ ${code} (${isCash ? '฿' + discountRate : Math.round(discountRate * 100) + '%'})`;
+    }
+
+    const removeBtn = document.getElementById('btnRemoveCoupon');
+    if (removeBtn) removeBtn.style.display = 'inline-block';
+
+    const applyBtn = document.getElementById('btnApplyCoupon');
+    if (applyBtn) applyBtn.style.display = 'none';
+
+    renderAvailableCouponsList();
+    syncClientCartUI();
+}
+
+function removeCouponClient() {
+    currentAppliedCoupon = null;
+
+    const input = document.getElementById('couponCodeInput');
+    if (input) input.value = '';
+
+    const hiddenInput = document.getElementById('applied_coupon_input');
+    if (hiddenInput) hiddenInput.value = '';
+
+    const badge = document.getElementById('active-coupon-badge');
+    if (badge) badge.style.display = 'none';
+
+    const removeBtn = document.getElementById('btnRemoveCoupon');
+    if (removeBtn) removeBtn.style.display = 'none';
+
+    const applyBtn = document.getElementById('btnApplyCoupon');
+    if (applyBtn) applyBtn.style.display = 'inline-block';
+
+    renderAvailableCouponsList();
+    syncClientCartUI();
+}
+
+function applyCouponManual() {
+    const input = document.getElementById('couponCodeInput');
+    const code = input ? input.value.trim() : '';
+    if (!code) {
+        if (input) {
+            input.focus();
+            input.style.borderColor = '#EF4444';
+            setTimeout(() => { input.style.borderColor = ''; }, 2000);
+        }
+        return;
+    }
+    applyCouponClient(code);
+}
+
+// =========================================================
+// Client-Side Cart Storage & Synchronization (Static HTML Support)
+// =========================================================
+const allCatsData = <?php echo json_encode($cats, JSON_UNESCAPED_UNICODE); ?>;
+
+function getClientCart() {
+    try {
+        return JSON.parse(localStorage.getItem('cat_shop_cart') || '[]');
+    } catch(e) { return []; }
+}
+
+function saveClientCart(cart) {
+    try {
+        localStorage.setItem('cat_shop_cart', JSON.stringify(cart));
+    } catch(e) {}
+}
+
+function syncClientCartUI() {
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    
+    // Check if ?add= is in URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const addCatId = urlParams.get('add');
+    if (addCatId && allCatsData[addCatId]) {
+        let cart = getClientCart();
+        const existing = cart.find(item => item.id === addCatId);
+        if (existing) {
+            existing.qty = (existing.qty || 1) + 1;
+        } else {
+            const cat = allCatsData[addCatId];
+            cart.push({
+                id: cat.id,
+                name: cat.name,
+                breed: cat.breed,
+                price: cat.price,
+                image: cat.image,
+                gender: cat.gender,
+                age: cat.age,
+                qty: 1
+            });
+        }
+        saveClientCart(cart);
+        try {
+            window.history.replaceState({}, '', window.location.pathname);
+        } catch(e) {}
+    }
+
+    const emptyView = document.getElementById('cart-empty-view');
+    const formView = document.getElementById('cart-form-view');
+    const cartWrapper = document.getElementById('cart-items-wrapper');
+    const badge = document.getElementById('cartCountBadge');
+    const summaryCatCount = document.getElementById('summaryCatCountVal');
+    
+    const phpHasCart = <?php echo !empty($_SESSION['cart']) ? 'true' : 'false'; ?>;
+    
+    if (isStatic || !phpHasCart) {
+        const clientCart = getClientCart();
+        if (clientCart.length > 0) {
+            if (emptyView) emptyView.style.display = 'none';
+            if (formView) formView.style.display = 'block';
+
+            let totalCount = 0;
+            let subtotal = 0;
+            clientCart.forEach(item => {
+                const q = (item.qty && item.qty > 0) ? item.qty : 1;
+                totalCount += q;
+                subtotal += (item.price * q);
+            });
+
+            if (badge) badge.textContent = `(${totalCount} ตัว)`;
+            if (summaryCatCount) summaryCatCount.textContent = `${totalCount} ตัว`;
+
+            if (cartWrapper) {
+                cartWrapper.innerHTML = clientCart.map(item => `
+                    <div class="cart-item" data-id="${item.id}">
+                        <div class="cart-item-left">
+                            <img src="assets/images/${item.image}" alt="${item.name}" class="cart-item-thumb">
+                            <div>
+                                <h4 class="cart-item-name">${item.name}</h4>
+                                <div class="cart-item-sub">
+                                    <span>${item.breed}</span> &bull; 
+                                    <span>${item.gender}</span> &bull; 
+                                    <span>${item.age}</span>
+                                </div>
+                                <div style="font-size: 0.78rem; color: var(--accent-mint); font-weight: 600; margin-top: 0.2rem;">
+                                    ✓ ฉีดวัคซีนแล้ว 2 เข็ม • ตรวจสุขภาพพร้อมส่งมอบ
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cart-item-right" style="display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;">
+                            <!-- Quantity Stepper Controls -->
+                            <div class="cart-qty-stepper" title="ปรับจำนวนการรับเลี้ยง">
+                                <button type="button" 
+                                        onclick="updateCartQtyClient(event, '${item.id}', -1)"
+                                        class="qty-btn" title="ลดจำนวน">-</button>
+                                <span class="qty-val">${item.qty || 1}</span>
+                                <button type="button" 
+                                        onclick="updateCartQtyClient(event, '${item.id}', 1)"
+                                        class="qty-btn" title="เพิ่มจำนวน">+</button>
+                            </div>
+
+                            <div class="cart-item-price" style="min-width: 95px; text-align: right;">
+                                ${(item.price * (item.qty || 1)).toLocaleString()} ฿
+                            </div>
+                            <a href="javascript:void(0)" 
+                               onclick="removeCartItemClient(event, '${item.id}')"
+                               style="color: #EF4444; text-decoration: none; font-size: 1.1rem; padding: 0.4rem; cursor: pointer;" 
+                               title="ลบรายการ">
+                                🗑️
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // 1. Coupon Discount Calculation
+            let couponDiscount = 0;
+            if (currentAppliedCoupon) {
+                if (currentAppliedCoupon.isCash) {
+                    couponDiscount = Math.min(subtotal, currentAppliedCoupon.discountRate);
+                } else {
+                    couponDiscount = Math.round(subtotal * currentAppliedCoupon.discountRate);
+                }
+            }
+
+            // 2. Member discount (5% if logged in)
+            const loggedUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : null;
+            let memberDiscount = loggedUser ? Math.round(subtotal * 0.05) : 0;
+            
+            let totalDiscount = memberDiscount + couponDiscount;
+            let afterDiscount = Math.max(0, subtotal - totalDiscount);
+            let vat = Math.round(afterDiscount * 0.07 * 100) / 100;
+            let grandTotal = afterDiscount + vat;
+
+            const subVal = document.getElementById('summarySubtotalVal');
+            if (subVal) subVal.textContent = subtotal.toLocaleString() + ' ฿';
+
+            // Coupon Row UI
+            const couponRow = document.getElementById('summaryCouponRow');
+            const couponName = document.getElementById('summaryCouponName');
+            const couponVal = document.getElementById('summaryCouponVal');
+            if (couponRow && couponVal && couponName) {
+                if (couponDiscount > 0) {
+                    couponRow.style.display = 'flex';
+                    couponName.textContent = currentAppliedCoupon.code;
+                    couponVal.textContent = '-' + couponDiscount.toLocaleString() + ' ฿';
+                } else {
+                    couponRow.style.display = 'none';
+                }
+            }
+
+            // Member Discount Row UI
+            const discRow = document.getElementById('summaryDiscountRow');
+            const discVal = document.getElementById('summaryDiscountVal');
+            if (discRow && discVal) {
+                if (memberDiscount > 0) {
+                    discRow.style.display = 'flex';
+                    discVal.textContent = '-' + memberDiscount.toLocaleString() + ' ฿';
+                } else {
+                    discRow.style.display = 'none';
+                }
+            }
+
+            const vatVal = document.getElementById('summaryVatVal');
+            if (vatVal) vatVal.textContent = vat.toFixed(2) + ' ฿';
+
+            const grandVal = document.getElementById('summaryGrandTotalVal');
+            if (grandVal) grandVal.textContent = grandTotal.toFixed(2) + ' ฿';
+        } else {
+            if (emptyView) emptyView.style.display = 'block';
+            if (formView) formView.style.display = 'none';
+        }
+    } else {
+        // PHP Cart Mode UI Recalculation for Coupon
+        let subtotalElem = document.getElementById('summarySubtotalVal');
+        let rawSubtotal = subtotalElem ? parseFloat(subtotalElem.textContent.replace(/[^0-9.]/g, '')) || 0 : 0;
+        
+        let couponDiscount = 0;
+        if (currentAppliedCoupon && rawSubtotal > 0) {
+            if (currentAppliedCoupon.isCash) {
+                couponDiscount = Math.min(rawSubtotal, currentAppliedCoupon.discountRate);
+            } else {
+                couponDiscount = Math.round(rawSubtotal * currentAppliedCoupon.discountRate);
+            }
+        }
+
+        const couponRow = document.getElementById('summaryCouponRow');
+        const couponName = document.getElementById('summaryCouponName');
+        const couponVal = document.getElementById('summaryCouponVal');
+        if (couponRow && couponVal && couponName) {
+            if (couponDiscount > 0) {
+                couponRow.style.display = 'flex';
+                couponName.textContent = currentAppliedCoupon.code;
+                couponVal.textContent = '-' + couponDiscount.toLocaleString() + ' ฿';
+            } else {
+                couponRow.style.display = 'none';
+            }
+        }
+
+        let discElem = document.getElementById('summaryDiscountVal');
+        let memberDiscount = discElem ? parseFloat(discElem.textContent.replace(/[^0-9.]/g, '')) || 0 : 0;
+        let totalDiscount = memberDiscount + couponDiscount;
+        let afterDiscount = Math.max(0, rawSubtotal - totalDiscount);
+        let vat = Math.round(afterDiscount * 0.07 * 100) / 100;
+        let grandTotal = afterDiscount + vat;
+
+        const vatVal = document.getElementById('summaryVatVal');
+        if (vatVal) vatVal.textContent = vat.toFixed(2) + ' ฿';
+
+        const grandVal = document.getElementById('summaryGrandTotalVal');
+        if (grandVal) grandVal.textContent = grandTotal.toFixed(2) + ' ฿';
+    }
+}
+
+function updateCartQtyClient(e, catId, delta) {
+    if (e) e.preventDefault();
+    let cart = getClientCart();
+    const item = cart.find(i => i.id === catId);
+    if (item) {
+        item.qty = (item.qty || 1) + delta;
+        if (item.qty <= 0) {
+            cart = cart.filter(i => i.id !== catId);
+        }
+        saveClientCart(cart);
+    }
+    
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (!isStatic) {
+        window.location.href = `cart.php?action=update_qty&id=${encodeURIComponent(catId)}&delta=${delta}`;
+    } else {
+        syncClientCartUI();
+        if (typeof updateCartBadgeUI === 'function') updateCartBadgeUI();
+    }
+}
+
+function removeCartItemClient(e, catId) {
+    if (e) e.preventDefault();
+    let cart = getClientCart();
+    cart = cart.filter(item => item.id !== catId);
+    saveClientCart(cart);
+    
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (!isStatic) {
+        window.location.href = 'cart.php?action=remove&id=' + encodeURIComponent(catId);
+    } else {
+        syncClientCartUI();
+        if (typeof updateCartBadgeUI === 'function') updateCartBadgeUI();
+    }
+}
+
+function clearCartClient(e) {
+    if (e) e.preventDefault();
+    saveClientCart([]);
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (!isStatic) {
+        window.location.href = 'cart.php?action=clear';
+    } else {
+        syncClientCartUI();
+    }
+}
+
+function handleCheckoutFormSubmit(e) {
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (isStatic) {
+        if (e) e.preventDefault();
+        const clientCart = getClientCart();
+        if (clientCart.length === 0) {
+            return;
+        }
+
+        const name = document.getElementById('customer_name')?.value || 'คุณผู้รับเลี้ยง';
+        const phone = document.getElementById('customer_phone')?.value || '0891234567';
+        const email = document.getElementById('customer_email')?.value || 'adopter@example.com';
+        const address = document.getElementById('delivery_address')?.value || 'กรุงเทพมหานคร';
+
+        const orderId = 'PFC-' + Math.floor(100000 + Math.random() * 900000);
+        const trackingId = 'TRACK-TH-' + Math.floor(10000 + Math.random() * 90000);
+
+        let subtotal = 0;
+        clientCart.forEach(item => {
+            subtotal += (item.price * (item.qty || 1));
+        });
+        let couponDiscount = 0;
+        if (currentAppliedCoupon) {
+            if (currentAppliedCoupon.isCash) {
+                couponDiscount = Math.min(subtotal, currentAppliedCoupon.discountRate);
+            } else {
+                couponDiscount = Math.round(subtotal * currentAppliedCoupon.discountRate);
+            }
+        }
+        const loggedUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : null;
+        let memberDiscount = loggedUser ? Math.round(subtotal * 0.05) : 0;
+        let totalDiscount = memberDiscount + couponDiscount;
+        let afterDiscount = Math.max(0, subtotal - totalDiscount);
+        let vat = Math.round(afterDiscount * 0.07 * 100) / 100;
+        let grandTotal = afterDiscount + vat;
+
+        const newOrder = {
+            order_id: orderId,
+            tracking_id: trackingId,
+            customer_name: name,
+            customer_phone: phone,
+            customer_email: email,
+            delivery_address: address,
+            items: clientCart,
+            coupon_code: currentAppliedCoupon ? currentAppliedCoupon.code : '',
+            coupon_discount: couponDiscount,
+            member_discount: memberDiscount,
+            subtotal: subtotal,
+            discount: totalDiscount,
+            vat: vat,
+            total: grandTotal,
+            created_at: new Date().toISOString()
+        };
+
+        // Save to orders list
+        try {
+            const orders = JSON.parse(localStorage.getItem('cat_shop_orders') || '[]');
+            orders.unshift(newOrder);
+            localStorage.setItem('cat_shop_orders', JSON.stringify(orders));
+            localStorage.removeItem('cat_shop_cart');
+        } catch(err) {}
+
+        window.location.href = `tracking.html?track_id=${trackingId}&order_id=${orderId}`;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderAvailableCouponsList();
+    
+    // Check if ?apply_coupon= parameter exists in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const couponParam = urlParams.get('apply_coupon');
+    if (couponParam) {
+        applyCouponClient(couponParam);
+    }
+
+    syncClientCartUI();
+});
 </script>
 
 <?php 

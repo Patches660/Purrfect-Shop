@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purrfect Shop - เพราะทุกบ้านควรมีเจ้าเหมียว 🐾</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <link rel="apple-touch-icon" href="assets/images/favicon.png">
+
+    <!-- Google Analytics 4 (GA4) Simulation Script -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PURRFECTCAT88"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-PURRFECTCAT88', {
+            'page_title': document.title,
+            'transport_type': 'beacon'
+        });
+    </script>
+
+    <!-- Meta Pixel (Facebook Pixel) Simulation Script -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '123456789012345');
+        fbq('track', 'PageView');
+    </script>
+
+    <style>
+        /* Nav Dropdown Menu Styles */
+        .nav-dropdown-wrapper {
+            position: relative;
+        }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+            padding: 0.6rem;
+            min-width: 280px;
+            list-style: none;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .nav-dropdown-wrapper:hover .nav-dropdown-menu,
+        .nav-dropdown-wrapper:focus-within .nav-dropdown-menu {
+            display: flex;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.65rem 0.85rem;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+        .nav-dropdown-menu li a:hover,
+        .nav-dropdown-menu li a.active {
+            background: rgba(255, 107, 74, 0.1);
+            color: var(--primary-coral);
+            transform: translateX(3px);
+        }
+        .nav-dd-icon {
+            font-size: 1.35rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .nav-dd-title {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .nav-dd-sub {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <!-- 1. Top Utility Bar: Announcements, Theme Switcher, Admin Console & User Profile -->
+        <div class="top-utility-bar">
+            <div class="top-utility-container">
+                <div class="top-utility-left">
+                    <span class="top-badge-pill">🐾 Purrfect Cattery & Boutique</span>
+                    <span class="top-utility-tagline">ฟาร์มเพาะพันธุ์น้องแมวสายพันธุ์แท้มาตรฐานสากล • การันตีสุขภาพ 180 วัน</span>
+                </div>
+                
+                <div class="top-utility-right">
+                    <!-- Theme Loop Switcher Button -->
+                    <button type="button" class="theme-loop-btn" onclick="cycleTheme()" title="กดเพื่อสลับสีพื้นหลังแบบวนลูป (Loop)">
+                        🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
+                    </button>
+
+                    <!-- Admin Console Shortcut (Only visible for Admins) -->
+                    
+                    <!-- User Account / Profile Badge & Paw Points -->
+                                            <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+                            <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
+                            <a href="subscribe.html" class="btn btn-sm " style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="รับข้อมูลข่าวสารโดยยังไม่ต้องสมัครสมาชิก">
+                                📬 รับข้อมูลข่าวสาร
+                            </a>
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.85rem; font-size: 0.82rem;">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="padding: 0.35rem 0.9rem; font-size: 0.82rem;">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+
+        <!-- 2. Main Branding & Primary Navigation Bar -->
+        <div class="main-nav-bar">
+            <div class="nav-container">
+                <a href="index.html" class="site-logo">
+                    <img src="assets/images/logo.png" alt="Purrfect Shop Logo" class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-title">Purrfect Shop</span>
+                        <span class="logo-subtitle">Cattery & Boutique</span>
+                    </div>
+                </a>
+
+                <!-- 3-Line Hamburger Menu Button (Mobile & Tablet) -->
+                <button type="button" class="mobile-menu-toggle-btn" id="mobile-menu-btn" onclick="toggleMobileDrawer()" aria-label="เปิดเมนูการนำทางและหมวดหมู่" title="เปิดเมนู ☰">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
+                
+                <nav>
+                    <ul class="nav-menu">
+                        <li>
+                            <a href="index.html" class="nav-link ">
+                                🏠 หน้าแรก
+                            </a>
+                        </li>
+                        <li>
+                            <a href="products.html" class="nav-link ">
+                                🐱 น้องแมวทั้งหมด
+                            </a>
+                        </li>
+                        <li>
+                            <a href="recommend.html" class="nav-link ">
+                                🌟 แนะนำสำหรับคุณ
+                            </a>
+                        </li>
+                        <li>
+                            <a href="welcome_deal.html" class="nav-link " style="position: relative;">
+                                🎁 ดีลสมาชิกใหม่
+                                <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
+                            </a>
+                        </li>
+                        <!-- 5 New Features + Services Dropdown Menu -->
+                        <li class="nav-dropdown-wrapper" style="position: relative;">
+                            <a href="#" class="nav-link nav-dropdown-trigger " style="display: inline-flex; align-items: center; gap: 4px;">
+                                ✨ บริการ & กิจกรรม ▾
+                            </a>
+                            <ul class="nav-dropdown-menu">
+                                <li>
+                                    <a href="reviews.html" class="">
+                                        <span class="nav-dd-icon">⭐</span>
+                                        <div>
+                                            <strong class="nav-dd-title">รีวิวน้องแมว & ย้ายบ้าน</strong>
+                                            <small class="nav-dd-sub">ภาพความประทับใจจากลูกค้าจริง</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="booking.html" class="">
+                                        <span class="nav-dd-icon">📅</span>
+                                        <div>
+                                            <strong class="nav-dd-title">จองคิวนัดดูตัว / Video Call</strong>
+                                            <small class="nav-dd-sub">เยี่ยมชมฟาร์ม & นัดดูสดผ่าน LINE</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pedigree.html" class="">
+                                        <span class="nav-dd-icon">🩺</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ตรวจสอบใบเพ็ด & วัคซีน</strong>
+                                            <small class="nav-dd-sub">เช็คเลขไมโครชิป & ประวัติสุขภาพ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="calculator.html" class="">
+                                        <span class="nav-dd-icon">🧮</span>
+                                        <div>
+                                            <strong class="nav-dd-title">คำนวณค่าเลี้ยงดูน้องแมว</strong>
+                                            <small class="nav-dd-sub">วางแผนงบประมาณรายเดือน/ตลอดชีพ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="lucky_wheel.html" class="">
+                                        <span class="nav-dd-icon">🎡</span>
+                                        <div>
+                                            <strong class="nav-dd-title">วงล้อเสี่ยงโชค Paw Spin</strong>
+                                            <small class="nav-dd-sub">หมุนฟรีลุ้นรับคูปองลด 25%</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li style="border-top: 1px dashed var(--border-color); margin-top: 4px; padding-top: 4px;">
+                                    <a href="tracking.html" class="">
+                                        <span class="nav-dd-icon">📍</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ติดตามการจัดส่ง</strong>
+                                            <small class="nav-dd-sub">ตรวจสอบสถานะการขนส่งสด 4 ขั้นตอน</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="creator.html" class="">
+                                        <span class="nav-dd-icon">👨‍💻</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ข้อมูลผู้จัดทำ</strong>
+                                            <small class="nav-dd-sub">ประวัติ & ข้อมูลโครงงาน</small>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="cart-badge-container">
+                            <a href="cart.html" class="nav-link nav-cart-btn ">
+                                🛒 ตะกร้า
+                                                                <span class="cart-badge" id="cart-badge-val" style="display: none;">0</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================================
+         MOBILE NAVIGATION DRAWER (OFF-CANVAS SLIDING MENU)
+         ========================================================= -->
+    <!-- Drawer Backdrop -->
+    <div id="mobile-drawer-backdrop" class="mobile-drawer-backdrop" onclick="closeMobileDrawer()"></div>
+
+    <!-- Mobile Drawer Content -->
+    <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="เมนูหลักสำหรับมือถือ">
+        <div class="drawer-header">
+            <div class="drawer-branding">
+                <img src="assets/images/logo.png" alt="Logo" class="drawer-logo-img">
+                <div>
+                    <strong class="drawer-title">Purrfect Shop</strong>
+                    <span class="drawer-subtitle">เมนูด่วน & หมวดหมู่บริการ</span>
+                </div>
+            </div>
+            <button type="button" class="drawer-close-btn" onclick="closeMobileDrawer()" aria-label="ปิดเมนู">✕</button>
+        </div>
+
+        <div class="drawer-body">
+            <!-- หมวดที่ 1: บัญชีผู้ใช้ & การตั้งค่า -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>⚙️ หมวดที่ 1: บัญชีผู้ใช้ & การตั้งค่า</span>
+                </div>
+                <div class="drawer-grid">
+                    <!-- Theme Loop Switcher -->
+                    <button type="button" class="drawer-action-btn theme-drawer-btn" onclick="cycleTheme(); updateDrawerThemeName();" title="กดเพื่อสลับธีมสี">
+                        <span class="drawer-btn-icon">🎨</span>
+                        <span class="drawer-btn-label">ธีม: <strong id="drawer-theme-current-name">อบอุ่น คอรัล</strong></span>
+                        <span class="drawer-btn-badge">🔄 สลับสี</span>
+                    </button>
+
+                    <!-- User Profile / Login / Register -->
+                                            <a href="subscribe.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                            <span class="drawer-link-icon">📬</span>
+                            <div class="drawer-link-info">
+                                <span class="drawer-link-title">รับข้อมูลข่าวสาร</span>
+                                <span class="drawer-link-sub">รับสิทธิ์โปรโมชัน & ข่าวกิจกรรม</span>
+                            </div>
+                        </a>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;">
+                            <a href="login.html" class="btn btn-secondary btn-sm" style="text-align: center; justify-content: center; font-size: 0.85rem; padding: 0.5rem;" onclick="closeMobileDrawer()">
+                                เข้าสู่ระบบ 🔑
+                            </a>
+                            <a href="register.html" class="btn btn-primary btn-sm" style="text-align: center; justify-content: center; font-size: 0.85rem; padding: 0.5rem;" onclick="closeMobileDrawer()">
+                                สมัครสมาชิก ✨
+                            </a>
+                        </div>
+                    
+                    <a href="index.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🏠</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">หน้าแรก (Home)</span>
+                            <span class="drawer-link-sub">ศูนย์รวมน้องแมว & โปรโมชันเด่น</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- หมวดที่ 2: เมนูหลัก & บริการร้านค้า -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>🐱 หมวดที่ 2: เมนูบริการ & เลือกชมน้องแมว</span>
+                </div>
+                <div class="drawer-grid">
+                    <a href="products.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🐱</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">น้องแมวทั้งหมด</span>
+                            <span class="drawer-link-sub">สายพันธุ์แท้ 100% พร้อมย้ายบ้าน</span>
+                        </div>
+                    </a>
+
+                    <a href="recommend.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🌟</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">แนะนำสำหรับคุณ</span>
+                            <span class="drawer-link-sub">ระบบค้นหาสายพันธุ์ตามไลฟ์สไตล์</span>
+                        </div>
+                    </a>
+
+                    <a href="welcome_deal.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🎁</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ดีลสมาชิกใหม่</span>
+                            <span class="drawer-link-sub">คูปองส่วนลดพิเศษ & Starter Kit</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FF5A5F; color: #FFFFFF; font-weight: 800;">HOT</span>
+                    </a>
+
+                    <a href="cart.html" class="drawer-link-item " style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🛒</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
+                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
+                        </div>
+                                                <span class="drawer-badge-pill" id="drawer-cart-badge-val" style="display: none; background: var(--primary-coral); color: #FFFFFF; font-weight: 800;">0 ตัว</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- หมวดที่ 3: บริการ & ฟีเจอร์พิเศษสำหรับทาสแมว -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>✨ หมวดที่ 3: บริการ & ฟีเจอร์พิเศษสำหรับทาสแมว</span>
+                </div>
+                <div class="drawer-grid">
+                    <a href="reviews.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">⭐</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">รีวิวน้องแมว & ย้ายบ้าน</span>
+                            <span class="drawer-link-sub">ภาพความประทับใจจากลูกค้าจริง 100%</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FEF3C7; color: #92400E;">5.0 ★</span>
+                    </a>
+
+                    <a href="booking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">📅</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">จองคิวนัดดูตัว / Video Call</span>
+                            <span class="drawer-link-sub">นัดชมฟาร์ม & 1-on-1 LIVE Call</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #DCFCE7; color: #166534;">นัดสด</span>
+                    </a>
+
+                    <a href="pedigree.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🩺</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ตรวจสอบใบเพ็ด & สมุดวัคซีน</span>
+                            <span class="drawer-link-sub">ค้นหาด้วยเลข Microchip ทันที</span>
+                        </div>
+                    </a>
+
+                    <a href="calculator.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🧮</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">เครื่องคำนวณค่าเลี้ยงดู</span>
+                            <span class="drawer-link-sub">คำนวณงบประมาณ รายเดือน/15 ปี</span>
+                        </div>
+                    </a>
+
+                    <a href="lucky_wheel.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🎡</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">วงล้อเสี่ยงโชค Paw Spin</span>
+                            <span class="drawer-link-sub">หมุนฟรีรับส่วนลด 25% & ของแถม</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FEE2E2; color: #991B1B;">หมุนฟรี!</span>
+                    </a>
+
+                    <a href="tracking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">📍</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ติดตามการจัดส่ง</span>
+                            <span class="drawer-link-sub">ระบบติดตามสถานะสด 4 ขั้นตอน</span>
+                        </div>
+                    </a>
+
+                    <a href="creator.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">👨‍💻</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ข้อมูลผู้จัดทำ</span>
+                            <span class="drawer-link-sub">ประวัติ & ข้อมูลโครงงาน</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <script>
+    function toggleMobileDrawer() {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (!drawer || !backdrop) return;
+        
+        const isOpen = drawer.classList.contains('open');
+        if (isOpen) {
+            closeMobileDrawer();
+        } else {
+            drawer.classList.add('open');
+            backdrop.classList.add('open');
+            if (btn) btn.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            updateDrawerThemeName();
+        }
+    }
+
+    function closeMobileDrawer() {
+        const drawer = document.getElementById('mobile-nav-drawer');
+        const backdrop = document.getElementById('mobile-drawer-backdrop');
+        const btn = document.getElementById('mobile-menu-btn');
+        if (drawer) drawer.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('open');
+        if (btn) btn.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function updateDrawerThemeName() {
+        const currentNameEl = document.getElementById('theme-current-name');
+        const drawerThemeEl = document.getElementById('drawer-theme-current-name');
+        if (currentNameEl && drawerThemeEl) {
+            drawerThemeEl.textContent = currentNameEl.textContent;
+        }
+    }
+
+    // Sync theme label on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', () => {
+        updateDrawerThemeName();
+    });
+    </script>
+
+    <script>
+    window.trackPurrfectBehavior = function(type, target, category) {
+        try {
+            const formData = new FormData();
+            formData.append('action', 'track');
+            formData.append('event_type', type);
+            formData.append('target', target);
+            formData.append('category', category || 'general');
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon('api_analytics.php', formData);
+            } else {
+                fetch('api_analytics.php', { method: 'POST', body: formData });
+            }
+        } catch (e) {}
+    };
+    </script>
+    <main>
+                
+<main class="page-container" style="padding: 2rem 1rem 5rem; max-width: 1200px; margin: 0 auto;">
+    
+    <!-- Breadcrumb Navigation -->
+    <nav style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem; flex-wrap: wrap;">
+        <a href="index.html" style="color: inherit; text-decoration: none;">🏠 หน้าแรก</a>
+        <span>/</span>
+        <a href="products.html" style="color: inherit; text-decoration: none;">🐱 น้องแมวทั้งหมด</a>
+        <span>/</span>
+        <span style="color: var(--primary-coral); font-weight: 700;" id="breadcrumbCatName">น้องสโนว์ (British Shorthair)</span>
+    </nav>
+
+    <!-- Main Product Detail Card -->
+    <div style="background: var(--bg-card); border-radius: 28px; border: 1px solid var(--border-color); box-shadow: 0 12px 40px rgba(0,0,0,0.06); overflow: hidden; margin-bottom: 3.5rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 2.5rem; padding: 2.5rem;" class="cat-detail-grid">
+            
+            <!-- Left: Gallery & Badges -->
+            <div>
+                <div style="position: relative; border-radius: 22px; overflow: hidden; box-shadow: 0 8px 25px rgba(0,0,0,0.08); margin-bottom: 1.2rem; background: #F8FAFC;">
+                    <img id="detailCatImg" src="assets/images/cat_british.jpg" alt="น้องสโนว์ (British Shorthair)" style="width: 100%; height: 420px; object-fit: cover; display: block; transition: transform 0.3s ease;">
+                    <span style="position: absolute; top: 16px; left: 16px; background: rgba(16, 185, 129, 0.92); color: #fff; font-weight: 800; font-size: 0.82rem; padding: 6px 14px; border-radius: 999px; backdrop-filter: blur(4px); box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                        ✨ สุขภาพสมบูรณ์ พร้อมย้ายบ้าน
+                    </span>
+                    <span style="position: absolute; bottom: 16px; right: 16px; background: rgba(0,0,0,0.65); color: #fff; font-weight: 700; font-size: 0.8rem; padding: 4px 12px; border-radius: 999px; backdrop-filter: blur(4px);">
+                        📷 ภาพถ่ายจริงจากฟาร์ม
+                    </span>
+                </div>
+
+                <!-- Trust Badges Row -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div style="background: rgba(255, 107, 74, 0.08); border-radius: 14px; padding: 0.9rem; text-align: center; border: 1px solid rgba(255, 107, 74, 0.2);">
+                        <span style="font-size: 1.4rem;">📜</span>
+                        <strong style="display: block; font-size: 0.85rem; color: var(--text-main); margin-top: 2px;">ใบเพ็ดดีกรีแท้</strong>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">WCF / CFA สากล</span>
+                    </div>
+                    <div style="background: rgba(16, 185, 129, 0.08); border-radius: 14px; padding: 0.9rem; text-align: center; border: 1px solid rgba(16, 185, 129, 0.2);">
+                        <span style="font-size: 1.4rem;">🛡️</span>
+                        <strong style="display: block; font-size: 0.85rem; color: var(--text-main); margin-top: 2px;">การันตีสุขภาพ 180 วัน</strong>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">สัตวแพทย์ดูแลตลอด</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Details, Attributes & Action Buttons -->
+            <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <!-- Breed & Title -->
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.6rem; flex-wrap: wrap;">
+                        <span id="detailCatBreed" style="background: var(--primary-coral-soft, #FFF1EE); color: var(--primary-coral); font-weight: 800; font-size: 0.85rem; padding: 4px 12px; border-radius: 999px;">
+                            บริติช ช็อตแฮร์ (British Shorthair)                        </span>
+                        <span style="color: #F59E0B; font-weight: 800; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 4px;">
+                            ⭐⭐⭐⭐⭐ 5.0 (รีวิวลูกค้า)
+                        </span>
+                    </div>
+
+                    <h1 id="detailCatTitle" style="font-size: 2.2rem; font-weight: 900; color: var(--text-main); margin-bottom: 0.8rem; line-height: 1.25;">
+                        น้องสโนว์ (British Shorthair)                    </h1>
+
+                    <p id="detailCatDesc" style="font-size: 1rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+                        น้องแมวสายพันธุ์ผู้ดีอังกฤษ หน้ากลมแก้มป่อง ขนแน่นนุ่มเหมือนกำมะหยี่ อารมณ์ดี เรียบร้อย เลี้ยงง่าย และเป็นมิตรกับทุกคนในครอบครัว                    </p>
+
+                    <!-- Price Box -->
+                    <div style="background: linear-gradient(135deg, rgba(255, 107, 74, 0.1) 0%, rgba(254, 243, 199, 0.4) 100%); border-radius: 18px; padding: 1.2rem 1.6rem; margin-bottom: 1.8rem; display: flex; align-items: center; justify-content: space-between; border: 1.5px solid rgba(255, 107, 74, 0.25); flex-wrap: wrap; gap: 10px;">
+                        <div>
+                            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700; display: block;">ค่าสินสอด / รับเลี้ยงดู</span>
+                            <span id="detailCatPrice" style="font-size: 2.2rem; font-weight: 900; color: var(--primary-coral); line-height: 1.1;">
+                                18,000 ฿
+                            </span>
+                        </div>
+                        <div style="text-align: right;">
+                            <span style="background: #10B981; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 3px 10px; border-radius: 999px;">สมาชิกใหม่ลด 5%</span>
+                            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px;">ผ่อน 0% สูงสุด 10 เดือน</div>
+                        </div>
+                    </div>
+
+                    <!-- Specifications Table Grid -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-bottom: 2rem;">
+                        <div style="background: var(--bg-page); border-radius: 12px; padding: 0.75rem 1rem; border: 1px solid var(--border-color);">
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">🎂 อายุของน้อง</span>
+                            <strong id="detailCatAge" style="font-size: 0.95rem; color: var(--text-main);">2.5 เดือน</strong>
+                        </div>
+                        <div style="background: var(--bg-page); border-radius: 12px; padding: 0.75rem 1rem; border: 1px solid var(--border-color);">
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">⚥ เพศ</span>
+                            <strong id="detailCatGender" style="font-size: 0.95rem; color: var(--text-main);">ผู้ (Male)</strong>
+                        </div>
+                        <div style="background: var(--bg-page); border-radius: 12px; padding: 0.75rem 1rem; border: 1px solid var(--border-color);">
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">🧶 ลักษณะขน</span>
+                            <strong id="detailCatHair" style="font-size: 0.95rem; color: var(--text-main);">ขนสั้นแน่นนุ่ม</strong>
+                        </div>
+                        <div style="background: var(--bg-page); border-radius: 12px; padding: 0.75rem 1rem; border: 1px solid var(--border-color);">
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">💖 นิสัยเด่น</span>
+                            <strong id="detailCatPersonality" style="font-size: 0.95rem; color: var(--text-main);">เรียบร้อย อ่อนโยน เข้ากับคนง่าย</strong>
+                        </div>
+                        <div style="grid-column: span 2; background: var(--bg-page); border-radius: 12px; padding: 0.75rem 1rem; border: 1px solid var(--border-color);">
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">🩺 ประวัติวัคซีน & สุขภาพ</span>
+                            <strong id="detailCatVaccine" style="font-size: 0.92rem; color: #059669;">ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิแล้ว</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action Buttons -->
+                <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                    <div class="detail-cta-row" style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 0.8rem;">
+                        <!-- Add to Cart Form -->
+                        <form method="POST" action="cart.html" id="add-to-cart-form" onsubmit="handleAddToCartDetail(event)" style="margin: 0;">
+                            <input type="hidden" name="action" value="add_cat">
+                            <input type="hidden" name="cat_id" id="detailFormCatId" value="cat_british">
+                            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem; font-weight: 800; border-radius: 16px; box-shadow: 0 8px 20px rgba(255, 107, 74, 0.35); cursor: pointer;">
+                                🛒 รับเลี้ยงน้องแมว 🐾
+                            </button>
+                        </form>
+
+                        <!-- Booking Button -->
+                        <a id="detailBookingLink" href="booking.html?breed=%E0%B8%99%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B9%82%E0%B8%99%E0%B8%A7%E0%B9%8C+%28British+Shorthair%29" class="btn btn-secondary" style="padding: 1rem; font-size: 0.95rem; font-weight: 800; border-radius: 16px; text-align: center; text-decoration: none; justify-content: center;">
+                            📅 จองดูตัว / Video Call
+                        </a>
+                    </div>
+
+                    <!-- Digital Pedigree Link -->
+                    <a id="detailPedigreeLink" href="pedigree.html?chip=900215001234567" style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.88rem; color: var(--primary-coral); font-weight: 700; text-decoration: none; padding: 0.75rem; border-radius: 12px; background: rgba(255, 107, 74, 0.06); border: 1px dashed var(--primary-coral); text-align: center; line-height: 1.4;">
+                        <span>🩺 ตรวจสอบใบเพ็ดดีกรี & สมุดวัคซีนของน้องตัวนี้ (Microchip) ➔</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         SECTION: REVIEWS & STORIES FOR THIS CAT BREED (ย้ายรีวิวเข้ามาไว้ตรงนี้)
+         ========================================================= -->
+    <section style="margin-bottom: 4rem;">
+        <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+            <span class="section-tag">⭐ HAPPY STORIES & REVIEWS</span>
+            <h2 class="section-title" id="reviewsSectionTitle">
+                รีวิวความสุขจากครอบครัวที่รับเลี้ยง บริติช ช็อตแฮร์ (British Shorthair) 🐾
+            </h2>
+            <p class="section-subtitle" style="margin-left: 0;">
+                ภาพความประทับใจจริงและพัฒนาการของน้องแมวหลังย้ายเข้าบ้านใหม่อย่างอบอุ่น
+            </p>
+        </div>
+
+        <div class="reviews-grid-container" id="breedReviewsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+                            <div class="review-card" style="background: var(--bg-card); border-radius: 24px; padding: 1.5rem; border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <!-- Author & Rating Header -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #FF6B4A, #FFA07A); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem;">
+                                    ค                                </div>
+                                <div>
+                                    <strong style="display: block; font-size: 0.95rem; color: var(--text-main);">คุณพิมพ์ลดา สุวรรณเวช</strong>
+                                    <span style="font-size: 0.78rem; color: var(--text-muted);">📍 กรุงเทพฯ (สุขุมวิท) • รับน้องไปแล้ว 6 เดือน</span>
+                                </div>
+                            </div>
+                            <span style="background: #FEF3C7; color: #92400E; font-size: 0.8rem; font-weight: 800; padding: 3px 8px; border-radius: 999px;">
+                                ⭐ 5.0                            </span>
+                        </div>
+
+                        <!-- Review Image at Home -->
+                                                    <div style="border-radius: 16px; overflow: hidden; margin-bottom: 1rem; max-height: 200px;">
+                                <img src="assets/images/cat_british.jpg" alt="น้องแมวในบ้านใหม่" style="width: 100%; height: 200px; object-fit: cover;">
+                            </div>
+                        
+                        <!-- Comment Text -->
+                        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; font-style: italic;">
+                            "รับน้องสโนว์มาได้ 6 เดือนแล้วค่ะ น้องสุขภาพแข็งแรงมาก ไม่เคยป่วยเลย หน้ากลมแก้มป่อง ขนแน่นนุ่มเหมือนกำมะหยี่ ขี้อ้อนสุดๆ ทางฟาร์มดูแลดีมาก ให้คำแนะนำตลอด มีใบเพ็ดดีกรีและสมุดวัคซีนครบถ้วน ประทับใจมากค่ะ!"
+                        </p>
+                    </div>
+
+                    <!-- Footer / Verified Badge -->
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px dashed var(--border-color); padding-top: 0.8rem; font-size: 0.78rem; color: var(--text-muted);">
+                        <span style="color: #10B981; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                            ✓ ผู้รับเลี้ยงจริง (Verified Adopter)
+                        </span>
+                        <span>📅 2026-09-15</span>
+                    </div>
+                </div>
+                    </div>
+    </section>
+
+    <!-- Other Recommended Cats -->
+    <section>
+        <div class="section-header" style="text-align: left; margin-bottom: 2rem;">
+            <span class="section-tag">🐾 MORE ADORABLE CATS</span>
+            <h2 class="section-title">น้องแมวสายพันธุ์อื่นๆ ที่น่ารักไม่แพ้กัน</h2>
+        </div>
+
+        <div class="cats-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+                            <a href="cat_detail.html?id=cat_persian" style="text-decoration: none; color: inherit;" class="cat-card">
+                    <div class="cat-card-img-wrap">
+                        <img src="assets/images/cat_persian.jpg" alt="น้องปุยหิมะ (Persian Classic)" class="cat-card-img">
+                        <span class="cat-card-gender">เมีย (Female)</span>
+                    </div>
+                    <div class="cat-card-body" style="padding: 1.2rem;">
+                        <div class="cat-card-breed">เปอร์เซีย (Persian)</div>
+                        <h4 class="cat-card-name" style="font-size: 1.1rem; margin-bottom: 0.4rem;">น้องปุยหิมะ (Persian Classic)</h4>
+                        <div class="cat-card-footer" style="margin-top: 0.8rem;">
+                            <span class="cat-price-val" style="font-size: 1.15rem; color: var(--primary-coral);">16,500 ฿</span>
+                            <span style="font-size: 0.82rem; color: var(--primary-coral); font-weight: 800;">ดูรายละเอียด ➔</span>
+                        </div>
+                    </div>
+                </a>
+                            <a href="cat_detail.html?id=cat_sphynx" style="text-decoration: none; color: inherit;" class="cat-card">
+                    <div class="cat-card-img-wrap">
+                        <img src="assets/images/cat_sphynx.jpg" alt="น้องซีซาร์ (Canadian Sphynx)" class="cat-card-img">
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+                    </div>
+                    <div class="cat-card-body" style="padding: 1.2rem;">
+                        <div class="cat-card-breed">สฟิงซ์ (Sphynx)</div>
+                        <h4 class="cat-card-name" style="font-size: 1.1rem; margin-bottom: 0.4rem;">น้องซีซาร์ (Canadian Sphynx)</h4>
+                        <div class="cat-card-footer" style="margin-top: 0.8rem;">
+                            <span class="cat-price-val" style="font-size: 1.15rem; color: var(--primary-coral);">28,000 ฿</span>
+                            <span style="font-size: 0.82rem; color: var(--primary-coral); font-weight: 800;">ดูรายละเอียด ➔</span>
+                        </div>
+                    </div>
+                </a>
+                            <a href="cat_detail.html?id=cat_siamese" style="text-decoration: none; color: inherit;" class="cat-card">
+                    <div class="cat-card-img-wrap">
+                        <img src="assets/images/cat_siamese.jpg" alt="น้องมงคล (Siamese / วิเชียรมาศ)" class="cat-card-img">
+                        <span class="cat-card-gender">เมีย (Female)</span>
+                    </div>
+                    <div class="cat-card-body" style="padding: 1.2rem;">
+                        <div class="cat-card-breed">วิเชียรมาศ (Siamese Cat)</div>
+                        <h4 class="cat-card-name" style="font-size: 1.1rem; margin-bottom: 0.4rem;">น้องมงคล (Siamese / วิเชียรมาศ)</h4>
+                        <div class="cat-card-footer" style="margin-top: 0.8rem;">
+                            <span class="cat-price-val" style="font-size: 1.15rem; color: var(--primary-coral);">12,000 ฿</span>
+                            <span style="font-size: 0.82rem; color: var(--primary-coral); font-weight: 800;">ดูรายละเอียด ➔</span>
+                        </div>
+                    </div>
+                </a>
+                            <a href="cat_detail.html?id=cat_mainecoon" style="text-decoration: none; color: inherit;" class="cat-card">
+                    <div class="cat-card-img-wrap">
+                        <img src="assets/images/cat_mainecoon.jpg" alt="น้องไททัน (Maine Coon)" class="cat-card-img">
+                        <span class="cat-card-gender">ผู้ (Male)</span>
+                    </div>
+                    <div class="cat-card-body" style="padding: 1.2rem;">
+                        <div class="cat-card-breed">เมนคูน (Maine Coon)</div>
+                        <h4 class="cat-card-name" style="font-size: 1.1rem; margin-bottom: 0.4rem;">น้องไททัน (Maine Coon)</h4>
+                        <div class="cat-card-footer" style="margin-top: 0.8rem;">
+                            <span class="cat-price-val" style="font-size: 1.15rem; color: var(--primary-coral);">35,000 ฿</span>
+                            <span style="font-size: 0.82rem; color: var(--primary-coral); font-weight: 800;">ดูรายละเอียด ➔</span>
+                        </div>
+                    </div>
+                </a>
+                    </div>
+    </section>
+
+</main>
+
+<style>
+@media (max-width: 900px) {
+    .cat-detail-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.8rem !important;
+        padding: 1.5rem 1.2rem !important;
+    }
+}
+@media (max-width: 600px) {
+    #detailCatImg {
+        height: 280px !important;
+    }
+    #detailCatTitle {
+        font-size: 1.6rem !important;
+    }
+    .detail-cta-row {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+
+<!-- Client-side JS to handle URL parameters dynamically on static exports -->
+<script>
+const allCats = {"cat_british":{"id":"cat_british","name":"น้องสโนว์ (British Shorthair)","breed":"บริติช ช็อตแฮร์ (British Shorthair)","description":"น้องแมวสายพันธุ์ผู้ดีอังกฤษ หน้ากลมแก้มป่อง ขนแน่นนุ่มเหมือนกำมะหยี่ อารมณ์ดี เรียบร้อย เลี้ยงง่าย และเป็นมิตรกับทุกคนในครอบครัว","price":18000,"image":"cat_british.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นแน่นนุ่ม","personality":"เรียบร้อย อ่อนโยน เข้ากับคนง่าย","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิแล้ว","pedigree":"มีใบเพ็ดดีกรี WCF รับรองสายพันธุ์","categories":["popular","condo","beginner","short_hair"],"highlights":["หน้ากลมแก้มยุ้ยน่าฟัด","ขนแน่นไม่ค่อยร่วง","เหมาะกับห้องพักและคอนโด"]},"cat_persian":{"id":"cat_persian","name":"น้องปุยหิมะ (Persian Classic)","breed":"เปอร์เซีย (Persian)","description":"ราชินีแห่งแมวขนยาว หน้าหวาน ขนฟูยาวหนานุ่มสง่างาม นิสัยสุภาพ นิ่งสงบ ไม่ส่งเสียงรบกวน ชอบนอนซุกผ้าห่มและคลอเคลียเจ้าของ","price":16500,"image":"cat_persian.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"long","hair_label":"ขนยาวฟูหนา","personality":"รักสงบ นิ่งเงียบ อ่อนโยนมาก","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพพร้อมย้ายบ้าน","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดแชมป์","categories":["fluffy","condo","long_hair"],"highlights":["ขนนุ่มฟูระดับพรีเมียม","รักความสงบไม่ร้องกวน","ชอบให้อุ้มและแปรงขน"]},"cat_sphynx":{"id":"cat_sphynx","name":"น้องซีซาร์ (Canadian Sphynx)","breed":"สฟิงซ์ (Sphynx)","description":"แมวไร้ขนสุดเท่ ผิวสัมผัสนุ่มอุ่นดั่งลูกพีช ไร้ขนร่วง 100% เหมาะสำหรับผู้ที่เป็นโรคภูมิแพ้ขนสัตว์ ฉลาดมาก ขี้อ้อนติดคนเหมือนสุนัขตัวน้อย","price":28000,"image":"cat_sphynx.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"hairless","hair_label":"ไร้ขน (ผิวสัมผัสพีช)","personality":"ขี้อ้อนมาก ติดเจ้าของ เป็นมิตรสุดๆ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ฝังไมโครชิปแล้ว","pedigree":"มีใบเพ็ดดีกรี WCF สายพันธุ์แท้","categories":["low_shed"],"highlights":["ขนร่วง 0% หมดปัญหาภูมิแพ้","ฉลาดและตอบสนองไว","อ้อนเก่งระดับสิบ"]},"cat_siamese":{"id":"cat_siamese","name":"น้องมงคล (Siamese \/ วิเชียรมาศ)","breed":"วิเชียรมาศ (Siamese Cat)","description":"แมวมงคลไทยโบราณ แต้มสี 9 จุดคมชัด ตาสีฟ้าครามเปล่งประกาย สติปัญญาเฉลียวฉลาด ช่างพูดช่างคุย ซื่อสัตย์และรักเจ้าของสุดหัวใจ","price":12000,"image":"cat_siamese.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นเรียบเนียน","personality":"ช่างพูด เฉลียวฉลาด ร่าเริง ผูกพันกับเจ้าของ","vaccine":"ฉีดวัคซีนรวม + ตรวจลิวคีเมีย\/เอดส์แมวผ่าน","pedigree":"ใบรับรองสายพันธุ์แมวไทยโบราณแท้","categories":["beginner","playful","short_hair"],"highlights":["แมวมงคลนำโชคลาภ","ช่างอ้อนช่างคุย","สุขภาพแข็งแรงเลี้ยงง่าย"]},"cat_mainecoon":{"id":"cat_mainecoon","name":"น้องไททัน (Maine Coon)","breed":"เมนคูน (Maine Coon)","description":"ยักษ์ใหญ่ใจดี สายพันธุ์แมวที่ตัวใหญ่ที่สุดในโลก ขนแผงคอสง่างามราวสิงโต นิสัยอ่อนโยน ขี้เล่น เป็นมิตรกับเด็กและสัตว์เลี้ยงอื่นๆ","price":35000,"image":"cat_mainecoon.jpg","age":"3.5 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวสองชั้นฟูหนา","personality":"ใจดี อ่อนโยน เข้ากับทุกคนได้ง่าย","vaccine":"ฉีดวัคซีนครบ 3 เข็ม + ฝังไมโครชิปมาตรฐาน","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดแชมป์นำเข้า","categories":["fluffy","playful","long_hair"],"highlights":["ขนาดตัวใหญ่สง่างามดั่งสิงโต","นิสัยน่ารักใจดีดั่งสุนัข","รักทุกคนในบ้าน"]},"cat_ragdoll":{"id":"cat_ragdoll","name":"น้องคอตตอน (Ragdoll)","breed":"แร็กดอลล์ (Ragdoll)","description":"เจ้าหญิงดวงตาสีฟ้าคราม ตัวนุ่มปวกเปียกเหมือนตุ๊กตาผ้าเวลาอุ้ม อ่อนโยน รักความสงบ ขนนุ่มดั่งปุยฝ้าย ไม่กางเล็บ เหมาะกับครอบครัวที่มีเด็ก","price":29000,"image":"cat_ragdoll.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"long","hair_label":"ขนกึ่งยาวนุ่มลื่น","personality":"ยอมคน อ่อนหวาน นุ่มนวล ไม่ดุร้าย","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจพันธุกรรมโรคหัวใจ HCM ปกติ","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์","categories":["popular","fluffy","condo","long_hair"],"highlights":["ตาสีฟ้าเปล่งประกายสวยงาม","ตัวนุ่มนิ่มอุ้มง่ายไม่ดิ้น","ปลอดภัยสำหรับเด็ก"]},"cat_bengal":{"id":"cat_bengal","name":"น้องจากัวร์ (Bengal Rosetted)","breed":"เบงกอล (Bengal)","description":"เสือดาวจิ๋วประจำบ้าน ลวดลายดอกกุหลาบ (Rosette) สีทองเด่นชัด กล้ามเนื้อแข็งแรง ปราดเปรียว ชื่นชอบการปีนป่ายและเล่นน้ำ","price":26000,"image":"cat_bengal.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นประกายกลิตเตอร์ทอง","personality":"พลังงานสูง ปราดเปรียว รักการผจญภัย","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิเรียบร้อย","pedigree":"มีใบเพ็ดดีกรี WCF ลายโรเซ็ตต์ชัดเจน","categories":["playful","short_hair"],"highlights":["ลายเสือดาวหายากสวยสง่า","ขนมีประกายทองวิบวับ","รักการเล่นน้ำและวิ่งเล่น"]},"cat_scottish":{"id":"cat_scottish","name":"น้องพุดดิ้ง (Scottish Fold)","breed":"สก็อตติช โฟลด์ (Scottish Fold)","description":"เจ้าเหมียวหูพับ หน้ากลมแป้นเหมือนนกฮูก ขี้อ้อน ชอบนั่งท่านั่งพุงพลุ้ย (Buddha Position) น่ารักน่าเอ็นดู เข้ากับทุกคนได้ง่ายดาย","price":21000,"image":"cat_scottish.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นนุ่มหนา","personality":"ขี้อ้อน อารมณ์ดี ชอบอยู่ใกล้ชิดเจ้าของ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพกระดูกและข้อผ่าน","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["popular","condo","beginner","short_hair"],"highlights":["หูพับแนบสนิทหน้ากลมน่ารัก","ชอบนั่งท่าบุดด้าตลกๆ","รักสงบเหมาะกับคอนโด"]},"cat_munchkin":{"id":"cat_munchkin","name":"น้องชอร์ตตี้ (Munchkin Short Legs)","breed":"มันช์กิ้น ขาสั้น (Munchkin)","description":"แมวขาสั้นเตี้ยดุ๊กดิ๊กสุดน่ารัก วิ่งดุ๊กดิ๊กไปมาเรียกเสียงหัวเราะได้ตลอดวัน กระตือรือร้น ชอบสำรวจ เป็นมิตรและปรับตัวเข้ากับสภาพแวดล้อมได้เร็ว","price":24000,"image":"cat_munchkin.jpg","age":"2 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นนุ่มฟูนิดๆ","personality":"ร่าเริง สดใส ตื่นตัว ชอบเล่นกับของเล่น","vaccine":"ฉีดวัคซีนครบตามช่วงวัย + ถ่ายพยาธิเรียบร้อย","pedigree":"มีใบเพ็ดดีกรี WCF ขาสั้นแท้มาตรฐาน","categories":["popular","playful","short_hair"],"highlights":["ขาสั้นน่ารักดุ๊กดิ๊กสะกดใจ","ปรับตัวเก่งเป็นมิตร","เล่นเก่งไม่เหงาแน่นอน"]},"cat_russian":{"id":"cat_russian","name":"น้องบลูสกาย (Russian Blue)","breed":"รัสเซียน บลู (Russian Blue)","description":"แมวชั้นสูงสีเทาเงินสะท้อนแสง ดวงตาสีเขียวมรกต เรียบร้อย สะอาด สุภาพ ไม่ส่งเสียงดัง ผลัดขนน้อยมาก เหมาะสำหรับคนทำงานที่ชอบความสงบ","price":22000,"image":"cat_russian.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นสีเทาเงินประกาย","personality":"สุภาพ เรียบร้อย ไม่ส่งเสียงดัง รักสงบ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพทั่วไปผ่านฉลุย","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["condo","low_shed","short_hair"],"highlights":["ดวงตาสีเขียวมรกตสะกดสายตา","ขนร่วงน้อยแทบไม่ผลัดขน","รักความสะอาดและความเงียบสงบ"]},"cat_abyssinian":{"id":"cat_abyssinian","name":"น้องแอมเบอร์ (Abyssinian)","breed":"อบิสซิเนียน (Abyssinian)","description":"แมวอียิปต์โบราณ ขนสีส้มอบเชยไล่เฉดสวยงาม ล่ำสัน ปราดเปรียวและฉลาดหลักแหลม ชอบมีส่วนร่วมกับทุกกิจกรรมของเจ้าของ รักการกระโดดสูง","price":19000,"image":"cat_abyssinian.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นลวดลาย Ticked Tabby","personality":"คล่องแคล่ว เฉลียวฉลาด ร่าเริง ชอบเล่น","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดตรวจสุขภาพประจำตัว","pedigree":"มีใบเพ็ดดีกรี WCF รับรองสายพันธุ์","categories":["playful","short_hair"],"highlights":["ขนไล่เฉดสีอบเชยสวยแปลกตา","ฉลาดสามารถฝึกสอนคำสั่งได้","ขี้เล่นสร้างรอยยิ้มได้เสมอ"]},"cat_americanshorthair":{"id":"cat_americanshorthair","name":"น้องการ์ฟิลด์ (American Shorthair)","breed":"อเมริกัน ช็อตแฮร์ (American Shorthair)","description":"แมวลายเสือสีเงินคลาสสิก ลายชัดเจน สุขภาพแข็งแรง อึด ทน ไม่ป่วยง่าย เลี้ยงง่าย อารมณ์ดี เป็นมิตรกับทั้งคนแปลกหน้าและสัตว์เลี้ยงอื่น","price":15000,"image":"cat_americanshorthair.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นแน่นลายชัดเจน","personality":"อารมณ์ดี เข้ากับทุกคนง่าย เลี้ยงง่ายที่สุด","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิเรียบร้อย","pedigree":"มีใบเพ็ดดีกรี WCF ลาย Classic Tabby ชัดเจน","categories":["beginner","condo","short_hair"],"highlights":["ลายเสือคลาสสิกคมชัด","สุขภาพแข็งแรงเลี้ยงง่ายที่สุด","เป็นมิตรกับทุกคนในบ้าน"]},"cat_norwegian":{"id":"cat_norwegian","name":"น้องธอร์ (Norwegian Forest Cat)","breed":"นอร์วีเจียน ฟอเรสต์ (Norwegian Forest Cat - นอร์เวย์)","description":"แมวไวกิ้งโบราณแห่งสแกนดิเนเวีย ขนสองชั้นกันน้ำหนานุ่ม แผงคอใหญ่สง่างาม ร่างกายกำยำ ปีนป่ายเก่งและรักความสงบ","price":32000,"image":"cat_norwegian.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวสองชั้นหนานุ่ม","personality":"สุขุม อ่อนโยน ฉลาด รักการสำรวจ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ฝังไมโครชิปแล้ว","pedigree":"มีใบเพ็ดดีกรี FIFe สายพันธุ์แท้นำเข้า","categories":["fluffy","playful","long_hair"],"highlights":["สายพันธุ์ไวกิ้งหายาก","ขนกันน้ำหนานุ่ม","นิสัยอ่อนโยนรักสงบ"]},"cat_japanese_bobtail":{"id":"cat_japanese_bobtail","name":"น้องซากุระ (Japanese Bobtail Mi-Ke)","breed":"เจแปนนิส บ็อบเทล (Japanese Bobtail - ญี่ปุ่น)","description":"ต้นกำเนิดแมวกวักนำโชค (Maneki-Neko) ของญี่ปุ่น หางกุดรูปพู่กลม ลายสามสีมงคล สดใส ช่างพูด เป็นมิตรและซื่อสัตย์","price":23000,"image":"cat_japanese_bobtail.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นลวดลายสามสี มิเกะ","personality":"ร่าเริง ฉลาด ช่างเจรจา ซื่อสัตย์","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพสมบูรณ์","pedigree":"มีใบเพ็ดดีกรี CFA สายพันธุ์แท้","categories":["popular","beginner","playful","short_hair"],"highlights":["ต้นแบบแมวกวักนำโชค","หางกุดพุ่มน่ารัก","ปรับตัวเก่งเป็นมิตร"]},"cat_siberian":{"id":"cat_siberian","name":"น้องวลาดิเมียร์ (Siberian Forest Cat)","breed":"ไซบีเรียน (Siberian Cat - รัสเซีย)","description":"แมวแห่งผืนป่าไซบีเรีย ขนสามชั้นทนหนาวจัด สารก่อภูมิแพ้ต่ำ (Hypoallergenic) กระโดดสูง ใจดี ขี้เล่น และรักทุกคนในบ้าน","price":34000,"image":"cat_siberian.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวสามชั้น Hypoallergenic","personality":"ใจดี รักสนุก ฉลาด ขี้อ้อน","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดประจำตัว","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดรัสเซียแท้","categories":["fluffy","low_shed","playful","long_hair"],"highlights":["สารก่อภูมิแพ้ต่ำเหมาะคนแพ้ง่าย","ขนฟูสวยสง่า","เป็นมิตรกับสัตว์เลี้ยงอื่น"]},"cat_turkish_angora":{"id":"cat_turkish_angora","name":"น้องสุลต่าน (Turkish Angora)","breed":"เตอร์กิช แองโกรา (Turkish Angora - ตุรกี)","description":"สมบัติแห่งชาติตุรกี ขนสีขาวบริสุทธิ์พริ้วไหวดั่งผ้าไหม ดวงตาสีฟ้าและสีอำพัน (Odd-Eyes) เฉลียวฉลาด สง่างามและช่างประจบ","price":27000,"image":"cat_turkish_angora.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนกึ่งยาวสัมผัสไหมนุ่ม","personality":"สง่างาม ปราดเปรียว ช่างเอาใจ ฉลาด","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจการได้ยินปกติ","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["fluffy","condo","long_hair"],"highlights":["ขนสีขาวประกายไหม","ตาสองสีทรงเสน่ห์","ความสง่างามระดับราชสำนัก"]},"cat_turkish_van":{"id":"cat_turkish_van","name":"น้องคาราเมล (Turkish Van Swimming Cat)","breed":"เตอร์กิช แวน (Turkish Van - ตุรกี)","description":"แมวว่ายน้ำแห่งทะเลสาบแวน ลวดลายสีเฉพาะที่หัวและหาง (Van Pattern) ขนกันน้ำ ชอบเล่นน้ำและผจญภัย ร่างกายล่ำสันแข็งแรง","price":26000,"image":"cat_turkish_van.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"long","hair_label":"ขนกึ่งยาวกันน้ำพิเศษ","personality":"รักการว่ายน้ำ พลังงานสูง ฉลาด มั่นใจ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิแล้ว","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์","categories":["playful","long_hair"],"highlights":["ฉายาแมวชอบว่ายน้ำ","ลวดลายแวนคลาสสิก","สุขภาพแข็งแรงมาก"]},"cat_cornish_rex":{"id":"cat_cornish_rex","name":"น้องซิกแซก (Cornish Rex)","breed":"คอร์นิช เร็กซ์ (Cornish Rex - อังกฤษ)","description":"แมวขนลอนคลื่นแปลกตาจากคอร์นวอลล์ สัมผัสนุ่มเหมือนกำมะหยี่ ขนแทบไม่ร่วง รูปร่างเพรียวระหงดั่งเกรย์ฮาวด์ กระโดดเก่งและขี้อ้อน","price":25000,"image":"cat_cornish_rex.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นหยิกเป็นลอนคลื่น","personality":"ขี้เล่น กระตือรือร้น รักความอบอุ่น","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพผ่าน","pedigree":"มีใบเพ็ดดีกรี GCCF จากอังกฤษ","categories":["low_shed","playful","short_hair"],"highlights":["ขนลอนคลื่นไม่เหมือนใคร","ขนร่วงน้อยมาก","อบอุ่นน่ากอด"]},"cat_devon_rex":{"id":"cat_devon_rex","name":"น้องพิ๊กซี่ (Devon Rex)","breed":"เดวอน เร็กซ์ (Devon Rex - อังกฤษ)","description":"แมวเอลฟ์หูใหญ่ ตาโต ขนสั้นหยิกนุ่มเหมือนขนนก ฉลาดหลักแหลม ชอบเกาะบนไหล่และเรียนรู้ทริคใหม่ๆ ได้อย่างรวดเร็ว","price":27000,"image":"cat_devon_rex.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นลอนละเอียดนุ่ม","personality":"ขี้เล่น ช่างสังเกต ชอบนั่งบนไหล่","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิ","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดแท้","categories":["popular","low_shed","playful","condo","short_hair"],"highlights":["หน้าตาเหมือนเอลฟ์น่ารัก","ชอบคลอเคลียบนไหล่","ขนร่วงน้อยดูแลง่าย"]},"cat_singapura":{"id":"cat_singapura","name":"น้องเปี๊ยก (Singapura)","breed":"สิงกาปุระ (Singapura - สิงคโปร์)","description":"สายพันธุ์แมวบ้านที่มีขนาดตัวเล็กที่สุดในโลก ตาโตสีเฮเซล ขนสีน้ำตาลเซเปียอบอุ่น น่ารักทะนุถนอม ขี้อ้อนและเข้ากับคนง่าย","price":28000,"image":"cat_singapura.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นละเอียดสีเซเปีย","personality":"ตัวเล็กขี้อ้อน อ่อนหวาน ช่างสังเกต","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดสุขภาพ","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์จิ๋ว","categories":["condo","beginner","short_hair"],"highlights":["สายพันธุ์แมวตัวเล็กที่สุดในโลก","ดวงตากลมโตบ้องแบ๊ว","เหมาะกับคอนโดและพื้นที่จำกัด"]},"cat_american_curl":{"id":"cat_american_curl","name":"น้องเคิร์ลลี่ (American Curl)","breed":"อเมริกัน เคิร์ล (American Curl - สหรัฐอเมริกา)","description":"แมวหูดัดม้วนไปข้างหลังอย่างมีเอกลักษณ์ นิสัยเหมือนลูกแมวตลอดชีวิต (Peter Pan of Cats) อารมณ์ดี ฉลาด เป็นมิตรกับทุกคน","price":24000,"image":"cat_american_curl.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นนุ่มแน่น","personality":"ขี้เล่น สดใส เข้ากับเด็กๆ ได้ดีเยี่ยม","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจกระดูกใบหู","pedigree":"มีใบเพ็ดดีกรี CFA สายพันธุ์แท้","categories":["beginner","playful","short_hair"],"highlights":["ใบหูดัดโค้งไปด้านหลังแปลกตา","นิสัยร่าเริงดั่งเด็กน้อยตลอดกาล","สุขภาพแข็งแรง"]},"cat_bombay":{"id":"cat_bombay","name":"น้องแพนเธอร์ (Bombay Cat)","breed":"บอมเบย์ (Bombay Cat - สหรัฐอเมริกา)","description":"เสือดำจิ๋วประจำห้องนั่งเล่น ขนสีดำขลับเงาวับดั่งผ้าซาติน ดวงตาสีทองแดงเปล่งประกาย สุภาพ ขี้อ้อน และรักความอบอุ่น","price":21000,"image":"cat_bombay.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นสีดำเงาวับ","personality":"สุขุม อ่อนหวาน ติดคน รักความสงบ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิ","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์","categories":["condo","beginner","short_hair"],"highlights":["ขนดำเงาดั่งแพรไหม","ตาสีทองแดงโดดเด่น","เชื่องและอ้อนเก่ง"]},"cat_burmese":{"id":"cat_burmese","name":"น้องโกโก้ (Burmese Cat)","breed":"เบอร์มีส (Burmese - เมียนมา \/ พม่า)","description":"แมวทองแดงโบราณ รูปร่างกลมกลืน ขนสีน้ำตาลเข้มซาติน ตาสีเหลืองทอง นิสัยขี้เล่น เชื่อมโยงจิตใจกับเจ้าของอย่างลึกซึ้ง","price":19500,"image":"cat_burmese.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นเงางามสีน้ำตาลช็อกโกแลต","personality":"ซื่อสัตย์ ช่างเอาใจ ขี้เล่น ผูกพันกับคน","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดประจำตัว","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["beginner","playful","short_hair"],"highlights":["ขนเนียนนุ่มสีน้ำตาลหรูหรา","ขี้อ้อนติดเจ้าของ","เลี้ยงง่ายไม่จุกจิก"]},"cat_chartreux":{"id":"cat_chartreux","name":"น้องมอนเต้ (Chartreux)","breed":"ชาร์ตรู (Chartreux - ฝรั่งเศส)","description":"แมวประวัติศาสตร์ของพระคริสต์ในฝรั่งเศส ขนสีเทาเงินอมฟ้าหนานุ่ม ตาสีส้มอำพัน ยิ้มหวานตลอดเวลา เงียบสงบ ไม่ส่งเสียงรบกวน","price":29000,"image":"cat_chartreux.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นสองชั้นสีเทาเงินอมฟ้า","personality":"สงบนิ่ง สุภาพ ไม่ส่งเสียงดัง ยิ้มหวาน","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจโรคทางพันธุกรรม","pedigree":"มีใบเพ็ดดีกรี LOOF จากฝรั่งเศส","categories":["condo","short_hair"],"highlights":["ฉายาแมวยิ้มแห่งฝรั่งเศส","เงียบสงบที่สุดไม่เคยร้องกวน","ขนสองชั้นนุ่มหนา"]},"cat_khao_manee":{"id":"cat_khao_manee","name":"น้องมณีเพชร (ขาวมณี \/ Khao Manee)","breed":"ขาวมณี (Khao Manee - ประเทศไทย)","description":"อัญมณีมีชีวิตแห่งสยาม ขนขาวปลอดดั่งหิมะ ดวงตาสองสี (ฟ้า-เหลืองอำพัน) ส่องประกายดั่งเพชร ฉลาด ขี้เล่น และนำพาโชคลาภวาสนา","price":25000,"image":"cat_khao_manee.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นสีขาวบริสุทธิ์ 100%","personality":"ฉลาด ร่าเริง ช่างสังเกต ขี้ประจบ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจการได้ยินผ่านเกณฑ์","pedigree":"ใบรับรองสายพันธุ์แมวมงคลไทยโบราณ","categories":["popular","beginner","playful","short_hair"],"highlights":["ตาสองสี (Odd-Eyes) หายากทรงคุณค่า","แมวมงคลสยามโบราณ","ขาวบริสุทธิ์ไร้แต้มสี"]},"cat_korat":{"id":"cat_korat","name":"น้องสีเงิน (โคราช \/ แมวสีสวาด)","breed":"โคราช \/ สีสวาด (Korat Cat - ประเทศไทย)","description":"แมวแห่งความรักและโชคลาภ หน้าทรงรูปหัวใจ ขนสีสวาดปลายเงินประกาย (Silver-tipped) ตาสีเขียวมรกต ฉลาดและผูกพันกับเจ้าของเป็นเลิศ","price":16000,"image":"cat_korat.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นประกายสีเงินเหลือบเมฆ","personality":"ซื่อสัตย์ อ่อนหวาน จดจำเจ้าของแม่นยำ","vaccine":"ฉีดวัคซีนรวม + ตรวจสุขภาพเรียบร้อย","pedigree":"ใบรับรองแมวไทยโบราณสายพันธุ์แท้","categories":["condo","beginner","short_hair"],"highlights":["ใบหน้าทรงหัวใจนำความรัก","ขนประกายสีเงินวาววับ","สุขภาพแข็งแรงสายพันธุ์แท้ดั้งเดิม"]},"cat_savannah":{"id":"cat_savannah","name":"น้องซิมบ้า (Savannah Cat F4)","breed":"ซาวันนาห์ (Savannah - สหรัฐอเมริกา \/ แอฟริกา)","description":"แมวขายาวสง่างาม ลวดลายจุดเสือป่าแอฟริกัน ร่างกายสูงเพรียว ฉลาดเทียบเท่าสุนัข เดินด้วยสายจูงได้ และชื่นชอบการเล่นน้ำ","price":45000,"image":"cat_savannah.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นลายจุดเสือป่า","personality":"พลังงานสูง ฉลาดล้ำเลิศ คล่องแคล่ว รักน้ำ","vaccine":"ฉีดวัคซีนครบ 3 เข็ม + ฝังไมโครชิปสากล","pedigree":"มีใบเพ็ดดีกรี TICA จดทะเบียน F4 ถูกกฎหมาย","categories":["playful","short_hair"],"highlights":["รูปร่างสูงเพรียวสง่าดั่งเสือชีตาห์","ฝึกจูงเดินเล่นได้เหมือนสุนัข","ระดับพรีเมียมเอกซ์คลูซีฟ"]},"cat_egyptian_mau":{"id":"cat_egyptian_mau","name":"น้องฟาโรห์ (Egyptian Mau)","breed":"อียิปเชียน มัว (Egyptian Mau - อียิปต์)","description":"แมวโบราณลายจุดธรรมชาติแท้หนึ่งเดียวจากลุ่มแม่น้ำไนล์ วิ่งเร็วที่สุดในโลก (สูงสุด 48 กม.\/ชม.) ตาสีกูสเบอร์รี่เขียวสดใส ซื่อสัตย์และรักเจ้าของ","price":28000,"image":"cat_egyptian_mau.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นลายจุดธรรมชาติคมชัด","personality":"ว่องไว ซื่อสัตย์ อ่อนโยนกับครอบครัว","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดสุขภาพ","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดอียิปต์แท้","categories":["playful","short_hair"],"highlights":["ลายจุดธรรมชาติแท้จากอียิปต์","แมวบ้านที่วิ่งเร็วที่สุดในโลก","รักเจ้าของสุดหัวใจ"]},"cat_scottish_straight":{"id":"cat_scottish_straight","name":"น้องมาร์ชเมลโล่ (Scottish Straight)","breed":"สก็อตติช สเตรท (Scottish Straight - สก็อตแลนด์)","description":"พี่น้องหูตั้งของสก็อตติช โฟลด์ หน้ากลมแป้น แก้มยุ้ย โครงสร้างกระดูกแข็งแรงสมบูรณ์ ขี้อ้อน ใจดี เหมาะสำหรับครอบครัว","price":17000,"image":"cat_scottish_straight.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นแน่นนุ่มฟู","personality":"อารมณ์ดี ขี้อ้อน เรียบร้อย สบายๆ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิ","pedigree":"มีใบเพ็ดดีกรี WCF สายพันธุ์แท้","categories":["popular","condo","beginner","short_hair"],"highlights":["หน้ากลมแก้มยุ้ยน่ารัก","สุขภาพข้อกระดูกแข็งแรงไร้กังวล","เลี้ยงง่ายเป็นมิตร"]},"cat_somali":{"id":"cat_somali","name":"น้องฟ็อกซี่ (Somali Fox Cat)","breed":"โซมาลี (Somali Cat - โซมาเลีย \/ สหรัฐอเมริกา)","description":"จิ้งจอกน้อยแห่งโลกแมว ขนยาวพริ้วสีส้มอบเชย หางพวงฟูสง่างาม ฉลาด คล่องแคล่ว ชอบเล่นซ่อนหาและสร้างรอยยิ้ม","price":26000,"image":"cat_somali.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวพริ้วสีอบเชยหางพวง","personality":"ร่าเริง ฉลาด ช่างเล่น อยากรู้อยากเห็น","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพ","pedigree":"มีใบเพ็ดดีกรี CFA รับรองสายพันธุ์","categories":["fluffy","playful","long_hair"],"highlights":["หางพวงขนฟูเหมือนจิ้งจอก","ขนไล่สีอบเชยเงางาม","ฉลาดฝึกสอนได้"]},"cat_australian_mist":{"id":"cat_australian_mist","name":"น้องโอปอล (Australian Mist)","breed":"ออสเตรเลียน มิสต์ (Australian Mist - ออสเตรเลีย)","description":"แมวสายพันธุ์แรกของออสเตรเลีย ลายหมอกนุ่มนวลเหมือนคลุมด้วยไอหมอก นิสัยผ่อนคลาย รักเด็กและทนทาน เหมาะสำหรับเลี้ยงในบ้าน 100%","price":22000,"image":"cat_australian_mist.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นลวดลายหมอกนุ่มนวล","personality":"ใจเย็น อ่อนโยน เข้ากับเด็กเล็กได้ยอดเยี่ยม","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดตรวจสุขภาพ","pedigree":"มีใบเพ็ดดีกรี WCF สายพันธุ์ออสเตรเลียแท้","categories":["condo","beginner","short_hair"],"highlights":["สายพันธุ์แรกแห่งแดนจิงโจ้","ลายหมอกฟุ้งนุ่มตา","ใจเย็นเข้ากับเด็กเล็กได้ดีที่สุด"]},"cat_kurilian_bobtail":{"id":"cat_kurilian_bobtail","name":"น้องโมจิ (Kurilian Bobtail)","breed":"คูริเลียน บ็อบเทล (Kurilian Bobtail - หมู่เกาะคูริล \/ รัสเซีย-ญี่ปุ่น)","description":"แมวเกาะหางกระต่ายธรรมชาติ ขนหนาทนหนาว กล้ามเนื้อแข็งแรง ว่ายน้ำเก่ง ไม่กลัวน้ำ นิสัยสุขุม ซื่อสัตย์ดั่งสุนัข","price":25000,"image":"cat_kurilian_bobtail.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนกึ่งยาวหนานุ่มหางพู่สั้น","personality":"ซื่อสัตย์ สุขุม รักน้ำ ว่ายน้ำเก่ง","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ฝังไมโครชิป","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดเกาะคูริลแท้","categories":["fluffy","playful","long_hair"],"highlights":["หางพู่ปอมปอมธรรมชาติ","ทนทานไม่ป่วยง่าย","นิสัยซื่อสัตย์ดั่งสุนัข"]}};
+const allReviewsData = [{"id":"rev_001","author":"คุณพิมพ์ลดา สุวรรณเวช","location":"กรุงเทพฯ (สุขุมวิท)","breed_id":"cat_british","breed_name":"บริติช ช็อตแฮร์ (น้องสโนว์)","rating":5,"date":"2026-09-15","adoption_duration":"รับน้องไปแล้ว 6 เดือน","comment":"รับน้องสโนว์มาได้ 6 เดือนแล้วค่ะ น้องสุขภาพแข็งแรงมาก ไม่เคยป่วยเลย หน้ากลมแก้มป่อง ขนแน่นนุ่มเหมือนกำมะหยี่ ขี้อ้อนสุดๆ ทางฟาร์มดูแลดีมาก ให้คำแนะนำตลอด มีใบเพ็ดดีกรีและสมุดวัคซีนครบถ้วน ประทับใจมากค่ะ!","image_at_cattery":"assets\/images\/cat_british.jpg","image_at_home":"assets\/images\/cat_british.jpg","likes":48,"verified_buyer":true},{"id":"rev_002","author":"คุณธนภัทร เลิศศิริ","location":"นนทบุรี (รัตนาธิเบศร์)","breed_id":"cat_persian","breed_name":"เปอร์เซีย (น้องปุยหิมะ)","rating":5,"date":"2026-09-18","adoption_duration":"รับน้องไปแล้ว 4 เดือน","comment":"น้องปุยหิมะเรียบร้อยมาก ไม่ส่งเสียงร้องกวนใจเลย เหมาะกับการเลี้ยงในคอนโดสุดๆ ขนยาวนุ่มฟูเหมือนปุยเมฆ ได้รับ Starter Kit ของแถมพรีเมียม 11 รายการคุ้มค่ามาก ทีมงานจัดส่ง Pet Taxi ถึงหน้าบ้านตรงเวลาเป๊ะครับ","image_at_cattery":"assets\/images\/cat_persian.jpg","image_at_home":"assets\/images\/cat_persian.jpg","likes":35,"verified_buyer":true},{"id":"rev_003","author":"คุณกานดา อัครเดชา","location":"สมุทรปราการ (บางนา)","breed_id":"cat_ragdoll","breed_name":"แร็กดอลล์ (น้องคอตตอน)","rating":5,"date":"2026-09-20","adoption_duration":"รับน้องไปแล้ว 3 เดือน","comment":"ดวงตาสีฟ้าครามสวยสะกดใจมากค่ะ น้องนุ่มนิ่มอุ้มง่ายไม่กางเล็บเลย ปลอดภัยสำหรับบ้านที่มีเด็กเล็ก ลูกสาวรักน้องมาก สัตวแพทย์ประจำฟาร์มคอยตรวจเช็กสุขภาพและให้คำปรึกษาดีเยี่ยมตลอด ขอบคุณ Purrfect Shop มากๆ ค่ะ","image_at_cattery":"assets\/images\/cat_ragdoll.jpg","image_at_home":"assets\/images\/cat_ragdoll.jpg","likes":52,"verified_buyer":true},{"id":"rev_004","author":"คุณวิศรุต เกียรติไพบูลย์","location":"เชียงใหม่ (นิมมานฯ)","breed_id":"cat_mainecoon","breed_name":"เมนคูน (น้องไททัน)","rating":5,"date":"2026-09-22","adoption_duration":"รับน้องไปแล้ว 5 เดือน","comment":"น้องไททันตัวใหญ่สง่างามดั่งสิงโต ขนแผงคอหนาฟูมากแต่นิสัยอ่อนโยนเหมือนน้องหมา ฉลาดมากฝึกขอมือได้แล้ว จัดส่งทางเครื่องบินมาเชียงใหม่อย่างปลอดภัย ไร้รอยขีดข่วน แข็งแรงร่าเริงตั้งแต่ถึงบ้านเลยครับ","image_at_cattery":"assets\/images\/cat_mainecoon.jpg","image_at_home":"assets\/images\/cat_mainecoon.jpg","likes":41,"verified_buyer":true},{"id":"rev_005","author":"คุณชุติมา ประเสริฐผล","location":"กรุงเทพฯ (อารีย์)","breed_id":"cat_munchkin","breed_name":"มันช์กิ้น ขาสั้น (น้องชอร์ตตี้)","rating":5,"date":"2026-09-25","adoption_duration":"รับน้องไปแล้ว 2 เดือน","comment":"วิ่งดุ๊กดิ๊กน่ารักจนใจละลายเลยค่ะ ขาสั้นเตี้ยแต่กระโดดคล่องมาก สร้างเสียงหัวเราะให้ทุกคนในบ้านทุกวัน ร่าเริง อารมณ์ดี ทานเก่ง ขับถ่ายเป็นที่เป็นทางตั้งแต่วันแรก สมบูรณ์แบบมากๆ ค่ะ","image_at_cattery":"assets\/images\/cat_munchkin.jpg","image_at_home":"assets\/images\/cat_munchkin.jpg","likes":64,"verified_buyer":true},{"id":"rev_006","author":"คุณอภิชาติ วงศ์สวรรค์","location":"ชลบุรี (พัทยา)","breed_id":"cat_bengal","breed_name":"เบงกอล (น้องจากัวร์)","rating":5,"date":"2026-09-26","adoption_duration":"รับน้องไปแล้ว 3 เดือน","comment":"ลายดอกกุหลาบ Rosette สีทองชัดเจนมาก ขนสะท้อนแสงประกายกลิตเตอร์สวยงาม ปราดเปรียวและชอบเล่นน้ำมาก ฝึกใส่สายจูงพาเดินเล่นได้สบายๆ สมกับเป็นเกรดท็อปสายเลือดแชมป์ครับ","image_at_cattery":"assets\/images\/cat_bengal.jpg","image_at_home":"assets\/images\/cat_bengal.jpg","likes":29,"verified_buyer":true}];
+const microchipMap = {"cat_british":"900215001234567","cat_persian":"900215003344556","cat_sphynx":"900215009988776","cat_siamese":"900215004455667","cat_mainecoon":"900215008899112","cat_ragdoll":"900215007654321","cat_bengal":"900215006677889","cat_scottish":"900215007788990","cat_munchkin":"900215005566778","cat_russian":"900215009900112"};
+
+(function initStaticCatDetail() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetId = urlParams.get('id');
+        if (targetId && allCats[targetId]) {
+            renderCatDetailsClient(targetId);
+        }
+    } catch(e) {}
+})();
+
+function renderCatDetailsClient(id) {
+    const cat = allCats[id];
+    if (!cat) return;
+
+    document.title = `${cat.name} - รายละเอียดน้องแมว | Purrfect Shop`;
+    const bc = document.getElementById('breadcrumbCatName');
+    if (bc) bc.textContent = cat.name;
+
+    const img = document.getElementById('detailCatImg');
+    if (img) {
+        img.src = `assets/images/${cat.image}`;
+        img.alt = cat.name;
+    }
+
+    const breed = document.getElementById('detailCatBreed');
+    if (breed) breed.textContent = cat.breed;
+
+    const title = document.getElementById('detailCatTitle');
+    if (title) title.textContent = cat.name;
+
+    const desc = document.getElementById('detailCatDesc');
+    if (desc) desc.textContent = cat.description;
+
+    const price = document.getElementById('detailCatPrice');
+    if (price) price.textContent = new Intl.NumberFormat().format(cat.price) + " ฿";
+
+    const age = document.getElementById('detailCatAge');
+    if (age) age.textContent = cat.age;
+
+    const gender = document.getElementById('detailCatGender');
+    if (gender) gender.textContent = cat.gender;
+
+    const hair = document.getElementById('detailCatHair');
+    if (hair) hair.textContent = cat.hair_label;
+
+    const pers = document.getElementById('detailCatPersonality');
+    if (pers) pers.textContent = cat.personality;
+
+    const vac = document.getElementById('detailCatVaccine');
+    if (vac) vac.textContent = cat.vaccine;
+
+    const formCatId = document.getElementById('detailFormCatId');
+    if (formCatId) formCatId.value = cat.id;
+
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+
+    const bookLink = document.getElementById('detailBookingLink');
+    if (bookLink) {
+        bookLink.href = isStatic 
+            ? `booking.html?breed=${encodeURIComponent(cat.name)}`
+            : `booking.php?breed=${encodeURIComponent(cat.name)}`;
+    }
+
+    const chip = microchipMap[cat.id] || '900215001234567';
+    const pedLink = document.getElementById('detailPedigreeLink');
+    if (pedLink) {
+        pedLink.href = isStatic
+            ? `pedigree.html?chip=${chip}`
+            : `pedigree.php?chip=${chip}`;
+    }
+
+    const revTitle = document.getElementById('reviewsSectionTitle');
+    if (revTitle) revTitle.textContent = `รีวิวความสุขจากครอบครัวที่รับเลี้ยง ${cat.breed} 🐾`;
+
+    // Render Filtered Reviews
+    const matchedRev = allReviewsData.filter(r => r.breed_id === cat.id);
+    const revToRender = matchedRev.length > 0 ? matchedRev : allReviewsData.slice(0, 2);
+    const container = document.getElementById('breedReviewsContainer');
+    if (container && revToRender.length > 0) {
+        container.innerHTML = revToRender.map(r => `
+            <div class="review-card" style="background: var(--bg-card); border-radius: 24px; padding: 1.5rem; border: 1px solid var(--border-color); box-shadow: 0 8px 24px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #FF6B4A, #FFA07A); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem;">
+                                ${(r.author || 'ท').substring(0, 1)}
+                            </div>
+                            <div>
+                                <strong style="display: block; font-size: 0.95rem; color: var(--text-main);">${r.author}</strong>
+                                <span style="font-size: 0.78rem; color: var(--text-muted);">📍 ${r.location} • ${r.adoption_duration || 'รับเลี้ยงแล้ว'}</span>
+                            </div>
+                        </div>
+                        <span style="background: #FEF3C7; color: #92400E; font-size: 0.8rem; font-weight: 800; padding: 3px 8px; border-radius: 999px;">
+                            ⭐ ${(r.rating || 5).toFixed(1)}
+                        </span>
+                    </div>
+                    ${r.image_at_home ? `
+                        <div style="border-radius: 16px; overflow: hidden; margin-bottom: 1rem; max-height: 200px;">
+                            <img src="${r.image_at_home}" alt="น้องแมวในบ้านใหม่" style="width: 100%; height: 200px; object-fit: cover;">
+                        </div>
+                    ` : ''}
+                    <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem; font-style: italic;">
+                        "${r.comment}"
+                    </p>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px dashed var(--border-color); padding-top: 0.8rem; font-size: 0.78rem; color: var(--text-muted);">
+                    <span style="color: #10B981; font-weight: 700; display: inline-flex; align-items: center; gap: 4px;">
+                        ✓ ผู้รับเลี้ยงจริง (Verified Adopter)
+                    </span>
+                    <span>📅 ${r.date || '2026-09'}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+// Client-side Add to Cart handler
+function handleAddToCartDetail(e) {
+    const catId = document.getElementById('detailFormCatId')?.value || 'cat_british';
+    const cat = allCats[catId];
+    
+    // 1. Always update localStorage cart
+    if (cat) {
+        let cart = [];
+        try {
+            cart = JSON.parse(localStorage.getItem('cat_shop_cart') || '[]');
+        } catch(err) { cart = []; }
+
+        const existing = cart.find(item => item.id === catId);
+        if (existing) {
+            existing.qty = (existing.qty || 1) + 1;
+        } else {
+            cart.push({
+                id: cat.id,
+                name: cat.name,
+                breed: cat.breed,
+                price: cat.price,
+                image: cat.image,
+                gender: cat.gender,
+                age: cat.age,
+                qty: 1
+            });
+        }
+
+        try {
+            localStorage.setItem('cat_shop_cart', JSON.stringify(cart));
+        } catch(err) {}
+    }
+
+    // 2. If static HTML environment, navigate to cart.html
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (isStatic) {
+        if (e) e.preventDefault();
+        window.location.href = `cart.html?add=${encodeURIComponent(catId)}`;
+    }
+}
+</script>
+
+    <footer>
+        <!-- Newsletter Subscription Ribbon -->
+        <div style="background: linear-gradient(135deg, rgba(255, 117, 86, 0.12) 0%, rgba(254, 243, 199, 0.5) 100%); border-bottom: 1px solid var(--border-color); padding: 1.8rem 1rem;">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <span style="font-size: 2.4rem; line-height: 1;">📬</span>
+                    <div>
+                        <h4 style="margin: 0 0 4px 0; font-size: 1.15rem; color: var(--text-main); font-weight: 800;">
+                            สมัครรับจดหมายข่าว & ดีลลับน้องแมว Purrfect Shop 🐾
+                        </h4>
+                        <p style="margin: 0; font-size: 0.88rem; color: var(--text-muted);">
+                            รับแจ้งเตือนน้องแมวเข้าใหม่ เกร็ดสุขภาพจากสัตวแพทย์ พร้อมรับโค้ดส่วนลด 10% (CATNEWS10) ทันทีทางอีเมล
+                        </p>
+                    </div>
+                </div>
+                <form action="subscribe.html" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
+                    <input type="email" name="subscriber_email" placeholder="กรอกอีเมลของคุณ เช่น name@gmail.com" required style="flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 999px; padding: 10px 22px; font-weight: 800; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);">
+                        ติดตามข่าวสาร ✨
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h3>Purrfect Shop 🐾</h3>
+                <p style="font-weight: 600; color: var(--primary-coral); margin-bottom: 0.4rem;">
+                    "เพราะทุกบ้านควรมีเจ้าเหมียว"
+                </p>
+                <p>
+                    ฟาร์มและศูนย์รวมน้องแมวสายพันธุ์แท้ 100% สุขภาพดี ได้รับการดูแลจากสัตวแพทย์อย่างใกล้ชิด
+                    พร้อมบริการตรวจสุขภาพ ฉีดวัคซีน ถ่ายพยาธิ และใบเพ็ดดีกรีรับรองสายพันธุ์ครบถ้วน
+                </p>
+                <div style="margin-top: 1rem; display: flex; gap: 0.8rem; font-size: 0.85rem; color: var(--text-muted);">
+                    <span>📍 บริการจัดส่งทั่วประเทศ</span> &bull; 
+                    <span>⏰ เปิดทุกวัน 09:00 - 20:00 น.</span>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>หมวดหมู่แนะนำ</h4>
+                <ul>
+                    <li><a href="recommend.html?cat=popular">🔥 สายพันธุ์ยอดนิยม</a></li>
+                    <li><a href="recommend.html?cat=condo">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
+                    <li><a href="recommend.html?cat=fluffy">🧸 แมวขนยาวนุ่มฟู</a></li>
+                    <li><a href="recommend.html?cat=short_hair">✨ แมวขนสั้นดูแลง่าย</a></li>
+                    <li><a href="recommend.html?cat=beginner">👶 มือใหม่เลี้ยงง่าย</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>ความปลอดภัย & สมาชิก</h4>
+                <ul>
+                    <li><a href="register.html">✨ สมัครสมาชิกรับส่วนลด 5%</a></li>
+                    <li><a href="creator.html">👨‍💻 ข้อมูลผู้จัดทำโครงการ</a></li>
+                    <li><a href="cart.html">🛒 ตะกร้าการจองน้องแมว</a></li>
+                    <li><a href="recommend.html">🌟 แนะนำสายพันธุ์สำหรับคุณ</a></li>
+                    <li><a href="products.html">🐱 ดูสายพันธุ์น้องแมวทั้งหมด</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 <strong>Purrfect Shop</strong> - คัดสรรและส่งมอบเพื่อนที่ดีที่สุดด้วยหัวใจ 🐾</p>
+            <p>
+                พัฒนาโดย <strong>Purrfect Cattery Team</strong> (TH-CAT-8899 IT) &bull; Purrfect Boutique Cattery
+            </p>
+        </div>
+    </footer>
+    <!-- chat_widget.php - Floating Live Chat Widget with Popup Quick Menu -->
+<div id="purrfect-chat-root">
+    <!-- 1. Floating Launcher Button (Fixed Bottom-Right) -->
+    <button id="chat-launcher-btn" type="button" onclick="togglePurrfectChat()" title="ปรึกษาแอดมิน & แชทบอทแนะนำน้องแมว 🐾">
+        <span class="launcher-icon">💬</span>
+        <span class="launcher-cat-icon">🐾</span>
+        <span class="launcher-close-icon">✕</span>
+        <span class="launcher-status-dot"></span>
+        <span id="chat-unread-badge" class="chat-unread-badge" style="display: none;">0</span>
+    </button>
+
+    <!-- 2. Chat Popup Window -->
+    <div id="purrfect-chat-window" class="chat-window-hidden">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar-wrapper">
+                    <img src="assets/images/logo.png" alt="Purrfect Advisor" class="chat-header-avatar">
+                    <span class="chat-online-badge"></span>
+                </div>
+                <div>
+                    <div class="chat-header-title">Purrfect Live Chat 🐾</div>
+                    <div class="chat-header-subtitle">
+                        <span class="status-pulse-dot"></span> เจ้าหน้าที่ & AI แนะนำสายพันธุ์ (ออนไลน์)
+                    </div>
+                </div>
+            </div>
+            <div class="chat-header-actions">
+                <button type="button" class="chat-btn-icon" onclick="togglePurrfectChat()" title="ย่อหน้าต่าง">✕</button>
+            </div>
+        </div>
+
+        <!-- Current User Info Strip -->
+        <div id="chat-user-strip" class="chat-user-strip">
+            <span id="chat-user-label">กำลังโหลดข้อมูลผู้ใช้...</span>
+        </div>
+
+        <!-- Chat Messages Body -->
+        <div id="chat-messages-container" class="chat-messages-container">
+            <div class="chat-loading-spinner" id="chat-loading">
+                <span>🐾 กำลังโหลดการสนทนา...</span>
+            </div>
+        </div>
+
+        <!-- Pop-up Quick Questions Menu Overlay (Toggled by "⚡ คำถาม" button) -->
+        <div id="chat-quick-menu-popup" class="chat-quick-popup-hidden">
+            <div class="chat-quick-popup-header">
+                <span>⚡ เลือกคำถามด่วน (บอทแนะนำทันที)</span>
+                <button type="button" class="quick-popup-close-btn" onclick="toggleQuickMenuPopup()">✕</button>
+            </div>
+            <div class="chat-quick-popup-grid">
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(1)">
+                    <span class="popup-item-icon">🐱</span>
+                    <span class="popup-item-text">1. น้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(2)">
+                    <span class="popup-item-icon">🏢</span>
+                    <span class="popup-item-text">2. เหมาะกับเลี้ยงในคอนโด / รักความสงบ</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(3)">
+                    <span class="popup-item-icon">🤧</span>
+                    <span class="popup-item-text">3. คนเป็นภูมิแพ้ ขนไม่ร่วง / ผลัดขน 0%</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(4)">
+                    <span class="popup-item-icon">👑</span>
+                    <span class="popup-item-text">4. สายพันธุ์พรีเมียม ขนฟู มีใบเพ็ดดีกรี</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(5)">
+                    <span class="popup-item-icon">🎁</span>
+                    <span class="popup-item-text">5. โปรโมชั่น & ดีลส่วนลดสมาชิกใหม่</span>
+                </button>
+                <button type="button" class="quick-popup-item" onclick="sendQuickReplyFromPopup(6)">
+                    <span class="popup-item-icon">🩺</span>
+                    <span class="popup-item-text">6. การรับประกันสุขภาพ 180 วัน & ขนส่ง</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Input Bar (With ⚡ คำถาม button beside input) -->
+        <form id="chat-input-form" onsubmit="handleSendChatMessage(event)" class="chat-input-form">
+            <button type="button" id="chat-quick-trigger-btn" class="chat-quick-trigger-btn" onclick="toggleQuickMenuPopup()" title="คลิกเพื่อเปิดคำถามด่วน 6 ข้อ">
+                <span>⚡ คำถาม</span>
+            </button>
+            <input type="text" id="chat-input-text" placeholder="พิมพ์ข้อความคุยกับแอดมิน..." autocomplete="off" maxlength="500">
+            <button type="submit" id="chat-send-btn" class="chat-send-btn" title="ส่งข้อความ">
+                <span>➤</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+(function() {
+    let chatIsOpen = false;
+    let quickPopupIsOpen = false;
+    let pollInterval = null;
+    let isBotTyping = false;
+    let lastRenderedSig = '';
+
+    const quickPromptsMap = {
+        1: '🐱 แนะนำน้องแมวยอดนิยม เลี้ยงง่าย สำหรับมือใหม่',
+        2: '🏢 มีน้องแมวพันธุ์ไหนที่เหมาะกับเลี้ยงในคอนโด/ห้องพักบ้าง?',
+        3: '🤧 เป็นภูมิแพ้ แนะนำน้องแมวขนไม่ร่วง/ผลัดขนน้อยหน่อยครับ',
+        4: '👑 ขอดูแมวสายพันธุ์พรีเมียม ขนฟูหน้าหวาน มีใบเพ็ดดีกรี',
+        5: '🎁 ตอนนี้มีโปรโมชั่นหรือดีลส่วนลดสมาชิกใหม่อะไรบ้าง?',
+        6: '🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?'
+    };
+
+    // Client-Side Fallback Knowledge Base & Quick Replies for Static GitHub Pages
+    const BOT_RESPONSES = {
+        1: {
+            text: "นี่คือน้องแมวยอดนิยมอันดับ 1 เลี้ยงง่าย เป็นมิตร สุขภาพแข็งแรง เหมาะสำหรับมือใหม่ที่เพิ่งเริ่มเลี้ยงที่สุดครับ 🐾",
+            cards: [
+                { id: 'cat_british', name: 'น้องบริติช บลู', breed: 'British Shorthair', price: '฿35,000', image: 'assets/images/cat_british.jpg', highlight: 'นิสัยสุขุม น่ารัก ขี้อ้อน', link: 'products.html' },
+                { id: 'cat_americanshorthair', name: 'น้องอเมริกัน ซิลเวอร์', breed: 'American Shorthair', price: '฿28,000', image: 'assets/images/cat_americanshorthair.jpg', highlight: 'ลายคมชัด ขี้เล่น เลี้ยงง่าย', link: 'products.html' },
+                { id: 'cat_scottish', name: 'น้องสกอตติช โฟลด์', breed: 'Scottish Fold', price: '฿32,000', image: 'assets/images/cat_scottish.jpg', highlight: 'หูพับหน้ากลม น่ารักติดคน', link: 'products.html' }
+            ]
+        },
+        2: {
+            text: "สำหรับเพื่อนๆ ที่พักอาศัยในคอนโดหรือห้องพัก แนะนำสายพันธุ์ที่รักความสงบ ไม่ส่งเสียงดังรบกวนข้างห้อง และปรับตัวเก่งครับ 🏢✨",
+            cards: [
+                { id: 'cat_persian', name: 'น้องเปอร์เซีย ขาวสำลี', breed: 'Persian', price: '฿29,000', image: 'assets/images/cat_persian.jpg', highlight: 'เงียบสงบ สุภาพ เรียบร้อย', link: 'recommend.html' },
+                { id: 'cat_russian', name: 'น้องรัสเซียน บลู', breed: 'Russian Blue', price: '฿38,000', image: 'assets/images/cat_russian.jpg', highlight: 'ฉลาด รักความเงียบสงบ', link: 'recommend.html' },
+                { id: 'cat_ragdoll', name: 'น้องแร็กดอลล์ ตาฟ้า', breed: 'Ragdoll', price: '฿45,000', image: 'assets/images/cat_ragdoll.jpg', highlight: 'ตัวใหญ่นุ่มนิ่ม อ่อนโยน', link: 'recommend.html' }
+            ]
+        },
+        3: {
+            text: "ผู้ที่เป็นโรคภูมิแพ้ขนสัตว์ หรือไม่ชอบกวาดขนแมว แนะนำกลุ่มสายพันธุ์ Hypoallergenic / ขนสั้นพิเศษ หรือไร้ขน 100% เหล่านี้ครับ 🤧🌿",
+            cards: [
+                { id: 'cat_sphynx', name: 'น้องสฟิงซ์ ชมพู', breed: 'Sphynx', price: '฿42,000', image: 'assets/images/cat_sphynx.jpg', highlight: 'ขนร่วง 0% ไร้ภูมิแพ้ อบอุ่น', link: 'recommend.html' },
+                { id: 'cat_devon_rex', name: 'น้องเดวอน เร็กซ์', breed: 'Devon Rex', price: '฿39,000', image: 'assets/images/cat_devon_rex.jpg', highlight: 'ขนหยักนุ่ม ผลัดขนน้อยมาก', link: 'recommend.html' },
+                { id: 'cat_cornish_rex', name: 'น้องคอร์นิช เร็กซ์', breed: 'Cornish Rex', price: '฿36,000', image: 'assets/images/cat_cornish_rex.jpg', highlight: 'ขนสั้นลอนสวย ไฮโปอัลเลอร์เจนิก', link: 'recommend.html' }
+            ]
+        },
+        4: {
+            text: "ขอนำเสนอน้องแมวเกรดพรีเมียม ขนฟูอลังการ หน้าหวาน และมีใบเพ็ดดีกรี CFA/WCF สายเลือดแชมป์สากล 100% ครับ 👑💎",
+            cards: [
+                { id: 'cat_mainecoon', name: 'น้องเมนคูน ไจแอนท์', breed: 'Maine Coon', price: '฿55,000', image: 'assets/images/cat_mainecoon.jpg', highlight: 'ยักษ์ใหญ่ใจดี มีใบเพ็ด CFA', link: 'products.html' },
+                { id: 'cat_ragdoll', name: 'น้องแร็กดอลล์ บลูพอยท์', breed: 'Ragdoll', price: '฿45,000', image: 'assets/images/cat_ragdoll.jpg', highlight: 'ขนฟูสวย หรูหราระดับท็อป', link: 'products.html' },
+                { id: 'cat_siberian', name: 'น้องไซบีเรียน ฟอเรสต์', breed: 'Siberian', price: '฿48,000', image: 'assets/images/cat_siberian.jpg', highlight: 'ขนหนานุ่ม 3 ชั้น สายพันธุ์แท้', link: 'products.html' }
+            ]
+        },
+        5: {
+            text: "🎉 สิทธิพิเศษและโค้ดส่วนลดสุดฮอตประจำเดือนนี้:\n\n" +
+                  "• 🏷️ โค้ด CAT10OFF: รับส่วนลด 10% เมื่อช้อปขั้นต่ำ 300.- (ใช้ได้ 1 ครั้ง/1 เดือน)\n" +
+                  "• 🏷️ โค้ด NEWMEMBER5: รับส่วนลด 5% ทุกรายการสำหรับสมาชิกใหม่\n" +
+                  "• 🏷️ โค้ด CATNEWS10: ส่วนลด 10% เมื่อสมัครรับจดหมายข่าว\n" +
+                  "• 🎁 ฟรี! Starter Kit เซ็ตของขวัญต้อนรับน้องแมว 11 รายการ มูลค่า 4,500 บาท ฟรีทุกออเดอร์!",
+            cards: [
+                { id: 'cat_british', name: 'น้องบริติช บลู', breed: 'British Shorthair', price: '฿35,000', image: 'assets/images/cat_british.jpg', highlight: 'ใช้โค้ด CAT10OFF ลด 10%', link: 'welcome_deal.html' },
+                { id: 'cat_munchkin', name: 'น้องมันช์กิ้น ขาสั้น', breed: 'Munchkin', price: '฿38,000', image: 'assets/images/cat_munchkin.jpg', highlight: 'แถมฟรี Starter Kit 11 ชิ้น', link: 'welcome_deal.html' }
+            ]
+        },
+        6: {
+            text: "🩺 การันตีมาตรฐานสุขภาพระดับสากลจาก Purrfect Cattery:\n\n" +
+                  "1. 💉 วัคซีนครบ 2 เข็ม + ถ่ายพยาธิ + หยดยาป้องกันเห็บหมัด\n" +
+                  "2. 🔬 ตรวจผลแล็บ ปลอดโรคลิวคีเมีย (FeLV) และเอดส์แมว (FIV) 100%\n" +
+                  "3. 🛡️ การันตีคุ้มครองสุขภาพโรคร้ายแรงนานถึง 180 วันเต็ม\n" +
+                  "4. 🚗 บริการจัดส่งด้วยรถ Pet Taxi ควบคุมอุณหภูมิถึงหน้าบ้านทั่วประเทศ\n" +
+                  "5. 👨‍⚕️ ปรึกษาสัตวแพทย์ประจำฟาร์มฟรีตลอดอายุขัยของน้องแมวครับ!",
+            cards: []
+        }
+    };
+
+    function getLocalChatMessages() {
+        try {
+            const raw = localStorage.getItem('purrfect_chat_history');
+            if (raw) return JSON.parse(raw);
+        } catch(e) {}
+        return [
+            {
+                id: 'msg_init_static',
+                sender: 'bot',
+                sender_name: 'Purrfect Bot 🐾',
+                text: 'สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ',
+                cards: [],
+                timestamp: getCurrentTimeFormatted()
+            }
+        ];
+    }
+
+    function saveLocalChatMessages(msgs) {
+        try {
+            localStorage.setItem('purrfect_chat_history', JSON.stringify(msgs));
+        } catch(e) {}
+    }
+
+    window.togglePurrfectChat = function() {
+        const win = document.getElementById('purrfect-chat-window');
+        const launcher = document.getElementById('chat-launcher-btn');
+        if (!win || !launcher) return;
+
+        launcher.classList.remove('anim-pulse');
+        void launcher.offsetWidth;
+        launcher.classList.add('anim-pulse');
+
+        chatIsOpen = !chatIsOpen;
+
+        if (chatIsOpen) {
+            win.classList.remove('chat-window-hidden', 'chat-window-closing');
+            win.classList.add('chat-window-visible');
+            launcher.classList.add('launcher-active');
+            const unread = document.getElementById('chat-unread-badge');
+            if (unread) {
+                unread.style.display = 'none';
+                unread.innerText = '0';
+            }
+            loadChatMessages(true);
+            setTimeout(() => {
+                const input = document.getElementById('chat-input-text');
+                if (input) input.focus();
+            }, 300);
+        } else {
+            launcher.classList.remove('launcher-active');
+            closeQuickMenuPopup();
+            win.classList.remove('chat-window-visible');
+            win.classList.add('chat-window-closing');
+            setTimeout(() => {
+                if (!chatIsOpen) {
+                    win.classList.remove('chat-window-closing');
+                    win.classList.add('chat-window-hidden');
+                }
+            }, 260);
+        }
+    };
+
+    window.toggleQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = !quickPopupIsOpen;
+        if (quickPopupIsOpen) {
+            popup.classList.remove('chat-quick-popup-hidden');
+            popup.classList.add('chat-quick-popup-visible');
+        } else {
+            popup.classList.remove('chat-quick-popup-visible');
+            popup.classList.add('chat-quick-popup-hidden');
+        }
+    };
+
+    window.closeQuickMenuPopup = function() {
+        const popup = document.getElementById('chat-quick-menu-popup');
+        quickPopupIsOpen = false;
+        popup.classList.remove('chat-quick-popup-visible');
+        popup.classList.add('chat-quick-popup-hidden');
+    };
+
+    window.sendQuickReplyFromPopup = function(option) {
+        closeQuickMenuPopup();
+        sendQuickReply(option);
+    };
+
+    window.loadChatMessages = function(forceScroll = false) {
+        if (isBotTyping && !forceScroll) return;
+
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+
+        if (isPhpServer) {
+            fetch('api_chat.php?action=get_messages')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.status === 'success' && data.conversation) {
+                        const conv = data.conversation;
+                        const u = data.current_user;
+                        updateUserStrip(u);
+                        if (!isBotTyping) {
+                            renderMessages(conv.messages || [], forceScroll);
+                        }
+                    }
+                })
+                .catch(() => fallbackClientLoad(forceScroll));
+        } else {
+            fallbackClientLoad(forceScroll);
+        }
+    };
+
+    function fallbackClientLoad(forceScroll) {
+        const user = typeof getClientLoggedUser === 'function' ? getClientLoggedUser() : null;
+        updateUserStrip(user ? { name: user.username, is_member: true } : { name: 'ผู้เยี่ยมชม', is_member: false });
+        const msgs = getLocalChatMessages();
+        renderMessages(msgs, forceScroll);
+    }
+
+    function updateUserStrip(u) {
+        const strip = document.getElementById('chat-user-label');
+        if (!strip) return;
+        if (u && u.is_member) {
+            strip.innerHTML = `👤 สนทนาในนามสมาชิก: <strong>${escapeHtml(u.name)}</strong> (ส่วนลด 5% 🐾)`;
+        } else {
+            strip.innerHTML = `👤 สนทนาในนาม: <strong>${escapeHtml(u ? u.name : 'ผู้เยี่ยมชม')}</strong> • <a href="login.html" style="color:var(--primary-coral); text-decoration:underline;">เข้าสู่ระบบ</a> เพื่อสะสมแต้ม`;
+        }
+    }
+
+    function getCurrentTimeFormatted() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    function renderMessages(messages, forceScroll = false) {
+        const container = document.getElementById('chat-messages-container');
+        if (!container) return;
+
+        const currentSig = messages.length + '_' + (messages.length > 0 ? (messages[messages.length - 1].id || messages[messages.length - 1].text) : '');
+        if (currentSig === lastRenderedSig && !forceScroll) {
+            return;
+        }
+        lastRenderedSig = currentSig;
+
+        let html = '';
+        messages.forEach(msg => {
+            const isCustomer = msg.sender === 'customer';
+            const senderClass = isCustomer ? 'msg-customer' : (msg.sender === 'admin' ? 'msg-admin' : 'msg-bot');
+            const senderBadge = isCustomer ? 'คุณ' : (msg.sender === 'admin' ? '👨‍💼 แอดมิน' : '🤖 ผู้ช่วย AI');
+
+            let cardHtml = '';
+            if (msg.cards && msg.cards.length > 0) {
+                cardHtml += `
+                    <div class="chat-carousel-wrapper">
+                        <button type="button" class="carousel-nav-btn nav-prev" onclick="scrollChatCarousel(this, -180)" title="เลื่อนดูน้องแมวก่อนหน้า">◀</button>
+                        <div class="chat-cards-carousel">
+                `;
+                msg.cards.forEach(card => {
+                    cardHtml += `
+                        <div class="chat-cat-card">
+                            <img src="${card.image}" alt="${escapeHtml(card.name)}" class="chat-cat-img" onerror="this.src='assets/images/logo.png'">
+                            <div class="chat-cat-info">
+                                <div class="chat-cat-name">${escapeHtml(card.name)}</div>
+                                <div class="chat-cat-breed">${escapeHtml(card.breed)}</div>
+                                <div class="chat-cat-highlight">${escapeHtml(card.highlight || '')}</div>
+                                <div class="chat-cat-price">${escapeHtml(card.price_fmt || card.price)}</div>
+                                <a href="${card.link || 'products.html'}" class="btn btn-primary btn-sm chat-card-action">
+                                    ดูน้องตัวนี้ 🐾
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                });
+                cardHtml += `
+                        </div>
+                        <button type="button" class="carousel-nav-btn nav-next" onclick="scrollChatCarousel(this, 180)" title="เลื่อนดูน้องแมวถัดไป">▶</button>
+                    </div>
+                `;
+            }
+
+            let formattedTime = '';
+            if (msg.timestamp) {
+                const tParts = msg.timestamp.split(' ');
+                if (tParts[1]) {
+                    formattedTime = tParts[1].substring(0, 5);
+                } else {
+                    formattedTime = msg.timestamp;
+                }
+            }
+
+            html += `
+                <div class="chat-message-row ${senderClass}">
+                    ${!isCustomer ? `<div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>` : ''}
+                    <div class="chat-bubble-content">
+                        <div class="chat-sender-header">
+                            <span class="chat-sender-name">${escapeHtml(msg.sender_name || senderBadge)}</span>
+                            <span class="chat-time">${formattedTime}</span>
+                        </div>
+                        <div class="chat-text">${escapeHtml(msg.text).replace(/\\n/g, '<br>')}</div>
+                        ${cardHtml}
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+        container.scrollTop = container.scrollHeight;
+    }
+
+    window.scrollChatCarousel = function(btn, delta) {
+        if (!btn) return;
+        const wrapper = btn.closest('.chat-carousel-wrapper');
+        if (wrapper) {
+            const carousel = wrapper.querySelector('.chat-cards-carousel');
+            if (carousel) {
+                carousel.scrollBy({ left: delta, behavior: 'smooth' });
+            }
+        }
+    };
+
+    function showTypingIndicator(userText) {
+        const container = document.getElementById('chat-messages-container');
+        if (!container) return;
+
+        const currentTime = getCurrentTimeFormatted();
+
+        if (userText) {
+            const customerRow = document.createElement('div');
+            customerRow.className = 'chat-message-row msg-customer';
+            customerRow.innerHTML = `
+                <div class="chat-bubble-content">
+                    <div class="chat-sender-header">
+                        <span class="chat-sender-name">คุณ</span>
+                        <span class="chat-time">${currentTime}</span>
+                    </div>
+                    <div class="chat-text">${escapeHtml(userText)}</div>
+                </div>
+            `;
+            container.appendChild(customerRow);
+        }
+
+        const oldTyping = document.getElementById('chat-typing-indicator');
+        if (oldTyping) oldTyping.remove();
+
+        const typingRow = document.createElement('div');
+        typingRow.id = 'chat-typing-indicator';
+        typingRow.className = 'chat-message-row msg-bot';
+        typingRow.innerHTML = `
+            <div class="chat-bubble-avatar"><img src="assets/images/logo.png" alt="Avatar"></div>
+            <div class="chat-bubble-content">
+                <div class="chat-sender-header">
+                    <span class="chat-sender-name">🤖 ผู้ช่วย AI</span>
+                    <span class="chat-time">${currentTime}</span>
+                </div>
+                <div class="chat-typing-bubble">
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span class="typing-dot"></span>
+                    <span style="font-size:0.75rem; color:#888; margin-left:6px; font-weight:600;">กำลังพิมพ์ข้อความ... 💬</span>
+                </div>
+            </div>
+        `;
+        container.appendChild(typingRow);
+        container.scrollTop = container.scrollHeight;
+        isBotTyping = true;
+    }
+
+    window.sendQuickReply = function(option) {
+        closeQuickMenuPopup();
+        const userText = quickPromptsMap[option] || 'คำถามด่วน';
+        showTypingIndicator(userText);
+
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+
+        if (isPhpServer) {
+            const formData = new FormData();
+            formData.append('action', 'quick_reply');
+            formData.append('option', option);
+
+            fetch('api_chat.php', { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(() => {
+                    setTimeout(() => {
+                        isBotTyping = false;
+                        const typing = document.getElementById('chat-typing-indicator');
+                        if (typing) typing.remove();
+                        loadChatMessages(true);
+                    }, 1200);
+                })
+                .catch(() => triggerClientQuickReply(option, userText));
+        } else {
+            triggerClientQuickReply(option, userText);
+        }
+    };
+
+    function triggerClientQuickReply(option, userText) {
+        setTimeout(() => {
+            isBotTyping = false;
+            const typing = document.getElementById('chat-typing-indicator');
+            if (typing) typing.remove();
+
+            const botData = BOT_RESPONSES[option] || {
+                text: "สวัสดีครับ! สนใจสอบถามข้อมูลน้องแมวตัวไหนเป็นพิเศษ ทักแชทบอกแอดมินได้เลยครับ 🐾",
+                cards: []
+            };
+
+            const msgs = getLocalChatMessages();
+            msgs.push({
+                id: 'msg_c_' + Date.now(),
+                sender: 'customer',
+                sender_name: 'คุณ',
+                text: userText,
+                cards: [],
+                timestamp: getCurrentTimeFormatted()
+            });
+            msgs.push({
+                id: 'msg_b_' + Date.now(),
+                sender: 'bot',
+                sender_name: 'Purrfect Advisor 🐾',
+                text: botData.text,
+                cards: botData.cards || [],
+                timestamp: getCurrentTimeFormatted()
+            });
+
+            saveLocalChatMessages(msgs);
+            renderMessages(msgs, true);
+        }, 1200);
+    }
+
+    window.handleSendChatMessage = function(e) {
+        e.preventDefault();
+        const input = document.getElementById('chat-input-text');
+        const text = input.value.trim();
+        if (!text) return;
+
+        input.value = '';
+        showTypingIndicator(text);
+
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+
+        if (isPhpServer) {
+            const formData = new FormData();
+            formData.append('action', 'send_message');
+            formData.append('message', text);
+
+            fetch('api_chat.php', { method: 'POST', body: formData })
+                .then(res => res.json())
+                .then(() => {
+                    setTimeout(() => {
+                        isBotTyping = false;
+                        const typing = document.getElementById('chat-typing-indicator');
+                        if (typing) typing.remove();
+                        loadChatMessages(true);
+                    }, 1200);
+                })
+                .catch(() => triggerClientChatMessage(text));
+        } else {
+            triggerClientChatMessage(text);
+        }
+    };
+
+    function triggerClientChatMessage(text) {
+        setTimeout(() => {
+            isBotTyping = false;
+            const typing = document.getElementById('chat-typing-indicator');
+            if (typing) typing.remove();
+
+            let replyText = "ขอบคุณสำหรับข้อความครับ! 🐾 เจ้าหน้าที่หรือผู้ช่วย AI กำลังตรวจสอบข้อมูลน้องแมวและจะแนะนำให้คุณลูกค้าทันทีครับ หากต้องการดูคำถามด่วนสามารถกดปุ่ม ⚡ คำถาม ได้เลยครับ";
+            let cards = [];
+
+            const lower = text.toLowerCase();
+            if (lower.includes('ราคา') || lower.includes('เท่าไหร่') || lower.includes('โปรโมชั่น') || lower.includes('ส่วนลด') || lower.includes('คูปอง') || lower.includes('cat10off')) {
+                replyText = "🎉 ตอนนี้มีโปรโมชั่นพิเศษ:\n• โค้ด CAT10OFF ลดทันที 10% (ขั้นต่ำ 300.-)\n• โค้ด NEWMEMBER5 ลด 5% สำหรับสมาชิกใหม่\n• แถมฟรี Starter Kit 11 ชิ้นมูลค่า 4,500.- ทุกออเดอร์ครับ!";
+                cards = BOT_RESPONSES[5].cards;
+            } else if (lower.includes('คอนโด') || lower.includes('ห้องพัก')) {
+                replyText = BOT_RESPONSES[2].text;
+                cards = BOT_RESPONSES[2].cards;
+            } else if (lower.includes('แพ้') || lower.includes('ภูมิแพ้') || lower.includes('ขนร่วง')) {
+                replyText = BOT_RESPONSES[3].text;
+                cards = BOT_RESPONSES[3].cards;
+            } else if (lower.includes('ส่ง') || lower.includes('ประกัน') || lower.includes('วัคซีน')) {
+                replyText = BOT_RESPONSES[6].text;
+            } else if (lower.includes('สวัสดี') || lower.includes('หวัดดี') || lower.includes('hello') || lower.includes('hi')) {
+                replyText = "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 สนใจน้องแมวพันธุ์ไหนเป็นพิเศษ หรือสอบถามการดูแล สามารถเลือกคำถามด่วนด้านล่างหรือพิมพ์คุยได้เลยครับ";
+                cards = BOT_RESPONSES[1].cards;
+            }
+
+            const msgs = getLocalChatMessages();
+            msgs.push({
+                id: 'msg_c_' + Date.now(),
+                sender: 'customer',
+                sender_name: 'คุณ',
+                text: text,
+                cards: [],
+                timestamp: getCurrentTimeFormatted()
+            });
+            msgs.push({
+                id: 'msg_b_' + Date.now(),
+                sender: 'bot',
+                sender_name: 'Purrfect Advisor 🐾',
+                text: replyText,
+                cards: cards,
+                timestamp: getCurrentTimeFormatted()
+            });
+
+            saveLocalChatMessages(msgs);
+            renderMessages(msgs, true);
+        }, 1200);
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadChatMessages(false);
+        const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+        if (isPhpServer) {
+            pollInterval = setInterval(() => {
+                if (chatIsOpen && !isBotTyping) {
+                    loadChatMessages(false);
+                }
+            }, 3500);
+        }
+    });
+})();
+</script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -34,14 +34,70 @@
         fbq('track', 'PageView');
     </script>
 
-    <script>
-        (function() {
-            try {
-                const savedTheme = localStorage.getItem('cat_shop_theme') || 'warm';
-                document.documentElement.setAttribute('data-theme', savedTheme);
-            } catch(e) {}
-        })();
-    </script>
+    <style>
+        /* Nav Dropdown Menu Styles */
+        .nav-dropdown-wrapper {
+            position: relative;
+        }
+        .nav-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+            padding: 0.6rem;
+            min-width: 280px;
+            list-style: none;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .nav-dropdown-wrapper:hover .nav-dropdown-menu,
+        .nav-dropdown-wrapper:focus-within .nav-dropdown-menu {
+            display: flex;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .nav-dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.65rem 0.85rem;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            transition: all 0.15s ease;
+        }
+        .nav-dropdown-menu li a:hover,
+        .nav-dropdown-menu li a.active {
+            background: rgba(255, 107, 74, 0.1);
+            color: var(--primary-coral);
+            transform: translateX(3px);
+        }
+        .nav-dd-icon {
+            font-size: 1.35rem;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .nav-dd-title {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .nav-dd-sub {
+            display: block;
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+    </style>
 </head>
 <body>
     <header class="site-header">
@@ -119,20 +175,82 @@
                                 <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="tracking.html" class="nav-link ">
-                                📍 ติดตามการจัดส่ง
+                        <!-- 5 New Features + Services Dropdown Menu -->
+                        <li class="nav-dropdown-wrapper" style="position: relative;">
+                            <a href="#" class="nav-link nav-dropdown-trigger " style="display: inline-flex; align-items: center; gap: 4px;">
+                                ✨ บริการ & กิจกรรม ▾
                             </a>
-                        </li>
-                        <li>
-                            <a href="creator.html" class="nav-link ">
-                                👨‍💻 ผู้จัดทำ
-                            </a>
+                            <ul class="nav-dropdown-menu">
+                                <li>
+                                    <a href="reviews.html" class="">
+                                        <span class="nav-dd-icon">⭐</span>
+                                        <div>
+                                            <strong class="nav-dd-title">รีวิวน้องแมว & ย้ายบ้าน</strong>
+                                            <small class="nav-dd-sub">ภาพความประทับใจจากลูกค้าจริง</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="booking.html" class="">
+                                        <span class="nav-dd-icon">📅</span>
+                                        <div>
+                                            <strong class="nav-dd-title">จองคิวนัดดูตัว / Video Call</strong>
+                                            <small class="nav-dd-sub">เยี่ยมชมฟาร์ม & นัดดูสดผ่าน LINE</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="pedigree.html" class="">
+                                        <span class="nav-dd-icon">🩺</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ตรวจสอบใบเพ็ด & วัคซีน</strong>
+                                            <small class="nav-dd-sub">เช็คเลขไมโครชิป & ประวัติสุขภาพ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="calculator.html" class="">
+                                        <span class="nav-dd-icon">🧮</span>
+                                        <div>
+                                            <strong class="nav-dd-title">คำนวณค่าเลี้ยงดูน้องแมว</strong>
+                                            <small class="nav-dd-sub">วางแผนงบประมาณรายเดือน/ตลอดชีพ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="lucky_wheel.html" class="">
+                                        <span class="nav-dd-icon">🎡</span>
+                                        <div>
+                                            <strong class="nav-dd-title">วงล้อเสี่ยงโชค Paw Spin</strong>
+                                            <small class="nav-dd-sub">หมุนฟรีลุ้นรับคูปองลด 25%</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li style="border-top: 1px dashed var(--border-color); margin-top: 4px; padding-top: 4px;">
+                                    <a href="tracking.html" class="">
+                                        <span class="nav-dd-icon">📍</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ติดตามการจัดส่ง</strong>
+                                            <small class="nav-dd-sub">ตรวจสอบสถานะการขนส่งสด 4 ขั้นตอน</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="creator.html" class="">
+                                        <span class="nav-dd-icon">👨‍💻</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ข้อมูลผู้จัดทำ</strong>
+                                            <small class="nav-dd-sub">ประวัติ & ข้อมูลโครงงาน</small>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="cart-badge-container">
                             <a href="cart.html" class="nav-link nav-cart-btn active">
                                 🛒 ตะกร้า
-                                                            </a>
+                                                                <span class="cart-badge" id="cart-badge-val" style="display: none;">0</span>
+                            </a>
                         </li>
                     </ul>
                 </nav>
@@ -232,6 +350,66 @@
                         <span class="drawer-badge-pill" style="background: #FF5A5F; color: #FFFFFF; font-weight: 800;">HOT</span>
                     </a>
 
+                    <a href="cart.html" class="drawer-link-item active" style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🛒</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
+                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
+                        </div>
+                                                <span class="drawer-badge-pill" id="drawer-cart-badge-val" style="display: none; background: var(--primary-coral); color: #FFFFFF; font-weight: 800;">0 ตัว</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- หมวดที่ 3: บริการ & ฟีเจอร์พิเศษสำหรับทาสแมว -->
+            <div class="drawer-section">
+                <div class="drawer-section-title">
+                    <span>✨ หมวดที่ 3: บริการ & ฟีเจอร์พิเศษสำหรับทาสแมว</span>
+                </div>
+                <div class="drawer-grid">
+                    <a href="reviews.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">⭐</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">รีวิวน้องแมว & ย้ายบ้าน</span>
+                            <span class="drawer-link-sub">ภาพความประทับใจจากลูกค้าจริง 100%</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FEF3C7; color: #92400E;">5.0 ★</span>
+                    </a>
+
+                    <a href="booking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">📅</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">จองคิวนัดดูตัว / Video Call</span>
+                            <span class="drawer-link-sub">นัดชมฟาร์ม & 1-on-1 LIVE Call</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #DCFCE7; color: #166534;">นัดสด</span>
+                    </a>
+
+                    <a href="pedigree.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🩺</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">ตรวจสอบใบเพ็ด & สมุดวัคซีน</span>
+                            <span class="drawer-link-sub">ค้นหาด้วยเลข Microchip ทันที</span>
+                        </div>
+                    </a>
+
+                    <a href="calculator.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🧮</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">เครื่องคำนวณค่าเลี้ยงดู</span>
+                            <span class="drawer-link-sub">คำนวณงบประมาณ รายเดือน/15 ปี</span>
+                        </div>
+                    </a>
+
+                    <a href="lucky_wheel.html" class="drawer-link-item " onclick="closeMobileDrawer()">
+                        <span class="drawer-link-icon">🎡</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title">วงล้อเสี่ยงโชค Paw Spin</span>
+                            <span class="drawer-link-sub">หมุนฟรีรับส่วนลด 25% & ของแถม</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #FEE2E2; color: #991B1B;">หมุนฟรี!</span>
+                    </a>
+
                     <a href="tracking.html" class="drawer-link-item " onclick="closeMobileDrawer()">
                         <span class="drawer-link-icon">📍</span>
                         <div class="drawer-link-info">
@@ -243,18 +421,10 @@
                     <a href="creator.html" class="drawer-link-item " onclick="closeMobileDrawer()">
                         <span class="drawer-link-icon">👨‍💻</span>
                         <div class="drawer-link-info">
-                            <span class="drawer-link-title">ผู้จัดทำ</span>
+                            <span class="drawer-link-title">ข้อมูลผู้จัดทำ</span>
                             <span class="drawer-link-sub">ประวัติ & ข้อมูลโครงงาน</span>
                         </div>
                     </a>
-
-                    <a href="cart.html" class="drawer-link-item active" style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.28);" onclick="closeMobileDrawer()">
-                        <span class="drawer-link-icon">🛒</span>
-                        <div class="drawer-link-info">
-                            <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">ตะกร้าสินค้า</span>
-                            <span class="drawer-link-sub">ดำเนินการจอง & สรุปยอดชำระ</span>
-                        </div>
-                                            </a>
                 </div>
             </div>
         </div>
@@ -407,25 +577,630 @@
 </div>
 
 
-            <!-- Empty Cart -->
-        <div style="text-align: center; padding: 4rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 580px; margin: 0 auto; box-shadow: var(--shadow-sm);">
-            <div style="font-size: 4.5rem; margin-bottom: 1rem;">🧺</div>
-            <h2 style="font-size: 1.7rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem;">
-                ยังไม่มีน้องแมวในตะกร้าของคุณ
-            </h2>
-            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.6;">
-                ค้นหาน้องแมวสายพันธุ์ที่ใช่เพื่อมอบความรักและความอบอุ่นให้กับบ้านของคุณ
-            </p>
-            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-                <a href="products.html" class="btn btn-primary btn-lg">
-                    เลือกชมน้องแมวทั้งหมด 🐾
-                </a>
-                <a href="recommend.html" class="btn btn-secondary btn-lg">
-                    ดูระบบแนะนำสายพันธุ์ 🌟
-                </a>
-            </div>
+    <!-- 1. Empty Cart State Container -->
+    <div id="cart-empty-view" style="display: block; text-align: center; padding: 4rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); max-width: 580px; margin: 0 auto; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 4.5rem; margin-bottom: 1rem;">🧺</div>
+        <h2 style="font-size: 1.7rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem;">
+            ยังไม่มีน้องแมวในตะกร้าของคุณ
+        </h2>
+        <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.6;">
+            ค้นหาน้องแมวสายพันธุ์ที่ใช่เพื่อมอบความรักและความอบอุ่นให้กับบ้านของคุณ
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <a href="products.html" class="btn btn-primary btn-lg">
+                เลือกชมน้องแมวทั้งหมด 🐾
+            </a>
+            <a href="recommend.html" class="btn btn-secondary btn-lg">
+                ดูระบบแนะนำสายพันธุ์ 🌟
+            </a>
         </div>
-    
+    </div>
+
+    <!-- 2. Active Cart / Checkout Form Container -->
+    <div id="cart-form-view" style="display: none;">
+        <form method="POST" action="cart.html" id="checkout-form" onsubmit="handleCheckoutFormSubmit(event)">
+            <input type="hidden" name="action" value="checkout">
+
+            <div class="cart-layout">
+                <!-- Left Column: Items, Adopter Info, Payment Channels -->
+                <div class="cart-left-col">
+                    
+                    
+                    <!-- BLOCK 1: Selected Kitten List -->
+                    <div class="checkout-block">
+                        <div class="checkout-block-header">
+                            <h3 class="checkout-block-title">
+                                <span>🐾 1. รายการน้องแมวที่เลือกรับเลี้ยง</span>
+                                <span style="font-size: 0.82rem; font-weight: 500; color: var(--text-muted);" id="cartCountBadge">(0 ตัว)</span>
+                            </h3>
+                            <a href="cart.html?action=clear" onclick="clearCartClient(event)" style="font-size: 0.82rem; color: #EF4444; text-decoration: none; font-weight: 600; cursor: pointer;">
+                                ล้างตะกร้าทั้งหมด 🧹
+                            </a>
+                        </div>
+
+                        <div id="cart-items-wrapper">
+                                                </div>
+
+                        <!-- Free Welcome Kit Banner -->
+                        <div style="background: var(--bg-card-subtle); border: 1px dashed var(--border-hover); border-radius: var(--radius-md); padding: 0.9rem 1.2rem; margin-top: 1.2rem; display: flex; align-items: center; gap: 0.8rem; font-size: 0.85rem;">
+                            <span style="font-size: 1.8rem;">🎁</span>
+                            <div>
+                                <strong style="color: var(--primary-coral); display: block;">ฟรี! Kitten Starter Kit ประจำตัวน้องแมว:</strong>
+                                <span style="color: var(--text-secondary);">อาหารสูตรลูกแมวเกรดพรีเมียม 2 กก. + ทรายแมวเต้าหู้ + ชามอาหาร + สมุดสุขภาพและใบเพ็ดดีกรี</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOCK 2: Adopter Information & Delivery Details -->
+                    <div class="checkout-block">
+                        <div class="checkout-block-header">
+                            <h3 class="checkout-block-title">
+                                <span>📍 2. ข้อมูลผู้รับอุปการะ & สถานที่ส่งมอบ</span>
+                            </h3>
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">รถตู้ปรับอากาศส่งถึงหน้าบ้าน</span>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="customer_name">ชื่อ - นามสกุล ผู้รับอุปการะ *</label>
+                                <input type="text" name="customer_name" id="customer_name" class="form-control" 
+                                       placeholder="เช่น กิตติพงษ์ รักแมว" 
+                                       value="" required>
+                            </div>
+
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="customer_phone">เบอร์โทรศัพท์สำหรับติดต่อส่งมอบ *</label>
+                                <input type="tel" name="customer_phone" id="customer_phone" class="form-control" 
+                                       placeholder="เช่น 0891234567" 
+                                       value="" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="customer_email">อีเมล (สำหรับรับเอกสารใบเสร็จและใบเพ็ดดีกรี)</label>
+                            <input type="email" name="customer_email" id="customer_email" class="form-control" 
+                                   placeholder="เช่น yourname@example.com" 
+                                   value="">
+                        </div>
+
+                        <!-- Specialized Pet Delivery Options -->
+                        <div class="form-group" style="margin-bottom: 1.2rem;">
+                            <label style="font-size: 0.88rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.6rem; display: block;">
+                                🚐 เลือกรูปแบบการจัดส่งสัตว์เลี้ยงเฉพาะทาง (Specialized Pet Delivery) *
+                            </label>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.8rem;" id="shippingMethodsContainer">
+                                <label class="shipping-option-card active" onclick="selectShippingOption(this)">
+                                    <input type="radio" name="shipping_method" value="pet_taxi" checked style="margin-top: 3px; accent-color: var(--primary-coral);" onchange="selectShippingOption(this.parentElement)">
+                                    <div>
+                                        <strong style="font-size: 0.88rem; color: var(--text-main); display: block;">🚐 รถตู้ Pet Taxi ปรับอากาศ</strong>
+                                        <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">คุมอุณหภูมิ 24-26°C + พี่เลี้ยงดูแล</span>
+                                        <span style="font-size: 0.75rem; color: #047857; font-weight: 700;">ฟรี (โปรโมชั่นฟาร์ม)</span>
+                                    </div>
+                                </label>
+
+                                <label class="shipping-option-card" onclick="selectShippingOption(this)">
+                                    <input type="radio" name="shipping_method" value="air_cargo" style="margin-top: 3px; accent-color: var(--primary-coral);" onchange="selectShippingOption(this.parentElement)">
+                                    <div>
+                                        <strong style="font-size: 0.88rem; color: var(--text-main); display: block;">✈️ เครื่องบิน Pet Air Cargo</strong>
+                                        <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">มาตรฐาน IATA สำหรับต่างจังหวัด</span>
+                                        <span style="font-size: 0.75rem; color: #B45309; font-weight: 700;">+฿1,200</span>
+                                    </div>
+                                </label>
+
+                                <label class="shipping-option-card" onclick="selectShippingOption(this)">
+                                    <input type="radio" name="shipping_method" value="farm_pickup" style="margin-top: 3px; accent-color: var(--primary-coral);" onchange="selectShippingOption(this.parentElement)">
+                                    <div>
+                                        <strong style="font-size: 0.88rem; color: var(--text-main); display: block;">🏡 นัดรับด้วยตนเองที่ฟาร์ม</strong>
+                                        <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Meet & Greet รับคำแนะนำฟรี</span>
+                                        <span style="font-size: 0.75rem; color: #047857; font-weight: 700;">ฟรี (กิฟต์เซ็ตพิเศษ)</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Address Mode Radio Selector: กรอกที่อยู่เอง VS เลือกพิกัดผ่าน GPS -->
+                        <div class="form-group" style="margin-bottom: 1.1rem;">
+                            <label style="font-size: 0.88rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem; display: block;">
+                                📍 เลือกวิธีการระบุสถานที่จัดส่งน้องแมว (Delivery Location Mode) *
+                            </label>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem;" id="addressModeContainer">
+                                <label class="location-mode-card active" id="modeCardManual" onclick="switchAddressMode('manual')">
+                                    <input type="radio" name="address_input_mode" value="manual" checked style="margin-top: 3px; accent-color: #047857;" onchange="switchAddressMode('manual')">
+                                    <div>
+                                        <strong style="font-size: 0.88rem; color: var(--text-main); display: block;">✍️ กรอกที่อยู่เอง (Manual Address)</strong>
+                                        <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 2px;">พิมพ์บ้านเลขที่ ซอย ถนน แขวง/เขต</span>
+                                    </div>
+                                </label>
+
+                                <label class="location-mode-card" id="modeCardGps" onclick="switchAddressMode('gps')">
+                                    <input type="radio" name="address_input_mode" value="gps" style="margin-top: 3px; accent-color: #047857;" onchange="switchAddressMode('gps')">
+                                    <div>
+                                        <strong style="font-size: 0.88rem; color: #047857; display: block;">📍 เลือกพิกัดผ่านแผนที่ & GPS</strong>
+                                        <span style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 2px;">ดึง GPS อัตโนมัติ หรือปักหมุด Google Maps</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom: 0.8rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                                <label for="delivery_address" style="margin-bottom: 0; font-weight: 700;">
+                                    ที่อยู่สำหรับจัดส่งน้องแมว (บ้าน / คอนโด / จังหวัด / รหัสไปรษณีย์) *
+                                </label>
+                                <span id="addressSourceBadge" style="font-size: 0.75rem; color: #1E40AF; background: #EFF6FF; border: 1px solid #BFDBFE; padding: 2px 8px; border-radius: 999px; font-weight: 600;">
+                                    ✍️ โหมดกรอกที่อยู่เอง
+                                </span>
+                            </div>
+
+                            <!-- Textarea with Auto-grow height (not resizable by user drag, grows automatically with text) -->
+                            <textarea name="delivery_address" id="delivery_address" class="form-control" rows="2" 
+                                      placeholder="เช่น 123/45 หมู่บ้านสุขใจ ซอยอารีย์ ถนนพหลโยธิน แขวงสามเสนใน เขตพญาไท กรุงเทพฯ 10400" 
+                                      style="resize: none; overflow-y: hidden; min-height: 56px; line-height: 1.5; transition: height 0.15s ease; box-sizing: border-box;"
+                                      oninput="autoResizeAddress(this)" onfocus="autoResizeAddress(this)" required></textarea>
+                        </div>
+
+                        <!-- GPS Status Alert Banner -->
+                        <div id="gpsStatusBanner" style="display: none; margin-bottom: 8px; padding: 6px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 600;"></div>
+
+                        <!-- Interactive Google Maps / GPS Live Picker Container -->
+                        <div id="mapPickerContainer" style="margin-bottom: 1.2rem; background: var(--bg-card); border: 1.5px solid #BFDBFE; border-radius: var(--radius-md); padding: 12px; display: none;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+                                <div style="font-size: 0.88rem; font-weight: 700; color: #1E40AF; display: flex; align-items: center; gap: 6px;">
+                                    🗺️ แผนที่ระบุพิกัด GPS & Google Maps สำหรับจัดส่ง
+                                </div>
+                                <div style="display: flex; gap: 4px; align-items: center; flex-wrap: wrap;">
+                                    <button type="button" id="btnCurrentGPS" class="btn btn-secondary btn-sm" onclick="locateCurrentGPS()" style="padding: 2px 8px; font-size: 0.72rem; font-weight: 700; background: #ECFDF5; color: #047857; border-color: #A7F3D0; display: inline-flex; align-items: center; gap: 4px; cursor: pointer;">
+                                        📍 ดึง GPS ปัจจุบัน
+                                    </button>
+                                    <button type="button" onclick="switchMapTileLayer('google_road')" id="btnLayerRoad" style="padding: 2px 8px; font-size: 0.72rem; border-radius: 4px; border: 1px solid #93C5FD; background: #DBEAFE; color: #1E40AF; font-weight: 700; cursor: pointer;">🗺️ Google ถนน</button>
+                                    <button type="button" onclick="switchMapTileLayer('google_satellite')" id="btnLayerSat" style="padding: 2px 8px; font-size: 0.72rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); cursor: pointer;">🛰️ ดาวเทียม</button>
+                                    <button type="button" onclick="switchMapTileLayer('osm')" id="btnLayerOsm" style="padding: 2px 8px; font-size: 0.72rem; border-radius: 4px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-secondary); cursor: pointer;">🌍 มาตรฐาน</button>
+                                </div>
+                            </div>
+
+                            <!-- Quick Preset Cities / Locations Strip -->
+                            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 8px;">
+                                <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">⚡ ปักหมุดด่วน:</span>
+                                <button type="button" onclick="setPresetCoordinate(13.7466, 100.5349, 'สยาม / ปทุมวัน กรุงเทพฯ')" style="background: var(--bg-card); border: 1px solid var(--border-color); font-size: 0.72rem; border-radius: 6px; padding: 2px 7px; cursor: pointer; color: var(--text-secondary);">📍 สยาม/กทม.</button>
+                                <button type="button" onclick="setPresetCoordinate(13.8037, 100.5532, 'จตุจักร / ลาดพร้าว กรุงเทพฯ')" style="background: var(--bg-card); border: 1px solid var(--border-color); font-size: 0.72rem; border-radius: 6px; padding: 2px 7px; cursor: pointer; color: var(--text-secondary);">📍 จตุจักร</button>
+                                <button type="button" onclick="setPresetCoordinate(13.8621, 100.5144, 'เมืองนนทบุรี นนทบุรี')" style="background: var(--bg-card); border: 1px solid var(--border-color); font-size: 0.72rem; border-radius: 6px; padding: 2px 7px; cursor: pointer; color: var(--text-secondary);">📍 นนทบุรี</button>
+                                <button type="button" onclick="setPresetCoordinate(18.7883, 98.9853, 'เมืองเชียงใหม่ เชียงใหม่')" style="background: var(--bg-card); border: 1px solid var(--border-color); font-size: 0.72rem; border-radius: 6px; padding: 2px 7px; cursor: pointer; color: var(--text-secondary);">📍 เชียงใหม่</button>
+                                <button type="button" onclick="setPresetCoordinate(12.9276, 100.8771, 'พัทยา / บางละมุง ชลบุรี')" style="background: var(--bg-card); border: 1px solid var(--border-color); font-size: 0.72rem; border-radius: 6px; padding: 2px 7px; cursor: pointer; color: var(--text-secondary);">📍 ชลบุรี/พัทยา</button>
+                                <button type="button" onclick="setPresetCoordinate(7.8804, 98.3923, 'เมืองภูเก็ต ภูเก็ต')" style="background: var(--bg-card); border: 1px solid var(--border-color); font-size: 0.72rem; border-radius: 6px; padding: 2px 7px; cursor: pointer; color: var(--text-secondary);">📍 ภูเก็ต</button>
+                            </div>
+
+                            <!-- Search Place & Google Maps URL Input Strip -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+                                <div style="display: flex; gap: 4px;">
+                                    <input type="text" id="mapSearchInput" placeholder="🔍 ค้นหาสถานที่ (เช่น สยาม, เซ็นทรัล, ม.เกษตร)..." class="form-control" style="font-size: 0.82rem; padding: 5px 10px;" onkeydown="if(event.key==='Enter'){event.preventDefault(); searchLocationOnMap();}">
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="searchLocationOnMap()" style="padding: 5px 10px; font-size: 0.78rem; font-weight: 700; white-space: nowrap;">
+                                        ค้นหา
+                                    </button>
+                                </div>
+                                <div style="display: flex; gap: 4px;">
+                                    <input type="text" id="gmapsPasteInput" placeholder="📋 หรือวางลิงก์ Google Maps / พิกัด (13.75, 100.50)..." class="form-control" style="font-size: 0.82rem; padding: 5px 10px;" oninput="parseAndSetGoogleMapsInput(this.value)" onpaste="setTimeout(() => parseAndSetGoogleMapsInput(this.value), 100)">
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="parseAndSetGoogleMapsInput(document.getElementById('gmapsPasteInput').value)" style="padding: 5px 10px; font-size: 0.78rem; font-weight: 700; white-space: nowrap; background: #EFF6FF; color: #1E40AF; border-color: #BFDBFE;">
+                                        แปลงพิกัด
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Leaflet / Google Maps Canvas -->
+                            <div id="deliveryMap" style="height: 300px; width: 100%; border-radius: 8px; border: 1.5px solid var(--border-color); z-index: 1;"></div>
+
+                            <!-- Coordinates Inputs Strip -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; background: var(--bg-card-subtle); padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <div>
+                                    <label style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 2px;">📍 ละติจูด (Latitude):</label>
+                                    <input type="number" step="any" name="delivery_lat" id="delivery_lat" class="form-control" style="font-size: 0.8rem; padding: 4px 8px; font-family: 'Outfit', monospace;" value="13.7563" oninput="onManualCoordinateChange()">
+                                </div>
+                                <div>
+                                    <label style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 2px;">📍 ลองจิจูด (Longitude):</label>
+                                    <input type="number" step="any" name="delivery_lng" id="delivery_lng" class="form-control" style="font-size: 0.8rem; padding: 4px 8px; font-family: 'Outfit', monospace;" value="100.5018" oninput="onManualCoordinateChange()">
+                                </div>
+                            </div>
+
+                            <!-- Bottom Coordinates & Action Strip -->
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border-color);">
+                                <div style="font-size: 0.82rem; color: var(--text-main);">
+                                    📍 <strong>พิกัด GPS ปัจจุบัน:</strong> 
+                                    <span id="display_lat_lng" style="font-family: 'Outfit', monospace; font-weight: 700; color: var(--primary-coral);">
+                                        Lat: 13.7563, Lng: 100.5018                                    </span>
+                                </div>
+                                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="reverseGeocodeAddress()" style="font-size: 0.75rem; padding: 4px 10px; background: #FEF3C7; color: #92400E; border-color: #FCD34D; font-weight: 700;">
+                                        ✍️ ดึงชื่อที่อยู่อัตโนมัติ
+                                    </button>
+                                    <a id="googleMapsLink" href="https://www.google.com/maps?q=13.7563%2C100.5018" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; padding: 4px 10px; background: #F1F5F9; color: #0284C7; border-color: #CBD5E1; text-decoration: none; font-weight: 700;">
+                                        🌐 เปิดดูบน Google Maps ↗
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="delivery_date">วันที่สะดวกรับน้องแมว</label>
+                                <input type="date" name="delivery_date" id="delivery_date" class="form-control" 
+                                       value="2026-10-02" 
+                                       min="2026-09-30">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="delivery_timeslot">ช่วงเวลาที่สะดวกรับ</label>
+                                <select name="delivery_timeslot" id="delivery_timeslot" class="form-control">
+                                    <option value="ช่วงเช้า (09:00 - 12:00 น.)">ช่วงเช้า (09:00 - 12:00 น.)</option>
+                                    <option value="ช่วงบ่าย (13:00 - 17:00 น.)" selected>ช่วงบ่าย (13:00 - 17:00 น.)</option>
+                                    <option value="ช่วงเย็น (17:00 - 20:00 น.)">ช่วงเย็น (17:00 - 20:00 น.)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 1rem; margin-bottom: 0;">
+                            <label for="special_notes">หมายเหตุเพิ่มเติมถึงพี่เลี้ยง (ถ้ามี)</label>
+                            <input type="text" name="special_notes" id="special_notes" class="form-control" 
+                                   placeholder="เช่น นัดรับที่ล็อบบี้คอนโด, ขอให้โทรแจ้งล่วงหน้า 30 นาที">
+                        </div>
+                    </div>
+
+                    <!-- BLOCK 3: Select Payment Channel -->
+                    <div class="checkout-block">
+                        <div class="checkout-block-header">
+                            <h3 class="checkout-block-title">
+                                <span>💳 3. เลือกช่องทางชำระเงิน (Payment Channel)</span>
+                            </h3>
+                            <span style="font-size: 0.78rem; color: var(--accent-mint); font-weight: 600;">🔒 เข้ารหัสปลอดภัย SSL 256-bit</span>
+                        </div>
+
+                        <!-- TEST MODE Sandbox Toggle (ตามคำขอ) -->
+                        <div class="test-mode-box">
+                            <label class="test-mode-label">
+                                <input type="checkbox" 
+                                       id="test_skip_account" 
+                                       name="is_test_mode" 
+                                       value="1" 
+                                       class="test-checkbox-input"
+                                       onchange="toggleTestMode(this.checked)">
+                                <div>
+                                    <span style="font-weight: 700; color: #B45309; font-size: 0.95rem; display: flex; align-items: center; gap: 0.3rem;">
+                                        🧪 โหมดทดสอบระบบ (TEST MODE)
+                                    </span>
+                                    <span style="font-size: 0.82rem; color: #78350F; line-height: 1.4; display: block; margin-top: 0.2rem;">
+                                        ติ๊กเครื่องหมายถูกนี้เพื่อ <strong>ข้ามการกรอกข้อมูลชำระเงินและเลขที่บัญชีทั้งหมด</strong> เหมาะสำหรับอาจารย์และผู้ตรวจเพื่อทดสอบการรับเลี้ยงได้ในคลิกเดียว
+                                    </span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Payment Channels Cards Grid -->
+                        <div class="payment-methods-grid" id="payment-methods-grid" style="transition: opacity 0.25s ease, filter 0.25s ease;">
+                            <!-- Option 1: Bank Transfer -->
+                            <label class="payment-method-card active" onclick="switchPaymentChannel('bank_transfer')">
+                                <input type="radio" name="payment_channel" value="bank_transfer" class="payment-method-radio" checked>
+                                <span class="payment-method-icon">🏦</span>
+                                <div class="payment-method-info">
+                                    <h5>โอนผ่านบัญชีธนาคาร</h5>
+                                    <p>KBANK, SCB, BBL, KTB</p>
+                                </div>
+                            </label>
+
+                            <!-- Option 2: PromptPay -->
+                            <label class="payment-method-card" onclick="switchPaymentChannel('promptpay')">
+                                <input type="radio" name="payment_channel" value="promptpay" class="payment-method-radio">
+                                <span class="payment-method-icon">📱</span>
+                                <div class="payment-method-info">
+                                    <h5>สแกนพร้อมเพย์ (QR)</h5>
+                                    <p>ทุกแอปธนาคาร ไม่มีค่าธรรมเนียม</p>
+                                </div>
+                            </label>
+
+                            <!-- Option 3: Credit/Debit Card -->
+                            <label class="payment-method-card" onclick="switchPaymentChannel('credit_card')">
+                                <input type="radio" name="payment_channel" value="credit_card" class="payment-method-radio">
+                                <span class="payment-method-icon">💳</span>
+                                <div class="payment-method-info">
+                                    <h5>บัตรเครดิต / เดบิต</h5>
+                                    <p>Visa, Mastercard, JCB</p>
+                                </div>
+                            </label>
+
+                            <!-- Option 4: Pay on Handover -->
+                            <label class="payment-method-card" onclick="switchPaymentChannel('cod')">
+                                <input type="radio" name="payment_channel" value="cod" class="payment-method-radio">
+                                <span class="payment-method-icon">🤝</span>
+                                <div class="payment-method-info">
+                                    <h5>ชำระเมื่อส่งมอบน้องแมว</h5>
+                                    <p>ตรวจสุขภาพหน้าบ้านแล้วจ่าย</p>
+                                </div>
+                            </label>
+
+                            <!-- Option 5: PayPal -->
+                            <label class="payment-method-card" onclick="switchPaymentChannel('paypal')">
+                                <input type="radio" name="payment_channel" value="paypal" class="payment-method-radio">
+                                <span class="payment-method-icon">🅿️</span>
+                                <div class="payment-method-info">
+                                    <h5>PayPal</h5>
+                                    <p>บัตรเดบิต/เครดิตทั่วโลก & PayPal</p>
+                                </div>
+                            </label>
+
+                            <!-- Option 6: Paw Points -->
+                            <label class="payment-method-card" onclick="switchPaymentChannel('paw_points')">
+                                <input type="radio" name="payment_channel" value="paw_points" class="payment-method-radio">
+                                <span class="payment-method-icon">🐾</span>
+                                <div class="payment-method-info">
+                                    <h5>ชำระผ่านแต้มสะสม</h5>
+                                    <p>ใช้ Paw Points แลกรับเลี้ยง</p>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Dynamic Channel Detail Panels -->
+                        <div id="payment-details-container" style="transition: opacity 0.25s ease, filter 0.25s ease;">
+                            <!-- 1. Bank Transfer Details -->
+                            <div id="panel-bank_transfer" class="payment-detail-box">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--primary-coral); margin-bottom: 0.8rem;">
+                                    🏦 บัญชีธนาคารของร้านสำหรับโอนเงิน:
+                                </h4>
+                                
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem; font-size: 0.85rem;">
+                                    <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.8rem; border-radius: 8px;">
+                                        <strong style="color: #047857;">ธนาคารกสิกรไทย (KBANK)</strong>
+                                        <div style="font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; margin: 0.2rem 0;">098-7-65432-1</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted);">ชื่อบัญชี: บจก. เพอร์เฟกต์ แคท ช็อป</div>
+                                    </div>
+                                    <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.8rem; border-radius: 8px;">
+                                        <strong style="color: #4338CA;">ธนาคารไทยพาณิชย์ (SCB)</strong>
+                                        <div style="font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; margin: 0.2rem 0;">123-4-56789-0</div>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted);">ชื่อบัญชี: บจก. เพอร์เฟกต์ แคท ช็อป</div>
+                                    </div>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="user_bank" style="font-size: 0.82rem;">ธนาคารของผู้โอน *</label>
+                                        <select name="user_bank" id="user_bank" class="form-control" style="padding: 0.55rem 0.8rem; font-size: 0.88rem;">
+                                            <option value="ธนาคารกสิกรไทย (KBANK)">ธนาคารกสิกรไทย (KBANK)</option>
+                                            <option value="ธนาคารไทยพาณิชย์ (SCB)">ธนาคารไทยพาณิชย์ (SCB)</option>
+                                            <option value="ธนาคารกรุงเทพ (BBL)">ธนาคารกรุงเทพ (BBL)</option>
+                                            <option value="ธนาคารกรุงไทย (KTB)">ธนาคารกรุงไทย (KTB)</option>
+                                            <option value="ธนาคารทหารไทยธนชาต (TTB)">ธนาคารทหารไทยธนชาต (TTB)</option>
+                                            <option value="พร้อมเพย์ / PromptPay">พร้อมเพย์ / PromptPay</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="user_bank_account" style="font-size: 0.82rem;">เลขที่บัญชีของคุณ *</label>
+                                        <input type="text" name="user_bank_account" id="user_bank_account" class="form-control" 
+                                               placeholder="เช่น 123-4-56789-0 หรือ 0812345678" 
+                                               value=""
+                                               style="padding: 0.55rem 0.8rem; font-size: 0.88rem;" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. PromptPay Details -->
+                            <div id="panel-promptpay" class="payment-detail-box" style="display: none; text-align: center;">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--primary-coral); margin-bottom: 0.6rem;">
+                                    📱 สแกน QR Code พร้อมเพย์เพื่อชำระเงิน
+                                </h4>
+                                <div style="display: inline-block; background: var(--bg-card); padding: 1rem; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin-bottom: 0.8rem;">
+                                    <div style="font-size: 4rem; line-height: 1;">📲</div>
+                                    <div style="font-family: 'Outfit'; font-weight: 800; font-size: 1.15rem; color: #1E3A8A; margin-top: 0.4rem;">PROMPTPAY</div>
+                                    <div style="font-family: 'Outfit'; font-weight: 700; color: var(--text-main);">089-123-4567</div>
+                                    <div style="font-size: 0.75rem; color: var(--text-muted);">บจก. เพอร์เฟกต์ แคท ช็อป</div>
+                                </div>
+                                <p style="font-size: 0.82rem; color: var(--text-secondary);">
+                                    สามารถบันทึกภาพหน้าจอ หรือใช้แอปธนาคารสแกนยอด <strong>0.00 ฿</strong> ได้ทันที
+                                </p>
+                            </div>
+
+                            <!-- 3. Credit Card Details -->
+                            <div id="panel-credit_card" class="payment-detail-box" style="display: none;">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--primary-coral); margin-bottom: 0.8rem;">
+                                    💳 ระบุข้อมูลบัตรเครดิต / เดบิต
+                                </h4>
+                                <div class="form-group" style="margin-bottom: 0.8rem;">
+                                    <label for="card_number" style="font-size: 0.82rem;">หมายเลขบัตร 16 หลัก</label>
+                                    <input type="text" name="card_number" id="card_number" class="form-control" 
+                                           placeholder="4123 4567 8901 2345" maxlength="19">
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="card_expiry" style="font-size: 0.82rem;">วันหมดอายุ (MM/YY)</label>
+                                        <input type="text" name="card_expiry" id="card_expiry" class="form-control" placeholder="12/28" maxlength="5">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0;">
+                                        <label for="card_cvv" style="font-size: 0.82rem;">รหัสหลังบัตร (CVV)</label>
+                                        <input type="password" name="card_cvv" id="card_cvv" class="form-control" placeholder="•••" maxlength="4">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. Cash on Handover Details -->
+                            <div id="panel-cod" class="payment-detail-box" style="display: none;">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--primary-coral); margin-bottom: 0.5rem;">
+                                    🤝 ชำระเงินสดในวันส่งมอบน้องแมว
+                                </h4>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                                    เจ้าหน้าที่จะเดินทางพร้อมน้องแมวด้วยรถปรับอากาศ เมื่อถึงที่หมาย คุณสามารถตรวจเช็กสุขภาพ ความแข็งแรง และเอกสารเพ็ดดีกรีของน้องแมวก่อน จากนั้นจึงชำระเงินสดหรือโอนจ่ายตรงกับเจ้าหน้าที่ส่งมอบ
+                                </p>
+                            </div>
+
+                            <!-- 5. PayPal Details -->
+                            <div id="panel-paypal" class="payment-detail-box" style="display: none;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 8px;">
+                                    <h4 style="font-size: 0.95rem; font-weight: 700; color: #0284C7; margin-bottom: 0; display: flex; align-items: center; gap: 0.4rem;">
+                                        🅿️ ชำระเงินผ่าน PayPal / บัตรสากล (Global Gateway)
+                                    </h4>
+                                    <span style="font-size: 0.75rem; background: #E0F2FE; color: #0369A1; padding: 2px 8px; border-radius: 999px; font-weight: 700;">Global Checkout</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1rem;">
+                                    รองรับบัญชี PayPal ทั่วโลก หรือบัตรเครดิต/เดบิตสากล (Visa, Mastercard, AMEX) ผ่านระบบความปลอดภัยมาตรฐานโลก
+                                </p>
+                                <div class="form-group" style="margin-bottom: 0.8rem;">
+                                    <label for="paypal_email" style="font-size: 0.82rem;">อีเมลบัญชี PayPal ของคุณ</label>
+                                    <input type="email" name="paypal_email" id="paypal_email" class="form-control" 
+                                           placeholder="เช่น your-paypal-account@email.com" 
+                                           value="">
+                                </div>
+                                <div style="background: var(--bg-card); border: 1px dashed var(--border-color); border-radius: 8px; padding: 0.8rem 1rem; font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.6rem;">
+                                    <span style="font-size: 1.2rem;">🔒</span>
+                                    <span>ระบบเชื่อมต่อตรงกับเซิร์ฟเวอร์ความปลอดภัยของ PayPal พร้อมหักชำระยอด <strong>0.00 ฿</strong> ทันทีที่ยืนยัน</span>
+                                </div>
+                            </div>
+
+                            <!-- 6. Paw Points Details -->
+                            <div id="panel-paw_points" class="payment-detail-box" style="display: none;">
+                                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 8px;">
+                                    <h4 style="font-size: 0.95rem; font-weight: 700; color: #B45309; margin-bottom: 0; display: flex; align-items: center; gap: 0.4rem;">
+                                        🐾 ชำระด้วยแต้มสะสมสมาชิก (Paw Points Redemption)
+                                    </h4>
+                                    <span style="font-size: 0.75rem; background: #FEF3C7; color: #92400E; padding: 2px 8px; border-radius: 999px; font-weight: 700;">Paw Points System</span>
+                                </div>
+                                
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem; font-size: 0.85rem;">
+                                    <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.8rem; border-radius: 8px;">
+                                        <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">แต้มสะสมของคุณปัจจุบัน:</span>
+                                        <strong style="color: #D97706; font-size: 1.15rem; font-family: 'Outfit';">🐾 150 พอยท์</strong>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">ระดับสมาชิก: <strong>สมาชิกระดับทั่วไป</strong></div>
+                                    </div>
+                                    <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.8rem; border-radius: 8px;">
+                                        <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">อัตราแลกแต้มแทนเงินสด:</span>
+                                        <strong style="color: #047857; font-size: 1.05rem; font-family: 'Outfit';">100 แต้ม = 100 ฿</strong>
+                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">ใช้แต้มสะสมครอบคลุมยอดสินสอดทั้งหมด</div>
+                                    </div>
+                                </div>
+
+                                <div style="background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.82rem; color: #92400E; line-height: 1.5;">
+                                    ✨ <strong>สิทธิ์แลกรับเลี้ยงด้วยแต้ม:</strong> เมื่อกดยืนยันคำสั่งจอง ระบบจะทำการหักแต้มสะสม Paw Points สมาชิกตามยอดสุทธิและมอบสิทธิ์การรับเลี้ยงทันที
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TEST Mode Live Banner Notification -->
+                        <div id="test-mode-notice" style="display: none; background: #FEF3C7; border: 1.5px dashed #F59E0B; border-radius: 8px; padding: 0.8rem 1rem; font-size: 0.85rem; color: #92400E; margin-top: 1rem;">
+                            ✓ <strong>เปิดใช้งานโหมด TEST แล้ว:</strong> ข้ามการกรอกข้อมูลชำระเงินและที่อยู่ทั้งหมด สามารถกดปุ่มยืนยันรับเลี้ยงด้านล่างเพื่อทดสอบระบบได้ทันที!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Sticky Summary & Trust Seals -->
+                <div class="cart-right-col">
+                    <div class="cart-summary-card">
+                        <h3 class="cart-summary-title">สรุปยอดคำสั่งจอง</h3>
+
+                                                    <!-- Member discount prompt -->
+                            <div style="background: var(--accent-amber-soft); border: 1px solid #FCD34D; border-radius: var(--radius-md); padding: 0.85rem 1rem; margin-bottom: 1.2rem; font-size: 0.85rem; color: #92400E;">
+                                💡 <strong>ประหยัดทันที 5%:</strong> <a href="login.html" style="color: #B45309; font-weight: 700;">เข้าสู่ระบบ</a> หรือ <a href="register.html" style="color: #B45309; font-weight: 700;">สมัครสมาชิกใหม่</a> เพื่อรับสิทธิพิเศษ!
+                            </div>
+                        
+                        <!-- Coupon & Lucky Wheel Rewards Selector Box -->
+                        <div class="coupon-section-box" style="background: var(--bg-card-subtle); border: 1.5px dashed var(--primary-coral); border-radius: var(--radius-md); padding: 1.1rem; margin-bottom: 1.2rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+                                <label for="couponCodeInput" style="font-size: 0.85rem; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 5px; margin: 0;">
+                                    <span>🎟️ คูปองส่วนลด & ของรางวัล</span>
+                                </label>
+                                <span id="active-coupon-badge" style="display: none; background: #DCFCE7; color: #166534; font-size: 0.72rem; font-weight: 800; padding: 2px 7px; border-radius: 999px;">
+                                    ✓ ใช้งานอยู่
+                                </span>
+                            </div>
+
+                            <!-- Input Form + Apply / Remove button -->
+                            <div style="display: flex; gap: 6px; margin-bottom: 0.6rem;">
+                                <input type="hidden" name="applied_coupon" id="applied_coupon_input" value="">
+                                <input type="text" id="couponCodeInput" class="form-control" placeholder="กรอกโค้ดส่วนลด..." style="padding: 0.5rem 0.8rem; font-size: 0.85rem; text-transform: uppercase; font-weight: 700; flex: 1;">
+                                <button type="button" class="btn btn-primary btn-sm" id="btnApplyCoupon" onclick="applyCouponManual()" style="padding: 0.5rem 0.9rem; font-size: 0.82rem; font-weight: 700; white-space: nowrap;">
+                                    ใช้โค้ด ➔
+                                </button>
+                                <button type="button" class="btn btn-secondary btn-sm" id="btnRemoveCoupon" onclick="removeCouponClient()" style="display: none; padding: 0.5rem 0.75rem; font-size: 0.82rem; color: #EF4444; border-color: #FCA5A5; background: #FEF2F2; font-weight: 700;">
+                                    ❌ ลบ
+                                </button>
+                            </div>
+
+                            <!-- Quick Select Drawer / Accordion of Available Coupons -->
+                            <div style="border-top: 1px dashed var(--border-color); padding-top: 0.6rem; margin-top: 0.6rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="font-size: 0.78rem; font-weight: 800; color: var(--text-secondary);">🎁 เลือกคูปองจากที่คุณมี:</span>
+                                    <button type="button" onclick="toggleAvailableCoupons()" style="background: none; border: none; font-size: 0.75rem; color: var(--primary-coral); font-weight: 800; cursor: pointer; padding: 0;" id="toggleCouponsBtn">
+                                        ดูทั้งหมด (▾)
+                                    </button>
+                                </div>
+                                <div id="availableCouponsList" style="display: grid; gap: 6px; max-height: 240px; overflow-y: auto; padding-right: 2px;">
+                                    <!-- Dynamic items from LocalStorage and store presets will be rendered here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="summary-row" style="padding-bottom: 0.4rem; border-bottom: 1px dashed var(--border-color); margin-bottom: 0.6rem;">
+                            <span>จำนวนน้องแมวที่เลือกรับเลี้ยง:</span>
+                            <strong id="summaryCatCountVal" style="color: var(--primary-coral); font-size: 1rem;">0 ตัว</strong>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>ราคาสินสอดรวม:</span>
+                            <span id="summarySubtotalVal">0 ฿</span>
+                        </div>
+
+                        <div class="summary-row" id="summaryCouponRow" style="display: none; color: #059669; font-weight: 700;">
+                            <span>🎟️ ส่วนลดคูปอง (<span id="summaryCouponName"></span>):</span>
+                            <span id="summaryCouponVal">-0 ฿</span>
+                        </div>
+
+                        <div class="summary-row" id="summaryDiscountRow" style="display: none; color: var(--accent-mint); font-weight: 600;">
+                            <span>ส่วนลดสมาชิก (5%):</span>
+                            <span id="summaryDiscountVal">-0 ฿</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>ค่าจัดส่งรถตู้ปรับอากาศ (Pet Transport):</span>
+                            <span style="color: var(--accent-mint); font-weight: 600;" id="summaryShippingVal">ฟรีโปรโมชั่น (0 ฿)</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>ภาษีมูลค่าเพิ่ม (VAT 7%):</span>
+                            <span id="summaryVatVal">0.00 ฿</span>
+                        </div>
+
+                        <div class="summary-row total">
+                            <span>ยอดชำระสุทธิ:</span>
+                            <span id="summaryGrandTotalVal">0.00 ฿</span>
+                        </div>
+
+                        <div style="margin-top: 1.5rem;">
+                            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.95rem; font-size: 1.05rem;">
+                                ยืนยันคำสั่งจองและรับเลี้ยง 🐾
+                            </button>
+                        </div>
+
+                        <!-- Trust and Guarantees List -->
+                        <div style="margin-top: 1.8rem; padding-top: 1.2rem; border-top: 1px solid var(--border-color);">
+                            <div class="trust-badge-item">
+                                <span class="trust-badge-icon">🩺</span>
+                                <div class="trust-badge-text">
+                                    <strong>รับประกันสุขภาพ 30 วัน</strong>
+                                    <span>ตรวจไข้หัดและลิวคีเมียก่อนส่งมอบทุกตัว</span>
+                                </div>
+                            </div>
+                            <div class="trust-badge-item">
+                                <span class="trust-badge-icon">📜</span>
+                                <div class="trust-badge-text">
+                                    <strong>ใบเพ็ดดีกรีรับรองสายพันธุ์</strong>
+                                    <span>สายเลือดแชมป์มาตรฐานสากล WCF/CFA</span>
+                                </div>
+                            </div>
+                            <div class="trust-badge-item">
+                                <span class="trust-badge-icon">🚗</span>
+                                <div class="trust-badge-text">
+                                    <strong>จัดส่งด้วยรถปรับอากาศสำหรับสัตว์เลี้ยง</strong>
+                                    <span>มีพี่เลี้ยงดูแลตลอดเส้นทางอย่างปลอดภัย</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
 
 <script>
 // Switch Payment Channels Tabs
@@ -950,6 +1725,557 @@ function reverseGeocodeAddress(lat, lng) {
         })
         .catch(err => console.error(err));
 }
+
+// =========================================================
+// Client-Side Cart Storage & Synchronization (Static HTML Support)
+// =========================================================
+// =========================================================
+// Coupon & Discount System (Supports Wheel Rewards & Store Coupons)
+// =========================================================
+let currentAppliedCoupon = null; // { code, title, discountRate, isCash }
+
+const officialStoreCoupons = [
+    { code: 'PURR25NEW', title: 'ส่วนลดต้อนรับสมาชิก 25%', desc: 'ลด 25% สำหรับการสั่งจองน้องแมวทุกสายพันธุ์', discountRate: 0.25, isCash: false, icon: '🎉', tag: 'สมาชิกใหม่' },
+    { code: 'WELCOME15', title: 'ส่วนลดต้อนรับ 15%', desc: 'ลด 15% สำหรับการรับเลี้ยงน้องแมวตัวแรก', discountRate: 0.15, isCash: false, icon: '✨', tag: 'ต้อนรับ' },
+    { code: 'CATNEWS10', title: 'ส่วนลดจดหมายข่าว 10%', desc: 'สิทธิ์ลด 10% สำหรับผู้ติดตามข่าวสาร', discountRate: 0.10, isCash: false, icon: '📬', tag: 'Newsletter' },
+    { code: 'VIPPAW15', title: 'สิทธิพิเศษ Diamond VIP 15%', desc: 'ส่วนลด 15% ตลอดชีพสำหรับสมาชิกระดับ VIP', discountRate: 0.15, isCash: false, icon: '👑', tag: 'VIP Club' },
+    { code: 'MEOWKIT25', title: 'ส่วนลดเซ็ตของแถม 25%', desc: 'ลด 25% สำหรับแพ็กเกจของใช้และอาหารลูกแมว', discountRate: 0.25, isCash: false, icon: '🎁', tag: 'Starter Kit' }
+];
+
+function toggleAvailableCoupons() {
+    const list = document.getElementById('availableCouponsList');
+    const btn = document.getElementById('toggleCouponsBtn');
+    if (!list) return;
+    if (list.style.display === 'none' || list.style.display === '') {
+        list.style.display = 'grid';
+        if (btn) btn.textContent = 'ย่อ (▴)';
+    } else {
+        list.style.display = 'none';
+        if (btn) btn.textContent = 'ดูทั้งหมด (▾)';
+    }
+}
+
+function getAllUserCoupons() {
+    let list = [];
+    // 1. Won from Lucky Wheel (localStorage: cat_shop_my_rewards)
+    try {
+        const wheelRewards = JSON.parse(localStorage.getItem('cat_shop_my_rewards') || '[]');
+        wheelRewards.forEach(r => {
+            let discountRate = 0.25;
+            let isCash = false;
+            let code = r.code || 'LUCKYPRIZE';
+            if (code.includes('500') || r.title.includes('500')) {
+                discountRate = 500;
+                isCash = true;
+            } else if (code.includes('1000') || r.title.includes('1000')) {
+                discountRate = 1000;
+                isCash = true;
+            } else if (code.includes('15') || r.title.includes('15%')) {
+                discountRate = 0.15;
+            } else if (code.includes('10') || r.title.includes('10%')) {
+                discountRate = 0.10;
+            }
+            list.push({
+                code: code,
+                title: r.title,
+                desc: r.desc || 'รางวัลที่คุณหมุนได้จากวงล้อนำโชค',
+                discountRate: discountRate,
+                isCash: isCash,
+                icon: r.icon || '🎡',
+                tag: '🎡 รางวัลจากวงล้อ',
+                isWheel: true
+            });
+        });
+    } catch(e) {}
+
+    // 2. Official store coupons
+    officialStoreCoupons.forEach(c => {
+        if (!list.some(existing => existing.code.toUpperCase() === c.code.toUpperCase())) {
+            list.push(c);
+        }
+    });
+
+    return list;
+}
+
+function renderAvailableCouponsList() {
+    const container = document.getElementById('availableCouponsList');
+    if (!container) return;
+
+    const coupons = getAllUserCoupons();
+    if (coupons.length === 0) {
+        container.innerHTML = '<div style="font-size:0.8rem; color:var(--text-muted); text-align:center; padding:0.5rem;">ไม่มีคูปองที่ใช้ได้ในขณะนี้</div>';
+        return;
+    }
+
+    container.innerHTML = coupons.map(c => {
+        const isActive = currentAppliedCoupon && currentAppliedCoupon.code.toUpperCase() === c.code.toUpperCase();
+        const discountLabel = c.isCash ? `ลด ฿${c.discountRate.toLocaleString()}` : `ลด ${Math.round(c.discountRate * 100)}%`;
+        
+        return `
+            <div style="background: ${isActive ? '#ECFDF5' : '#FFFFFF'}; border: 1.5px solid ${isActive ? '#10B981' : '#E2E8F0'}; border-radius: 10px; padding: 8px 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; transition: all 0.2s;">
+                <div style="display: flex; align-items: center; gap: 8px; min-width: 0;">
+                    <span style="font-size: 1.3rem;">${c.icon}</span>
+                    <div style="min-width: 0;">
+                        <div style="display: flex; align-items: center; gap: 5px; flex-wrap: wrap;">
+                            <strong style="font-size: 0.82rem; color: var(--text-main);">${c.code}</strong>
+                            <span style="background: ${c.isWheel ? '#FEF3C7' : '#EFF6FF'}; color: ${c.isWheel ? '#92400E' : '#1E40AF'}; font-size: 0.68rem; font-weight: 800; padding: 1px 6px; border-radius: 999px;">${c.tag}</span>
+                            <span style="background: #DCFCE7; color: #166534; font-size: 0.68rem; font-weight: 800; padding: 1px 6px; border-radius: 999px;">${discountLabel}</span>
+                        </div>
+                        <div style="font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 170px;">
+                            ${c.title}
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    ${isActive 
+                        ? `<button type="button" onclick="removeCouponClient()" style="background: #EF4444; color: #FFF; border: none; border-radius: 6px; font-size: 0.72rem; font-weight: 800; padding: 4px 8px; cursor: pointer;">ยกเลิก</button>`
+                        : `<button type="button" onclick="applyCouponClient('${c.code}', '${c.title}', ${c.discountRate}, ${c.isCash})" style="background: var(--primary-coral); color: #FFF; border: none; border-radius: 6px; font-size: 0.72rem; font-weight: 800; padding: 4px 8px; cursor: pointer; white-space: nowrap;">เลือกใช้</button>`
+                    }
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function applyCouponClient(code, title, discountRate, isCash) {
+    if (!code) return;
+    code = code.trim().toUpperCase();
+    
+    // If rate/cash not provided, look up or calculate
+    if (discountRate === undefined) {
+        if (['PURR25NEW', 'LUCKY25', 'MEOWKIT25', 'TREAT25'].includes(code)) {
+            discountRate = 0.25;
+            isCash = false;
+            title = 'ส่วนลด 25%';
+        } else if (['WELCOME15', 'VIPPAW15'].includes(code)) {
+            discountRate = 0.15;
+            isCash = false;
+            title = 'ส่วนลด 15%';
+        } else if (['CATNEWS10'].includes(code)) {
+            discountRate = 0.10;
+            isCash = false;
+            title = 'ส่วนลด 10%';
+        } else if (code === 'LUCKY500') {
+            discountRate = 500;
+            isCash = true;
+            title = 'ส่วนลดเงินสด ฿500';
+        } else if (code === 'LUCKY1000') {
+            discountRate = 1000;
+            isCash = true;
+            title = 'ส่วนลดเงินสด ฿1,000';
+        } else {
+            discountRate = 0.10;
+            isCash = false;
+            title = 'คูปองส่วนลด';
+        }
+    }
+
+    currentAppliedCoupon = {
+        code: code,
+        title: title || code,
+        discountRate: discountRate,
+        isCash: isCash || false
+    };
+
+    const input = document.getElementById('couponCodeInput');
+    if (input) input.value = code;
+
+    const hiddenInput = document.getElementById('applied_coupon_input');
+    if (hiddenInput) hiddenInput.value = code;
+
+    const badge = document.getElementById('active-coupon-badge');
+    if (badge) {
+        badge.style.display = 'inline-block';
+        badge.textContent = `✓ ${code} (${isCash ? '฿' + discountRate : Math.round(discountRate * 100) + '%'})`;
+    }
+
+    const removeBtn = document.getElementById('btnRemoveCoupon');
+    if (removeBtn) removeBtn.style.display = 'inline-block';
+
+    const applyBtn = document.getElementById('btnApplyCoupon');
+    if (applyBtn) applyBtn.style.display = 'none';
+
+    renderAvailableCouponsList();
+    syncClientCartUI();
+}
+
+function removeCouponClient() {
+    currentAppliedCoupon = null;
+
+    const input = document.getElementById('couponCodeInput');
+    if (input) input.value = '';
+
+    const hiddenInput = document.getElementById('applied_coupon_input');
+    if (hiddenInput) hiddenInput.value = '';
+
+    const badge = document.getElementById('active-coupon-badge');
+    if (badge) badge.style.display = 'none';
+
+    const removeBtn = document.getElementById('btnRemoveCoupon');
+    if (removeBtn) removeBtn.style.display = 'none';
+
+    const applyBtn = document.getElementById('btnApplyCoupon');
+    if (applyBtn) applyBtn.style.display = 'inline-block';
+
+    renderAvailableCouponsList();
+    syncClientCartUI();
+}
+
+function applyCouponManual() {
+    const input = document.getElementById('couponCodeInput');
+    const code = input ? input.value.trim() : '';
+    if (!code) {
+        if (input) {
+            input.focus();
+            input.style.borderColor = '#EF4444';
+            setTimeout(() => { input.style.borderColor = ''; }, 2000);
+        }
+        return;
+    }
+    applyCouponClient(code);
+}
+
+// =========================================================
+// Client-Side Cart Storage & Synchronization (Static HTML Support)
+// =========================================================
+const allCatsData = {"cat_british":{"id":"cat_british","name":"น้องสโนว์ (British Shorthair)","breed":"บริติช ช็อตแฮร์ (British Shorthair)","description":"น้องแมวสายพันธุ์ผู้ดีอังกฤษ หน้ากลมแก้มป่อง ขนแน่นนุ่มเหมือนกำมะหยี่ อารมณ์ดี เรียบร้อย เลี้ยงง่าย และเป็นมิตรกับทุกคนในครอบครัว","price":18000,"image":"cat_british.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นแน่นนุ่ม","personality":"เรียบร้อย อ่อนโยน เข้ากับคนง่าย","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิแล้ว","pedigree":"มีใบเพ็ดดีกรี WCF รับรองสายพันธุ์","categories":["popular","condo","beginner","short_hair"],"highlights":["หน้ากลมแก้มยุ้ยน่าฟัด","ขนแน่นไม่ค่อยร่วง","เหมาะกับห้องพักและคอนโด"]},"cat_persian":{"id":"cat_persian","name":"น้องปุยหิมะ (Persian Classic)","breed":"เปอร์เซีย (Persian)","description":"ราชินีแห่งแมวขนยาว หน้าหวาน ขนฟูยาวหนานุ่มสง่างาม นิสัยสุภาพ นิ่งสงบ ไม่ส่งเสียงรบกวน ชอบนอนซุกผ้าห่มและคลอเคลียเจ้าของ","price":16500,"image":"cat_persian.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"long","hair_label":"ขนยาวฟูหนา","personality":"รักสงบ นิ่งเงียบ อ่อนโยนมาก","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพพร้อมย้ายบ้าน","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดแชมป์","categories":["fluffy","condo","long_hair"],"highlights":["ขนนุ่มฟูระดับพรีเมียม","รักความสงบไม่ร้องกวน","ชอบให้อุ้มและแปรงขน"]},"cat_sphynx":{"id":"cat_sphynx","name":"น้องซีซาร์ (Canadian Sphynx)","breed":"สฟิงซ์ (Sphynx)","description":"แมวไร้ขนสุดเท่ ผิวสัมผัสนุ่มอุ่นดั่งลูกพีช ไร้ขนร่วง 100% เหมาะสำหรับผู้ที่เป็นโรคภูมิแพ้ขนสัตว์ ฉลาดมาก ขี้อ้อนติดคนเหมือนสุนัขตัวน้อย","price":28000,"image":"cat_sphynx.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"hairless","hair_label":"ไร้ขน (ผิวสัมผัสพีช)","personality":"ขี้อ้อนมาก ติดเจ้าของ เป็นมิตรสุดๆ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ฝังไมโครชิปแล้ว","pedigree":"มีใบเพ็ดดีกรี WCF สายพันธุ์แท้","categories":["low_shed"],"highlights":["ขนร่วง 0% หมดปัญหาภูมิแพ้","ฉลาดและตอบสนองไว","อ้อนเก่งระดับสิบ"]},"cat_siamese":{"id":"cat_siamese","name":"น้องมงคล (Siamese \/ วิเชียรมาศ)","breed":"วิเชียรมาศ (Siamese Cat)","description":"แมวมงคลไทยโบราณ แต้มสี 9 จุดคมชัด ตาสีฟ้าครามเปล่งประกาย สติปัญญาเฉลียวฉลาด ช่างพูดช่างคุย ซื่อสัตย์และรักเจ้าของสุดหัวใจ","price":12000,"image":"cat_siamese.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นเรียบเนียน","personality":"ช่างพูด เฉลียวฉลาด ร่าเริง ผูกพันกับเจ้าของ","vaccine":"ฉีดวัคซีนรวม + ตรวจลิวคีเมีย\/เอดส์แมวผ่าน","pedigree":"ใบรับรองสายพันธุ์แมวไทยโบราณแท้","categories":["beginner","playful","short_hair"],"highlights":["แมวมงคลนำโชคลาภ","ช่างอ้อนช่างคุย","สุขภาพแข็งแรงเลี้ยงง่าย"]},"cat_mainecoon":{"id":"cat_mainecoon","name":"น้องไททัน (Maine Coon)","breed":"เมนคูน (Maine Coon)","description":"ยักษ์ใหญ่ใจดี สายพันธุ์แมวที่ตัวใหญ่ที่สุดในโลก ขนแผงคอสง่างามราวสิงโต นิสัยอ่อนโยน ขี้เล่น เป็นมิตรกับเด็กและสัตว์เลี้ยงอื่นๆ","price":35000,"image":"cat_mainecoon.jpg","age":"3.5 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวสองชั้นฟูหนา","personality":"ใจดี อ่อนโยน เข้ากับทุกคนได้ง่าย","vaccine":"ฉีดวัคซีนครบ 3 เข็ม + ฝังไมโครชิปมาตรฐาน","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดแชมป์นำเข้า","categories":["fluffy","playful","long_hair"],"highlights":["ขนาดตัวใหญ่สง่างามดั่งสิงโต","นิสัยน่ารักใจดีดั่งสุนัข","รักทุกคนในบ้าน"]},"cat_ragdoll":{"id":"cat_ragdoll","name":"น้องคอตตอน (Ragdoll)","breed":"แร็กดอลล์ (Ragdoll)","description":"เจ้าหญิงดวงตาสีฟ้าคราม ตัวนุ่มปวกเปียกเหมือนตุ๊กตาผ้าเวลาอุ้ม อ่อนโยน รักความสงบ ขนนุ่มดั่งปุยฝ้าย ไม่กางเล็บ เหมาะกับครอบครัวที่มีเด็ก","price":29000,"image":"cat_ragdoll.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"long","hair_label":"ขนกึ่งยาวนุ่มลื่น","personality":"ยอมคน อ่อนหวาน นุ่มนวล ไม่ดุร้าย","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจพันธุกรรมโรคหัวใจ HCM ปกติ","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์","categories":["popular","fluffy","condo","long_hair"],"highlights":["ตาสีฟ้าเปล่งประกายสวยงาม","ตัวนุ่มนิ่มอุ้มง่ายไม่ดิ้น","ปลอดภัยสำหรับเด็ก"]},"cat_bengal":{"id":"cat_bengal","name":"น้องจากัวร์ (Bengal Rosetted)","breed":"เบงกอล (Bengal)","description":"เสือดาวจิ๋วประจำบ้าน ลวดลายดอกกุหลาบ (Rosette) สีทองเด่นชัด กล้ามเนื้อแข็งแรง ปราดเปรียว ชื่นชอบการปีนป่ายและเล่นน้ำ","price":26000,"image":"cat_bengal.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นประกายกลิตเตอร์ทอง","personality":"พลังงานสูง ปราดเปรียว รักการผจญภัย","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิเรียบร้อย","pedigree":"มีใบเพ็ดดีกรี WCF ลายโรเซ็ตต์ชัดเจน","categories":["playful","short_hair"],"highlights":["ลายเสือดาวหายากสวยสง่า","ขนมีประกายทองวิบวับ","รักการเล่นน้ำและวิ่งเล่น"]},"cat_scottish":{"id":"cat_scottish","name":"น้องพุดดิ้ง (Scottish Fold)","breed":"สก็อตติช โฟลด์ (Scottish Fold)","description":"เจ้าเหมียวหูพับ หน้ากลมแป้นเหมือนนกฮูก ขี้อ้อน ชอบนั่งท่านั่งพุงพลุ้ย (Buddha Position) น่ารักน่าเอ็นดู เข้ากับทุกคนได้ง่ายดาย","price":21000,"image":"cat_scottish.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นนุ่มหนา","personality":"ขี้อ้อน อารมณ์ดี ชอบอยู่ใกล้ชิดเจ้าของ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพกระดูกและข้อผ่าน","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["popular","condo","beginner","short_hair"],"highlights":["หูพับแนบสนิทหน้ากลมน่ารัก","ชอบนั่งท่าบุดด้าตลกๆ","รักสงบเหมาะกับคอนโด"]},"cat_munchkin":{"id":"cat_munchkin","name":"น้องชอร์ตตี้ (Munchkin Short Legs)","breed":"มันช์กิ้น ขาสั้น (Munchkin)","description":"แมวขาสั้นเตี้ยดุ๊กดิ๊กสุดน่ารัก วิ่งดุ๊กดิ๊กไปมาเรียกเสียงหัวเราะได้ตลอดวัน กระตือรือร้น ชอบสำรวจ เป็นมิตรและปรับตัวเข้ากับสภาพแวดล้อมได้เร็ว","price":24000,"image":"cat_munchkin.jpg","age":"2 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นนุ่มฟูนิดๆ","personality":"ร่าเริง สดใส ตื่นตัว ชอบเล่นกับของเล่น","vaccine":"ฉีดวัคซีนครบตามช่วงวัย + ถ่ายพยาธิเรียบร้อย","pedigree":"มีใบเพ็ดดีกรี WCF ขาสั้นแท้มาตรฐาน","categories":["popular","playful","short_hair"],"highlights":["ขาสั้นน่ารักดุ๊กดิ๊กสะกดใจ","ปรับตัวเก่งเป็นมิตร","เล่นเก่งไม่เหงาแน่นอน"]},"cat_russian":{"id":"cat_russian","name":"น้องบลูสกาย (Russian Blue)","breed":"รัสเซียน บลู (Russian Blue)","description":"แมวชั้นสูงสีเทาเงินสะท้อนแสง ดวงตาสีเขียวมรกต เรียบร้อย สะอาด สุภาพ ไม่ส่งเสียงดัง ผลัดขนน้อยมาก เหมาะสำหรับคนทำงานที่ชอบความสงบ","price":22000,"image":"cat_russian.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นสีเทาเงินประกาย","personality":"สุภาพ เรียบร้อย ไม่ส่งเสียงดัง รักสงบ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพทั่วไปผ่านฉลุย","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["condo","low_shed","short_hair"],"highlights":["ดวงตาสีเขียวมรกตสะกดสายตา","ขนร่วงน้อยแทบไม่ผลัดขน","รักความสะอาดและความเงียบสงบ"]},"cat_abyssinian":{"id":"cat_abyssinian","name":"น้องแอมเบอร์ (Abyssinian)","breed":"อบิสซิเนียน (Abyssinian)","description":"แมวอียิปต์โบราณ ขนสีส้มอบเชยไล่เฉดสวยงาม ล่ำสัน ปราดเปรียวและฉลาดหลักแหลม ชอบมีส่วนร่วมกับทุกกิจกรรมของเจ้าของ รักการกระโดดสูง","price":19000,"image":"cat_abyssinian.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นลวดลาย Ticked Tabby","personality":"คล่องแคล่ว เฉลียวฉลาด ร่าเริง ชอบเล่น","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดตรวจสุขภาพประจำตัว","pedigree":"มีใบเพ็ดดีกรี WCF รับรองสายพันธุ์","categories":["playful","short_hair"],"highlights":["ขนไล่เฉดสีอบเชยสวยแปลกตา","ฉลาดสามารถฝึกสอนคำสั่งได้","ขี้เล่นสร้างรอยยิ้มได้เสมอ"]},"cat_americanshorthair":{"id":"cat_americanshorthair","name":"น้องการ์ฟิลด์ (American Shorthair)","breed":"อเมริกัน ช็อตแฮร์ (American Shorthair)","description":"แมวลายเสือสีเงินคลาสสิก ลายชัดเจน สุขภาพแข็งแรง อึด ทน ไม่ป่วยง่าย เลี้ยงง่าย อารมณ์ดี เป็นมิตรกับทั้งคนแปลกหน้าและสัตว์เลี้ยงอื่น","price":15000,"image":"cat_americanshorthair.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นแน่นลายชัดเจน","personality":"อารมณ์ดี เข้ากับทุกคนง่าย เลี้ยงง่ายที่สุด","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิเรียบร้อย","pedigree":"มีใบเพ็ดดีกรี WCF ลาย Classic Tabby ชัดเจน","categories":["beginner","condo","short_hair"],"highlights":["ลายเสือคลาสสิกคมชัด","สุขภาพแข็งแรงเลี้ยงง่ายที่สุด","เป็นมิตรกับทุกคนในบ้าน"]},"cat_norwegian":{"id":"cat_norwegian","name":"น้องธอร์ (Norwegian Forest Cat)","breed":"นอร์วีเจียน ฟอเรสต์ (Norwegian Forest Cat - นอร์เวย์)","description":"แมวไวกิ้งโบราณแห่งสแกนดิเนเวีย ขนสองชั้นกันน้ำหนานุ่ม แผงคอใหญ่สง่างาม ร่างกายกำยำ ปีนป่ายเก่งและรักความสงบ","price":32000,"image":"cat_norwegian.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวสองชั้นหนานุ่ม","personality":"สุขุม อ่อนโยน ฉลาด รักการสำรวจ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ฝังไมโครชิปแล้ว","pedigree":"มีใบเพ็ดดีกรี FIFe สายพันธุ์แท้นำเข้า","categories":["fluffy","playful","long_hair"],"highlights":["สายพันธุ์ไวกิ้งหายาก","ขนกันน้ำหนานุ่ม","นิสัยอ่อนโยนรักสงบ"]},"cat_japanese_bobtail":{"id":"cat_japanese_bobtail","name":"น้องซากุระ (Japanese Bobtail Mi-Ke)","breed":"เจแปนนิส บ็อบเทล (Japanese Bobtail - ญี่ปุ่น)","description":"ต้นกำเนิดแมวกวักนำโชค (Maneki-Neko) ของญี่ปุ่น หางกุดรูปพู่กลม ลายสามสีมงคล สดใส ช่างพูด เป็นมิตรและซื่อสัตย์","price":23000,"image":"cat_japanese_bobtail.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นลวดลายสามสี มิเกะ","personality":"ร่าเริง ฉลาด ช่างเจรจา ซื่อสัตย์","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพสมบูรณ์","pedigree":"มีใบเพ็ดดีกรี CFA สายพันธุ์แท้","categories":["popular","beginner","playful","short_hair"],"highlights":["ต้นแบบแมวกวักนำโชค","หางกุดพุ่มน่ารัก","ปรับตัวเก่งเป็นมิตร"]},"cat_siberian":{"id":"cat_siberian","name":"น้องวลาดิเมียร์ (Siberian Forest Cat)","breed":"ไซบีเรียน (Siberian Cat - รัสเซีย)","description":"แมวแห่งผืนป่าไซบีเรีย ขนสามชั้นทนหนาวจัด สารก่อภูมิแพ้ต่ำ (Hypoallergenic) กระโดดสูง ใจดี ขี้เล่น และรักทุกคนในบ้าน","price":34000,"image":"cat_siberian.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวสามชั้น Hypoallergenic","personality":"ใจดี รักสนุก ฉลาด ขี้อ้อน","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดประจำตัว","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดรัสเซียแท้","categories":["fluffy","low_shed","playful","long_hair"],"highlights":["สารก่อภูมิแพ้ต่ำเหมาะคนแพ้ง่าย","ขนฟูสวยสง่า","เป็นมิตรกับสัตว์เลี้ยงอื่น"]},"cat_turkish_angora":{"id":"cat_turkish_angora","name":"น้องสุลต่าน (Turkish Angora)","breed":"เตอร์กิช แองโกรา (Turkish Angora - ตุรกี)","description":"สมบัติแห่งชาติตุรกี ขนสีขาวบริสุทธิ์พริ้วไหวดั่งผ้าไหม ดวงตาสีฟ้าและสีอำพัน (Odd-Eyes) เฉลียวฉลาด สง่างามและช่างประจบ","price":27000,"image":"cat_turkish_angora.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนกึ่งยาวสัมผัสไหมนุ่ม","personality":"สง่างาม ปราดเปรียว ช่างเอาใจ ฉลาด","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจการได้ยินปกติ","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["fluffy","condo","long_hair"],"highlights":["ขนสีขาวประกายไหม","ตาสองสีทรงเสน่ห์","ความสง่างามระดับราชสำนัก"]},"cat_turkish_van":{"id":"cat_turkish_van","name":"น้องคาราเมล (Turkish Van Swimming Cat)","breed":"เตอร์กิช แวน (Turkish Van - ตุรกี)","description":"แมวว่ายน้ำแห่งทะเลสาบแวน ลวดลายสีเฉพาะที่หัวและหาง (Van Pattern) ขนกันน้ำ ชอบเล่นน้ำและผจญภัย ร่างกายล่ำสันแข็งแรง","price":26000,"image":"cat_turkish_van.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"long","hair_label":"ขนกึ่งยาวกันน้ำพิเศษ","personality":"รักการว่ายน้ำ พลังงานสูง ฉลาด มั่นใจ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิแล้ว","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์","categories":["playful","long_hair"],"highlights":["ฉายาแมวชอบว่ายน้ำ","ลวดลายแวนคลาสสิก","สุขภาพแข็งแรงมาก"]},"cat_cornish_rex":{"id":"cat_cornish_rex","name":"น้องซิกแซก (Cornish Rex)","breed":"คอร์นิช เร็กซ์ (Cornish Rex - อังกฤษ)","description":"แมวขนลอนคลื่นแปลกตาจากคอร์นวอลล์ สัมผัสนุ่มเหมือนกำมะหยี่ ขนแทบไม่ร่วง รูปร่างเพรียวระหงดั่งเกรย์ฮาวด์ กระโดดเก่งและขี้อ้อน","price":25000,"image":"cat_cornish_rex.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นหยิกเป็นลอนคลื่น","personality":"ขี้เล่น กระตือรือร้น รักความอบอุ่น","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพผ่าน","pedigree":"มีใบเพ็ดดีกรี GCCF จากอังกฤษ","categories":["low_shed","playful","short_hair"],"highlights":["ขนลอนคลื่นไม่เหมือนใคร","ขนร่วงน้อยมาก","อบอุ่นน่ากอด"]},"cat_devon_rex":{"id":"cat_devon_rex","name":"น้องพิ๊กซี่ (Devon Rex)","breed":"เดวอน เร็กซ์ (Devon Rex - อังกฤษ)","description":"แมวเอลฟ์หูใหญ่ ตาโต ขนสั้นหยิกนุ่มเหมือนขนนก ฉลาดหลักแหลม ชอบเกาะบนไหล่และเรียนรู้ทริคใหม่ๆ ได้อย่างรวดเร็ว","price":27000,"image":"cat_devon_rex.jpg","age":"3 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นลอนละเอียดนุ่ม","personality":"ขี้เล่น ช่างสังเกต ชอบนั่งบนไหล่","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิ","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดแท้","categories":["popular","low_shed","playful","condo","short_hair"],"highlights":["หน้าตาเหมือนเอลฟ์น่ารัก","ชอบคลอเคลียบนไหล่","ขนร่วงน้อยดูแลง่าย"]},"cat_singapura":{"id":"cat_singapura","name":"น้องเปี๊ยก (Singapura)","breed":"สิงกาปุระ (Singapura - สิงคโปร์)","description":"สายพันธุ์แมวบ้านที่มีขนาดตัวเล็กที่สุดในโลก ตาโตสีเฮเซล ขนสีน้ำตาลเซเปียอบอุ่น น่ารักทะนุถนอม ขี้อ้อนและเข้ากับคนง่าย","price":28000,"image":"cat_singapura.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นละเอียดสีเซเปีย","personality":"ตัวเล็กขี้อ้อน อ่อนหวาน ช่างสังเกต","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดสุขภาพ","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์จิ๋ว","categories":["condo","beginner","short_hair"],"highlights":["สายพันธุ์แมวตัวเล็กที่สุดในโลก","ดวงตากลมโตบ้องแบ๊ว","เหมาะกับคอนโดและพื้นที่จำกัด"]},"cat_american_curl":{"id":"cat_american_curl","name":"น้องเคิร์ลลี่ (American Curl)","breed":"อเมริกัน เคิร์ล (American Curl - สหรัฐอเมริกา)","description":"แมวหูดัดม้วนไปข้างหลังอย่างมีเอกลักษณ์ นิสัยเหมือนลูกแมวตลอดชีวิต (Peter Pan of Cats) อารมณ์ดี ฉลาด เป็นมิตรกับทุกคน","price":24000,"image":"cat_american_curl.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นนุ่มแน่น","personality":"ขี้เล่น สดใส เข้ากับเด็กๆ ได้ดีเยี่ยม","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจกระดูกใบหู","pedigree":"มีใบเพ็ดดีกรี CFA สายพันธุ์แท้","categories":["beginner","playful","short_hair"],"highlights":["ใบหูดัดโค้งไปด้านหลังแปลกตา","นิสัยร่าเริงดั่งเด็กน้อยตลอดกาล","สุขภาพแข็งแรง"]},"cat_bombay":{"id":"cat_bombay","name":"น้องแพนเธอร์ (Bombay Cat)","breed":"บอมเบย์ (Bombay Cat - สหรัฐอเมริกา)","description":"เสือดำจิ๋วประจำห้องนั่งเล่น ขนสีดำขลับเงาวับดั่งผ้าซาติน ดวงตาสีทองแดงเปล่งประกาย สุภาพ ขี้อ้อน และรักความอบอุ่น","price":21000,"image":"cat_bombay.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นสีดำเงาวับ","personality":"สุขุม อ่อนหวาน ติดคน รักความสงบ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิ","pedigree":"มีใบเพ็ดดีกรี TICA รับรองสายพันธุ์","categories":["condo","beginner","short_hair"],"highlights":["ขนดำเงาดั่งแพรไหม","ตาสีทองแดงโดดเด่น","เชื่องและอ้อนเก่ง"]},"cat_burmese":{"id":"cat_burmese","name":"น้องโกโก้ (Burmese Cat)","breed":"เบอร์มีส (Burmese - เมียนมา \/ พม่า)","description":"แมวทองแดงโบราณ รูปร่างกลมกลืน ขนสีน้ำตาลเข้มซาติน ตาสีเหลืองทอง นิสัยขี้เล่น เชื่อมโยงจิตใจกับเจ้าของอย่างลึกซึ้ง","price":19500,"image":"cat_burmese.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นเงางามสีน้ำตาลช็อกโกแลต","personality":"ซื่อสัตย์ ช่างเอาใจ ขี้เล่น ผูกพันกับคน","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดประจำตัว","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดแท้","categories":["beginner","playful","short_hair"],"highlights":["ขนเนียนนุ่มสีน้ำตาลหรูหรา","ขี้อ้อนติดเจ้าของ","เลี้ยงง่ายไม่จุกจิก"]},"cat_chartreux":{"id":"cat_chartreux","name":"น้องมอนเต้ (Chartreux)","breed":"ชาร์ตรู (Chartreux - ฝรั่งเศส)","description":"แมวประวัติศาสตร์ของพระคริสต์ในฝรั่งเศส ขนสีเทาเงินอมฟ้าหนานุ่ม ตาสีส้มอำพัน ยิ้มหวานตลอดเวลา เงียบสงบ ไม่ส่งเสียงรบกวน","price":29000,"image":"cat_chartreux.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นสองชั้นสีเทาเงินอมฟ้า","personality":"สงบนิ่ง สุภาพ ไม่ส่งเสียงดัง ยิ้มหวาน","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจโรคทางพันธุกรรม","pedigree":"มีใบเพ็ดดีกรี LOOF จากฝรั่งเศส","categories":["condo","short_hair"],"highlights":["ฉายาแมวยิ้มแห่งฝรั่งเศส","เงียบสงบที่สุดไม่เคยร้องกวน","ขนสองชั้นนุ่มหนา"]},"cat_khao_manee":{"id":"cat_khao_manee","name":"น้องมณีเพชร (ขาวมณี \/ Khao Manee)","breed":"ขาวมณี (Khao Manee - ประเทศไทย)","description":"อัญมณีมีชีวิตแห่งสยาม ขนขาวปลอดดั่งหิมะ ดวงตาสองสี (ฟ้า-เหลืองอำพัน) ส่องประกายดั่งเพชร ฉลาด ขี้เล่น และนำพาโชคลาภวาสนา","price":25000,"image":"cat_khao_manee.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นสีขาวบริสุทธิ์ 100%","personality":"ฉลาด ร่าเริง ช่างสังเกต ขี้ประจบ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจการได้ยินผ่านเกณฑ์","pedigree":"ใบรับรองสายพันธุ์แมวมงคลไทยโบราณ","categories":["popular","beginner","playful","short_hair"],"highlights":["ตาสองสี (Odd-Eyes) หายากทรงคุณค่า","แมวมงคลสยามโบราณ","ขาวบริสุทธิ์ไร้แต้มสี"]},"cat_korat":{"id":"cat_korat","name":"น้องสีเงิน (โคราช \/ แมวสีสวาด)","breed":"โคราช \/ สีสวาด (Korat Cat - ประเทศไทย)","description":"แมวแห่งความรักและโชคลาภ หน้าทรงรูปหัวใจ ขนสีสวาดปลายเงินประกาย (Silver-tipped) ตาสีเขียวมรกต ฉลาดและผูกพันกับเจ้าของเป็นเลิศ","price":16000,"image":"cat_korat.jpg","age":"2.5 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นประกายสีเงินเหลือบเมฆ","personality":"ซื่อสัตย์ อ่อนหวาน จดจำเจ้าของแม่นยำ","vaccine":"ฉีดวัคซีนรวม + ตรวจสุขภาพเรียบร้อย","pedigree":"ใบรับรองแมวไทยโบราณสายพันธุ์แท้","categories":["condo","beginner","short_hair"],"highlights":["ใบหน้าทรงหัวใจนำความรัก","ขนประกายสีเงินวาววับ","สุขภาพแข็งแรงสายพันธุ์แท้ดั้งเดิม"]},"cat_savannah":{"id":"cat_savannah","name":"น้องซิมบ้า (Savannah Cat F4)","breed":"ซาวันนาห์ (Savannah - สหรัฐอเมริกา \/ แอฟริกา)","description":"แมวขายาวสง่างาม ลวดลายจุดเสือป่าแอฟริกัน ร่างกายสูงเพรียว ฉลาดเทียบเท่าสุนัข เดินด้วยสายจูงได้ และชื่นชอบการเล่นน้ำ","price":45000,"image":"cat_savannah.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นลายจุดเสือป่า","personality":"พลังงานสูง ฉลาดล้ำเลิศ คล่องแคล่ว รักน้ำ","vaccine":"ฉีดวัคซีนครบ 3 เข็ม + ฝังไมโครชิปสากล","pedigree":"มีใบเพ็ดดีกรี TICA จดทะเบียน F4 ถูกกฎหมาย","categories":["playful","short_hair"],"highlights":["รูปร่างสูงเพรียวสง่าดั่งเสือชีตาห์","ฝึกจูงเดินเล่นได้เหมือนสุนัข","ระดับพรีเมียมเอกซ์คลูซีฟ"]},"cat_egyptian_mau":{"id":"cat_egyptian_mau","name":"น้องฟาโรห์ (Egyptian Mau)","breed":"อียิปเชียน มัว (Egyptian Mau - อียิปต์)","description":"แมวโบราณลายจุดธรรมชาติแท้หนึ่งเดียวจากลุ่มแม่น้ำไนล์ วิ่งเร็วที่สุดในโลก (สูงสุด 48 กม.\/ชม.) ตาสีกูสเบอร์รี่เขียวสดใส ซื่อสัตย์และรักเจ้าของ","price":28000,"image":"cat_egyptian_mau.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"short","hair_label":"ขนสั้นลายจุดธรรมชาติคมชัด","personality":"ว่องไว ซื่อสัตย์ อ่อนโยนกับครอบครัว","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดสุขภาพ","pedigree":"มีใบเพ็ดดีกรี CFA สายเลือดอียิปต์แท้","categories":["playful","short_hair"],"highlights":["ลายจุดธรรมชาติแท้จากอียิปต์","แมวบ้านที่วิ่งเร็วที่สุดในโลก","รักเจ้าของสุดหัวใจ"]},"cat_scottish_straight":{"id":"cat_scottish_straight","name":"น้องมาร์ชเมลโล่ (Scottish Straight)","breed":"สก็อตติช สเตรท (Scottish Straight - สก็อตแลนด์)","description":"พี่น้องหูตั้งของสก็อตติช โฟลด์ หน้ากลมแป้น แก้มยุ้ย โครงสร้างกระดูกแข็งแรงสมบูรณ์ ขี้อ้อน ใจดี เหมาะสำหรับครอบครัว","price":17000,"image":"cat_scottish_straight.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นแน่นนุ่มฟู","personality":"อารมณ์ดี ขี้อ้อน เรียบร้อย สบายๆ","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ถ่ายพยาธิ","pedigree":"มีใบเพ็ดดีกรี WCF สายพันธุ์แท้","categories":["popular","condo","beginner","short_hair"],"highlights":["หน้ากลมแก้มยุ้ยน่ารัก","สุขภาพข้อกระดูกแข็งแรงไร้กังวล","เลี้ยงง่ายเป็นมิตร"]},"cat_somali":{"id":"cat_somali","name":"น้องฟ็อกซี่ (Somali Fox Cat)","breed":"โซมาลี (Somali Cat - โซมาเลีย \/ สหรัฐอเมริกา)","description":"จิ้งจอกน้อยแห่งโลกแมว ขนยาวพริ้วสีส้มอบเชย หางพวงฟูสง่างาม ฉลาด คล่องแคล่ว ชอบเล่นซ่อนหาและสร้างรอยยิ้ม","price":26000,"image":"cat_somali.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนยาวพริ้วสีอบเชยหางพวง","personality":"ร่าเริง ฉลาด ช่างเล่น อยากรู้อยากเห็น","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ตรวจสุขภาพ","pedigree":"มีใบเพ็ดดีกรี CFA รับรองสายพันธุ์","categories":["fluffy","playful","long_hair"],"highlights":["หางพวงขนฟูเหมือนจิ้งจอก","ขนไล่สีอบเชยเงางาม","ฉลาดฝึกสอนได้"]},"cat_australian_mist":{"id":"cat_australian_mist","name":"น้องโอปอล (Australian Mist)","breed":"ออสเตรเลียน มิสต์ (Australian Mist - ออสเตรเลีย)","description":"แมวสายพันธุ์แรกของออสเตรเลีย ลายหมอกนุ่มนวลเหมือนคลุมด้วยไอหมอก นิสัยผ่อนคลาย รักเด็กและทนทาน เหมาะสำหรับเลี้ยงในบ้าน 100%","price":22000,"image":"cat_australian_mist.jpg","age":"2.5 เดือน","gender":"เมีย (Female)","hair_type":"short","hair_label":"ขนสั้นลวดลายหมอกนุ่มนวล","personality":"ใจเย็น อ่อนโยน เข้ากับเด็กเล็กได้ยอดเยี่ยม","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + สมุดตรวจสุขภาพ","pedigree":"มีใบเพ็ดดีกรี WCF สายพันธุ์ออสเตรเลียแท้","categories":["condo","beginner","short_hair"],"highlights":["สายพันธุ์แรกแห่งแดนจิงโจ้","ลายหมอกฟุ้งนุ่มตา","ใจเย็นเข้ากับเด็กเล็กได้ดีที่สุด"]},"cat_kurilian_bobtail":{"id":"cat_kurilian_bobtail","name":"น้องโมจิ (Kurilian Bobtail)","breed":"คูริเลียน บ็อบเทล (Kurilian Bobtail - หมู่เกาะคูริล \/ รัสเซีย-ญี่ปุ่น)","description":"แมวเกาะหางกระต่ายธรรมชาติ ขนหนาทนหนาว กล้ามเนื้อแข็งแรง ว่ายน้ำเก่ง ไม่กลัวน้ำ นิสัยสุขุม ซื่อสัตย์ดั่งสุนัข","price":25000,"image":"cat_kurilian_bobtail.jpg","age":"3 เดือน","gender":"ผู้ (Male)","hair_type":"long","hair_label":"ขนกึ่งยาวหนานุ่มหางพู่สั้น","personality":"ซื่อสัตย์ สุขุม รักน้ำ ว่ายน้ำเก่ง","vaccine":"ฉีดวัคซีนครบ 2 เข็ม + ฝังไมโครชิป","pedigree":"มีใบเพ็ดดีกรี WCF สายเลือดเกาะคูริลแท้","categories":["fluffy","playful","long_hair"],"highlights":["หางพู่ปอมปอมธรรมชาติ","ทนทานไม่ป่วยง่าย","นิสัยซื่อสัตย์ดั่งสุนัข"]}};
+
+function getClientCart() {
+    try {
+        return JSON.parse(localStorage.getItem('cat_shop_cart') || '[]');
+    } catch(e) { return []; }
+}
+
+function saveClientCart(cart) {
+    try {
+        localStorage.setItem('cat_shop_cart', JSON.stringify(cart));
+    } catch(e) {}
+}
+
+function syncClientCartUI() {
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    
+    // Check if ?add= is in URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const addCatId = urlParams.get('add');
+    if (addCatId && allCatsData[addCatId]) {
+        let cart = getClientCart();
+        const existing = cart.find(item => item.id === addCatId);
+        if (existing) {
+            existing.qty = (existing.qty || 1) + 1;
+        } else {
+            const cat = allCatsData[addCatId];
+            cart.push({
+                id: cat.id,
+                name: cat.name,
+                breed: cat.breed,
+                price: cat.price,
+                image: cat.image,
+                gender: cat.gender,
+                age: cat.age,
+                qty: 1
+            });
+        }
+        saveClientCart(cart);
+        try {
+            window.history.replaceState({}, '', window.location.pathname);
+        } catch(e) {}
+    }
+
+    const emptyView = document.getElementById('cart-empty-view');
+    const formView = document.getElementById('cart-form-view');
+    const cartWrapper = document.getElementById('cart-items-wrapper');
+    const badge = document.getElementById('cartCountBadge');
+    const summaryCatCount = document.getElementById('summaryCatCountVal');
+    
+    const phpHasCart = false;
+    
+    if (isStatic || !phpHasCart) {
+        const clientCart = getClientCart();
+        if (clientCart.length > 0) {
+            if (emptyView) emptyView.style.display = 'none';
+            if (formView) formView.style.display = 'block';
+
+            let totalCount = 0;
+            let subtotal = 0;
+            clientCart.forEach(item => {
+                const q = (item.qty && item.qty > 0) ? item.qty : 1;
+                totalCount += q;
+                subtotal += (item.price * q);
+            });
+
+            if (badge) badge.textContent = `(${totalCount} ตัว)`;
+            if (summaryCatCount) summaryCatCount.textContent = `${totalCount} ตัว`;
+
+            if (cartWrapper) {
+                cartWrapper.innerHTML = clientCart.map(item => `
+                    <div class="cart-item" data-id="${item.id}">
+                        <div class="cart-item-left">
+                            <img src="assets/images/${item.image}" alt="${item.name}" class="cart-item-thumb">
+                            <div>
+                                <h4 class="cart-item-name">${item.name}</h4>
+                                <div class="cart-item-sub">
+                                    <span>${item.breed}</span> &bull; 
+                                    <span>${item.gender}</span> &bull; 
+                                    <span>${item.age}</span>
+                                </div>
+                                <div style="font-size: 0.78rem; color: var(--accent-mint); font-weight: 600; margin-top: 0.2rem;">
+                                    ✓ ฉีดวัคซีนแล้ว 2 เข็ม • ตรวจสุขภาพพร้อมส่งมอบ
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cart-item-right" style="display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;">
+                            <!-- Quantity Stepper Controls -->
+                            <div class="cart-qty-stepper" title="ปรับจำนวนการรับเลี้ยง">
+                                <button type="button" 
+                                        onclick="updateCartQtyClient(event, '${item.id}', -1)"
+                                        class="qty-btn" title="ลดจำนวน">-</button>
+                                <span class="qty-val">${item.qty || 1}</span>
+                                <button type="button" 
+                                        onclick="updateCartQtyClient(event, '${item.id}', 1)"
+                                        class="qty-btn" title="เพิ่มจำนวน">+</button>
+                            </div>
+
+                            <div class="cart-item-price" style="min-width: 95px; text-align: right;">
+                                ${(item.price * (item.qty || 1)).toLocaleString()} ฿
+                            </div>
+                            <a href="javascript:void(0)" 
+                               onclick="removeCartItemClient(event, '${item.id}')"
+                               style="color: #EF4444; text-decoration: none; font-size: 1.1rem; padding: 0.4rem; cursor: pointer;" 
+                               title="ลบรายการ">
+                                🗑️
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // 1. Coupon Discount Calculation
+            let couponDiscount = 0;
+            if (currentAppliedCoupon) {
+                if (currentAppliedCoupon.isCash) {
+                    couponDiscount = Math.min(subtotal, currentAppliedCoupon.discountRate);
+                } else {
+                    couponDiscount = Math.round(subtotal * currentAppliedCoupon.discountRate);
+                }
+            }
+
+            // 2. Member discount (5% if logged in)
+            const loggedUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : null;
+            let memberDiscount = loggedUser ? Math.round(subtotal * 0.05) : 0;
+            
+            let totalDiscount = memberDiscount + couponDiscount;
+            let afterDiscount = Math.max(0, subtotal - totalDiscount);
+            let vat = Math.round(afterDiscount * 0.07 * 100) / 100;
+            let grandTotal = afterDiscount + vat;
+
+            const subVal = document.getElementById('summarySubtotalVal');
+            if (subVal) subVal.textContent = subtotal.toLocaleString() + ' ฿';
+
+            // Coupon Row UI
+            const couponRow = document.getElementById('summaryCouponRow');
+            const couponName = document.getElementById('summaryCouponName');
+            const couponVal = document.getElementById('summaryCouponVal');
+            if (couponRow && couponVal && couponName) {
+                if (couponDiscount > 0) {
+                    couponRow.style.display = 'flex';
+                    couponName.textContent = currentAppliedCoupon.code;
+                    couponVal.textContent = '-' + couponDiscount.toLocaleString() + ' ฿';
+                } else {
+                    couponRow.style.display = 'none';
+                }
+            }
+
+            // Member Discount Row UI
+            const discRow = document.getElementById('summaryDiscountRow');
+            const discVal = document.getElementById('summaryDiscountVal');
+            if (discRow && discVal) {
+                if (memberDiscount > 0) {
+                    discRow.style.display = 'flex';
+                    discVal.textContent = '-' + memberDiscount.toLocaleString() + ' ฿';
+                } else {
+                    discRow.style.display = 'none';
+                }
+            }
+
+            const vatVal = document.getElementById('summaryVatVal');
+            if (vatVal) vatVal.textContent = vat.toFixed(2) + ' ฿';
+
+            const grandVal = document.getElementById('summaryGrandTotalVal');
+            if (grandVal) grandVal.textContent = grandTotal.toFixed(2) + ' ฿';
+        } else {
+            if (emptyView) emptyView.style.display = 'block';
+            if (formView) formView.style.display = 'none';
+        }
+    } else {
+        // PHP Cart Mode UI Recalculation for Coupon
+        let subtotalElem = document.getElementById('summarySubtotalVal');
+        let rawSubtotal = subtotalElem ? parseFloat(subtotalElem.textContent.replace(/[^0-9.]/g, '')) || 0 : 0;
+        
+        let couponDiscount = 0;
+        if (currentAppliedCoupon && rawSubtotal > 0) {
+            if (currentAppliedCoupon.isCash) {
+                couponDiscount = Math.min(rawSubtotal, currentAppliedCoupon.discountRate);
+            } else {
+                couponDiscount = Math.round(rawSubtotal * currentAppliedCoupon.discountRate);
+            }
+        }
+
+        const couponRow = document.getElementById('summaryCouponRow');
+        const couponName = document.getElementById('summaryCouponName');
+        const couponVal = document.getElementById('summaryCouponVal');
+        if (couponRow && couponVal && couponName) {
+            if (couponDiscount > 0) {
+                couponRow.style.display = 'flex';
+                couponName.textContent = currentAppliedCoupon.code;
+                couponVal.textContent = '-' + couponDiscount.toLocaleString() + ' ฿';
+            } else {
+                couponRow.style.display = 'none';
+            }
+        }
+
+        let discElem = document.getElementById('summaryDiscountVal');
+        let memberDiscount = discElem ? parseFloat(discElem.textContent.replace(/[^0-9.]/g, '')) || 0 : 0;
+        let totalDiscount = memberDiscount + couponDiscount;
+        let afterDiscount = Math.max(0, rawSubtotal - totalDiscount);
+        let vat = Math.round(afterDiscount * 0.07 * 100) / 100;
+        let grandTotal = afterDiscount + vat;
+
+        const vatVal = document.getElementById('summaryVatVal');
+        if (vatVal) vatVal.textContent = vat.toFixed(2) + ' ฿';
+
+        const grandVal = document.getElementById('summaryGrandTotalVal');
+        if (grandVal) grandVal.textContent = grandTotal.toFixed(2) + ' ฿';
+    }
+}
+
+function updateCartQtyClient(e, catId, delta) {
+    if (e) e.preventDefault();
+    let cart = getClientCart();
+    const item = cart.find(i => i.id === catId);
+    if (item) {
+        item.qty = (item.qty || 1) + delta;
+        if (item.qty <= 0) {
+            cart = cart.filter(i => i.id !== catId);
+        }
+        saveClientCart(cart);
+    }
+    
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (!isStatic) {
+        window.location.href = `cart.php?action=update_qty&id=${encodeURIComponent(catId)}&delta=${delta}`;
+    } else {
+        syncClientCartUI();
+        if (typeof updateCartBadgeUI === 'function') updateCartBadgeUI();
+    }
+}
+
+function removeCartItemClient(e, catId) {
+    if (e) e.preventDefault();
+    let cart = getClientCart();
+    cart = cart.filter(item => item.id !== catId);
+    saveClientCart(cart);
+    
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (!isStatic) {
+        window.location.href = 'cart.php?action=remove&id=' + encodeURIComponent(catId);
+    } else {
+        syncClientCartUI();
+        if (typeof updateCartBadgeUI === 'function') updateCartBadgeUI();
+    }
+}
+
+function clearCartClient(e) {
+    if (e) e.preventDefault();
+    saveClientCart([]);
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (!isStatic) {
+        window.location.href = 'cart.php?action=clear';
+    } else {
+        syncClientCartUI();
+    }
+}
+
+function handleCheckoutFormSubmit(e) {
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (isStatic) {
+        if (e) e.preventDefault();
+        const clientCart = getClientCart();
+        if (clientCart.length === 0) {
+            return;
+        }
+
+        const name = document.getElementById('customer_name')?.value || 'คุณผู้รับเลี้ยง';
+        const phone = document.getElementById('customer_phone')?.value || '0891234567';
+        const email = document.getElementById('customer_email')?.value || 'adopter@example.com';
+        const address = document.getElementById('delivery_address')?.value || 'กรุงเทพมหานคร';
+
+        const orderId = 'PFC-' + Math.floor(100000 + Math.random() * 900000);
+        const trackingId = 'TRACK-TH-' + Math.floor(10000 + Math.random() * 90000);
+
+        let subtotal = 0;
+        clientCart.forEach(item => {
+            subtotal += (item.price * (item.qty || 1));
+        });
+        let couponDiscount = 0;
+        if (currentAppliedCoupon) {
+            if (currentAppliedCoupon.isCash) {
+                couponDiscount = Math.min(subtotal, currentAppliedCoupon.discountRate);
+            } else {
+                couponDiscount = Math.round(subtotal * currentAppliedCoupon.discountRate);
+            }
+        }
+        const loggedUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : null;
+        let memberDiscount = loggedUser ? Math.round(subtotal * 0.05) : 0;
+        let totalDiscount = memberDiscount + couponDiscount;
+        let afterDiscount = Math.max(0, subtotal - totalDiscount);
+        let vat = Math.round(afterDiscount * 0.07 * 100) / 100;
+        let grandTotal = afterDiscount + vat;
+
+        const newOrder = {
+            order_id: orderId,
+            tracking_id: trackingId,
+            customer_name: name,
+            customer_phone: phone,
+            customer_email: email,
+            delivery_address: address,
+            items: clientCart,
+            coupon_code: currentAppliedCoupon ? currentAppliedCoupon.code : '',
+            coupon_discount: couponDiscount,
+            member_discount: memberDiscount,
+            subtotal: subtotal,
+            discount: totalDiscount,
+            vat: vat,
+            total: grandTotal,
+            created_at: new Date().toISOString()
+        };
+
+        // Save to orders list
+        try {
+            const orders = JSON.parse(localStorage.getItem('cat_shop_orders') || '[]');
+            orders.unshift(newOrder);
+            localStorage.setItem('cat_shop_orders', JSON.stringify(orders));
+            localStorage.removeItem('cat_shop_cart');
+        } catch(err) {}
+
+        window.location.href = `tracking.html?track_id=${trackingId}&order_id=${orderId}`;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderAvailableCouponsList();
+    
+    // Check if ?apply_coupon= parameter exists in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const couponParam = urlParams.get('apply_coupon');
+    if (couponParam) {
+        applyCouponClient(couponParam);
+    }
+
+    syncClientCartUI();
+});
 </script>
 
     <footer>
@@ -967,7 +2293,7 @@ function reverseGeocodeAddress(lat, lng) {
                         </p>
                     </div>
                 </div>
-                <form action="subscribe.html" onsubmit="event.preventDefault(); alert('ขอบคุณที่สมัครรับข่าวสาร Purrfect Shop 🐾');" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
+                <form action="subscribe.html" method="POST" style="display: flex; gap: 8px; flex-wrap: wrap; flex: 1; max-width: 460px;">
                     <input type="email" name="subscriber_email" placeholder="กรอกอีเมลของคุณ เช่น name@gmail.com" required style="flex: 1; min-width: 220px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.9rem;">
                     <button type="submit" class="btn btn-primary" style="border-radius: 999px; padding: 10px 22px; font-weight: 800; font-size: 0.9rem; white-space: nowrap; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.3);">
                         ติดตามข่าวสาร ✨
@@ -995,11 +2321,11 @@ function reverseGeocodeAddress(lat, lng) {
             <div class="footer-col">
                 <h4>หมวดหมู่แนะนำ</h4>
                 <ul>
-                    <li><a href="recommend.html">🔥 สายพันธุ์ยอดนิยม</a></li>
-                    <li><a href="recommend.html">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
-                    <li><a href="recommend.html">🧸 แมวขนยาวนุ่มฟู</a></li>
-                    <li><a href="recommend.html">✨ แมวขนสั้นดูแลง่าย</a></li>
-                    <li><a href="recommend.html">👶 มือใหม่เลี้ยงง่าย</a></li>
+                    <li><a href="recommend.html?cat=popular">🔥 สายพันธุ์ยอดนิยม</a></li>
+                    <li><a href="recommend.html?cat=condo">🏢 แมวเลี้ยงในคอนโด/รักสงบ</a></li>
+                    <li><a href="recommend.html?cat=fluffy">🧸 แมวขนยาวนุ่มฟู</a></li>
+                    <li><a href="recommend.html?cat=short_hair">✨ แมวขนสั้นดูแลง่าย</a></li>
+                    <li><a href="recommend.html?cat=beginner">👶 มือใหม่เลี้ยงง่าย</a></li>
                 </ul>
             </div>
 

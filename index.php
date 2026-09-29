@@ -154,13 +154,19 @@ if ($msg === 'reg_success') {
                  data-categories="<?php echo implode(',', $cat['categories']); ?>" 
                  data-hair="<?php echo $cat['hair_type']; ?>">
                 <div class="cat-card-img-wrap">
-                    <img src="assets/images/<?php echo $cat['image']; ?>" alt="<?php echo $cat['name']; ?>" class="cat-card-img">
+                    <a href="cat_detail.php?id=<?php echo $cat['id']; ?>" style="display: block; width: 100%; height: 100%;">
+                        <img src="assets/images/<?php echo $cat['image']; ?>" alt="<?php echo $cat['name']; ?>" class="cat-card-img">
+                    </a>
                     <span class="cat-card-badge">✨ แนะนำพิเศษ</span>
                     <span class="cat-card-gender"><?php echo $cat['gender']; ?></span>
                 </div>
                 <div class="cat-card-body">
                     <div class="cat-card-breed"><?php echo $cat['breed']; ?></div>
-                    <h3 class="cat-card-name"><?php echo $cat['name']; ?></h3>
+                    <h3 class="cat-card-name">
+                        <a href="cat_detail.php?id=<?php echo $cat['id']; ?>" style="color: inherit; text-decoration: none;">
+                            <?php echo $cat['name']; ?>
+                        </a>
+                    </h3>
                     <p class="cat-card-desc"><?php echo $cat['description']; ?></p>
                     
                     <div class="cat-tags-row">
@@ -169,18 +175,23 @@ if ($msg === 'reg_success') {
                         <span class="cat-pill-tag">📜 ใบเพ็ดดีกรี</span>
                     </div>
 
-                    <div class="cat-card-footer">
-                        <div class="cat-price-box">
-                            <span class="cat-price-label">ค่าสินสอด / รับเลี้ยง</span>
+                    <div class="cat-card-footer" style="gap: 6px; flex-wrap: wrap;">
+                        <div class="cat-price-box" style="margin-right: auto;">
+                            <span class="cat-price-label">ค่าสินสอด</span>
                             <span class="cat-price-val"><?php echo number_format($cat['price']); ?> ฿</span>
                         </div>
-                        <form method="POST" action="index.php#recommendation">
-                            <input type="hidden" name="action" value="add_cat">
-                            <input type="hidden" name="cat_id" value="<?php echo $cat['id']; ?>">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                รับเลี้ยงน้อง 🐾
-                            </button>
-                        </form>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <a href="cat_detail.php?id=<?php echo $cat['id']; ?>" class="btn btn-secondary btn-sm" style="padding: 0.45rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">
+                                ดูข้อมูล 🔍
+                            </a>
+                            <form method="POST" action="index.php#recommendation" style="margin: 0;">
+                                <input type="hidden" name="action" value="add_cat">
+                                <input type="hidden" name="cat_id" value="<?php echo $cat['id']; ?>">
+                                <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.45rem 0.85rem; font-size: 0.8rem; white-space: nowrap;">
+                                    รับเลี้ยง 🐾
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -245,6 +256,108 @@ if ($msg === 'reg_success') {
                 <!-- Injected by JavaScript -->
             </div>
         </div>
+    </div>
+</section>
+
+<!-- =========================================================
+     5 INTERACTIVE SYSTEMS SHOWCASE (ระบบ & ฟีเจอร์พิเศษสำหรับทาสแมว)
+     ========================================================= -->
+<section style="margin-bottom: 4rem;">
+    <div class="section-header">
+        <span class="section-tag">✨ ALL-IN-ONE CAT SERVICES</span>
+        <h2 class="section-title">บริการ & ฟีเจอร์พิเศษสำหรับครอบครัว Purrfect</h2>
+        <p class="section-subtitle">
+            เราพัฒนาเครื่องมือและระบบอำนวยความสะดวกครบวงจร เพื่อให้คุณและเจ้าเหมียวมีความสุขตั้งแต่วันแรกที่พบกัน 🐾
+        </p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
+        
+        <!-- 1. Reviews -->
+        <a href="reviews.php" style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 20px; padding: 1.6rem 1.2rem; text-decoration: none; color: inherit; transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm);" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='var(--primary-coral)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='var(--shadow-sm)';">
+            <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                    <span style="font-size: 2.2rem;">⭐</span>
+                    <span style="background: #FEF3C7; color: #92400E; font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 999px;">5.0 ดาว</span>
+                </div>
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem;">รีวิวน้องแมวย้ายบ้าน</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                    ภาพความประทับใจและเรื่องราวของน้องแมวในบ้านหลังใหม่จากลูกค้าจริงกว่า 1,000 ครอบครัว
+                </p>
+            </div>
+            <span style="color: var(--primary-coral); font-weight: 800; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 4px;">
+                ดูรีวิวทั้งหมด ➔
+            </span>
+        </a>
+
+        <!-- 2. Booking -->
+        <a href="booking.php" style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 20px; padding: 1.6rem 1.2rem; text-decoration: none; color: inherit; transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm);" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='var(--primary-coral)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='var(--shadow-sm)';">
+            <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                    <span style="font-size: 2.2rem;">📅</span>
+                    <span style="background: #DCFCE7; color: #166534; font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 999px;">จองคิวสด</span>
+                </div>
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem;">จองดูตัว / Video Call</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                    นัดเยี่ยมชมฟาร์มแบบ VIP หรือ Video Call 1-on-1 ดูความน่ารักของน้องแบบเรียลไทม์
+                </p>
+            </div>
+            <span style="color: var(--primary-coral); font-weight: 800; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 4px;">
+                จองคิวนัดหมาย ➔
+            </span>
+        </a>
+
+        <!-- 3. Pedigree -->
+        <a href="pedigree.php" style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 20px; padding: 1.6rem 1.2rem; text-decoration: none; color: inherit; transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm);" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='var(--primary-coral)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='var(--shadow-sm)';">
+            <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                    <span style="font-size: 2.2rem;">🩺</span>
+                    <span style="background: #E0E7FF; color: #3730A3; font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 999px;">ใบเพ็ด WCF</span>
+                </div>
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem;">ตรวจใบเพ็ด & วัคซีน</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                    ค้นหาด้วย Microchip ตรวจสอบสาแหรก 3 รุ่น ผลตรวจยีนทางพันธุกรรม และประวัติวัคซีน
+                </p>
+            </div>
+            <span style="color: var(--primary-coral); font-weight: 800; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 4px;">
+                ตรวจสอบข้อมูล ➔
+            </span>
+        </a>
+
+        <!-- 4. Calculator -->
+        <a href="calculator.php" style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 20px; padding: 1.6rem 1.2rem; text-decoration: none; color: inherit; transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm);" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='var(--primary-coral)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='var(--shadow-sm)';">
+            <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                    <span style="font-size: 2.2rem;">🧮</span>
+                    <span style="background: #F3E8FF; color: #6B21A8; font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 999px;">วางแผนงบ</span>
+                </div>
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem;">คำนวณค่าเลี้ยงดู</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                    เครื่องคำนวณค่าอาหาร ทราย วัคซีน และของใช้ วางแผนงบประมาณรายเดือนและตลอด 15 ปี
+                </p>
+            </div>
+            <span style="color: var(--primary-coral); font-weight: 800; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 4px;">
+                คำนวณงบประมาณ ➔
+            </span>
+        </a>
+
+        <!-- 5. Lucky Wheel -->
+        <a href="lucky_wheel.php" style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: 20px; padding: 1.6rem 1.2rem; text-decoration: none; color: inherit; transition: all 0.25s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm);" onmouseover="this.style.transform='translateY(-6px)'; this.style.borderColor='var(--primary-coral)'; this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--border-color)'; this.style.boxShadow='var(--shadow-sm)';">
+            <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                    <span style="font-size: 2.2rem;">🎡</span>
+                    <span style="background: #FEE2E2; color: #991B1B; font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 999px;">ลดสูงสุด 25%</span>
+                </div>
+                <h3 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 0.4rem;">วงล้อเสี่ยงโชค Paw Spin</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1rem;">
+                    หมุนฟรีทุกวัน ลุ้นรับโค้ดส่วนลด 25%, VIP Starter Kit, ส่งฟรี หรือคะแนนสะสม 500 พอยท์
+                </p>
+            </div>
+            <span style="color: var(--primary-coral); font-weight: 800; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 4px;">
+                หมุนวงล้อเลย ➔
+            </span>
+        </a>
+
     </div>
 </section>
 

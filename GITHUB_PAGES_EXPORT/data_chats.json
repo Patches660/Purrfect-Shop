@@ -735,6 +735,66 @@
                     "timestamp": "2026-09-24 09:46:21"
                 }
             ]
+        },
+        "guest_8f571dfa79": {
+            "user_id": "guest_8f571dfa79",
+            "user_name": "ผู้เยี่ยมชม (fa79)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-09-26 17:17:14",
+            "messages": [
+                {
+                    "id": "msg_init_1790417834",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-26 17:17:14"
+                }
+            ]
+        },
+        "guest_9198326123": {
+            "user_id": "guest_9198326123",
+            "user_name": "ผู้เยี่ยมชม (6123)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-09-28 13:52:24",
+            "messages": [
+                {
+                    "id": "msg_init_1790578344",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-28 13:52:24"
+                }
+            ]
+        },
+        "guest_4be5078cab": {
+            "user_id": "guest_4be5078cab",
+            "user_name": "ผู้เยี่ยมชม (8cab)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-09-29 10:59:26",
+            "messages": [
+                {
+                    "id": "msg_init_1790654366",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-29 10:59:26"
+                }
+            ]
         }
     }
 }

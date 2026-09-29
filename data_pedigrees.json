@@ -1,0 +1,382 @@
+{
+    "900215001234567": {
+        "microchip": "900215001234567",
+        "name_th": "น้องสโนว์",
+        "name_en": "Snow of Purrfect Dynasty",
+        "breed_th": "บริติช ช็อตแฮร์ (British Shorthair)",
+        "breed_en": "British Shorthair (BSH)",
+        "color": "Blue Solid (BSH a)",
+        "eye_color": "Copper / Amber (ทองอำพัน)",
+        "gender": "ผู้ (Male)",
+        "dob": "2026-07-10",
+        "registry": "WCF (World Cat Federation)",
+        "registration_no": "WCF-TH-2026-BSH-08912",
+        "cattery": "Purrfect Royal Cattery (Reg. No. 89124)",
+        "image": "assets/images/cat_british.jpg",
+        "sire": {
+            "title": "Grand International Champion (GIC)",
+            "name": "Silver King of British Crown",
+            "reg_no": "WCF-DE-2024-BSH-00412"
+        },
+        "dam": {
+            "title": "International Champion (IC)",
+            "name": "Duchess Luna of Oxford",
+            "reg_no": "WCF-TH-2025-BSH-00981"
+        },
+        "health_status": "EXCELLENT (ผ่านการตรวจมาตรฐาน 100%)",
+        "genetic_tests": [
+            {"test": "HCM (Hypertrophic Cardiomyopathy)", "result": "CLEAR / NORMAL (ยีนปกติ)", "status": "pass"},
+            {"test": "PKD (Polycystic Kidney Disease)", "result": "NEGATIVE / N/N (ปลอดโรคไตถุงน้ำ)", "status": "pass"},
+            {"test": "FIV (Feline Immunodeficiency Virus)", "result": "NEGATIVE (ตรวจไม่พบเชื้อเอดส์แมว)", "status": "pass"},
+            {"test": "FeLV (Feline Leukemia Virus)", "result": "NEGATIVE (ตรวจไม่พบเชื้อมะเร็งเม็ดเลือดขาว)", "status": "pass"},
+            {"test": "Blood Group / หมู่เลือด", "result": "Type A (Serologically Checked)", "status": "pass"}
+        ],
+        "vaccinations": [
+            {"dose": "เข็มที่ 1 (วัคซีนรวม FPV/FHV/FCV)", "date": "2026-08-25", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "เข็มที่ 2 (วัคซีนรวม + ตรวจลิวคีเมีย)", "date": "2026-09-15", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "ถ่ายพยาธิ & หยอด Revolution Plus", "date": "2026-09-20", "vet": "น.สพ. ปริญญา มหาวงศ์ (ว.09452)", "clinic": "Purrfect Vet Care Sukhumvit"}
+        ],
+        "vet_signature": "DR. NICHAKARN P., D.V.M. (VERIFIED)",
+        "issue_date": "2026-09-22"
+    },
+    "900215003344556": {
+        "microchip": "900215003344556",
+        "name_th": "น้องปุยหิมะ",
+        "name_en": "Snowy Queen of Persian Grace",
+        "breed_th": "เปอร์เซีย (Persian Classic)",
+        "breed_en": "Persian (PER)",
+        "color": "Pure White Doll Face (PER w 62)",
+        "eye_color": "Copper (ทองแดงหวาน)",
+        "gender": "เมีย (Female)",
+        "dob": "2026-06-28",
+        "registry": "CFA (Cat Fanciers' Association)",
+        "registration_no": "CFA-0128-0994321",
+        "cattery": "Purrfect Royal Cattery (Reg. No. 89124)",
+        "image": "assets/images/cat_persian.jpg",
+        "sire": {
+            "title": "National Winner / Grand Champion (GC, NW)",
+            "name": "Whisper White of Teheran Stars",
+            "reg_no": "CFA-0128-0887123"
+        },
+        "dam": {
+            "title": "Grand Champion (GC)",
+            "name": "Silk Velvet of Persia Magic",
+            "reg_no": "CFA-0128-0912456"
+        },
+        "health_status": "EXCELLENT (ผ่านการตรวจมาตรฐาน 100%)",
+        "genetic_tests": [
+            {"test": "PKD (Polycystic Kidney Disease)", "result": "NEGATIVE / N/N (ไม่มีภาวะถุงน้ำในไต)", "status": "pass"},
+            {"test": "HCM (Cardiomyopathy)", "result": "NORMAL (โครงสร้างหัวใจสมบูรณ์)", "status": "pass"},
+            {"test": "FIV / FeLV", "result": "NEGATIVE (ปลอดเชื้อ)", "status": "pass"}
+        ],
+        "vaccinations": [
+            {"dose": "เข็มที่ 1 (วัคซีนรวม FPV/FHV/FCV)", "date": "2026-08-12", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "เข็มที่ 2 (วัคซีนรวม + พิษสุนัขบ้า)", "date": "2026-09-05", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"}
+        ],
+        "vet_signature": "DR. NICHAKARN P., D.V.M. (VERIFIED)",
+        "issue_date": "2026-09-10"
+    },
+    "900215009988776": {
+        "microchip": "900215009988776",
+        "name_th": "น้องซีซาร์",
+        "name_en": "Caesar the Pharaoh of Sphynx",
+        "breed_th": "สฟิงซ์ (Canadian Sphynx)",
+        "breed_en": "Sphynx (SPH)",
+        "color": "Pinkish Nude Skin (SPH n)",
+        "eye_color": "Aqua Blue (ฟ้าน้ำทะเลใส)",
+        "gender": "ผู้ (Male)",
+        "dob": "2026-06-25",
+        "registry": "TICA & WCF Certified",
+        "registration_no": "WCF-TH-2026-SPH-07721",
+        "cattery": "Purrfect Royal Cattery (Reg. No. 89124)",
+        "image": "assets/images/cat_sphynx.jpg",
+        "sire": {
+            "title": "Supreme Grand Champion (SGC)",
+            "name": "Anubis the Golden Sun of Cairo",
+            "reg_no": "TICA-SPH-011224-889"
+        },
+        "dam": {
+            "title": "International Champion (IC)",
+            "name": "Cleopatra Velvet of Montreal",
+            "reg_no": "WCF-CA-2024-SPH-1102"
+        },
+        "health_status": "EXCELLENT (ไร้ขน ผิวหนังแข็งแรงสมบูรณ์ 100%)",
+        "genetic_tests": [
+            {"test": "HCM (Sphynx Specific Mutation ALMS1)", "result": "CLEAR / N/N (ไม่พบยีนกลายพันธุ์)", "status": "pass"},
+            {"test": "CMS (Congenital Myasthenic Syndrome)", "result": "CLEAR / N/N (ปกติสมบูรณ์)", "status": "pass"},
+            {"test": "FIV / FeLV", "result": "NEGATIVE (ตรวจไม่พบเชื้อ)", "status": "pass"},
+            {"test": "Dermatology Skin Panel", "result": "HEALTHY (ไม่มีเชื้อรา/ปรสิตภายนอก)", "status": "pass"}
+        ],
+        "vaccinations": [
+            {"dose": "เข็มที่ 1 (วัคซีนรวม FPV/FHV/FCV)", "date": "2026-08-05", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "เข็มที่ 2 (วัคซีนรวมกระตุ้น + พิษสุนัขบ้า)", "date": "2026-08-28", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "ตรวจสุขภาพผิวหนัง & หยอด Revolution", "date": "2026-09-18", "vet": "น.สพ. ปริญญา มหาวงศ์ (ว.09452)", "clinic": "Purrfect Vet Care Sukhumvit"}
+        ],
+        "vet_signature": "DR. NICHAKARN P., D.V.M. (VERIFIED)",
+        "issue_date": "2026-09-20"
+    },
+    "900215004455667": {
+        "microchip": "900215004455667",
+        "name_th": "น้องมงคล",
+        "name_en": "Mongkhon Royal Siamese",
+        "breed_th": "วิเชียรมาศ (Siamese Cat)",
+        "breed_en": "Siamese / Wichienmaat (SIA)",
+        "color": "Seal Point 9 แต้มมงคล (SIA n)",
+        "eye_color": "Sapphire Blue (ฟ้าครามส่องประกาย)",
+        "gender": "เมีย (Female)",
+        "dob": "2026-07-12",
+        "registry": "TIMBA (The International Maew Boran Association) & WCF",
+        "registration_no": "TIMBA-TH-2026-SIA-0312",
+        "cattery": "Purrfect Royal Cattery (Reg. No. 89124)",
+        "image": "assets/images/cat_siamese.jpg",
+        "sire": {
+            "title": "National Master Breeder Champion",
+            "name": "Thong-Ek of Ayutthaya Heritage",
+            "reg_no": "TIMBA-TH-2023-SIA-0012"
+        },
+        "dam": {
+            "title": "Champion Queen",
+            "name": "Mani-Rat of Siam Pearl",
+            "reg_no": "TIMBA-TH-2024-SIA-0089"
+        },
+        "health_status": "EXCELLENT (สายเลือดโบราณแท้ 100% แข็งแรงสมบูรณ์)",
+        "genetic_tests": [
+            {"test": "PRA-rdAc (Progressive Retinal Atrophy)", "result": "N/N (CLEAR - สายตาปกติ)", "status": "pass"},
+            {"test": "Gangliosidosis (GM1 / GM2)", "result": "NEGATIVE / N/N (ปกติ)", "status": "pass"},
+            {"test": "FIV / FeLV", "result": "NEGATIVE (ปลอดเชื้อ 100%)", "status": "pass"}
+        ],
+        "vaccinations": [
+            {"dose": "เข็มที่ 1 (วัคซีนรวม 3 โรค)", "date": "2026-08-20", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "เข็มที่ 2 (วัคซีนรวม + ตรวจลิวคีเมีย)", "date": "2026-09-10", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"}
+        ],
+        "vet_signature": "DR. NICHAKARN P., D.V.M. (VERIFIED)",
+        "issue_date": "2026-09-15"
+    },
+    "900215008899112": {
+        "microchip": "900215008899112",
+        "name_th": "น้องไททัน",
+        "name_en": "Titan the Lionheart of Maine",
+        "breed_th": "เมนคูน (Maine Coon)",
+        "breed_en": "Maine Coon (MCO)",
+        "color": "Black Silver Classic Tabby (MCO ns 22)",
+        "eye_color": "Green Gold (เขียวประกายทอง)",
+        "gender": "ผู้ (Male)",
+        "dob": "2026-06-15",
+        "registry": "CFA & WCF Dual Registered",
+        "registration_no": "CFA-1792-0049182",
+        "cattery": "Purrfect Royal Cattery (Reg. No. 89124)",
+        "image": "assets/images/cat_mainecoon.jpg",
+        "sire": {
+            "title": "World Champion (W.Ch)",
+            "name": "Goliath King of Giant Paws (Import Russia)",
+            "reg_no": "WCF-RU-2023-MCO-9981"
+        },
+        "dam": {
+            "title": "Grand Champion (GC)",
+            "name": "Freya Silver Queen of Valhalla",
+            "reg_no": "CFA-1792-0038171"
+        },
+        "health_status": "EXCELLENT (ผ่านการตรวจมาตรฐาน 100%)",
+        "genetic_tests": [
+            {"test": "HCM1 (Maine Coon Mutation A31P)", "result": "N/N (CLEAR - ไม่พบยีนกลายพันธุ์)", "status": "pass"},
+            {"test": "SMA (Spinal Muscular Atrophy)", "result": "N/N (CLEAR)", "status": "pass"},
+            {"test": "PK-Def (Pyruvate Kinase Deficiency)", "result": "N/N (CLEAR)", "status": "pass"},
+            {"test": "FIV / FeLV", "result": "NEGATIVE (ปลอดเชื้อ)", "status": "pass"}
+        ],
+        "vaccinations": [
+            {"dose": "เข็มที่ 1 (วัคซีนรวม FPV/FHV/FCV)", "date": "2026-07-30", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "เข็มที่ 2 (วัคซีนรวม + พิษสุนัขบ้า)", "date": "2026-08-20", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "เข็มที่ 3 (วัคซีนลิวคีเมีย + ฝังชิป)", "date": "2026-09-12", "vet": "น.สพ. ปริญญา มหาวงศ์ (ว.09452)", "clinic": "Purrfect Vet Care Sukhumvit"}
+        ],
+        "vet_signature": "DR. NICHAKARN P., D.V.M. (VERIFIED)",
+        "issue_date": "2026-09-15"
+    },
+    "900215007654321": {
+        "microchip": "900215007654321",
+        "name_th": "น้องคอตตอน",
+        "name_en": "Cotton Princess of Crystal Blue",
+        "breed_th": "แร็กดอลล์ (Ragdoll)",
+        "breed_en": "Ragdoll (RAG)",
+        "color": "Seal Bicolor (RAG n 03)",
+        "eye_color": "Deep Sapphire Blue (ฟ้าครามแซฟไฟร์)",
+        "gender": "เมีย (Female)",
+        "dob": "2026-07-15",
+        "registry": "TICA (The International Cat Association)",
+        "registration_no": "TICA-SBT-071526-098",
+        "cattery": "Purrfect Royal Cattery (Reg. No. 89124)",
+        "image": "assets/images/cat_ragdoll.jpg",
+        "sire": {
+            "title": "Supreme Grand Champion (SGC)",
+            "name": "Polar Bear of Ragdoll Valley (Import USA)",
+            "reg_no": "TICA-SBT-031223-110"
+        },
+        "dam": {
+            "title": "Regional Winner / Quadruple Grand Champion (QGC)",
+            "name": "Stella Blue of Diamond Doll",
+            "reg_no": "TICA-SBT-082424-055"
+        },
+        "health_status": "EXCELLENT (ผ่านการตรวจมาตรฐาน 100%)",
+        "genetic_tests": [
+            {"test": "HCM (Ragdoll Mutation RagHCM)", "result": "N/N (CLEAR - ไม่พบยีนกลายพันธุ์)", "status": "pass"},
+            {"test": "PKD (Polycystic Kidney Disease)", "result": "NEGATIVE / N/N (ปกติ)", "status": "pass"},
+            {"test": "FIV / FeLV", "result": "NEGATIVE (ปลอดเชื้อ 100%)", "status": "pass"},
+            {"test": "MPS VI (Mucopolysaccharidosis)", "result": "N/N (CLEAR)", "status": "pass"}
+        ],
+        "vaccinations": [
+            {"dose": "เข็มที่ 1 (วัคซีนรวม FPV/FHV/FCV)", "date": "2026-08-30", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "เข็มที่ 2 (วัคซีนรวมกระตุ้น + ตรวจสุขภาพ)", "date": "2026-09-20", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "ฝังไมโครชิปสากล 15 หลัก & ถ่ายพยาธิ", "date": "2026-09-22", "vet": "น.สพ. ปริญญา มหาวงศ์ (ว.09452)", "clinic": "Purrfect Vet Care Sukhumvit"}
+        ],
+        "vet_signature": "DR. NICHAKARN P., D.V.M. (VERIFIED)",
+        "issue_date": "2026-09-24"
+    },
+    "900215006677889": {
+        "microchip": "900215006677889",
+        "name_th": "น้องจากัวร์",
+        "name_en": "Jaguar Gold of Jungle Kingdom",
+        "breed_th": "เบงกอล (Bengal Rosetted)",
+        "breed_en": "Bengal (BEN)",
+        "color": "Brown Spotted Tabby / Gold Glitter (BEN n 24)",
+        "eye_color": "Golden Amber (ทองอำพัน)",
+        "gender": "ผู้ (Male)",
+        "dob": "2026-06-29",
+        "registry": "WCF (World Cat Federation)",
+        "registration_no": "WCF-TH-2026-BEN-04412",
+        "cattery": "Purrfect Royal Cattery (Reg. No. 89124)",
+        "image": "assets/images/cat_bengal.jpg",
+        "sire": {
+            "title": "World Champion (W.Ch)",
+            "name": "Leopard King of Wild Safari",
+            "reg_no": "WCF-DE-2023-BEN-0199"
+        },
+        "dam": {
+            "title": "International Champion (IC)",
+            "name": "Amber Rosette of Bengal Star",
+            "reg_no": "WCF-TH-2024-BEN-0331"
+        },
+        "health_status": "EXCELLENT (กล้ามเนื้อแข็งแรง ลายโรเซ็ตต์ชัดเจน 100%)",
+        "genetic_tests": [
+            {"test": "PK-Def (Bengal Pyruvate Kinase Deficiency)", "result": "N/N (CLEAR)", "status": "pass"},
+            {"test": "PRA-b (Bengal Progressive Retinal Atrophy)", "result": "N/N (CLEAR)", "status": "pass"},
+            {"test": "HCM (Cardiomyopathy Ultrasound)", "result": "NORMAL (หัวใจสมบูรณ์)", "status": "pass"},
+            {"test": "FIV / FeLV", "result": "NEGATIVE (ปลอดเชื้อ)", "status": "pass"}
+        ],
+        "vaccinations": [
+            {"dose": "เข็มที่ 1 (วัคซีนรวม FPV/FHV/FCV)", "date": "2026-08-10", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "เข็มที่ 2 (วัคซีนรวม + พิษสุนัขบ้า)", "date": "2026-09-02", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"}
+        ],
+        "vet_signature": "DR. NICHAKARN P., D.V.M. (VERIFIED)",
+        "issue_date": "2026-09-08"
+    },
+    "900215007788990": {
+        "microchip": "900215007788990",
+        "name_th": "น้องพุดดิ้ง",
+        "name_en": "Pudding Fold of Sweet Dream",
+        "breed_th": "สก็อตติช โฟลด์ (Scottish Fold)",
+        "breed_en": "Scottish Fold (SFL)",
+        "color": "Lilac Tabby (SFL c 22)",
+        "eye_color": "Copper (ทองสว่าง)",
+        "gender": "เมีย (Female)",
+        "dob": "2026-07-14",
+        "registry": "WCF Certified",
+        "registration_no": "WCF-TH-2026-SFL-05521",
+        "cattery": "Purrfect Royal Cattery (Reg. No. 89124)",
+        "image": "assets/images/cat_scottish.jpg",
+        "sire": {
+            "title": "Grand International Champion (GIC)",
+            "name": "Mochi Straight of Scottish Castle",
+            "reg_no": "WCF-RU-2024-SFS-0212"
+        },
+        "dam": {
+            "title": "Champion (CH)",
+            "name": "Honey Fold of Highland Mist",
+            "reg_no": "WCF-TH-2025-SFL-0391"
+        },
+        "health_status": "EXCELLENT (หูพับแนบสนิท ข้อและกระดูกแข็งแรงสมบูรณ์)",
+        "genetic_tests": [
+            {"test": "Osteochondrodysplasia (OCD Gene Screen)", "result": "Fd/fd (FOLD HETEROZYGOUS - ปลอดภัย)", "status": "pass"},
+            {"test": "PKD (Polycystic Kidney Disease)", "result": "NEGATIVE / N/N (ปกติ)", "status": "pass"},
+            {"test": "FIV / FeLV", "result": "NEGATIVE (ปลอดเชื้อ 100%)", "status": "pass"}
+        ],
+        "vaccinations": [
+            {"dose": "เข็มที่ 1 (วัคซีนรวม FPV/FHV/FCV)", "date": "2026-08-28", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "เข็มที่ 2 (วัคซีนรวมกระตุ้น + ตรวจสุขภาพข้อ)", "date": "2026-09-18", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"}
+        ],
+        "vet_signature": "DR. NICHAKARN P., D.V.M. (VERIFIED)",
+        "issue_date": "2026-09-22"
+    },
+    "900215005566778": {
+        "microchip": "900215005566778",
+        "name_th": "น้องชอร์ตตี้",
+        "name_en": "Shorty Little Star of Munchkin",
+        "breed_th": "มันช์กิ้น ขาสั้น (Munchkin)",
+        "breed_en": "Munchkin Shorthair (MNC)",
+        "color": "Calico Bicolor (MNC f 03)",
+        "eye_color": "Amber Green (เขียวมรกตเหลือบทอง)",
+        "gender": "ผู้ (Male)",
+        "dob": "2026-07-28",
+        "registry": "TICA & WCF Registered",
+        "registration_no": "TICA-SBT-072826-041",
+        "cattery": "Purrfect Royal Cattery (Reg. No. 89124)",
+        "image": "assets/images/cat_munchkin.jpg",
+        "sire": {
+            "title": "Quadruple Grand Champion (QGC)",
+            "name": "Bambino Short Legs of Paws Kingdom",
+            "reg_no": "TICA-SBT-041923-019"
+        },
+        "dam": {
+            "title": "Champion (CH)",
+            "name": "Cupcake Munchkin of Joy",
+            "reg_no": "WCF-TH-2024-MNC-0112"
+        },
+        "health_status": "EXCELLENT (ขาสั้นน่ารัก ร่างกายแข็งแรงปราดเปรียว 100%)",
+        "genetic_tests": [
+            {"test": "Lordosis & Pectus Screen", "result": "CLEAR / NORMAL (กระดูกสันหลังและหน้าอกสมบูรณ์)", "status": "pass"},
+            {"test": "PKD (Polycystic Kidney Disease)", "result": "NEGATIVE / N/N (ปกติ)", "status": "pass"},
+            {"test": "FIV / FeLV", "result": "NEGATIVE (ปลอดเชื้อ)", "status": "pass"}
+        ],
+        "vaccinations": [
+            {"dose": "เข็มที่ 1 (วัคซีนรวม FPV/FHV/FCV)", "date": "2026-09-08", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "ถ่ายพยาธิ & หยอด Revolution", "date": "2026-09-22", "vet": "น.สพ. ปริญญา มหาวงศ์ (ว.09452)", "clinic": "Purrfect Vet Care Sukhumvit"}
+        ],
+        "vet_signature": "DR. NICHAKARN P., D.V.M. (VERIFIED)",
+        "issue_date": "2026-09-25"
+    },
+    "900215009900112": {
+        "microchip": "900215009900112",
+        "name_th": "น้องบลูสกาย",
+        "name_en": "Blue Sky of Russian Aristocracy",
+        "breed_th": "รัสเซียน บลู (Russian Blue)",
+        "breed_en": "Russian Blue (RUS)",
+        "color": "Silver-Tipped Blue (RUS a)",
+        "eye_color": "Vivid Emerald Green (เขียวมรกตเจิดจรัส)",
+        "gender": "เมีย (Female)",
+        "dob": "2026-06-27",
+        "registry": "WCF (World Cat Federation)",
+        "registration_no": "WCF-TH-2026-RUS-0129",
+        "cattery": "Purrfect Royal Cattery (Reg. No. 89124)",
+        "image": "assets/images/cat_russian.jpg",
+        "sire": {
+            "title": "World Champion (W.Ch)",
+            "name": "Tsar Nicholas of Saint Petersburg",
+            "reg_no": "WCF-RU-2023-RUS-0081"
+        },
+        "dam": {
+            "title": "Grand International Champion (GIC)",
+            "name": "Anastasia of Moscow Stars",
+            "reg_no": "WCF-RU-2024-RUS-0211"
+        },
+        "health_status": "EXCELLENT (ขนสีเงินเงางาม สุขภาพแข็งแรงสมบูรณ์)",
+        "genetic_tests": [
+            {"test": "HCM (Cardiomyopathy)", "result": "CLEAR / NORMAL (ปกติ)", "status": "pass"},
+            {"test": "PKD (Polycystic Kidney Disease)", "result": "NEGATIVE / N/N (ปกติ)", "status": "pass"},
+            {"test": "FIV / FeLV", "result": "NEGATIVE (ปลอดเชื้อ 100%)", "status": "pass"}
+        ],
+        "vaccinations": [
+            {"dose": "เข็มที่ 1 (วัคซีนรวม FPV/FHV/FCV)", "date": "2026-08-10", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"},
+            {"dose": "เข็มที่ 2 (วัคซีนรวม + พิษสุนัขบ้า)", "date": "2026-09-01", "vet": "สพ.ญ. ณิชากานต์ พลูทอง (ว.11890)", "clinic": "Purrfect Vet Care Sukhumvit"}
+        ],
+        "vet_signature": "DR. NICHAKARN P., D.V.M. (VERIFIED)",
+        "issue_date": "2026-09-08"
+    }
+}

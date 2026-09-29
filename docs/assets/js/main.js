@@ -173,7 +173,9 @@ function runCatMatcher() {
             const cardHtml = `
                 <div class="cat-card" style="display: flex;">
                     <div class="cat-card-img-wrap">
-                        <img src="assets/images/${cat.image}" alt="${cat.name}" class="cat-card-img">
+                        <a href="cat_detail.php?id=${cat.id}" style="display: block; width: 100%; height: 100%;">
+                            <img src="assets/images/${cat.image}" alt="${cat.name}" class="cat-card-img">
+                        </a>
                         <span class="cat-card-badge" style="background: var(--accent-amber); color: #FFFFFF;">
                             🎯 ตรงใจ ${item.score}%
                         </span>
@@ -181,23 +183,32 @@ function runCatMatcher() {
                     </div>
                     <div class="cat-card-body">
                         <div class="cat-card-breed">${cat.breed}</div>
-                        <h3 class="cat-card-name">${cat.name}</h3>
+                        <h3 class="cat-card-name">
+                            <a href="cat_detail.php?id=${cat.id}" style="color: inherit; text-decoration: none;">
+                                ${cat.name}
+                            </a>
+                        </h3>
                         <p class="cat-card-desc">${cat.description}</p>
                         <div class="cat-tags-row">
                             <span class="cat-pill-tag highlight">🩺 ${cat.age}</span>
                             <span class="cat-pill-tag">🧶 ${cat.hair_label}</span>
                             <span class="cat-pill-tag">🐾 เหมาะกับคุณ</span>
                         </div>
-                        <div class="cat-card-footer">
-                            <div class="cat-price-box">
+                        <div class="cat-card-footer" style="gap: 6px; flex-wrap: wrap;">
+                            <div class="cat-price-box" style="margin-right: auto;">
                                 <span class="cat-price-label">ค่าสินสอด</span>
                                 <span class="cat-price-val">${Number(cat.price).toLocaleString()} ฿</span>
                             </div>
-                            <form method="POST" action="index.php#recommendation">
-                                <input type="hidden" name="action" value="add_cat">
-                                <input type="hidden" name="cat_id" value="${cat.id}">
-                                <button type="submit" class="btn btn-primary btn-sm">รับเลี้ยงน้อง 🐾</button>
-                            </form>
+                            <div style="display: flex; gap: 6px; align-items: center;">
+                                <a href="cat_detail.php?id=${cat.id}" class="btn btn-secondary btn-sm" style="padding: 0.45rem 0.75rem; font-size: 0.8rem; white-space: nowrap;">
+                                    ดูข้อมูล 🔍
+                                </a>
+                                <form method="POST" action="index.php#recommendation" style="margin: 0;">
+                                    <input type="hidden" name="action" value="add_cat">
+                                    <input type="hidden" name="cat_id" value="${cat.id}">
+                                    <button type="submit" class="btn btn-primary btn-sm" style="padding: 0.45rem 0.85rem; font-size: 0.8rem; white-space: nowrap;">รับเลี้ยง 🐾</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -455,22 +466,64 @@ function syncHeaderUserUI() {
                         👑 ผู้ดูแลระบบ (Admin)
                     </span>
                 ` : `
-                    <a href="index.html#points" class="top-badge-pill" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="ระบบสะสมแต้ม Paw Points">
-                        🐾 ${user.paw_points || 150} พอยท์
+                    <a href="profile.html?tab=points" class="top-badge-pill" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="ระบบสะสมแต้ม Paw Points">
+                        🐾 ${Number(user.paw_points || 150).toLocaleString()} พอยท์
                     </a>
                 `}
+                <a href="profile.html?tab=coupons" class="btn btn-sm" style="background: rgba(245, 158, 11, 0.12); color: #D97706; border: 1.5px solid #F59E0B; font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="คูปองและของรางวัลของคุณ">
+                    🎁 คูปอง & รางวัล
+                </a>
                 <a href="subscribe.html" class="btn btn-sm" style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                     📬 ข่าวสาร
                 </a>
-                <span class="user-badge" style="cursor: default; display: inline-flex; align-items: center; gap: 6px; padding: 0.25rem 0.65rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 999px;" title="เข้าสู่ระบบแล้ว">
+                <a href="profile.html" class="user-badge" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.25rem 0.75rem; background: var(--bg-card); border: 1.5px solid var(--primary-coral); border-radius: 999px; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="คลิกเพื่อเปิดดูโปรไฟล์และจัดการข้อมูลส่วนตัว">
                     <img src="${user.avatar || 'assets/images/logo.png'}" alt="Avatar" class="user-avatar-sm" style="width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--primary-coral);">
-                    <strong style="color: var(--text-main); font-size: 0.85rem;">คุณ${user.username}</strong>
-                </span>
+                    <strong style="color: var(--text-main); font-size: 0.85rem;">คุณ${user.username} 👤</strong>
+                </a>
                 <button type="button" onclick="clientLogout()" class="btn btn-sm" style="background: rgba(239, 68, 68, 0.1); color: #EF4444; border: 1.5px solid rgba(239, 68, 68, 0.3); font-weight: 700; padding: 0.35rem 0.8rem; font-size: 0.82rem; border-radius: 999px; cursor: pointer;">
                     🚪 ออกจากระบบ
                 </button>
             </div>
         `;
+    }
+
+    // Sync Mobile Drawer User State if present
+    const drawerGrid = document.querySelector('#mobile-nav-drawer .drawer-grid');
+    if (user && drawerGrid) {
+        // If drawer has guest login buttons, inject user profile card into mobile drawer
+        const guestBox = drawerGrid.querySelector('div[style*="grid-template-columns"]');
+        if (guestBox) {
+            const userProfileDrawer = document.createElement('div');
+            userProfileDrawer.style.marginBottom = '0.5rem';
+            userProfileDrawer.innerHTML = `
+                <a href="profile.html" class="drawer-link-item" onclick="closeMobileDrawer()" style="background: rgba(255, 117, 86, 0.08); border-color: rgba(255, 117, 86, 0.25);">
+                    <img src="${user.avatar || 'assets/images/logo.png'}" alt="Avatar" class="drawer-avatar">
+                    <div class="drawer-link-info">
+                        <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">คุณ${user.username}</span>
+                        <span class="drawer-link-sub">จัดการโปรไฟล์, คูปอง & คำสั่งซื้อ</span>
+                    </div>
+                    <span class="drawer-badge-pill" style="background: var(--primary-coral); color: #fff;">โปรไฟล์ ➔</span>
+                </a>
+                <a href="profile.html?tab=coupons" class="drawer-link-item" onclick="closeMobileDrawer()">
+                    <span class="drawer-link-icon">🎁</span>
+                    <div class="drawer-link-info">
+                        <span class="drawer-link-title">คูปอง & รางวัลจากวงล้อ</span>
+                        <span class="drawer-link-sub">โค้ดส่วนลดและของขวัญของคุณ</span>
+                    </div>
+                </a>
+                <a href="profile.html?tab=points" class="drawer-link-item" onclick="closeMobileDrawer()">
+                    <span class="drawer-link-icon">🐾</span>
+                    <div class="drawer-link-info">
+                        <span class="drawer-link-title">Paw Points สะสม</span>
+                        <span class="drawer-link-sub">${Number(user.paw_points || 150).toLocaleString()} พอยท์</span>
+                    </div>
+                </a>
+                <button type="button" onclick="clientLogout()" class="btn btn-secondary btn-sm" style="width: 100%; justify-content: center; margin-top: 6px; color: #EF4444; border-color: rgba(239, 68, 68, 0.4);">
+                    🚪 ออกจากระบบ
+                </button>
+            `;
+            guestBox.replaceWith(userProfileDrawer);
+        }
     }
 }
 
@@ -587,4 +640,232 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Initialize Universal Cart Badge & Event Interceptors
+    updateCartBadgeUI();
+    setupAddToCartInterceptors();
 });
+
+// =========================================================
+// 9. Universal Cart Management & Adoption Counter Engine
+// =========================================================
+const CAT_SHOP_ITEMS_DATA = {
+    'cat_british': { id: 'cat_british', name: 'น้องสโนว์ (British Shorthair)', breed: 'บริติช ช็อตแฮร์ (British Shorthair)', price: 18000, image: 'cat_british.jpg', gender: 'ผู้ (Male)', age: '2.5 เดือน' },
+    'cat_persian': { id: 'cat_persian', name: 'น้องปุยหิมะ (Persian Classic)', breed: 'เปอร์เซีย (Persian)', price: 16500, image: 'cat_persian.jpg', gender: 'เมีย (Female)', age: '3 เดือน' },
+    'cat_sphynx': { id: 'cat_sphynx', name: 'น้องซีซาร์ (Canadian Sphynx)', breed: 'สฟิงซ์ (Sphynx)', price: 28000, image: 'cat_sphynx.jpg', gender: 'ผู้ (Male)', age: '3 เดือน' },
+    'cat_siamese': { id: 'cat_siamese', name: 'น้องมงคล (Siamese / วิเชียรมาศ)', breed: 'วิเชียรมาศ (Siamese Cat)', price: 12000, image: 'cat_siamese.jpg', gender: 'เมีย (Female)', age: '2.5 เดือน' },
+    'cat_mainecoon': { id: 'cat_mainecoon', name: 'น้องไททัน (Maine Coon)', breed: 'เมนคูน (Maine Coon)', price: 35000, image: 'cat_mainecoon.jpg', gender: 'ผู้ (Male)', age: '3.5 เดือน' },
+    'cat_ragdoll': { id: 'cat_ragdoll', name: 'น้องคอตตอน (Ragdoll)', breed: 'แร็กดอลล์ (Ragdoll)', price: 29000, image: 'cat_ragdoll.jpg', gender: 'เมีย (Female)', age: '2.5 เดือน' },
+    'cat_bengal': { id: 'cat_bengal', name: 'น้องจากัวร์ (Bengal Rosetted)', breed: 'เบงกอล (Bengal)', price: 26000, image: 'cat_bengal.jpg', gender: 'ผู้ (Male)', age: '3 เดือน' },
+    'cat_scottish': { id: 'cat_scottish', name: 'น้องพุดดิ้ง (Scottish Fold)', breed: 'สก็อตติช โฟลด์ (Scottish Fold)', price: 21000, image: 'cat_scottish.jpg', gender: 'เมีย (Female)', age: '2.5 เดือน' },
+    'cat_munchkin': { id: 'cat_munchkin', name: 'น้องชอร์ตตี้ (Munchkin Short Legs)', breed: 'มันช์กิ้น ขาสั้น (Munchkin)', price: 24000, image: 'cat_munchkin.jpg', gender: 'ผู้ (Male)', age: '2 เดือน' },
+    'cat_russian': { id: 'cat_russian', name: 'น้องบลูสกาย (Russian Blue)', breed: 'รัสเซียน บลู (Russian Blue)', price: 22000, image: 'cat_russian.jpg', gender: 'เมีย (Female)', age: '3 เดือน' },
+    'cat_abyssinian': { id: 'cat_abyssinian', name: 'น้องแอมเบอร์ (Abyssinian)', breed: 'อบิสซิเนียน (Abyssinian)', price: 19000, image: 'cat_abyssinian.jpg', gender: 'ผู้ (Male)', age: '2.5 เดือน' },
+    'cat_americanshorthair': { id: 'cat_americanshorthair', name: 'น้องการ์ฟิลด์ (American Shorthair)', breed: 'อเมริกัน ช็อตแฮร์ (American Shorthair)', price: 15000, image: 'cat_americanshorthair.jpg', gender: 'ผู้ (Male)', age: '2.5 เดือน' },
+    'cat_norwegian': { id: 'cat_norwegian', name: 'น้องธอร์ (Norwegian Forest Cat)', breed: 'นอร์วีเจียน ฟอเรสต์ (Norwegian Forest Cat)', price: 32000, image: 'cat_norwegian.jpg', gender: 'ผู้ (Male)', age: '3 เดือน' },
+    'cat_japanese_bobtail': { id: 'cat_japanese_bobtail', name: 'น้องซากุระ (Japanese Bobtail Mi-Ke)', breed: 'เจแปนนิส บ็อบเทล (Japanese Bobtail)', price: 23000, image: 'cat_japanese_bobtail.jpg', gender: 'เมีย (Female)', age: '2.5 เดือน' },
+    'cat_turkish_van': { id: 'cat_turkish_van', name: 'น้องวานิลลา (Turkish Van)', breed: 'เตอร์กิช วาน (Turkish Van)', price: 27000, image: 'cat_turkish_van.jpg', gender: 'ผู้ (Male)', age: '3 เดือน' },
+    'cat_cornish_rex': { id: 'cat_cornish_rex', name: 'น้องซิกแซก (Cornish Rex)', breed: 'คอร์นิช เร็กซ์ (Cornish Rex)', price: 25000, image: 'cat_cornish_rex.jpg', gender: 'ผู้ (Male)', age: '2.5 เดือน' },
+    'cat_devon_rex': { id: 'cat_devon_rex', name: 'น้องพิ๊กซี่ (Devon Rex)', breed: 'เดวอน เร็กซ์ (Devon Rex)', price: 27000, image: 'cat_devon_rex.jpg', gender: 'เมีย (Female)', age: '3 เดือน' },
+    'cat_singapura': { id: 'cat_singapura', name: 'น้องเปี๊ยก (Singapura)', breed: 'สิงกาปุระ (Singapura)', price: 28000, image: 'cat_singapura.jpg', gender: 'เมีย (Female)', age: '2.5 เดือน' },
+    'cat_american_curl': { id: 'cat_american_curl', name: 'น้องเคิร์ลลี่ (American Curl)', breed: 'อเมริกัน เคิร์ล (American Curl)', price: 24000, image: 'cat_american_curl.jpg', gender: 'ผู้ (Male)', age: '2.5 เดือน' },
+    'cat_bombay': { id: 'cat_bombay', name: 'น้องแพนเธอร์ (Bombay Cat)', breed: 'บอมเบย์ (Bombay Cat)', price: 21000, image: 'cat_bombay.jpg', gender: 'ผู้ (Male)', age: '3 เดือน' },
+    'cat_burmese': { id: 'cat_burmese', name: 'น้องโกโก้ (Burmese Cat)', breed: 'เบอร์มีส (Burmese)', price: 19500, image: 'cat_burmese.jpg', gender: 'เมีย (Female)', age: '2.5 เดือน' },
+    'cat_chartreux': { id: 'cat_chartreux', name: 'น้องมอนเต้ (Chartreux)', breed: 'ชาร์ตรู (Chartreux)', price: 29000, image: 'cat_chartreux.jpg', gender: 'ผู้ (Male)', age: '3 เดือน' },
+    'cat_khao_manee': { id: 'cat_khao_manee', name: 'น้องมณีเพชร (ขาวมณี / Khao Manee)', breed: 'ขาวมณี (Khao Manee)', price: 25000, image: 'cat_khao_manee.jpg', gender: 'เมีย (Female)', age: '2.5 เดือน' },
+    'cat_korat': { id: 'cat_korat', name: 'น้องสีเงิน (โคราช / แมวสีสวาด)', breed: 'โคราช / สีสวาด (Korat Cat)', price: 16000, image: 'cat_korat.jpg', gender: 'ผู้ (Male)', age: '2.5 เดือน' },
+    'cat_savannah': { id: 'cat_savannah', name: 'น้องซิมบ้า (Savannah Cat F4)', breed: 'ซาวันนาห์ (Savannah)', price: 45000, image: 'cat_savannah.jpg', gender: 'ผู้ (Male)', age: '3 เดือน' },
+    'cat_egyptian_mau': { id: 'cat_egyptian_mau', name: 'น้องฟาโรห์ (Egyptian Mau)', breed: 'อียิปเชียน มัว (Egyptian Mau)', price: 28000, image: 'cat_egyptian_mau.jpg', gender: 'ผู้ (Male)', age: '3 เดือน' },
+    'cat_scottish_straight': { id: 'cat_scottish_straight', name: 'น้องมาร์ชเมลโล่ (Scottish Straight)', breed: 'สก็อตติช สเตรท (Scottish Straight)', price: 17000, image: 'cat_scottish_straight.jpg', gender: 'เมีย (Female)', age: '2.5 เดือน' },
+    'cat_somali': { id: 'cat_somali', name: 'น้องฟ็อกซี่ (Somali Fox Cat)', breed: 'โซมาลี (Somali Cat)', price: 26000, image: 'cat_somali.jpg', gender: 'ผู้ (Male)', age: '3 เดือน' },
+    'cat_australian_mist': { id: 'cat_australian_mist', name: 'น้องโอปอล (Australian Mist)', breed: 'ออสเตรเลียน มิสต์ (Australian Mist)', price: 22000, image: 'cat_australian_mist.jpg', gender: 'เมีย (Female)', age: '2.5 เดือน' },
+    'cat_kurilian_bobtail': { id: 'cat_kurilian_bobtail', name: 'น้องโมจิ (Kurilian Bobtail)', breed: 'คูริเลียน บ็อบเทล (Kurilian Bobtail)', price: 25000, image: 'cat_kurilian_bobtail.jpg', gender: 'ผู้ (Male)', age: '3 เดือน' },
+    // Starter kits & bundles
+    'bundle_starter': { id: 'bundle_starter', name: 'ชุดทาสแมวมือใหม่ (Newborn Starter Kit)', breed: 'แพ็กเกจของใช้ทาสแมวครบเซ็ต', price: 2490, image: 'logo.png', gender: 'ของใช้พรีเมียม', age: 'ครบชุดพร้อมใช้' },
+    'bundle_spa': { id: 'bundle_spa', name: 'ชุดสปา & สุขภาพพรีเมียม (Royal Spa & Wellness Kit)', breed: 'แพ็กเกจบริการและสุขภาพสัตว์เลี้ยง', price: 3490, image: 'logo.png', gender: 'บริการ & สุขภาพ', age: 'ความคุ้มครอง 1 ปี' },
+    'bundle_vip': { id: 'bundle_vip', name: 'แพ็กเกจพร้อมอยู่ All-Inclusive (Ultimate VIP Pack)', breed: 'แพ็กเกจระดับพรีเมียมครบวงจร', price: 5990, image: 'logo.png', gender: 'พรีเมียม ออล-อิน-วัน', age: 'บริการระดับ VIP' }
+};
+
+function getClientCart() {
+    try {
+        return JSON.parse(localStorage.getItem('cat_shop_cart') || '[]');
+    } catch(e) {
+        return [];
+    }
+}
+
+function saveClientCart(cart) {
+    try {
+        localStorage.setItem('cat_shop_cart', JSON.stringify(cart));
+    } catch(e) {}
+    updateCartBadgeUI();
+}
+
+function getCartTotalCount(cartParam) {
+    const cart = cartParam || getClientCart();
+    let total = 0;
+    if (Array.isArray(cart)) {
+        cart.forEach(item => {
+            total += parseInt(item.qty || 1, 10);
+        });
+    }
+    return total;
+}
+
+function updateCartBadgeUI() {
+    const cart = getClientCart();
+    const totalCount = getCartTotalCount(cart);
+
+    // Desktop Nav Cart Badge
+    const navBadges = document.querySelectorAll('#cart-badge-val, .nav-cart-btn .cart-badge');
+    navBadges.forEach(badge => {
+        if (totalCount > 0) {
+            badge.textContent = totalCount;
+            badge.style.display = 'inline-flex';
+            badge.classList.remove('bump');
+            void badge.offsetWidth; // trigger reflow
+            badge.classList.add('bump');
+        } else {
+            const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+            if (isStatic) {
+                badge.style.display = 'none';
+                badge.textContent = '0';
+            }
+        }
+    });
+
+    // Mobile Drawer Cart Badge
+    const drawerBadges = document.querySelectorAll('#drawer-cart-badge-val, .drawer-badge-pill.cart-count-badge');
+    drawerBadges.forEach(badge => {
+        if (totalCount > 0) {
+            badge.textContent = `${totalCount} ตัว`;
+            badge.style.display = 'inline-flex';
+        } else {
+            const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+            if (isStatic) {
+                badge.style.display = 'none';
+                badge.textContent = '0 ตัว';
+            }
+        }
+    });
+
+    // Update cart counter on cart page if present
+    const cartPageBadge = document.getElementById('cartCountBadge');
+    if (cartPageBadge) {
+        cartPageBadge.textContent = `(${totalCount} ตัว)`;
+    }
+    const summaryCatCount = document.getElementById('summaryCatCountVal');
+    if (summaryCatCount) {
+        summaryCatCount.textContent = `${totalCount} ตัว`;
+    }
+}
+
+function showCatAdoptToast(catItem, totalCount) {
+    let toast = document.getElementById('cat-adopt-toast-box');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'cat-adopt-toast-box';
+        toast.className = 'cat-adopt-toast';
+        document.body.appendChild(toast);
+    }
+
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    const cartUrl = isStatic ? 'cart.html' : 'cart.php';
+    const imgSrc = catItem.image ? (catItem.image.startsWith('http') || catItem.image.startsWith('assets/') ? catItem.image : `assets/images/${catItem.image}`) : 'assets/images/logo.png';
+
+    toast.innerHTML = `
+        <img src="${imgSrc}" alt="${catItem.name || 'น้องแมว'}" class="cat-adopt-toast-img">
+        <div class="cat-adopt-toast-info">
+            <div class="cat-adopt-toast-title">
+                <span>🎉 รับเลี้ยงสำเร็จ!</span>
+            </div>
+            <div class="cat-adopt-toast-sub">
+                เพิ่ม <strong>${catItem.name || 'น้องแมว'}</strong> ในตะกร้าแล้ว (รวม: <strong>${totalCount} ตัว</strong>)
+            </div>
+        </div>
+        <a href="${cartUrl}" class="cat-adopt-toast-btn">
+            🛒 ตะกร้า (${totalCount}) ➔
+        </a>
+    `;
+
+    toast.classList.add('show');
+    if (toast._timer) clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+        toast.classList.remove('show');
+    }, 4500);
+}
+
+function addToCartClient(catId, qty = 1, showToast = true) {
+    if (!catId) return;
+    const cat = (typeof allCatsData !== 'undefined' && allCatsData[catId]) ? allCatsData[catId] : (CAT_SHOP_ITEMS_DATA[catId] || {
+        id: catId,
+        name: 'น้องแมวสายพันธุ์แท้',
+        breed: 'สายพันธุ์รับรอง',
+        price: 15000,
+        image: 'logo.png',
+        gender: 'ผู้/เมีย',
+        age: '2.5 เดือน'
+    });
+
+    let cart = getClientCart();
+    const existing = cart.find(item => item.id === catId);
+    if (existing) {
+        existing.qty = (parseInt(existing.qty || 1, 10)) + qty;
+    } else {
+        cart.push({
+            id: cat.id,
+            name: cat.name,
+            breed: cat.breed,
+            price: cat.price,
+            image: cat.image,
+            gender: cat.gender || 'ไม่ระบุ',
+            age: cat.age || '2.5 เดือน',
+            qty: qty
+        });
+    }
+
+    saveClientCart(cart);
+    const totalCount = getCartTotalCount(cart);
+
+    if (showToast) {
+        showCatAdoptToast(cat, totalCount);
+    }
+
+    return { success: true, cart: cart, totalCount: totalCount };
+}
+
+function setupAddToCartInterceptors() {
+    // Intercept any form with input[name="action"][value="add_cat"]
+    document.addEventListener('submit', (e) => {
+        const form = e.target;
+        if (!form) return;
+        const actionInput = form.querySelector('input[name="action"][value="add_cat"]');
+        if (actionInput) {
+            const catIdInput = form.querySelector('input[name="cat_id"]');
+            const catId = catIdInput ? catIdInput.value : '';
+            if (catId) {
+                const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+                if (isStatic) {
+                    e.preventDefault();
+                    addToCartClient(catId, 1, true);
+                } else {
+                    // Update localStorage in background before PHP POST
+                    addToCartClient(catId, 1, false);
+                }
+            }
+        }
+    });
+
+    // Also listen to any button with data-add-cat
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-add-cat]');
+        if (btn) {
+            e.preventDefault();
+            const catId = btn.getAttribute('data-add-cat');
+            if (catId) {
+                addToCartClient(catId, 1, true);
+            }
+        }
+    });
+}
+
