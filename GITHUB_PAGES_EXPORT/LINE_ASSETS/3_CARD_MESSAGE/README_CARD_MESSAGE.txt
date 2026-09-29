@@ -15,26 +15,26 @@
 [การ์ดที่ 1]
 - รูปภาพ: card_1_british_1200x780.png
 - ข้อความแท็ก (Tag): ยอดนิยมอันดับ 1
-- หัวเรื่อง (Title): น้องบริติช บลู (British Shorthair)
+- หัวเรื่อง (Title): น้องสโนว์ (British Shorthair)
 - คำอธิบาย (Description): ขนแน่นนุ่มฟู หน้ากลมแป้น อารมณ์ดี เรียบร้อย
-- ราคา (Price): 35,000 บาท
-- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/products.html?breed=british
+- ราคา (Price): 18,000 บาท
+- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_british
 
 [การ์ดที่ 2]
 - รูปภาพ: card_2_scottish_1200x780.png
 - ข้อความแท็ก (Tag): เลี้ยงง่าย ขี้อ้อน
-- หัวเรื่อง (Title): น้องสกอตติช โฟลด์ (Scottish Fold)
+- หัวเรื่อง (Title): น้องพุดดิ้ง (Scottish Fold)
 - คำอธิบาย (Description): หูพับสนิท ตากลมโต ขี้อ้อน ชอบนั่งพุงพลุ้ย
-- ราคา (Price): 32,000 บาท
-- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/products.html?breed=scottish
+- ราคา (Price): 21,000 บาท
+- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_scottish
 
 [การ์ดที่ 3]
 - รูปภาพ: card_3_mainecoon_1200x780.png
 - ข้อความแท็ก (Tag): เกรดพรีเมียม ใบเพ็ดครบ
-- หัวเรื่อง (Title): น้องเมนคูน ไจแอนท์ (Maine Coon)
+- หัวเรื่อง (Title): น้องไททัน (Maine Coon)
 - คำอธิบาย (Description): ยักษ์ใหญ่ใจดี สายเลือดแชมป์ โครงสร้างใหญ่สง่างาม
-- ราคา (Price): 55,000 บาท
-- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/products.html?breed=mainecoon
+- ราคา (Price): 35,000 บาท
+- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_mainecoon
 
 [การ์ดที่ 4]
 - รูปภาพ: card_4_welcome_deal_1200x780.png
@@ -50,7 +50,7 @@
 - หัวเรื่อง (Title): น้องปุยหิมะ (Persian Classic)
 - คำอธิบาย (Description): ราชินีแห่งแมวขนยาว หน้าหวาน นิสัยสุภาพ นิ่งสงบ อารมณ์ดี
 - ราคา (Price): 16,500 บาท
-- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/products.html?breed=persian
+- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_persian
 
 [การ์ดที่ 6]
 - รูปภาพ: card_6_ragdoll_1200x780.png
@@ -58,7 +58,7 @@
 - หัวเรื่อง (Title): น้องคอตตอน (Ragdoll Princess)
 - คำอธิบาย (Description): เจ้าหญิงตาสีฟ้า ตัวนุ่มดั่งตุ๊กตาผ้า ไม่กางเล็บ ปลอดภัยกับเด็ก
 - ราคา (Price): 29,000 บาท
-- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/products.html?breed=ragdoll
+- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_ragdoll
 
 [การ์ดที่ 7]
 - รูปภาพ: card_7_munchkin_1200x780.png
@@ -66,7 +66,7 @@
 - หัวเรื่อง (Title): น้องชอร์ตตี้ (Munchkin Legs)
 - คำอธิบาย (Description): ขาสั้นเตี้ยดุ๊กดิ๊ก วิ่งน่ารักสดใส ขี้เล่นอารมณ์ดีตลอดวัน
 - ราคา (Price): 24,000 บาท
-- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/products.html?breed=munchkin
+- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_munchkin
 
 [การ์ดที่ 8]
 - รูปภาพ: card_8_bengal_1200x780.png
@@ -74,7 +74,7 @@
 - หัวเรื่อง (Title): น้องจากัวร์ (Bengal Rosetted)
 - คำอธิบาย (Description): ลายกุหลาบทองคำ ขนประกายกลิตเตอร์ ฉลาด ปราดเปรียว
 - ราคา (Price): 26,000 บาท
-- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/products.html?breed=bengal
+- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_bengal
 
 [การ์ดที่ 9]
 - รูปภาพ: card_9_sphynx_1200x780.png
@@ -82,7 +82,7 @@
 - หัวเรื่อง (Title): น้องซีซาร์ (Canadian Sphynx)
 - คำอธิบาย (Description): แมวไร้ขน ผิวนุ่มอุ่นดั่งลูกพีช ฉลาด ขี้อ้อนติดคน หมดห่วงภูมิแพ้
 - ราคา (Price): 28,000 บาท
-- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/products.html?breed=sphynx
+- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_sphynx
 
 [การ์ดที่ 10]
 - รูปภาพ: card_10_siamese_1200x780.png
@@ -90,7 +90,7 @@
 - หัวเรื่อง (Title): น้องมงคล (Siamese / วิเชียรมาศ)
 - คำอธิบาย (Description): แต้มสี 9 จุดคมชัด ตาสีฟ้าคราม ช่างพูด เฉลียวฉลาด นำโชคลาภ
 - ราคา (Price): 12,000 บาท
-- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/products.html?breed=siamese
+- ลิงก์ Action: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_siamese
 
 --------------------------------------------------------------------------------
 🛠️ วิธีนำไปตั้งค่าใน LINE Official Account Manager (manager.line.biz):

@@ -7,22 +7,22 @@
 1. 🌸 น้องปุยหิมะ - เปอร์เซีย (Persian Classic)
    - ไฟล์: rich_message_persian_1040x1040.png
    - จุดเด่น: ราชินีขนฟู หน้าหวาน นิ่งสงบ ค่าสินสอด 16,500.- (เพ็ดดีกรี CFA)
-   - ลิงก์ที่แนะนำ: https://patches660.github.io/Purrfect-Shop/products.html?breed=persian
+   - ลิงก์ที่แนะนำ: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_persian
 
 2. 💎 น้องคอตตอน - แร็กดอลล์ (Ragdoll Princess)
    - ไฟล์: rich_message_ragdoll_1040x1040.png
    - จุดเด่น: เจ้าหญิงตาสีฟ้าคราม ตัวนุ่มนิ่มดั่งตุ๊กตาผ้า ค่าสินสอด 29,000.- (เพ็ดดีกรี TICA)
-   - ลิงก์ที่แนะนำ: https://patches660.github.io/Purrfect-Shop/products.html?breed=ragdoll
+   - ลิงก์ที่แนะนำ: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_ragdoll
 
 3. 🐾 น้องชอร์ตตี้ - มันช์กิ้น ขาสั้น (Munchkin Short Legs)
    - ไฟล์: rich_message_munchkin_1040x1040.png
    - จุดเด่น: ขาสั้นเตี้ยดุ๊กดิ๊ก วิ่งน่ารัก ร่าเริงอารมณ์ดี ค่าสินสอด 24,000.- (เพ็ดดีกรี WCF)
-   - ลิงก์ที่แนะนำ: https://patches660.github.io/Purrfect-Shop/products.html?breed=munchkin
+   - ลิงก์ที่แนะนำ: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_munchkin
 
 4. 🐆 น้องจากัวร์ - เบงกอล เสือดาวจิ๋ว (Bengal Rosetted)
    - ไฟล์: rich_message_bengal_1040x1040.png
    - จุดเด่น: ลายโรเซ็ตต์ประกายทอง ขน Glittering เท่หรูหรา ค่าสินสอด 26,000.- (สายเลือดแชมป์)
-   - ลิงก์ที่แนะนำ: https://patches660.github.io/Purrfect-Shop/products.html?breed=bengal
+   - ลิงก์ที่แนะนำ: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_bengal
 
 5. 🐱 แบนเนอร์รวมโปรโมชั่นร้าน (Generic Shop & Deal)
    - rich_message_1040x1040_square.png (แบนเนอร์รวมโปรโมชั่น 1040x1040)

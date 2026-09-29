@@ -1,0 +1,107 @@
+================================================================================
+🐾 PURRFECT SHOP - ตารางลิงก์หน้ารายละเอียดสินค้าแมวสำหรับใส่ใน LINE OA
+================================================================================
+
+📌 วิธีใช้งานใน LINE Official Account (manager.line.biz):
+- เมื่อสร้างการ์ดเมสเสจ (Card-based Message), ริชเมสเสจ (Rich Message) หรือริชเมนู (Rich Menu)
+- ในช่อง "ประเภทแอ็กชัน (Action Type)" ให้เลือกเป็น: "ลิงก์ (Link / URL)"
+- คัดลอก URL ของน้องแมวแต่ละสายพันธุ์ไปวางได้ทันที เพื่อให้ลูกค้ากดแล้วเด้งไปดูข้อมูล รับเลี้ยง หรือคำนวณราคาได้โดยตรง
+
+================================================================================
+🌐 1. ลิงก์ออนไลน์สำหรับใช้งานจริงบน LINE OA (GitHub Pages Live Links)
+================================================================================
+
+🐱 [1] น้องสโนว์ - บริติช ช็อตแฮร์ (British Shorthair) | ราคา 18,000 บาท
+👉 URL: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_british
+🖼️ รูปการ์ด: card_1_british_1200x780.png
+
+🐱 [2] น้องปุยหิมะ - เปอร์เซีย (Persian Classic) | ราคา 16,500 บาท
+👉 URL: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_persian
+🖼️ รูปการ์ด: card_5_persian_1200x780.png
+🖼️ ริชเมสเสจ: rich_message_persian_1040x1040.png
+
+🐱 [3] น้องซีซาร์ - แคนาดา สฟิงซ์ (Canadian Sphynx) | ราคา 28,000 บาท
+👉 URL: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_sphynx
+🖼️ รูปการ์ด: card_9_sphynx_1200x780.png
+
+🐱 [4] น้องมงคล - วิเชียรมาศ (Siamese Cat) | ราคา 12,000 บาท
+👉 URL: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_siamese
+🖼️ รูปการ์ด: card_10_siamese_1200x780.png
+
+🐱 [5] น้องไททัน - เมนคูน (Maine Coon Giant) | ราคา 35,000 บาท
+👉 URL: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_mainecoon
+🖼️ รูปการ์ด: card_3_mainecoon_1200x780.png
+
+🐱 [6] น้องคอตตอน - แร็กดอลล์ (Ragdoll Princess) | ราคา 29,000 บาท
+👉 URL: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_ragdoll
+🖼️ รูปการ์ด: card_6_ragdoll_1200x780.png
+🖼️ ริชเมสเสจ: rich_message_ragdoll_1040x1040.png
+
+🐱 [7] น้องจากัวร์ - เบงกอล (Bengal Rosetted) | ราคา 26,000 บาท
+👉 URL: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_bengal
+🖼️ รูปการ์ด: card_8_bengal_1200x780.png
+🖼️ ริชเมสเสจ: rich_message_bengal_1040x1040.png
+
+🐱 [8] น้องพุดดิ้ง - สก็อตติช โฟลด์ (Scottish Fold) | ราคา 21,000 บาท
+👉 URL: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_scottish
+🖼️ รูปการ์ด: card_2_scottish_1200x780.png
+
+🐱 [9] น้องชอร์ตตี้ - มันช์กิ้น ขาสั้น (Munchkin Short Legs) | ราคา 24,000 บาท
+👉 URL: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_munchkin
+🖼️ รูปการ์ด: card_7_munchkin_1200x780.png
+🖼️ ริชเมสเสจ: rich_message_munchkin_1040x1040.png
+
+🐱 [10] น้องบลูสกาย - รัสเซียน บลู (Russian Blue) | ราคา 22,000 บาท
+👉 URL: https://patches660.github.io/Purrfect-Shop/cat_detail.html?id=cat_russian
+
+================================================================================
+🌟 2. ลิงก์หน้าบริการและกิจกรรมพิเศษอื่นๆ สำหรับ LINE Broadcast / Rich Menu
+================================================================================
+
+🏠 หน้าหลักร้านค้า (Homepage):
+👉 https://patches660.github.io/Purrfect-Shop/index.html
+
+🐱 แคตตาล็อกน้องแมวทั้งหมด (All Breeds):
+👉 https://patches660.github.io/Purrfect-Shop/products.html
+
+🎡 วงล้อลุ้นโชคแมวเหมียว หมุนแจกคูปอง 50% (Lucky Wheel):
+👉 https://patches660.github.io/Purrfect-Shop/lucky_wheel.html
+
+🌟 ระบบทดสอบแนะนำสายพันธุ์ 6 มิติ (Smart Matcher 6D):
+👉 https://patches660.github.io/Purrfect-Shop/recommend.html
+
+🎁 ดีลต้อนรับสมาชิกใหม่ + คูปอง 25% (Welcome Deals):
+👉 https://patches660.github.io/Purrfect-Shop/welcome_deal.html
+
+📅 จองคิวเยี่ยมชมฟาร์ม (Farm Visit Booking):
+👉 https://patches660.github.io/Purrfect-Shop/booking.html
+
+📜 ตรวจสอบใบเพ็ดดีกรีแท้ WCF/CFA (Pedigree Checker):
+👉 https://patches660.github.io/Purrfect-Shop/pedigree.html
+
+🧮 โปรแกรมคำนวณอาหารและการดูแล (Food Calculator):
+👉 https://patches660.github.io/Purrfect-Shop/calculator.html
+
+💬 รีวิวจากผู้รับเลี้ยงจริง (Customer Reviews):
+👉 https://patches660.github.io/Purrfect-Shop/reviews.html
+
+🛒 ตะกร้าและสั่งซื้อ (Cart & Checkout):
+👉 https://patches660.github.io/Purrfect-Shop/cart.html
+
+📍 ติดตามสถานะการจัดส่ง (Live Tracking):
+👉 https://patches660.github.io/Purrfect-Shop/tracking.html
+
+================================================================================
+💻 3. ลิงก์สำหรับทดสอบบนเครื่อง Localhost (กรณีเปิดเซิร์ฟเวอร์จำลอง)
+================================================================================
+- British Shorthair : http://localhost:8000/cat_detail.html?id=cat_british
+- Persian           : http://localhost:8000/cat_detail.html?id=cat_persian
+- Canadian Sphynx   : http://localhost:8000/cat_detail.html?id=cat_sphynx
+- Siamese (วิเชียรมาศ): http://localhost:8000/cat_detail.html?id=cat_siamese
+- Maine Coon        : http://localhost:8000/cat_detail.html?id=cat_mainecoon
+- Ragdoll           : http://localhost:8000/cat_detail.html?id=cat_ragdoll
+- Bengal            : http://localhost:8000/cat_detail.html?id=cat_bengal
+- Scottish Fold     : http://localhost:8000/cat_detail.html?id=cat_scottish
+- Munchkin          : http://localhost:8000/cat_detail.html?id=cat_munchkin
+- Russian Blue      : http://localhost:8000/cat_detail.html?id=cat_russian
+================================================================================

@@ -182,15 +182,24 @@ if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) &&
             $coupon_title = "";
             if (!empty($applied_coupon)) {
                 $coupon_upper = strtoupper($applied_coupon);
-                if (in_array($coupon_upper, ['PURR25NEW', 'LUCKY25', 'MEOWKIT25', 'TREAT25'])) {
+                if (in_array($coupon_upper, ['PAW45GRAND', 'GRAND45', 'PAW45', 'REWARD45'])) {
+                    $coupon_discount = round($invoice_subtotal * 0.45);
+                    $coupon_title = "ส่วนลดรางวัลใหญ่ LINE OA 45% ({$coupon_upper})";
+                } elseif (in_array($coupon_upper, ['PURR25NEW', 'LUCKY25', 'MEOWKIT25', 'TREAT25', 'CATLOVE25', 'MEOWTREAT25', 'CATTOY25', 'FLASH25VIP'])) {
                     $coupon_discount = round($invoice_subtotal * 0.25);
-                    $coupon_title = "ส่วนลด 25% ({$coupon_upper})";
+                    $coupon_title = "ส่วนลดพิเศษ LINE OA 25% ({$coupon_upper})";
                 } elseif (in_array($coupon_upper, ['WELCOME15', 'VIPPAW15'])) {
                     $coupon_discount = round($invoice_subtotal * 0.15);
                     $coupon_title = "ส่วนลด 15% ({$coupon_upper})";
-                } elseif (in_array($coupon_upper, ['CATNEWS10'])) {
+                } elseif (in_array($coupon_upper, ['CATNEWS10', 'PURRFECT10', 'PAW10REWARD', 'PAWREWARD10', 'PAW10', 'FEEDBACK10'])) {
                     $coupon_discount = round($invoice_subtotal * 0.10);
                     $coupon_title = "ส่วนลด 10% ({$coupon_upper})";
+                } elseif (in_array($coupon_upper, ['PAW100SURVEY', 'SURVEY100', 'FEEDBACK100', 'SURVEYPAW100'])) {
+                    $coupon_discount = min($invoice_subtotal, 100);
+                    $coupon_title = "ส่วนลดแบบสอบถาม LINE ฿100 ({$coupon_upper})";
+                } elseif (in_array($coupon_upper, ['PAW350KIT', 'PAWSTARTER350', 'STARTERKIT350', 'FREEKIT350', 'STARTER350'])) {
+                    $coupon_discount = min($invoice_subtotal, 350);
+                    $coupon_title = "ฟรี Starter Kit / ส่วนลด ฿350 ({$coupon_upper})";
                 } elseif ($coupon_upper === 'LUCKY500') {
                     $coupon_discount = min($invoice_subtotal, 500);
                     $coupon_title = "ส่วนลดเงินสด ฿500 ({$coupon_upper})";
@@ -1103,7 +1112,7 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                             </div>
 
                             <!-- Input Form + Apply / Remove button -->
-                            <div style="display: flex; gap: 6px; margin-bottom: 0.6rem;">
+                            <div style="display: flex; gap: 6px; margin-bottom: 0.4rem;">
                                 <input type="hidden" name="applied_coupon" id="applied_coupon_input" value="">
                                 <input type="text" id="couponCodeInput" class="form-control" placeholder="กรอกโค้ดส่วนลด..." style="padding: 0.5rem 0.8rem; font-size: 0.85rem; text-transform: uppercase; font-weight: 700; flex: 1;">
                                 <button type="button" class="btn btn-primary btn-sm" id="btnApplyCoupon" onclick="applyCouponManual()" style="padding: 0.5rem 0.9rem; font-size: 0.82rem; font-weight: 700; white-space: nowrap;">
@@ -1113,6 +1122,7 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                                     ❌ ลบ
                                 </button>
                             </div>
+                            <div id="couponFeedbackMsg" style="display: none; font-size: 0.76rem; font-weight: 700; margin-bottom: 0.5rem; transition: all 0.3s;"></div>
 
                             <!-- Quick Select Drawer / Accordion of Available Coupons -->
                             <div style="border-top: 1px dashed var(--border-color); padding-top: 0.6rem; margin-top: 0.6rem;">
@@ -1840,21 +1850,61 @@ function renderAvailableCouponsList() {
 function applyCouponClient(code, title, discountRate, isCash) {
     if (!code) return;
     code = code.trim().toUpperCase();
+    const feedback = document.getElementById('couponFeedbackMsg');
     
-    // If rate/cash not provided, look up or calculate
+    // 1. Check Lucky Wheel rewards in localStorage
     if (discountRate === undefined) {
-        if (['PURR25NEW', 'LUCKY25', 'MEOWKIT25', 'TREAT25'].includes(code)) {
+        try {
+            const wheelRewards = JSON.parse(localStorage.getItem('cat_shop_my_rewards') || '[]');
+            const foundWheel = wheelRewards.find(r => (r.code || '').toUpperCase() === code);
+            if (foundWheel) {
+                title = foundWheel.title;
+                if (code.includes('500') || foundWheel.title.includes('500')) {
+                    discountRate = 500;
+                    isCash = true;
+                } else if (code.includes('1000') || foundWheel.title.includes('1000')) {
+                    discountRate = 1000;
+                    isCash = true;
+                } else if (code.includes('15') || foundWheel.title.includes('15%')) {
+                    discountRate = 0.15;
+                    isCash = false;
+                } else if (code.includes('10') || foundWheel.title.includes('10%')) {
+                    discountRate = 0.10;
+                    isCash = false;
+                } else {
+                    discountRate = 0.25;
+                    isCash = false;
+                }
+            }
+        } catch(e) {}
+    }
+
+    // 2. Secret & Official Store / LINE OA Coupons validation
+    if (discountRate === undefined) {
+        if (['PAW45GRAND', 'GRAND45', 'PAW45', 'REWARD45'].includes(code)) {
+            discountRate = 0.45;
+            isCash = false;
+            title = 'ส่วนลดรางวัลใหญ่ LINE OA 45%';
+        } else if (['PURR25NEW', 'LUCKY25', 'MEOWKIT25', 'TREAT25', 'CATLOVE25', 'MEOWTREAT25', 'CATTOY25', 'FLASH25VIP'].includes(code)) {
             discountRate = 0.25;
             isCash = false;
-            title = 'ส่วนลด 25%';
+            title = 'ส่วนลดพิเศษ LINE OA 25%';
         } else if (['WELCOME15', 'VIPPAW15'].includes(code)) {
             discountRate = 0.15;
             isCash = false;
             title = 'ส่วนลด 15%';
-        } else if (['CATNEWS10'].includes(code)) {
+        } else if (['CATNEWS10', 'PURRFECT10', 'PAW10REWARD', 'PAWREWARD10', 'PAW10', 'FEEDBACK10'].includes(code)) {
             discountRate = 0.10;
             isCash = false;
             title = 'ส่วนลด 10%';
+        } else if (['PAW100SURVEY', 'SURVEY100', 'FEEDBACK100', 'SURVEYPAW100'].includes(code)) {
+            discountRate = 100;
+            isCash = true;
+            title = 'ส่วนลดแบบสอบถาม LINE ฿100';
+        } else if (['PAW350KIT', 'PAWSTARTER350', 'STARTERKIT350', 'FREEKIT350', 'STARTER350'].includes(code)) {
+            discountRate = 350;
+            isCash = true;
+            title = 'ฟรี Starter Kit / ส่วนลด ฿350';
         } else if (code === 'LUCKY500') {
             discountRate = 500;
             isCash = true;
@@ -1864,9 +1914,20 @@ function applyCouponClient(code, title, discountRate, isCash) {
             isCash = true;
             title = 'ส่วนลดเงินสด ฿1,000';
         } else {
-            discountRate = 0.10;
-            isCash = false;
-            title = 'คูปองส่วนลด';
+            // Invalid code entered
+            const input = document.getElementById('couponCodeInput');
+            if (input) {
+                input.focus();
+                input.style.borderColor = '#EF4444';
+                setTimeout(() => { input.style.borderColor = ''; }, 3000);
+            }
+            if (feedback) {
+                feedback.style.display = 'block';
+                feedback.style.color = '#EF4444';
+                feedback.textContent = '❌ ไม่พบโค้ดคูปองนี้ หรือโค้ดหมดอายุแล้ว';
+                setTimeout(() => { feedback.style.display = 'none'; }, 3500);
+            }
+            return;
         }
     }
 
@@ -1878,7 +1939,11 @@ function applyCouponClient(code, title, discountRate, isCash) {
     };
 
     const input = document.getElementById('couponCodeInput');
-    if (input) input.value = code;
+    if (input) {
+        input.value = code;
+        input.style.borderColor = '#10B981';
+        setTimeout(() => { input.style.borderColor = ''; }, 2000);
+    }
 
     const hiddenInput = document.getElementById('applied_coupon_input');
     if (hiddenInput) hiddenInput.value = code;
@@ -1886,7 +1951,7 @@ function applyCouponClient(code, title, discountRate, isCash) {
     const badge = document.getElementById('active-coupon-badge');
     if (badge) {
         badge.style.display = 'inline-block';
-        badge.textContent = `✓ ${code} (${isCash ? '฿' + discountRate : Math.round(discountRate * 100) + '%'})`;
+        badge.textContent = `✓ ${code} (${isCash ? '฿' + discountRate.toLocaleString() : Math.round(discountRate * 100) + '%'})`;
     }
 
     const removeBtn = document.getElementById('btnRemoveCoupon');
@@ -1894,6 +1959,13 @@ function applyCouponClient(code, title, discountRate, isCash) {
 
     const applyBtn = document.getElementById('btnApplyCoupon');
     if (applyBtn) applyBtn.style.display = 'none';
+
+    if (feedback) {
+        feedback.style.display = 'block';
+        feedback.style.color = '#059669';
+        feedback.textContent = `✓ ใช้โค้ด ${code} สำเร็จ! (${title})`;
+        setTimeout(() => { feedback.style.display = 'none'; }, 4000);
+    }
 
     renderAvailableCouponsList();
     syncClientCartUI();
@@ -1916,6 +1988,9 @@ function removeCouponClient() {
 
     const applyBtn = document.getElementById('btnApplyCoupon');
     if (applyBtn) applyBtn.style.display = 'inline-block';
+
+    const feedback = document.getElementById('couponFeedbackMsg');
+    if (feedback) feedback.style.display = 'none';
 
     renderAvailableCouponsList();
     syncClientCartUI();
