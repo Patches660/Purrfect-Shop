@@ -115,8 +115,11 @@
                         🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
                     </button>
 
-                    <!-- Admin Console Shortcut (Only visible for Admins) -->
-                    
+                    <!-- Admin Console Shortcut Link (Clickable Royal Navy & Gold Badge) -->
+                    <a href="admin.html" class="top-badge-pill" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1px solid #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
+                        👑 ผู้ดูแลระบบ (Admin)
+                    </a>
+
                     <!-- User Account / Profile Badge & Paw Points -->
                                             <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                             <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
@@ -175,12 +178,30 @@
                                 <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
                             </a>
                         </li>
-                        <!-- 5 New Features + Services Dropdown Menu -->
+                        <!-- Services & Activities Dropdown Menu -->
                         <li class="nav-dropdown-wrapper" style="position: relative;">
                             <a href="#" class="nav-link nav-dropdown-trigger active" style="display: inline-flex; align-items: center; gap: 4px;">
                                 ✨ บริการ & กิจกรรม ▾
                             </a>
                             <ul class="nav-dropdown-menu">
+                                <li>
+                                    <a href="quiz.html" class="">
+                                        <span class="nav-dd-icon">🔮</span>
+                                        <div>
+                                            <strong class="nav-dd-title">AI แมวในฝัน (Matchmaker)</strong>
+                                            <small class="nav-dd-sub">แบบทดสอบหาสายพันธุ์ที่เหมาะกับคุณ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="vaccine_reminder.html" class="">
+                                        <span class="nav-dd-icon">💉</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ตารางวัคซีน & สมุดสุขภาพ</strong>
+                                            <small class="nav-dd-sub">บันทึกนัดหมาย & แจ้งเตือนวัคซีน</small>
+                                        </div>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="reviews.html" class="">
                                         <span class="nav-dd-icon">⭐</span>
@@ -733,9 +754,15 @@
             </div>
         </div>
 
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <button onclick="window.print()" class="btn btn-primary" style="background: #D97706; border-color: #D97706; padding: 0.85rem 2.2rem; font-size: 1.05rem; border-radius: 999px; font-weight: 800; box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35); cursor: pointer; max-width: 100%;">
+        <div style="text-align: center; margin-bottom: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: center;">
+            <button onclick="window.print()" class="btn btn-primary" style="background: #D97706; border-color: #D97706; padding: 0.85rem 2.2rem; font-size: 1.05rem; border-radius: 999px; font-weight: 800; box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35); cursor: pointer;">
                 🖨️ พิมพ์ใบรับรองสายพันธุ์ (Print Official Pedigree)
+            </button>
+            <button type="button" onclick="sharePedigreeToLine()" class="btn btn-line-share" style="background: linear-gradient(135deg, #06C755 0%, #05B04B 100%); color: #fff; border: none; padding: 0.85rem 2.2rem; font-size: 1.05rem; border-radius: 999px; font-weight: 800; box-shadow: 0 6px 20px rgba(6, 199, 85, 0.35); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 5.82 2 10.53c0 2.93 1.77 5.51 4.5 6.96-.2.74-.72 2.68-.82 3.09-.13.52.19.51.4.37.17-.11 2.3-1.57 3.25-2.22.87.16 1.76.24 2.67.24 5.52 0 10-3.82 10-8.53S17.52 2 12 2z"/>
+                </svg>
+                📲 แชร์ใบเพ็ดเข้า LINE (1-Click)
             </button>
         </div>
     </div>
@@ -935,6 +962,31 @@ function handlePedigreeSearch(e) {
         if (e) e.preventDefault();
         selectChipClient(chip);
     }
+}
+
+function sharePedigreeToLine() {
+    const chipInput = document.getElementById('pedChipInput');
+    const chip = chipInput ? chipInput.value.trim() : '900215001234567';
+    const p = (typeof allPedigrees !== 'undefined' && allPedigrees[chip]) ? allPedigrees[chip] : (allPedigrees ? Object.values(allPedigrees)[0] : null);
+    
+    const catName = p ? `${p.name_th} (${p.breed_th})` : 'น้องแมวสายพันธุ์แท้';
+    const regNo = p ? p.registration_no : '';
+    const registry = p ? p.registry : 'WCF International';
+    
+    // Construct dynamic target URL
+    const baseUrl = window.location.href.split('?')[0].split('#')[0];
+    const shareUrl = `${baseUrl}?chip=${encodeURIComponent(chip)}`;
+    
+    const message = `🏆 ใบรับรองสายพันธุ์ & สมุดวัคซีนดิจิทัล (Digital Pedigree)\n🐱 น้อง: ${catName}\n🩺 หมายเลขไมโครชิป: ${chip}\n📜 เลขทะเบียน: ${regNo} (${registry})\n🏥 การันตีผลตรวจพันธุกรรม & วัคซีนครบ 100%\n\n👉 ดูใบเพ็ดดีกรีฉบับเต็มคลิก:\n${shareUrl}`;
+    
+    const lineShareUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(message)}`;
+    
+    // Open LINE Share popup or window
+    const popupWidth = 600;
+    const popupHeight = 580;
+    const left = (window.innerWidth - popupWidth) / 2;
+    const top = (window.innerHeight - popupHeight) / 2;
+    window.open(lineShareUrl, 'LineShare', `width=${popupWidth},height=${popupHeight},top=${top},left=${left},scrollbars=yes`);
 }
 
 // Auto-run on load from URL parameters (?chip=...)

@@ -115,8 +115,11 @@
                         🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
                     </button>
 
-                    <!-- Admin Console Shortcut (Only visible for Admins) -->
-                    
+                    <!-- Admin Console Shortcut Link (Clickable Royal Navy & Gold Badge) -->
+                    <a href="admin.html" class="top-badge-pill" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1px solid #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
+                        👑 ผู้ดูแลระบบ (Admin)
+                    </a>
+
                     <!-- User Account / Profile Badge & Paw Points -->
                                             <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                             <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
@@ -175,12 +178,30 @@
                                 <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
                             </a>
                         </li>
-                        <!-- 5 New Features + Services Dropdown Menu -->
+                        <!-- Services & Activities Dropdown Menu -->
                         <li class="nav-dropdown-wrapper" style="position: relative;">
                             <a href="#" class="nav-link nav-dropdown-trigger " style="display: inline-flex; align-items: center; gap: 4px;">
                                 ✨ บริการ & กิจกรรม ▾
                             </a>
                             <ul class="nav-dropdown-menu">
+                                <li>
+                                    <a href="quiz.html" class="">
+                                        <span class="nav-dd-icon">🔮</span>
+                                        <div>
+                                            <strong class="nav-dd-title">AI แมวในฝัน (Matchmaker)</strong>
+                                            <small class="nav-dd-sub">แบบทดสอบหาสายพันธุ์ที่เหมาะกับคุณ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="vaccine_reminder.html" class="">
+                                        <span class="nav-dd-icon">💉</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ตารางวัคซีน & สมุดสุขภาพ</strong>
+                                            <small class="nav-dd-sub">บันทึกนัดหมาย & แจ้งเตือนวัคซีน</small>
+                                        </div>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="reviews.html" class="">
                                         <span class="nav-dd-icon">⭐</span>
@@ -496,6 +517,143 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 <style>
+/* Custom In-App Delete Confirmation Modal */
+.custom-cart-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.custom-cart-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.custom-cart-modal-card {
+    background: #FFFFFF;
+    border-radius: 28px;
+    padding: 2.2rem 2rem;
+    max-width: 460px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.8);
+    transform: scale(0.92) translateY(10px);
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.custom-cart-modal-overlay.active .custom-cart-modal-card {
+    transform: scale(1) translateY(0);
+}
+.modal-close-icon {
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    background: #F1F5F9;
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.modal-close-icon:hover {
+    background: #E2E8F0;
+    color: #0F172A;
+    transform: rotate(90deg);
+}
+.modal-badge-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
+    border: 2px solid #FCA5A5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    margin: 0 auto 1.4rem auto;
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.2);
+}
+.modal-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #1E293B;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.3px;
+}
+.modal-description {
+    font-size: 0.95rem;
+    color: #475569;
+    line-height: 1.55;
+    margin-bottom: 1.2rem;
+}
+.modal-alert-box {
+    background: #F8FAFC;
+    border: 1.5px dashed #CBD5E1;
+    border-radius: 14px;
+    padding: 0.75rem 1rem;
+    font-size: 0.82rem;
+    color: #64748B;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-align: left;
+    margin-bottom: 1.6rem;
+}
+.modal-actions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 0.85rem;
+}
+.modal-btn-cancel {
+    background: #F1F5F9 !important;
+    color: #475569 !important;
+    border: 1.5px solid #CBD5E1 !important;
+    border-radius: 14px !important;
+    padding: 0.75rem 1rem !important;
+    font-weight: 800 !important;
+    font-size: 0.9rem !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+.modal-btn-cancel:hover {
+    background: #E2E8F0 !important;
+    color: #1E293B !important;
+}
+.modal-btn-confirm {
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 14px !important;
+    padding: 0.75rem 1rem !important;
+    font-weight: 800 !important;
+    font-size: 0.9rem !important;
+    cursor: pointer !important;
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.35) !important;
+    transition: all 0.2s ease !important;
+}
+.modal-btn-confirm:hover {
+    background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(239, 68, 68, 0.45) !important;
+}
+
 /* Shipping Option Cards Dynamic Selection Style */
 .shipping-option-card {
     border: 2px solid var(--border-color);
@@ -822,8 +980,8 @@
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="delivery_date">วันที่สะดวกรับน้องแมว</label>
                                 <input type="date" name="delivery_date" id="delivery_date" class="form-control" 
-                                       value="2026-10-02" 
-                                       min="2026-09-30">
+                                       value="2026-10-03" 
+                                       min="2026-10-01">
                             </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="delivery_timeslot">ช่วงเวลาที่สะดวกรับ</label>
@@ -1202,6 +1360,37 @@
         </form>
     </div>
 
+
+<!-- Custom In-App Delete Confirmation Modal -->
+<div id="cartDeleteConfirmModal" class="custom-cart-modal-overlay" style="display: none;" onclick="if(event.target === this) closeCartDeleteModal();">
+    <div class="custom-cart-modal-card">
+        <button type="button" class="modal-close-icon" onclick="closeCartDeleteModal()" title="ปิดหน้าต่าง">&times;</button>
+        
+        <div class="modal-badge-icon">
+            <span>🗑️</span>
+        </div>
+
+        <h3 class="modal-title">ยืนยันการลบรายการน้องแมว</h3>
+        
+        <p class="modal-description">
+            คุณต้องการนำ <strong id="modalCatNameToDelete" style="color: var(--primary-coral);">"น้องแมว"</strong> ออกจากรายการสั่งซื้อใช่หรือไม่?
+        </p>
+
+        <div class="modal-alert-box">
+            <span>💡</span>
+            <span>หากลบแล้ว คุณสามารถกลับไปเลือกชมน้องแมวสายพันธุ์แท้ตัวอื่นในระบบได้ตลอดเวลาค่ะ</span>
+        </div>
+
+        <div class="modal-actions-grid">
+            <button type="button" class="btn btn-secondary modal-btn-cancel" onclick="closeCartDeleteModal()">
+                ยกเลิก (เก็บไว้ก่อน)
+            </button>
+            <button type="button" id="modalConfirmDeleteBtn" class="btn btn-danger modal-btn-confirm" onclick="executeCartDeleteConfirmed()">
+                🗑️ ยืนยันการลบรายการ
+            </button>
+        </div>
+    </div>
+</div>
 
 <script>
 // Switch Payment Channels Tabs
@@ -2217,10 +2406,87 @@ function syncClientCartUI() {
     }
 }
 
+let pendingDeleteAction = null; // { catId, delta, isRemoveDirect }
+
+function promptCartItemDeletion(catId, delta, isRemoveDirect) {
+    let cart = getClientCart();
+    let item = cart.find(i => i.id === catId);
+    let catName = item ? item.name : '';
+    if (!catName) {
+        const domItem = document.querySelector(`.cart-item[data-id="${catId}"]`);
+        if (domItem) {
+            const nameElem = domItem.querySelector('.cart-item-name');
+            if (nameElem) catName = nameElem.textContent.trim();
+        }
+    }
+    const displayName = catName ? `"${catName}"` : 'สินค้ารายการนี้';
+
+    pendingDeleteAction = { catId, delta, isRemoveDirect };
+    
+    const nameLabel = document.getElementById('modalCatNameToDelete');
+    if (nameLabel) nameLabel.textContent = displayName;
+
+    const modal = document.getElementById('cartDeleteConfirmModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('active'), 10);
+    }
+}
+
+function closeCartDeleteModal() {
+    pendingDeleteAction = null;
+    const modal = document.getElementById('cartDeleteConfirmModal');
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 250);
+    }
+}
+
+function executeCartDeleteConfirmed() {
+    if (!pendingDeleteAction) {
+        closeCartDeleteModal();
+        return;
+    }
+    const { catId, delta, isRemoveDirect } = pendingDeleteAction;
+    closeCartDeleteModal();
+
+    let cart = getClientCart();
+    cart = cart.filter(i => i.id !== catId);
+    saveClientCart(cart);
+
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    if (!isStatic) {
+        const actionUrl = isRemoveDirect ? `cart.php?action=remove&id=${encodeURIComponent(catId)}` : `cart.php?action=update_qty&id=${encodeURIComponent(catId)}&delta=${delta}`;
+        window.location.href = actionUrl;
+    } else {
+        syncClientCartUI();
+        if (typeof updateCartBadgeUI === 'function') updateCartBadgeUI();
+    }
+}
+
 function updateCartQtyClient(e, catId, delta) {
     if (e) e.preventDefault();
     let cart = getClientCart();
-    const item = cart.find(i => i.id === catId);
+    let item = cart.find(i => i.id === catId);
+    
+    // In PHP mode if not in clientCart, find from DOM
+    let currentQty = item ? (item.qty || 1) : 1;
+    if (!item) {
+        const domItem = document.querySelector(`.cart-item[data-id="${catId}"]`);
+        if (domItem) {
+            const qtyElem = domItem.querySelector('.qty-val');
+            if (qtyElem) currentQty = parseInt(qtyElem.textContent.trim(), 10) || 1;
+        }
+    }
+
+    // If reducing to 0, show modern custom in-app popup modal
+    if (delta < 0 && (currentQty + delta <= 0)) {
+        promptCartItemDeletion(catId, delta, false);
+        return false;
+    }
+
     if (item) {
         item.qty = (item.qty || 1) + delta;
         if (item.qty <= 0) {
@@ -2236,21 +2502,13 @@ function updateCartQtyClient(e, catId, delta) {
         syncClientCartUI();
         if (typeof updateCartBadgeUI === 'function') updateCartBadgeUI();
     }
+    return true;
 }
 
 function removeCartItemClient(e, catId) {
     if (e) e.preventDefault();
-    let cart = getClientCart();
-    cart = cart.filter(item => item.id !== catId);
-    saveClientCart(cart);
-    
-    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
-    if (!isStatic) {
-        window.location.href = 'cart.php?action=remove&id=' + encodeURIComponent(catId);
-    } else {
-        syncClientCartUI();
-        if (typeof updateCartBadgeUI === 'function') updateCartBadgeUI();
-    }
+    promptCartItemDeletion(catId, -1, true);
+    return false;
 }
 
 function clearCartClient(e) {

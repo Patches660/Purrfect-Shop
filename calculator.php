@@ -200,6 +200,12 @@ require_once __DIR__ . '/header.php';
             </div>
 
             <div style="display: grid; gap: 0.8rem;">
+                <button type="button" onclick="shareCalculatorToLine()" class="btn btn-line-share" style="text-align: center; padding: 0.95rem; font-weight: 900; border-radius: 14px; background: linear-gradient(135deg, #06C755 0%, #05B04B 100%); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 6px 20px rgba(6, 199, 85, 0.35); font-size: 1rem; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 5.82 2 10.53c0 2.93 1.77 5.51 4.5 6.96-.2.74-.72 2.68-.82 3.09-.13.52.19.51.4.37.17-.11 2.3-1.57 3.25-2.22.87.16 1.76.24 2.67.24 5.52 0 10-3.82 10-8.53S17.52 2 12 2z"/>
+                    </svg>
+                    📲 แชร์รายงานค่าเลี้ยงดูเข้า LINE (1-Click)
+                </button>
                 <a href="products.html" class="btn btn-primary" style="text-align: center; padding: 0.95rem; font-weight: 900; border-radius: 14px; background: linear-gradient(135deg, #EA580C 0%, #F97316 100%); border-color: #EA580C;">
                     🐱 เลือกชมน้องแมวพร้อมย้ายบ้าน >
                 </a>
@@ -306,6 +312,27 @@ function calcExpenses() {
     document.getElementById('res_litter_txt').innerText = litterTotal.toLocaleString() + ' ฿';
     document.getElementById('res_health_txt').innerText = healthTotal.toLocaleString() + ' ฿';
     document.getElementById('res_toy_txt').innerText = toyTotal.toLocaleString() + ' ฿';
+}
+
+function shareCalculatorToLine() {
+    const monthly = document.getElementById('res_monthly') ? document.getElementById('res_monthly').innerText : '1,580';
+    const yearly = document.getElementById('res_yearly') ? document.getElementById('res_yearly').innerText : '18,960 ฿';
+    const food = document.getElementById('res_food_txt') ? document.getElementById('res_food_txt').innerText : '650 ฿';
+    const litter = document.getElementById('res_litter_txt') ? document.getElementById('res_litter_txt').innerText : '280 ฿';
+    const health = document.getElementById('res_health_txt') ? document.getElementById('res_health_txt').innerText : '350 ฿';
+    const toy = document.getElementById('res_toy_txt') ? document.getElementById('res_toy_txt').innerText : '300 ฿';
+
+    const shareUrl = window.location.href.split('?')[0].split('#')[0];
+    
+    const message = `🐾 รายงานแผนงบประมาณค่าเลี้ยงดูน้องแมว (Cat Expense Report)\n💰 เฉลี่ยต่อเดือน: ${monthly} บาท/ด. (${yearly}/ปี)\n---------------------------\n🥩 อาหาร: ${food}\n🪴 ทรายแมว: ${litter}\n🩺 สุขภาพ/หยอดยา: ${health}\n🧸 ขนม & ของเล่น: ${toy}\n---------------------------\n✨ วางแผนงบประมาณดูแลเจ้านายของคุณเองคลิก:\n${shareUrl}`;
+
+    const lineShareUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(message)}`;
+    
+    const popupWidth = 600;
+    const popupHeight = 580;
+    const left = (window.innerWidth - popupWidth) / 2;
+    const top = (window.innerHeight - popupHeight) / 2;
+    window.open(lineShareUrl, 'LineShare', `width=${popupWidth},height=${popupHeight},top=${top},left=${left},scrollbars=yes`);
 }
 
 document.addEventListener('DOMContentLoaded', calcExpenses);

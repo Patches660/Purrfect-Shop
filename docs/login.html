@@ -115,8 +115,11 @@
                         🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
                     </button>
 
-                    <!-- Admin Console Shortcut (Only visible for Admins) -->
-                    
+                    <!-- Admin Console Shortcut Link (Clickable Royal Navy & Gold Badge) -->
+                    <a href="admin.html" class="top-badge-pill" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1px solid #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
+                        👑 ผู้ดูแลระบบ (Admin)
+                    </a>
+
                     <!-- User Account / Profile Badge & Paw Points -->
                                             <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                             <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
@@ -175,12 +178,30 @@
                                 <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
                             </a>
                         </li>
-                        <!-- 5 New Features + Services Dropdown Menu -->
+                        <!-- Services & Activities Dropdown Menu -->
                         <li class="nav-dropdown-wrapper" style="position: relative;">
                             <a href="#" class="nav-link nav-dropdown-trigger " style="display: inline-flex; align-items: center; gap: 4px;">
                                 ✨ บริการ & กิจกรรม ▾
                             </a>
                             <ul class="nav-dropdown-menu">
+                                <li>
+                                    <a href="quiz.html" class="">
+                                        <span class="nav-dd-icon">🔮</span>
+                                        <div>
+                                            <strong class="nav-dd-title">AI แมวในฝัน (Matchmaker)</strong>
+                                            <small class="nav-dd-sub">แบบทดสอบหาสายพันธุ์ที่เหมาะกับคุณ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="vaccine_reminder.html" class="">
+                                        <span class="nav-dd-icon">💉</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ตารางวัคซีน & สมุดสุขภาพ</strong>
+                                            <small class="nav-dd-sub">บันทึกนัดหมาย & แจ้งเตือนวัคซีน</small>
+                                        </div>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="reviews.html" class="">
                                         <span class="nav-dd-icon">⭐</span>
@@ -495,16 +516,18 @@
     <div class="auth-card">
         <div class="auth-header">
             <div class="auth-icon-circle">🔑</div>
-            <h1 class="auth-title">เข้าสู่ระบบสมาชิก</h1>
-            <p class="auth-subtitle">เข้าสู่ระบบเพื่อรับส่วนลด 5% และจัดการการจองน้องแมว</p>
+            <h1 class="auth-title">เข้าสู่ระบบสมาชิก & ผู้ดูแลระบบ</h1>
+            <p class="auth-subtitle">เข้าสู่ระบบเพื่อรับส่วนลด 5% หรือเข้าสู่ระบบจัดการหลังบ้าน</p>
         </div>
 
+
+
         
-        <form id="login-form" onsubmit="handleStaticLogin(event)"><script>function handleStaticLogin(e){if(e)e.preventDefault();var id=document.getElementById("identifier").value.trim();var pass=document.getElementById("password").value.trim();var res=clientLogin(id,pass);var oldAlert=document.querySelector(".auth-alert-box");if(oldAlert)oldAlert.remove();var card=document.querySelector(".auth-card")||document.querySelector(".auth-container");var alertBox=document.createElement("div");alertBox.className="auth-alert-box alert-box "+(res.success?"alert-success":"alert-danger");alertBox.style.marginBottom="1.2rem";if(res.success){alertBox.innerHTML='<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">🎉</span><div><strong style="color:#059669;font-size:1.05rem;">เข้าสู่ระบบสำเร็จเรียบร้อย!</strong><div style="font-size:0.88rem;color:#065F46;margin-top:2px;">ยินดีต้อนรับ <strong>คุณ'+res.user.username+'</strong> 🐾 กำลังพาท่านไปหน้าหลัก...</div></div></div>';if(card)card.insertBefore(alertBox,document.getElementById("login-form"));syncHeaderUserUI();setTimeout(function(){window.location.href="index.html?login=success";},800);}else{alertBox.innerHTML='<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">⚠️</span><div><strong style="color:#DC2626;font-size:0.98rem;">เข้าสู่ระบบไม่สำเร็จ:</strong><div style="font-size:0.88rem;color:#991B1B;margin-top:2px;">'+res.message+'</div></div></div>';if(card)card.insertBefore(alertBox,document.getElementById("login-form"));}}</script>
+        <form id="login-form" onsubmit="handleStaticLogin(event)"><script>function handleStaticLogin(e){if(e)e.preventDefault();var id=document.getElementById("identifier").value.trim();var pass=document.getElementById("password").value.trim();var res=clientLogin(id,pass);var oldAlert=document.querySelector(".auth-alert-box");if(oldAlert)oldAlert.remove();var card=document.querySelector(".auth-card")||document.querySelector(".auth-container");var alertBox=document.createElement("div");alertBox.className="auth-alert-box alert-box "+(res.success?"alert-success":"alert-danger");alertBox.style.marginBottom="1.2rem";if(res.success){alertBox.innerHTML='<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">🎉</span><div><strong style="color:#059669;font-size:1.05rem;">เข้าสู่ระบบสำเร็จเรียบร้อย!</strong><div style="font-size:0.88rem;color:#065F46;margin-top:2px;">ยินดีต้อนรับ <strong>คุณ'+res.user.username+'</strong> 🐾 กำลังพาท่านไปที่ระบบ...</div></div></div>';if(card)card.insertBefore(alertBox,document.getElementById("login-form"));syncHeaderUserUI();setTimeout(function(){if(res.user.role==="admin"){window.location.href="admin.html?login=admin_success";}else{window.location.href="index.html?login=success";}},700);}else{alertBox.innerHTML='<div style="display:flex;align-items:center;gap:10px;"><span style="font-size:1.5rem;">⚠️</span><div><strong style="color:#DC2626;font-size:0.98rem;">เข้าสู่ระบบไม่สำเร็จ:</strong><div style="font-size:0.88rem;color:#991B1B;margin-top:2px;">'+res.message+'</div></div></div>';if(card)card.insertBefore(alertBox,document.getElementById("login-form"));}}</script>
             <div class="form-group">
                 <label for="identifier">อีเมล หรือ ชื่อผู้ใช้</label>
                 <input type="text" id="identifier" name="identifier" class="form-control" 
-                       placeholder="เช่น catlover หรือ catlover@example.com" 
+                       placeholder="เช่น admin หรือ catlover" 
                        value="" required autofocus>
             </div>
 
@@ -514,8 +537,10 @@
                        placeholder="รหัสผ่านของคุณ" required>
             </div>
 
-            <div style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.85rem; color: var(--text-muted);">
-                💡 <em>บัญชีสำหรับทดสอบ: Username: <code>catlover</code> / รหัสผ่าน: <code>123456</code></em>
+            <div style="margin-top: 0.5rem; margin-bottom: 1.5rem; font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+                💡 <strong>ข้อมูลบัญชีสำหรับทดสอบ:</strong><br>
+                &bull; <strong>👑 ผู้ดูแลระบบ (Admin):</strong> User: <code>admin</code> / Pass: <code>admin123</code> (หรือ User: <code>Meow</code>)<br>
+                &bull; <strong>🐱 ลูกค้าสมาชิก (Customer):</strong> User: <code>catlover</code> / Pass: <code>123456</code>
             </div>
 
             <button type="button" onclick="handleStaticLogin(event)" class="btn btn-primary" style="width: 100%; padding: 0.9rem; font-size: 1.05rem; cursor: pointer;">เข้าสู่ระบบ 🐾</button>

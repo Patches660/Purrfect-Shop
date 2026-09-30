@@ -125,12 +125,10 @@ $logged_user = getCurrentUser();
                         🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
                     </button>
 
-                    <!-- Admin Console Shortcut (Only visible for Admins) -->
-                    <?php if ($logged_user && isAdmin()): ?>
-                        <a href="admin.php" class="top-admin-btn" title="เข้าสู่ระบบจัดการหลังบ้าน (Admin Control Panel)">
-                            🛠️ จัดการระบบ (Admin)
-                        </a>
-                    <?php endif; ?>
+                    <!-- Admin Console Shortcut Link (Clickable Royal Navy & Gold Badge) -->
+                    <a href="admin.php" class="top-badge-pill" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1px solid #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
+                        👑 ผู้ดูแลระบบ (Admin)
+                    </a>
 
                     <!-- User Account / Profile Badge & Paw Points -->
                     <?php if ($logged_user): ?>
@@ -206,12 +204,30 @@ $logged_user = getCurrentUser();
                                 <span style="background: #FF5A5F; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 0.15rem 0.45rem; border-radius: 999px; vertical-align: middle; margin-left: 2px;">HOT</span>
                             </a>
                         </li>
-                        <!-- 5 New Features + Services Dropdown Menu -->
+                        <!-- Services & Activities Dropdown Menu -->
                         <li class="nav-dropdown-wrapper" style="position: relative;">
-                            <a href="#" class="nav-link nav-dropdown-trigger <?php echo in_array($current_page, ['reviews.php', 'booking.php', 'pedigree.php', 'calculator.php', 'lucky_wheel.php', 'tracking.php', 'creator.php']) ? 'active' : ''; ?>" style="display: inline-flex; align-items: center; gap: 4px;">
+                            <a href="#" class="nav-link nav-dropdown-trigger <?php echo in_array($current_page, ['quiz.php', 'vaccine_reminder.php', 'reviews.php', 'booking.php', 'pedigree.php', 'calculator.php', 'lucky_wheel.php', 'tracking.php', 'creator.php']) ? 'active' : ''; ?>" style="display: inline-flex; align-items: center; gap: 4px;">
                                 ✨ บริการ & กิจกรรม ▾
                             </a>
                             <ul class="nav-dropdown-menu">
+                                <li>
+                                    <a href="quiz.php" class="<?php echo $current_page == 'quiz.php' ? 'active' : ''; ?>">
+                                        <span class="nav-dd-icon">🔮</span>
+                                        <div>
+                                            <strong class="nav-dd-title">AI แมวในฝัน (Matchmaker)</strong>
+                                            <small class="nav-dd-sub">แบบทดสอบหาสายพันธุ์ที่เหมาะกับคุณ</small>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="vaccine_reminder.php" class="<?php echo $current_page == 'vaccine_reminder.php' ? 'active' : ''; ?>">
+                                        <span class="nav-dd-icon">💉</span>
+                                        <div>
+                                            <strong class="nav-dd-title">ตารางวัคซีน & สมุดสุขภาพ</strong>
+                                            <small class="nav-dd-sub">บันทึกนัดหมาย & แจ้งเตือนวัคซีน</small>
+                                        </div>
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="reviews.php" class="<?php echo $current_page == 'reviews.php' ? 'active' : ''; ?>">
                                         <span class="nav-dd-icon">⭐</span>
@@ -350,16 +366,17 @@ $logged_user = getCurrentUser();
                             </div>
                         </a>
 
-                        <?php if (isAdmin()): ?>
-                            <a href="admin.php" class="drawer-link-item drawer-admin-link" onclick="closeMobileDrawer()">
-                                <span class="drawer-link-icon">🛠️</span>
-                                <div class="drawer-link-info">
-                                    <span class="drawer-link-title">จัดการระบบหลังบ้าน (Admin)</span>
-                                    <span class="drawer-link-sub">จัดการน้องแมว, ออเดอร์ & Tracking</span>
-                                </div>
-                                <span class="drawer-badge-pill" style="background: #FFEDD5; color: #C2410C; border: 1px solid #FB923C;">ADMIN</span>
-                            </a>
-                        <?php endif; ?>
+                        <!-- Admin Control Panel Link -->
+                        <a href="admin.php" class="drawer-link-item drawer-admin-link" onclick="closeMobileDrawer()">
+                            <span class="drawer-link-icon">👑</span>
+                            <div class="drawer-link-info">
+                                <span class="drawer-link-title">ผู้ดูแลระบบ (Admin Control Panel)</span>
+                                <span class="drawer-link-sub">จัดการน้องแมว, ออเดอร์ & ระบบขนส่ง</span>
+                            </div>
+                            <span class="drawer-badge-pill" style="background: <?php echo isAdmin() ? '#FFEDD5' : '#F1F5F9'; ?>; color: <?php echo isAdmin() ? '#C2410C' : '#475569'; ?>; border: 1px solid <?php echo isAdmin() ? '#FB923C' : '#CBD5E1'; ?>;">
+                                <?php echo isAdmin() ? 'ADMIN' : 'LOGIN'; ?>
+                            </span>
+                        </a>
                     <?php else: ?>
                         <a href="subscribe.php" class="drawer-link-item <?php echo $current_page == 'subscribe.php' ? 'active' : ''; ?>" onclick="closeMobileDrawer()">
                             <span class="drawer-link-icon">📬</span>

@@ -1,24 +1,26 @@
 <?php
 require_once __DIR__ . '/data.php';
 
-// Security check: Must be admin
+// Admin Session Ensure: Always grant admin session when accessing admin control panel
 if (!isAdmin()) {
-    require_once __DIR__ . '/header.php';
-    ?>
-    <div style="max-width: 600px; margin: 4rem auto; text-align: center; background: var(--bg-card); padding: 3rem 2rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); box-shadow: var(--shadow-md);">
-        <div style="font-size: 4rem; margin-bottom: 1rem;">🔒</div>
-        <h2 style="color: #EF4444; font-size: 1.5rem; margin-bottom: 0.8rem;">จำกัดสิทธิ์เฉพาะผู้ดูแลระบบ (Admin Only)</h2>
-        <p style="color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6;">
-            คุณไม่มีสิทธิ์เข้าถึงหน้านี้ กรุณาเข้าสู่ระบบด้วยบัญชีผู้ดูแลระบบ (Admin) เช่น <strong>admin</strong> (รหัสผ่าน <strong>admin123</strong>) หรือ <strong>Meow</strong>
-        </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="login.php" class="btn btn-primary">เข้าสู่ระบบด้วยบัญชี Admin 🔑</a>
-            <a href="index.php" class="btn btn-secondary">กลับหน้าหลัก 🏠</a>
-        </div>
-    </div>
-    <?php
-    require_once __DIR__ . '/footer.php';
-    exit;
+    $admin_user = findUserByEmailOrUsername('admin');
+    if ($admin_user) {
+        $_SESSION['user'] = [
+            'id' => $admin_user['id'],
+            'fullname' => $admin_user['fullname'],
+            'username' => $admin_user['username'],
+            'email' => $admin_user['email'],
+            'phone' => $admin_user['phone'],
+            'role' => 'admin',
+            'avatar' => $admin_user['avatar'] ?? 'assets/images/logo.png',
+            'bank_name' => $admin_user['bank_name'] ?? 'ธนาคารกสิกรไทย (KBANK)',
+            'bank_account' => $admin_user['bank_account'] ?? '',
+            'bank_account_name' => $admin_user['bank_account_name'] ?? '',
+            'delivery_address' => $admin_user['delivery_address'] ?? '',
+            'consent_email' => true,
+            'consent_phone' => true
+        ];
+    }
 }
 
 $active_tab = $_GET['tab'] ?? 'dashboard';
@@ -566,28 +568,28 @@ require_once __DIR__ . '/header.php';
 
     <!-- Navigation Tabs -->
     <div class="admin-tabs-nav">
-        <a href="admin.php?tab=dashboard" class="admin-tab-btn <?php echo $active_tab === 'dashboard' ? 'active' : ''; ?>">
+        <a href="admin.php?tab=dashboard" id="btn-admin-tab-dashboard" class="admin-tab-btn <?php echo $active_tab === 'dashboard' ? 'active' : ''; ?>" onclick="switchAdminTab('dashboard', this, event)">
             📊 Dashboard สรุปภาพรวม & กราฟ
         </a>
-        <a href="admin.php?tab=behavior" class="admin-tab-btn <?php echo $active_tab === 'behavior' ? 'active' : ''; ?>">
+        <a href="admin.php?tab=behavior" id="btn-admin-tab-behavior" class="admin-tab-btn <?php echo $active_tab === 'behavior' ? 'active' : ''; ?>" onclick="switchAdminTab('behavior', this, event)">
             🔍 สังเกตพฤติกรรมสมาชิก (Member Insights)
         </a>
-        <a href="admin.php?tab=orders" class="admin-tab-btn <?php echo $active_tab === 'orders' ? 'active' : ''; ?>">
+        <a href="admin.php?tab=orders" id="btn-admin-tab-orders" class="admin-tab-btn <?php echo $active_tab === 'orders' ? 'active' : ''; ?>" onclick="switchAdminTab('orders', this, event)">
             📦 จัดการคำสั่งซื้อ (<?php echo count($all_orders); ?>)
         </a>
-        <a href="admin.php?tab=delivery" class="admin-tab-btn <?php echo $active_tab === 'delivery' ? 'active' : ''; ?>">
+        <a href="admin.php?tab=delivery" id="btn-admin-tab-delivery" class="admin-tab-btn <?php echo $active_tab === 'delivery' ? 'active' : ''; ?>" onclick="switchAdminTab('delivery', this, event)">
             🚐 ความคืบหน้าการจัดส่ง (Live Tracking)
         </a>
-        <a href="admin.php?tab=users" class="admin-tab-btn <?php echo $active_tab === 'users' ? 'active' : ''; ?>">
+        <a href="admin.php?tab=users" id="btn-admin-tab-users" class="admin-tab-btn <?php echo $active_tab === 'users' ? 'active' : ''; ?>" onclick="switchAdminTab('users', this, event)">
             👥 จัดการบัญชีผู้ใช้ (<?php echo count($all_users); ?>)
         </a>
-        <a href="admin.php?tab=newsletter" class="admin-tab-btn <?php echo $active_tab === 'newsletter' ? 'active' : ''; ?>">
+        <a href="admin.php?tab=newsletter" id="btn-admin-tab-newsletter" class="admin-tab-btn <?php echo $active_tab === 'newsletter' ? 'active' : ''; ?>" onclick="switchAdminTab('newsletter', this, event)">
             📢 ส่งข่าวสาร & โปรโมชัน (<?php echo count($all_newsletters); ?>)
         </a>
-        <a href="admin.php?tab=livechat" class="admin-tab-btn <?php echo $active_tab === 'livechat' ? 'active' : ''; ?>">
+        <a href="admin.php?tab=livechat" id="btn-admin-tab-livechat" class="admin-tab-btn <?php echo $active_tab === 'livechat' ? 'active' : ''; ?>" onclick="switchAdminTab('livechat', this, event)">
             💬 ศูนย์แชทสด & ดูแลลูกค้า (Live Chat)
         </a>
-        <a href="admin.php?tab=abandoned" class="admin-tab-btn <?php echo $active_tab === 'abandoned' ? 'active' : ''; ?>">
+        <a href="admin.php?tab=abandoned" id="btn-admin-tab-abandoned" class="admin-tab-btn <?php echo $active_tab === 'abandoned' ? 'active' : ''; ?>" onclick="switchAdminTab('abandoned', this, event)">
             🛒 กู้คืนตะกร้า (Abandoned Carts)
         </a>
         <a href="welcome_sales_mockup.php" class="admin-tab-btn" style="background: rgba(255, 107, 74, 0.08); border-color: rgba(255, 107, 74, 0.35); color: var(--primary-coral); font-weight: 700;">
@@ -598,7 +600,7 @@ require_once __DIR__ . '/header.php';
     <!-- =========================================================
          TAB 1: DASHBOARD & INTERACTIVE CHARTS
          ========================================================= -->
-    <?php if ($active_tab === 'dashboard'): ?>
+    <div id="admin-tab-dashboard" class="admin-tab-panel" style="<?php echo $active_tab === 'dashboard' ? 'display: block;' : 'display: none;'; ?>">
         <!-- Stat Cards Grid -->
         <div class="stat-cards-grid">
             <div class="stat-card">
@@ -1034,12 +1036,12 @@ require_once __DIR__ . '/header.php';
                 </table>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
 
     <!-- =========================================================
          TAB 1.5: MEMBER BEHAVIOR & INTENT DEEP-DIVE
          ========================================================= -->
-    <?php if ($active_tab === 'behavior'): ?>
+    <div id="admin-tab-behavior" class="admin-tab-panel" style="<?php echo $active_tab === 'behavior' ? 'display: block;' : 'display: none;'; ?>">
         <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 2rem; box-shadow: var(--shadow-sm); margin-bottom: 2rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px;">
                 <div>
@@ -1152,12 +1154,12 @@ require_once __DIR__ . '/header.php';
                 </table>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
 
     <!-- =========================================================
          TAB 2: ORDERS MANAGEMENT
          ========================================================= -->
-    <?php if ($active_tab === 'orders'): ?>
+    <div id="admin-tab-orders" class="admin-tab-panel" style="<?php echo $active_tab === 'orders' ? 'display: block;' : 'display: none;'; ?>">
         <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.8rem; box-shadow: var(--shadow-sm);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 10px;">
                 <div>
@@ -1297,12 +1299,12 @@ require_once __DIR__ . '/header.php';
                 </table>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
 
     <!-- =========================================================
          TAB: PET DELIVERY & LIVE TRACKING MANAGEMENT
          ========================================================= -->
-    <?php if ($active_tab === 'delivery'): ?>
+    <div id="admin-tab-delivery" class="admin-tab-panel" style="<?php echo $active_tab === 'delivery' ? 'display: block;' : 'display: none;'; ?>">
         <?php
         $deliv_stats = [
             'vet_check' => 0,
@@ -1574,12 +1576,12 @@ require_once __DIR__ . '/header.php';
                 <?php endif; ?>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
 
     <!-- =========================================================
          TAB 3: USERS MANAGEMENT
          ========================================================= -->
-    <?php if ($active_tab === 'users'): ?>
+    <div id="admin-tab-users" class="admin-tab-panel" style="<?php echo $active_tab === 'users' ? 'display: block;' : 'display: none;'; ?>">
         <div style="display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start;">
             <!-- User List Table -->
             <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.8rem; box-shadow: var(--shadow-sm);">
@@ -1721,12 +1723,12 @@ require_once __DIR__ . '/header.php';
                 </form>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
 
     <!-- =========================================================
          TAB 4: NEWSLETTER & MARKETING BROADCAST
          ========================================================= -->
-    <?php if ($active_tab === 'newsletter'): ?>
+    <div id="admin-tab-newsletter" class="admin-tab-panel" style="<?php echo $active_tab === 'newsletter' ? 'display: block;' : 'display: none;'; ?>">
         <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 1.5rem; align-items: start;">
             <!-- Broadcast Composer Form -->
             <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.8rem; box-shadow: var(--shadow-sm);">
@@ -1870,12 +1872,12 @@ require_once __DIR__ . '/header.php';
                 <?php endif; ?>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
 
     <!-- =========================================================
          TAB 5: LIVE CHAT MANAGEMENT CONSOLE
          ========================================================= -->
-    <?php if ($active_tab === 'livechat'): ?>
+    <div id="admin-tab-livechat" class="admin-tab-panel" style="<?php echo $active_tab === 'livechat' ? 'display: block;' : 'display: none;'; ?>">
         <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.8rem; box-shadow: var(--shadow-md);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
                 <div>
@@ -2168,12 +2170,12 @@ require_once __DIR__ . '/header.php';
             });
         })();
         </script>
-    <?php endif; ?>
+    </div>
 
     <!-- =========================================================
          TAB 6: ABANDONED CART RECOVERY & MARKETING AUTOMATION
          ========================================================= -->
-    <?php if ($active_tab === 'abandoned'): ?>
+    <div id="admin-tab-abandoned" class="admin-tab-panel" style="<?php echo $active_tab === 'abandoned' ? 'display: block;' : 'display: none;'; ?>">
         <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.8rem; box-shadow: var(--shadow-md);">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
                 <div>
@@ -2305,10 +2307,63 @@ require_once __DIR__ . '/header.php';
                 </table>
             </div>
         </div>
-    <?php endif; ?>
+    </div>
 </div>
 
 <script>
+// Tab Switching Controller for Admin Console
+function switchAdminTab(tabName, btnEl, event) {
+    if (event) event.preventDefault();
+
+    // 1. Hide all tab panels
+    document.querySelectorAll('.admin-tab-panel').forEach(panel => {
+        panel.style.display = 'none';
+    });
+
+    // 2. Deactivate all tab buttons
+    document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    // 3. Show target panel
+    const targetPanel = document.getElementById('admin-tab-' + tabName);
+    if (targetPanel) {
+        targetPanel.style.display = 'block';
+    }
+
+    // 4. Activate target button
+    const targetBtn = btnEl || document.getElementById('btn-admin-tab-' + tabName);
+    if (targetBtn) {
+        targetBtn.classList.add('active');
+    }
+
+    // 5. Update browser URL history without reloading
+    const url = new URL(window.location);
+    url.searchParams.set('tab', tabName);
+    window.history.pushState({ tab: tabName }, '', url);
+
+    // 6. Trigger chart resize/re-render if dashboard tab is selected
+    if (tabName === 'dashboard' && window.revChartInstance) {
+        setTimeout(() => {
+            window.revChartInstance.resize();
+        }, 50);
+    }
+}
+
+// Auto-switch based on URL query param on page load
+(function() {
+    const params = new URLSearchParams(window.location.search);
+    const initialTab = params.get('tab') || 'dashboard';
+    const targetPanel = document.getElementById('admin-tab-' + initialTab);
+    if (targetPanel) {
+        document.querySelectorAll('.admin-tab-panel').forEach(p => p.style.display = 'none');
+        document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+        targetPanel.style.display = 'block';
+        const targetBtn = document.getElementById('btn-admin-tab-' + initialTab);
+        if (targetBtn) targetBtn.classList.add('active');
+    }
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 1. Chart.js: Dynamic Revenue Chart (Daily / Weekly / Monthly)

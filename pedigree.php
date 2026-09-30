@@ -214,9 +214,15 @@ $selected_pedigree = $pedigrees[$query] ?? $pedigrees['900215001234567'] ?? null
             </div>
         </div>
 
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <button onclick="window.print()" class="btn btn-primary" style="background: #D97706; border-color: #D97706; padding: 0.85rem 2.2rem; font-size: 1.05rem; border-radius: 999px; font-weight: 800; box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35); cursor: pointer; max-width: 100%;">
+        <div style="text-align: center; margin-bottom: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: center;">
+            <button onclick="window.print()" class="btn btn-primary" style="background: #D97706; border-color: #D97706; padding: 0.85rem 2.2rem; font-size: 1.05rem; border-radius: 999px; font-weight: 800; box-shadow: 0 6px 20px rgba(217, 119, 6, 0.35); cursor: pointer;">
                 🖨️ พิมพ์ใบรับรองสายพันธุ์ (Print Official Pedigree)
+            </button>
+            <button type="button" onclick="sharePedigreeToLine()" class="btn btn-line-share" style="background: linear-gradient(135deg, #06C755 0%, #05B04B 100%); color: #fff; border: none; padding: 0.85rem 2.2rem; font-size: 1.05rem; border-radius: 999px; font-weight: 800; box-shadow: 0 6px 20px rgba(6, 199, 85, 0.35); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: transform 0.2s ease, box-shadow 0.2s ease;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 5.82 2 10.53c0 2.93 1.77 5.51 4.5 6.96-.2.74-.72 2.68-.82 3.09-.13.52.19.51.4.37.17-.11 2.3-1.57 3.25-2.22.87.16 1.76.24 2.67.24 5.52 0 10-3.82 10-8.53S17.52 2 12 2z"/>
+                </svg>
+                📲 แชร์ใบเพ็ดเข้า LINE (1-Click)
             </button>
         </div>
     <?php endif; ?>
@@ -417,6 +423,31 @@ function handlePedigreeSearch(e) {
         if (e) e.preventDefault();
         selectChipClient(chip);
     }
+}
+
+function sharePedigreeToLine() {
+    const chipInput = document.getElementById('pedChipInput');
+    const chip = chipInput ? chipInput.value.trim() : '900215001234567';
+    const p = (typeof allPedigrees !== 'undefined' && allPedigrees[chip]) ? allPedigrees[chip] : (allPedigrees ? Object.values(allPedigrees)[0] : null);
+    
+    const catName = p ? `${p.name_th} (${p.breed_th})` : 'น้องแมวสายพันธุ์แท้';
+    const regNo = p ? p.registration_no : '';
+    const registry = p ? p.registry : 'WCF International';
+    
+    // Construct dynamic target URL
+    const baseUrl = window.location.href.split('?')[0].split('#')[0];
+    const shareUrl = `${baseUrl}?chip=${encodeURIComponent(chip)}`;
+    
+    const message = `🏆 ใบรับรองสายพันธุ์ & สมุดวัคซีนดิจิทัล (Digital Pedigree)\n🐱 น้อง: ${catName}\n🩺 หมายเลขไมโครชิป: ${chip}\n📜 เลขทะเบียน: ${regNo} (${registry})\n🏥 การันตีผลตรวจพันธุกรรม & วัคซีนครบ 100%\n\n👉 ดูใบเพ็ดดีกรีฉบับเต็มคลิก:\n${shareUrl}`;
+    
+    const lineShareUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(message)}`;
+    
+    // Open LINE Share popup or window
+    const popupWidth = 600;
+    const popupHeight = 580;
+    const left = (window.innerWidth - popupWidth) / 2;
+    const top = (window.innerHeight - popupHeight) / 2;
+    window.open(lineShareUrl, 'LineShare', `width=${popupWidth},height=${popupHeight},top=${top},left=${left},scrollbars=yes`);
 }
 
 // Auto-run on load from URL parameters (?chip=...)

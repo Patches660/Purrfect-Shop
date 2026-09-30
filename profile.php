@@ -119,9 +119,22 @@ $total_cats_adopted = 0;
 $user_messages = getCustomerMessages($currUser['email'], $currUser['id']);
 
 $total_spent = 0;
+$adoptedCats = [];
 foreach ($user_orders as $ord) {
     $total_cats_adopted += $ord['cat_count'] ?? 0;
     $total_spent += $ord['total'] ?? 0;
+    foreach ($ord['items'] ?? [] as $it) {
+        $adoptedCats[] = [
+            'id' => $it['id'] ?? '',
+            'name' => $it['name'] ?? 'น้องแมว',
+            'breed' => $it['breed'] ?? 'สายพันธุ์แท้',
+            'image' => $it['image'] ?? 'cat_british.jpg',
+            'age' => $it['age'] ?? '2.5 เดือน',
+            'gender' => $it['gender'] ?? 'ไม่ระบุ',
+            'order_id' => $ord['order_id'] ?? '',
+            'created_at' => $ord['created_at'] ?? ''
+        ];
+    }
 }
 
 require_once __DIR__ . '/header.php';
@@ -211,51 +224,78 @@ require_once __DIR__ . '/header.php';
     </div>
 
     <!-- Navigation Tabs for Profile -->
-    <div style="display: flex; gap: 0.6rem; margin-bottom: 1.8rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.8rem; flex-wrap: wrap;">
+    <div class="profile-tabs-nav">
         <button type="button" 
-                class="cat-filter-btn <?php echo $active_tab === 'profile' ? 'active' : ''; ?>" 
+                class="profile-nav-btn <?php echo $active_tab === 'profile' ? 'active' : ''; ?>" 
                 id="btn-tab-profile"
                 onclick="switchProfileTab('profile', this)">
-            👤 ข้อมูลส่วนตัว & รูปโปรไฟล์
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">ข้อมูลส่วนตัว & รูปโปรไฟล์</span>
         </button>
+
         <button type="button" 
-                class="cat-filter-btn <?php echo $active_tab === 'coupons' ? 'active' : ''; ?>" 
+                class="profile-nav-btn <?php echo $active_tab === 'vaccine' ? 'active' : ''; ?>" 
+                id="btn-tab-vaccine"
+                onclick="switchProfileTab('vaccine', this)">
+            <span class="nav-icon">💉</span>
+            <span class="nav-label">สมุดวัคซีน & สุขภาพ</span>
+            <span class="nav-badge nav-badge-mint" id="vaccine-counter-badge"><?php echo count($adoptedCats); ?></span>
+        </button>
+
+        <button type="button" 
+                class="profile-nav-btn <?php echo $active_tab === 'coupons' ? 'active' : ''; ?>" 
                 id="btn-tab-coupons"
                 onclick="switchProfileTab('coupons', this)">
-            🎁 คูปอง & รางวัลจากวงล้อ <span id="rewards-counter-badge" style="background: var(--primary-coral); color: #fff; font-size: 0.72rem; padding: 2px 7px; border-radius: 999px; margin-left: 4px; display: inline-block;">0</span>
+            <span class="nav-icon">🎁</span>
+            <span class="nav-label">คูปอง & รางวัลจากวงล้อ</span>
+            <span class="nav-badge nav-badge-coral" id="rewards-counter-badge">0</span>
         </button>
+
         <button type="button" 
-                class="cat-filter-btn <?php echo $active_tab === 'payment' ? 'active' : ''; ?>" 
+                class="profile-nav-btn <?php echo $active_tab === 'payment' ? 'active' : ''; ?>" 
                 id="btn-tab-payment"
                 onclick="switchProfileTab('payment', this)">
-            💳 ข้อมูลการชำระเงิน & ที่อยู่จัดส่ง
+            <span class="nav-icon">💳</span>
+            <span class="nav-label">ข้อมูลการชำระเงิน & ที่อยู่จัดส่ง</span>
         </button>
+
         <button type="button" 
-                class="cat-filter-btn <?php echo $active_tab === 'orders' ? 'active' : ''; ?>" 
+                class="profile-nav-btn <?php echo $active_tab === 'orders' ? 'active' : ''; ?>" 
                 id="btn-tab-orders"
                 onclick="switchProfileTab('orders', this)">
-            📦 ประวัติการสั่งซื้อ & แมวที่ชำระแล้ว (<span id="orders-tab-count"><?php echo count($user_orders); ?></span>)
+            <span class="nav-icon">📦</span>
+            <span class="nav-label">ประวัติการสั่งซื้อ & แมวที่ชำระแล้ว</span>
+            <span class="nav-badge nav-badge-amber" id="orders-tab-count"><?php echo count($user_orders); ?></span>
         </button>
+
         <button type="button" 
-                class="cat-filter-btn <?php echo $active_tab === 'points' ? 'active' : ''; ?>" 
+                class="profile-nav-btn <?php echo $active_tab === 'points' ? 'active' : ''; ?>" 
                 id="btn-tab-points"
                 onclick="switchProfileTab('points', this)">
-            🐾 สะสมแต้ม Paw Points & Tiers
+            <span class="nav-icon">🐾</span>
+            <span class="nav-label">สะสมแต้ม Paw Points & Tiers</span>
         </button>
+
         <button type="button" 
-                class="cat-filter-btn <?php echo $active_tab === 'inbox' ? 'active' : ''; ?>" 
+                class="profile-nav-btn <?php echo $active_tab === 'inbox' ? 'active' : ''; ?>" 
                 id="btn-tab-inbox"
                 onclick="switchProfileTab('inbox', this)">
-            📬 กล่องจดหมาย & ข่าวสารร้านค้า (<?php echo count($user_messages); ?>)
+            <span class="nav-icon">📬</span>
+            <span class="nav-label">กล่องจดหมาย & ข่าวสารร้านค้า</span>
+            <span class="nav-badge nav-badge-blue" id="inbox-tab-count"><?php echo count($user_messages); ?></span>
         </button>
-        <a href="tracking.php" class="cat-filter-btn" style="text-decoration: none; color: var(--primary-coral); border-color: var(--primary-coral);">
-            📍 ติดตามการจัดส่งสด
+
+        <a href="tracking.php" class="profile-nav-btn profile-nav-link-track" title="เปิดหน้าติดตามสถานะการจัดส่งแบบสด">
+            <span class="nav-icon">📍</span>
+            <span class="nav-label">ติดตามการจัดส่งสด</span>
+            <span class="nav-pulse-dot"></span>
         </a>
-        <?php if (isAdmin()): ?>
-            <a href="admin.php" class="cat-filter-btn" style="background: #1E293B; color: #FBBF24; border-color: #F59E0B; text-decoration: none;" title="เปิดหน้าจัดการระบบ">
-                🛠️ จัดการระบบ (Admin Panel) &rarr;
-            </a>
-        <?php endif; ?>
+
+        <a href="admin.php" class="profile-nav-btn profile-nav-link-admin" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1.5px solid #F59E0B; font-weight: 800; box-shadow: 0 4px 12px rgba(30, 27, 75, 0.25);" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
+            <span class="nav-icon">👑</span>
+            <span class="nav-label">ผู้ดูแลระบบ (Admin) &rarr;</span>
+            <span class="nav-badge" style="background: #F59E0B; color: #1E1B4B; font-weight: 900; font-size: 0.68rem;">MASTER</span>
+        </a>
     </div>
 
     <!-- =========================================================
@@ -283,8 +323,8 @@ require_once __DIR__ . '/header.php';
                             ['src' => 'assets/images/logo.png', 'label' => 'โลโก้ร้าน'],
                             ['src' => 'assets/images/cat_british.jpg', 'label' => 'บริติช'],
                             ['src' => 'assets/images/cat_ragdoll.jpg', 'label' => 'แร็กดอลล์'],
-                            ['src' => 'assets/images/cat_scottishfold.jpg', 'label' => 'สก็อตติช'],
                             ['src' => 'assets/images/cat_persian.jpg', 'label' => 'เปอร์เซีย'],
+                            ['src' => 'assets/images/cat_khao_manee.jpg', 'label' => 'ขาวมณี'],
                             ['src' => 'assets/images/cat_mainecoon.jpg', 'label' => 'เมนคูน']
                         ];
                         $currAvatar = $currUser['avatar'] ?? 'assets/images/logo.png';
@@ -475,18 +515,24 @@ require_once __DIR__ . '/header.php';
                                     </span>
                                 </div>
                                 <div>
-                                    <div style="display: flex; gap: 6px;">
+                                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                                         <a href="tracking.php?track=<?php echo urlencode($order['tracking_id'] ?? $order['order_id']); ?>" 
                                            class="btn btn-primary btn-sm" 
-                                           style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;" 
+                                           style="padding: 0.38rem 0.85rem; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;" 
                                            title="ติดตามสถานะการส่งมอบสัตว์เลี้ยงแบบเรียลไทม์">
                                             📍 ติดตามส่งมอบ
                                         </a>
                                         <a href="order_letter.php?id=<?php echo urlencode($order['order_id']); ?>" target="_blank" 
                                            class="btn btn-secondary btn-sm" 
-                                           style="padding: 0.35rem 0.75rem; font-size: 0.8rem; font-weight: 700; color: #92400E; background: #FEF3C7; border-color: #FCD34D; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;" 
+                                           style="padding: 0.38rem 0.85rem; font-size: 0.8rem; font-weight: 700; color: #92400E; background: #FEF3C7; border-color: #FCD34D; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;" 
                                            title="เปิดดูจดหมายตอบรับและใบรับประกันอย่างเป็นทางการ">
                                             📜 จดหมายตอบรับ
+                                        </a>
+                                        <a href="vaccine_reminder.php" 
+                                           class="btn btn-secondary btn-sm" 
+                                           style="padding: 0.38rem 0.85rem; font-size: 0.8rem; font-weight: 700; color: #065F46; background: #ECFDF5; border-color: #A7F3D0; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;" 
+                                           title="เปิดดูสมุดสุขภาพและตารางนัดหมายวัคซีน">
+                                            💉 สมุดวัคซีน
                                         </a>
                                     </div>
                                 </div>
@@ -500,18 +546,23 @@ require_once __DIR__ . '/header.php';
 
                                 <div style="display: flex; flex-direction: column; gap: 0.8rem;">
                                     <?php foreach ($order['items'] as $item): ?>
-                                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem 0; border-bottom: 1px dashed var(--border-color);">
+                                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px dashed var(--border-color); flex-wrap: wrap;">
                                             <div style="display: flex; align-items: center; gap: 1rem;">
                                                 <img src="assets/images/<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>" 
-                                                     style="width: 55px; height: 55px; border-radius: 8px; object-fit: cover; border: 1.5px solid var(--border-color);">
+                                                     style="width: 58px; height: 58px; border-radius: 10px; object-fit: cover; border: 1.5px solid var(--border-color);">
                                                 <div>
-                                                    <strong style="color: var(--text-main); font-size: 0.95rem;"><?php echo $item['name']; ?></strong>
-                                                    <div style="font-size: 0.8rem; color: var(--text-muted);">
+                                                    <strong style="color: var(--text-main); font-size: 0.95rem; display: block;"><?php echo $item['name']; ?></strong>
+                                                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">
                                                         <?php echo $item['breed']; ?> &bull; เพศ: <?php echo $item['gender']; ?> (x<?php echo $item['qty']; ?>)
                                                     </div>
+                                                    <a href="vaccine_reminder.php?cat_name=<?php echo urlencode($item['name']); ?>&breed=<?php echo urlencode($item['breed']); ?>&image=<?php echo urlencode($item['image']); ?>" 
+                                                       class="btn-vaccine-link" 
+                                                       style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                                        💉 ดูตารางวัคซีนน้องตัวนี้ ➔
+                                                    </a>
                                                 </div>
                                             </div>
-                                            <span style="font-weight: 700; color: var(--primary-coral); font-family: 'Outfit';">
+                                            <span style="font-weight: 700; color: var(--primary-coral); font-family: 'Outfit'; font-size: 1.05rem;">
                                                 <?php echo number_format($item['price'] * $item['qty']); ?> ฿
                                             </span>
                                         </div>
@@ -1270,7 +1321,486 @@ require_once __DIR__ . '/header.php';
             </div>
         </div>
     </div>
+
+    <!-- =========================================================
+         TAB 7: สมุดวัคซีน & แผนสุขภาพ (Cat Health & Vaccines)
+         ========================================================= -->
+    <div id="tab-vaccine" class="profile-tab-panel" style="<?php echo $active_tab === 'vaccine' ? 'display: block;' : 'display: none;'; ?>">
+        <div class="checkout-block">
+            <!-- Tab Header -->
+            <div class="checkout-block-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; border-bottom: 1.5px solid var(--border-color); padding-bottom: 1.2rem; margin-bottom: 1.5rem;">
+                <div>
+                    <h3 class="checkout-block-title" style="margin: 0; display: flex; align-items: center; gap: 8px; font-size: 1.35rem;">
+                        <span>💉 สมุดวัคซีน & ปฏิทินสุขภาพน้องแมว</span>
+                    </h3>
+                    <p style="font-size: 0.88rem; color: var(--text-muted); margin: 4px 0 0 0;">
+                        ตรวจเช็คสถานะวัคซีนของน้องแมวแต่ละตัว พร้อมดูวันนัดหมายบนปฏิทินแบบเรียลไทม์
+                    </p>
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <a href="vaccine_reminder.php" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.65rem 1.3rem; font-weight: 800; font-size: 0.88rem; text-decoration: none; border-radius: 12px;">
+                        🩺 เปิดคำนวณตารางวัคซีนฉบับเต็ม ➔
+                    </a>
+                </div>
+            </div>
+
+            <!-- Two-Column Layout: Left = Cats List & Filters | Right = Calendar & Appointments -->
+            <div class="vaccine-twocol-grid" style="display: grid; grid-template-columns: 1.05fr 1fr; gap: 1.8rem; align-items: start;">
+                
+                <!-- ================= LEFT COLUMN: CATS LIST & VACCINE STATUS FILTER ================= -->
+                <div class="vaccine-left-col">
+                    <!-- Filter Controls Header -->
+                    <div style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 18px; padding: 1.2rem; margin-bottom: 1.2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; flex-wrap: wrap; gap: 6px;">
+                            <span style="font-size: 0.9rem; font-weight: 800; color: #1E293B; display: flex; align-items: center; gap: 6px;">
+                                🔍 ฟิลเตอร์ตรวจสถานะวัคซีน:
+                            </span>
+                            <span id="filter-count-badge" style="font-size: 0.75rem; background: #E2E8F0; color: #475569; font-weight: 800; padding: 2px 8px; border-radius: 999px;">
+                                แสดงทั้งหมด
+                            </span>
+                        </div>
+
+                        <!-- Status Filter Buttons -->
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.8rem;">
+                            <button type="button" class="vaccine-filter-chip active" onclick="filterVaccineCats('all', this)">
+                                🐾 ทั้งหมด
+                            </button>
+                            <button type="button" class="vaccine-filter-chip" onclick="filterVaccineCats('due', this)">
+                                ⚠️ ถึงกำหนด / เร็วๆ นี้
+                            </button>
+                            <button type="button" class="vaccine-filter-chip" onclick="filterVaccineCats('pending', this)">
+                                ⏳ รอฉีด
+                            </button>
+                            <button type="button" class="vaccine-filter-chip" onclick="filterVaccineCats('completed', this)">
+                                ✅ ฉีดครบแล้ว
+                            </button>
+                        </div>
+
+                        <!-- Quick Search Input -->
+                        <div style="position: relative;">
+                            <input type="text" id="vaccineCatSearchInput" oninput="searchVaccineCats(this.value)" 
+                                   placeholder="พิมพ์ชื่อ หรือสายพันธุ์น้องแมวเพื่อค้นหา..." 
+                                   style="width: 100%; padding: 0.55rem 0.9rem 0.55rem 2.2rem; border-radius: 10px; border: 1.5px solid #CBD5E1; font-size: 0.82rem; background: #FFFFFF;">
+                            <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: #94A3B8;">🔎</span>
+                        </div>
+                    </div>
+
+                    <!-- Cats List Container -->
+                    <div id="profile-vaccine-cats-container" style="display: flex; flex-direction: column; gap: 1rem;">
+                        <!-- Dynamically populated or rendered from PHP -->
+                        <?php 
+                        // Fallback sample cats if empty
+                        $renderCats = !empty($adoptedCats) ? $adoptedCats : [
+                            ['id' => 'cat_persian', 'name' => 'น้องปุยหิมะ', 'breed' => 'เปอร์เซีย (Persian)', 'image' => 'cat_persian.jpg', 'age' => '3 เดือน', 'gender' => 'เมีย'],
+                            ['id' => 'cat_ragdoll', 'name' => 'น้องคอตตอน', 'breed' => 'แร็กดอลล์ (Ragdoll)', 'image' => 'cat_ragdoll.jpg', 'age' => '2.5 เดือน', 'gender' => 'เมีย'],
+                            ['id' => 'cat_americanshorthair', 'name' => 'น้องการ์ฟิลด์', 'breed' => 'American Shorthair', 'image' => 'cat_americanshorthair.jpg', 'age' => '2.5 เดือน', 'gender' => 'ผู้']
+                        ];
+                        ?>
+                        <?php foreach ($renderCats as $idx => $c): ?>
+                            <div class="cat-vaccine-item-card <?php echo $idx === 0 ? 'selected-cat-card' : ''; ?>" 
+                                 data-cat-name="<?php echo htmlspecialchars($c['name']); ?>"
+                                 data-cat-breed="<?php echo htmlspecialchars($c['breed']); ?>"
+                                 data-cat-image="<?php echo htmlspecialchars($c['image']); ?>"
+                                 data-cat-age="<?php echo htmlspecialchars($c['age']); ?>"
+                                 onclick="selectCatForCalendar('<?php echo htmlspecialchars(addslashes($c['name'])); ?>', '<?php echo htmlspecialchars(addslashes($c['breed'])); ?>', '<?php echo htmlspecialchars(addslashes($c['image'])); ?>', this)"
+                                 style="background: #FFFFFF; border: 2px solid <?php echo $idx === 0 ? '#10B981' : '#E2E8F0'; ?>; border-radius: 16px; padding: 1.1rem; box-shadow: 0 4px 14px rgba(0,0,0,0.03); cursor: pointer; transition: all 0.25s ease; position: relative;">
+                                
+                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 0.8rem;">
+                                    <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
+                                        <img src="assets/images/<?php echo htmlspecialchars($c['image']); ?>" alt="<?php echo htmlspecialchars($c['name']); ?>" 
+                                             style="width: 60px; height: 60px; border-radius: 14px; object-fit: cover; border: 2px solid #10B981; flex-shrink: 0;">
+                                        <div style="overflow: hidden;">
+                                            <strong style="font-size: 1.05rem; color: #1E293B; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                <?php echo htmlspecialchars($c['name']); ?>
+                                            </strong>
+                                            <span style="display: inline-block; font-size: 0.72rem; background: #D1FAE5; color: #065F46; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-top: 2px;">
+                                                <?php echo htmlspecialchars($c['breed']); ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <span class="cat-status-badge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #EFF6FF; color: #1E40AF; white-space: nowrap;">
+                                        ⏳ ติดตามวัคซีน
+                                    </span>
+                                </div>
+
+                                <!-- Vaccine Progress bar -->
+                                <div style="background: #F8FAFC; border-radius: 10px; padding: 0.6rem 0.8rem; margin-bottom: 0.8rem; border: 1px solid #E2E8F0;">
+                                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: #475569; margin-bottom: 4px;">
+                                        <span>ความคืบหน้าการฉีด:</span>
+                                        <span class="cat-progress-text" style="color: #059669;">2/6 เข็ม (33%)</span>
+                                    </div>
+                                    <div style="width: 100%; height: 6px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
+                                        <div class="cat-progress-bar" style="width: 33%; height: 100%; background: linear-gradient(90deg, #10B981, #059669); border-radius: 999px;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Card Action Footer -->
+                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                    <span style="font-size: 0.75rem; color: #059669; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                                        📅 คลิกเพื่อดูนัดบนปฏิทิน
+                                    </span>
+                                    <a href="vaccine_reminder.php?cat_name=<?php echo urlencode($c['name']); ?>&breed=<?php echo urlencode($c['breed']); ?>&image=<?php echo urlencode($c['image']); ?>" 
+                                       onclick="event.stopPropagation();"
+                                       class="btn btn-secondary btn-sm btn-vaccine-link" 
+                                       style="font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 8px; color: #059669; background: #ECFDF5; border-color: #A7F3D0; text-decoration: none;">
+                                        💉 สมุดวัคซีน ➔
+                                    </a>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+                <!-- ================= RIGHT COLUMN: CALENDAR & APPOINTMENTS ================= -->
+                <div class="vaccine-right-col" style="background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 24px; padding: 1.6rem; box-shadow: 0 8px 25px rgba(0,0,0,0.04); position: sticky; top: 1rem;">
+                    
+                    <!-- Selected Cat Banner on Calendar -->
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border: 1.5px solid #A7F3D0; border-radius: 14px; padding: 0.75rem 1rem; margin-bottom: 1.2rem;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.4rem;">📅</span>
+                            <div>
+                                <span style="font-size: 0.72rem; color: #047857; font-weight: 800; text-transform: uppercase; display: block;">ปฏิทินนัดหมายสำหรับ:</span>
+                                <strong id="cal-selected-cat-name" style="font-size: 0.95rem; color: #064E3B;">น้องปุยหิมะ (ทุกรายการ)</strong>
+                            </div>
+                        </div>
+                        <button type="button" onclick="showAllCatsOnCalendar()" class="btn btn-secondary btn-sm" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 8px; background: #FFFFFF; color: #065F46; border: 1px solid #6EE7B7;">
+                            แสดงแมวทั้งหมด
+                        </button>
+                    </div>
+
+                    <!-- Calendar Header & Navigation -->
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h4 id="calendarMonthTitle" style="font-size: 1.15rem; font-weight: 900; color: #1E293B; margin: 0;">
+                            กันยายน 2026
+                        </h4>
+                        <div style="display: flex; gap: 6px; align-items: center;">
+                            <button type="button" onclick="changeCalendarMonth(-1)" class="btn btn-secondary btn-sm" style="padding: 4px 10px; font-weight: 800; border-radius: 8px; font-size: 0.8rem;">
+                                ◀
+                            </button>
+                            <button type="button" onclick="goToTodayCalendar()" class="btn btn-secondary btn-sm" style="padding: 4px 10px; font-weight: 800; border-radius: 8px; font-size: 0.75rem;">
+                                วันนี้
+                            </button>
+                            <button type="button" onclick="changeCalendarMonth(1)" class="btn btn-secondary btn-sm" style="padding: 4px 10px; font-weight: 800; border-radius: 8px; font-size: 0.8rem;">
+                                ▶
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Calendar Days of Week Header -->
+                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: 800; font-size: 0.75rem; color: #64748B; margin-bottom: 6px;">
+                        <span style="color: #EF4444;">อา.</span>
+                        <span>จ.</span>
+                        <span>อ.</span>
+                        <span>พ.</span>
+                        <span>พฤ.</span>
+                        <span>ศ.</span>
+                        <span style="color: #3B82F6;">ส.</span>
+                    </div>
+
+                    <!-- Calendar Grid Container -->
+                    <div id="calendarGridDays" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 1.4rem;">
+                        <!-- Generated dynamically by JS -->
+                    </div>
+
+                    <!-- Selected Date Appointment Details Section -->
+                    <div id="calendarEventDetailsBox" style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 1.1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                            <strong id="selectedDateLabel" style="font-size: 0.9rem; color: #1E293B; display: flex; align-items: center; gap: 6px;">
+                                📋 นัดหมายในวันที่เลือก
+                            </strong>
+                            <span id="appointmentCountBadge" style="font-size: 0.72rem; background: #D1FAE5; color: #065F46; font-weight: 800; padding: 2px 7px; border-radius: 999px;">
+                                1 นัดหมาย
+                            </span>
+                        </div>
+
+                        <!-- Appointments List -->
+                        <div id="calendarEventsList" style="display: flex; flex-direction: column; gap: 0.7rem;">
+                            <!-- Dynamically generated -->
+                        </div>
+                    </div>
+
+                    <!-- Quick LINE & Vet Appointment CTA -->
+                    <div style="margin-top: 1.2rem; text-align: center;">
+                        <a href="https://line.me" target="_blank" class="btn btn-primary" style="width: 100%; padding: 0.7rem; font-weight: 800; font-size: 0.88rem; border-radius: 12px; background: #06C755; border: none; box-shadow: 0 4px 12px rgba(6,199,85,0.25); display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; color: #fff;">
+                            💬 ปรึกษาสัตวแพทย์ & จองคิวฉีดวัคซีนผ่าน LINE
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+/* Modern Profile & Luxury Buttons Redesign */
+.profile-tabs-nav {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 1.8rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.8rem;
+    flex-wrap: wrap;
+}
+/* Modern Luxury Profile Tab Navigation */
+.profile-tabs-nav {
+    display: flex;
+    gap: 0.65rem;
+    margin-bottom: 2.2rem;
+    padding: 0.85rem;
+    background: #FFFFFF;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+    flex-wrap: wrap;
+    align-items: center;
+}
+.profile-nav-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 0.7rem 1.25rem !important;
+    border-radius: 999px !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+    background: #F8FAFC !important;
+    border: 1.5px solid #E2E8F0 !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    position: relative;
+    user-select: none;
+}
+.profile-nav-btn:hover {
+    color: var(--primary-coral) !important;
+    background: #FFFFFF !important;
+    border-color: rgba(255, 117, 86, 0.45) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 18px rgba(255, 117, 86, 0.16) !important;
+}
+.profile-nav-btn.active {
+    background: linear-gradient(135deg, #FF7556 0%, #FF533D 100%) !important;
+    color: #FFFFFF !important;
+    border-color: transparent !important;
+    box-shadow: 0 8px 22px rgba(255, 117, 86, 0.38) !important;
+    transform: translateY(-1px) !important;
+}
+.profile-nav-btn .nav-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+}
+.profile-nav-btn .nav-label {
+    font-size: 0.88rem;
+    font-weight: 750;
+    line-height: 1.2;
+}
+.profile-nav-btn .nav-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 999px;
+    line-height: 1;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+.nav-badge-coral {
+    background: rgba(255, 117, 86, 0.15);
+    color: var(--primary-coral);
+    border: 1px solid rgba(255, 117, 86, 0.3);
+}
+.nav-badge-mint {
+    background: #D1FAE5;
+    color: #065F46;
+    border: 1px solid #A7F3D0;
+}
+.nav-badge-amber {
+    background: #FEF3C7;
+    color: #92400E;
+    border: 1px solid #FCD34D;
+}
+.nav-badge-blue {
+    background: #DBEAFE;
+    color: #1E40AF;
+    border: 1px solid #BFDBFE;
+}
+.profile-nav-btn.active .nav-badge {
+    background: rgba(255, 255, 255, 0.28) !important;
+    color: #FFFFFF !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+}
+.profile-nav-link-track {
+    background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%) !important;
+    border-color: #FDBA74 !important;
+    color: #C2410C !important;
+}
+.profile-nav-link-track:hover {
+    background: #FFF !important;
+    border-color: #FF7556 !important;
+    color: #FF7556 !important;
+}
+.nav-pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #10B981;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
+    animation: pulseDot 2s infinite ease-in-out;
+}
+@keyframes pulseDot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+}
+.profile-nav-link-admin {
+    background: #1E293B !important;
+    color: #FBBF24 !important;
+    border-color: #F59E0B !important;
+}
+.profile-nav-link-admin:hover {
+    background: #0F172A !important;
+    color: #FDE68A !important;
+    box-shadow: 0 6px 18px rgba(245, 158, 11, 0.25) !important;
+}
+.cat-filter-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 0.65rem 1.25rem !important;
+    border-radius: 999px !important;
+    font-size: 0.88rem !important;
+    font-weight: 700 !important;
+    color: var(--text-secondary) !important;
+    background: var(--bg-card) !important;
+    border: 1.5px solid var(--border-color) !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+}
+.cat-filter-btn:hover {
+    color: var(--primary-coral) !important;
+    border-color: rgba(255, 117, 86, 0.45) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(255, 117, 86, 0.18) !important;
+    background: #FFFFFF !important;
+}
+.cat-filter-btn.active {
+    background: linear-gradient(135deg, #FF7556 0%, #FF533D 100%) !important;
+    color: #FFFFFF !important;
+    border-color: transparent !important;
+    box-shadow: 0 6px 18px rgba(255, 117, 86, 0.35) !important;
+    transform: translateY(-1px) !important;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #FF7556 0%, #FF533D 100%) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 800 !important;
+    box-shadow: 0 4px 14px rgba(255, 117, 86, 0.28) !important;
+    transition: all 0.25s ease !important;
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, #FF533D 0%, #E03E2D 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 22px rgba(255, 117, 86, 0.4) !important;
+}
+.btn-secondary {
+    background: #F8FAFC !important;
+    color: #334155 !important;
+    border: 1.5px solid #CBD5E1 !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+    transition: all 0.25s ease !important;
+}
+.btn-secondary:hover {
+    background: #EDF2F7 !important;
+    border-color: #94A3B8 !important;
+    color: #0F172A !important;
+    transform: translateY(-2px) !important;
+}
+.vaccine-filter-chip {
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    border: 1.5px solid #CBD5E1;
+    background: #FFFFFF;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.vaccine-filter-chip:hover {
+    border-color: #10B981;
+    color: #059669;
+}
+.vaccine-filter-chip.active {
+    background: #10B981;
+    color: #FFFFFF;
+    border-color: #10B981;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+.cat-vaccine-item-card:hover {
+    border-color: #10B981 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.12) !important;
+}
+.cat-vaccine-item-card.selected-cat-card {
+    border-color: #10B981 !important;
+    background: #F0FDF4 !important;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.18) !important;
+}
+.cal-day-cell {
+    min-height: 42px;
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    position: relative;
+}
+.cal-day-cell:hover {
+    background: #F1F5F9;
+}
+.cal-day-cell.other-month {
+    color: #CBD5E1;
+}
+.cal-day-cell.today {
+    border-color: #FF7556;
+    background: rgba(255, 117, 86, 0.06);
+    color: var(--primary-coral);
+    font-weight: 900;
+}
+.cal-day-cell.selected-day {
+    background: #10B981 !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+}
+.cal-event-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-top: 2px;
+}
+@media (max-width: 860px) {
+    .vaccine-twocol-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
 
 <script>
 function switchProfileTab(tabName, btnElement) {
@@ -1282,13 +1812,17 @@ function switchProfileTab(tabName, btnElement) {
     if (target) target.style.display = 'block';
 
     // Update active button state
-    document.querySelectorAll('.cat-filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.profile-nav-btn, .cat-filter-btn').forEach(b => b.classList.remove('active'));
     
     if (btnElement) {
         btnElement.classList.add('active');
     } else {
         const btn = document.getElementById('btn-tab-' + tabName);
         if (btn) btn.classList.add('active');
+    }
+
+    if (tabName === 'vaccine') {
+        renderCalendar();
     }
 
     // Update URL query string without reload
@@ -1315,7 +1849,301 @@ function copyCouponCode(code, btn) {
     });
 }
 
-// Client-side hydration for Profile & Lucky Wheel Rewards
+// ================= VACCINE CALENDAR & FILTER LOGIC =================
+const standardSchedulePlan = [
+    { id: 'vac_1', ageWeeks: 8, title: 'วัคซีนรวมแมว (FPLV/FHV/FCV) เข็ม 1', icon: '💉', color: '#3B82F6' },
+    { id: 'vac_2', ageWeeks: 9, title: 'ถ่ายพยาธิ & หยอดเห็บหมัด Spot-on', icon: '💊', color: '#10B981' },
+    { id: 'vac_3', ageWeeks: 12, title: 'วัคซีนรวม เข็ม 2 + ลิวคีเมีย เข็ม 1', icon: '🛡️', color: '#8B5CF6' },
+    { id: 'vac_4', ageWeeks: 16, title: 'วัคซีนพิษสุนัขบ้า + ลิวคีเมีย เข็ม 2', icon: '👑', color: '#EA580C' },
+    { id: 'vac_5', ageWeeks: 24, title: 'ตรวจสุขภาพ 6 เดือน & วางแผนทำหมัน', icon: '🩺', color: '#059669' },
+    { id: 'vac_6', ageWeeks: 52, title: 'วัคซีนรวม + พิษสุนัขบ้า กระตุ้นประจำปี', icon: '🎂', color: '#D97706' }
+];
+
+let calDate = new Date();
+let selectedCatFilter = 'all';
+let selectedCalCat = null;
+let selectedCalDayStr = null;
+
+function getCatVaccineSchedule(catName, breed, ageStr) {
+    let monthsAgo = 2.5;
+    if (ageStr) {
+        if (ageStr.includes('3')) monthsAgo = 3;
+        else if (ageStr.includes('2.5')) monthsAgo = 2.5;
+        else if (ageStr.includes('2')) monthsAgo = 2;
+        else if (ageStr.includes('4')) monthsAgo = 4;
+    }
+    const catDob = new Date();
+    catDob.setDate(catDob.getDate() - Math.round(monthsAgo * 30.5));
+
+    const savedChecks = JSON.parse(localStorage.getItem(`cat_health_${catName}`) || '{}');
+
+    return standardSchedulePlan.map(item => {
+        const targetDate = new Date(catDob);
+        targetDate.setDate(targetDate.getDate() + (item.ageWeeks * 7));
+        const dateStr = targetDate.toISOString().split('T')[0];
+        const isDone = savedChecks[item.id] === true;
+        const isPast = targetDate < new Date();
+        let status = isDone ? 'completed' : (isPast ? 'due' : 'pending');
+
+        return {
+            ...item,
+            catName,
+            breed,
+            targetDate,
+            dateStr,
+            isDone,
+            status
+        };
+    });
+}
+
+function getAllCatsList() {
+    const cards = document.querySelectorAll('.cat-vaccine-item-card');
+    const list = [];
+    cards.forEach(card => {
+        list.push({
+            name: card.getAttribute('data-cat-name') || 'น้องแมว',
+            breed: card.getAttribute('data-cat-breed') || 'สายพันธุ์แท้',
+            image: card.getAttribute('data-cat-image') || 'cat_british.jpg',
+            age: card.getAttribute('data-cat-age') || '2.5 เดือน',
+            element: card
+        });
+    });
+    return list;
+}
+
+function filterVaccineCats(statusFilter, btn) {
+    selectedCatFilter = statusFilter;
+    document.querySelectorAll('.vaccine-filter-chip').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    const cards = document.querySelectorAll('.cat-vaccine-item-card');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+        const catName = card.getAttribute('data-cat-name') || '';
+        const breed = card.getAttribute('data-cat-breed') || '';
+        const age = card.getAttribute('data-cat-age') || '';
+        const schedule = getCatVaccineSchedule(catName, breed, age);
+
+        const doneCount = schedule.filter(s => s.isDone).length;
+        const hasDue = schedule.some(s => s.status === 'due');
+        const hasPending = schedule.some(s => s.status === 'pending');
+
+        let match = false;
+        if (statusFilter === 'all') {
+            match = true;
+        } else if (statusFilter === 'completed' && doneCount === schedule.length) {
+            match = true;
+        } else if (statusFilter === 'due' && hasDue) {
+            match = true;
+        } else if (statusFilter === 'pending' && hasPending && doneCount < schedule.length) {
+            match = true;
+        }
+
+        if (match) {
+            card.style.display = 'block';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    const badge = document.getElementById('filter-count-badge');
+    if (badge) {
+        badge.textContent = `พบ ${visibleCount} ตัว`;
+    }
+}
+
+function searchVaccineCats(query) {
+    const cleanQ = query.trim().toLowerCase();
+    const cards = document.querySelectorAll('.cat-vaccine-item-card');
+    cards.forEach(card => {
+        const name = (card.getAttribute('data-cat-name') || '').toLowerCase();
+        const breed = (card.getAttribute('data-cat-breed') || '').toLowerCase();
+        if (!cleanQ || name.includes(cleanQ) || breed.includes(cleanQ)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+function selectCatForCalendar(catName, breed, image, cardElem) {
+    selectedCalCat = catName;
+    document.querySelectorAll('.cat-vaccine-item-card').forEach(c => c.classList.remove('selected-cat-card'));
+    if (cardElem) cardElem.classList.add('selected-cat-card');
+
+    document.getElementById('cal-selected-cat-name').textContent = `${catName} (${breed})`;
+    renderCalendar();
+}
+
+function showAllCatsOnCalendar() {
+    selectedCalCat = null;
+    document.querySelectorAll('.cat-vaccine-item-card').forEach(c => c.classList.remove('selected-cat-card'));
+    document.getElementById('cal-selected-cat-name').textContent = 'น้องแมวทุกตัว (All Cats)';
+    renderCalendar();
+}
+
+function changeCalendarMonth(delta) {
+    calDate.setMonth(calDate.getMonth() + delta);
+    renderCalendar();
+}
+
+function goToTodayCalendar() {
+    calDate = new Date();
+    selectedCalDayStr = new Date().toISOString().split('T')[0];
+    renderCalendar();
+}
+
+function renderCalendar() {
+    const grid = document.getElementById('calendarGridDays');
+    if (!grid) return;
+
+    const year = calDate.getFullYear();
+    const month = calDate.getMonth();
+
+    const monthNamesThai = [
+        'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+        'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+    ];
+    document.getElementById('calendarMonthTitle').textContent = `${monthNamesThai[month]} ${year + 543} (${year})`;
+
+    // Gather all events for calendar
+    const cats = getAllCatsList();
+    const activeCats = selectedCalCat ? cats.filter(c => c.name === selectedCalCat) : cats;
+    
+    const eventsMap = {}; // dateStr -> array of events
+    activeCats.forEach(cat => {
+        const sched = getCatVaccineSchedule(cat.name, cat.breed, cat.age);
+        sched.forEach(item => {
+            if (!eventsMap[item.dateStr]) eventsMap[item.dateStr] = [];
+            eventsMap[item.dateStr].push(item);
+        });
+    });
+
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    const totalDaysInMonth = new Date(year, month + 1, 0).getDate();
+    const prevMonthDays = new Date(year, month, 0).getDate();
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    if (!selectedCalDayStr) selectedCalDayStr = todayStr;
+
+    let html = '';
+
+    // Previous month filler days
+    for (let i = firstDayIndex - 1; i >= 0; i--) {
+        const d = prevMonthDays - i;
+        html += `<div class="cal-day-cell other-month"><span>${d}</span></div>`;
+    }
+
+    // Days of current month
+    for (let day = 1; day <= totalDaysInMonth; day++) {
+        const dStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        const dayEvents = eventsMap[dStr] || [];
+        const isToday = dStr === todayStr;
+        const isSelected = dStr === selectedCalDayStr;
+
+        let dotsHtml = '';
+        if (dayEvents.length > 0) {
+            dotsHtml = `
+                <div style="display: flex; gap: 2px; justify-content: center; margin-top: 2px; flex-wrap: wrap;">
+                    ${dayEvents.slice(0, 3).map(ev => `<span class="cal-event-dot" style="background: ${ev.color};"></span>`).join('')}
+                </div>
+            `;
+        }
+
+        html += `
+            <div class="cal-day-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected-day' : ''}" 
+                 onclick="selectCalendarDate('${dStr}')" 
+                 title="${dayEvents.length > 0 ? dayEvents.length + ' นัดหมาย' : ''}">
+                <span>${day}</span>
+                ${dotsHtml}
+            </div>
+        `;
+    }
+
+    grid.innerHTML = html;
+
+    renderCalendarEventsDetails(eventsMap);
+}
+
+function selectCalendarDate(dateStr) {
+    selectedCalDayStr = dateStr;
+    renderCalendar();
+}
+
+function renderCalendarEventsDetails(eventsMap) {
+    const container = document.getElementById('calendarEventsList');
+    const badge = document.getElementById('appointmentCountBadge');
+    const label = document.getElementById('selectedDateLabel');
+    if (!container) return;
+
+    const dateObj = new Date(selectedCalDayStr);
+    const dateFormatted = dateObj.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' });
+    if (label) label.innerHTML = `📋 นัดหมายวันที่: <span style="color: #059669; font-weight: 800;">${dateFormatted}</span>`;
+
+    const dayEvents = eventsMap[selectedCalDayStr] || [];
+    if (badge) badge.textContent = `${dayEvents.length} รายการ`;
+
+    if (dayEvents.length === 0) {
+        // Show upcoming in current month or empty guide
+        const allMonthEvents = [];
+        Object.keys(eventsMap).sort().forEach(k => {
+            if (k.startsWith(selectedCalDayStr.substring(0, 7))) {
+                eventsMap[k].forEach(ev => allMonthEvents.push(ev));
+            }
+        });
+
+        if (allMonthEvents.length > 0) {
+            container.innerHTML = `
+                <div style="font-size: 0.78rem; color: #64748B; margin-bottom: 4px;">
+                    ไม่มีนัดในวันนี้ แต่มีนัดหมายอื่นๆ ในเดือนนี้:
+                </div>
+                ${allMonthEvents.slice(0, 3).map(ev => renderSingleEventCard(ev)).join('')}
+            `;
+        } else {
+            container.innerHTML = `
+                <div style="text-align: center; padding: 1.2rem; color: #64748B; font-size: 0.82rem;">
+                    ✨ ไม่มีนัดหมายฉีดวัคซีนในวันที่เลือก<br>
+                    <span style="font-size: 0.75rem; color: #94A3B8;">(คลิกเลือกวันที่ที่มีจุดสีเพื่อดูรายละเอียด)</span>
+                </div>
+            `;
+        }
+    } else {
+        container.innerHTML = dayEvents.map(ev => renderSingleEventCard(ev)).join('');
+    }
+}
+
+function renderSingleEventCard(ev) {
+    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    const trackerUrl = (isStatic ? 'vaccine_reminder.html' : 'vaccine_reminder.php') + `?cat_name=${encodeURIComponent(ev.catName)}&breed=${encodeURIComponent(ev.breed)}`;
+
+    return `
+        <div style="background: #FFFFFF; border: 1.5px solid ${ev.isDone ? '#A7F3D0' : '#E2E8F0'}; border-radius: 12px; padding: 0.8rem; box-shadow: 0 2px 6px rgba(0,0,0,0.03); display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="font-size: 1.5rem; background: ${ev.color}15; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                    ${ev.icon}
+                </span>
+                <div>
+                    <strong style="font-size: 0.88rem; color: #1E293B; display: block;">
+                        ${ev.title}
+                    </strong>
+                    <span style="font-size: 0.72rem; color: #64748B;">
+                        🐾 ${ev.catName} (${ev.breed}) &bull; ${ev.dateStr}
+                    </span>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <a href="${trackerUrl}" class="btn btn-secondary btn-sm" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; color: #059669; background: #ECFDF5; border-color: #A7F3D0; text-decoration: none;">
+                    บันทึก ✓
+                </a>
+            </div>
+        </div>
+    `;
+}
+
+// Client-side hydration for Profile & Lucky Wheel Rewards & Vaccine Cats
 document.addEventListener('DOMContentLoaded', () => {
     const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
     
@@ -1328,6 +2156,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.coupon-apply-btn').forEach(btn => {
             const code = btn.getAttribute('data-code');
             if (code) btn.href = 'cart.html?apply_coupon=' + encodeURIComponent(code);
+        });
+        document.querySelectorAll('.btn-vaccine-link').forEach(btn => {
+            if (btn.href) btn.href = btn.href.replace('vaccine_reminder.php', 'vaccine_reminder.html');
         });
     }
 
@@ -1421,7 +2252,87 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } catch(e) {}
 
-    // 3. Handle initial tab selection from URL params
+    // 3. Sync Vaccine Cats from LocalStorage if available
+    try {
+        const storedOrders = JSON.parse(localStorage.getItem('cat_shop_my_orders') || '[]');
+        const vaccineContainer = document.getElementById('profile-vaccine-cats-container');
+        if (storedOrders && storedOrders.length > 0 && vaccineContainer) {
+            const localCats = [];
+            storedOrders.forEach(ord => {
+                if (ord.items && Array.isArray(ord.items)) {
+                    ord.items.forEach(it => {
+                        localCats.push({
+                            id: it.id,
+                            name: it.name || 'น้องแมว',
+                            breed: it.breed || 'สายพันธุ์แท้',
+                            image: it.image || 'cat_british.jpg',
+                            age: it.age || '2.5 เดือน',
+                            gender: it.gender || 'ไม่ระบุ'
+                        });
+                    });
+                }
+            });
+
+            if (localCats.length > 0) {
+                const targetFile = isStatic ? 'vaccine_reminder.html' : 'vaccine_reminder.php';
+                vaccineContainer.innerHTML = localCats.map((c, idx) => `
+                    <div class="cat-vaccine-item-card ${idx === 0 ? 'selected-cat-card' : ''}" 
+                         data-cat-name="${c.name}"
+                         data-cat-breed="${c.breed}"
+                         data-cat-image="${c.image}"
+                         data-cat-age="${c.age}"
+                         onclick="selectCatForCalendar('${c.name.replace(/'/g, "\\'")}', '${c.breed.replace(/'/g, "\\'")}', '${c.image.replace(/'/g, "\\'")}', this)"
+                         style="background: #FFFFFF; border: 2px solid ${idx === 0 ? '#10B981' : '#E2E8F0'}; border-radius: 16px; padding: 1.1rem; box-shadow: 0 4px 14px rgba(0,0,0,0.03); cursor: pointer; transition: all 0.25s ease; position: relative;">
+                        
+                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 0.8rem;">
+                            <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
+                                <img src="assets/images/${c.image}" alt="${c.name}" 
+                                     style="width: 60px; height: 60px; border-radius: 14px; object-fit: cover; border: 2px solid #10B981; flex-shrink: 0;">
+                                <div style="overflow: hidden;">
+                                    <strong style="font-size: 1.05rem; color: #1E293B; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                        ${c.name}
+                                    </strong>
+                                    <span style="display: inline-block; font-size: 0.72rem; background: #D1FAE5; color: #065F46; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-top: 2px;">
+                                        ${c.breed}
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="cat-status-badge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #EFF6FF; color: #1E40AF; white-space: nowrap;">
+                                ⏳ ติดตามวัคซีน
+                            </span>
+                        </div>
+
+                        <div style="background: #F8FAFC; border-radius: 10px; padding: 0.6rem 0.8rem; margin-bottom: 0.8rem; border: 1px solid #E2E8F0;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: #475569; margin-bottom: 4px;">
+                                <span>ความคืบหน้าการฉีด:</span>
+                                <span class="cat-progress-text" style="color: #059669;">2/6 เข็ม (33%)</span>
+                            </div>
+                            <div style="width: 100%; height: 6px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
+                                <div class="cat-progress-bar" style="width: 33%; height: 100%; background: linear-gradient(90deg, #10B981, #059669); border-radius: 999px;"></div>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
+                            <span style="font-size: 0.75rem; color: #059669; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                                📅 คลิกเพื่อดูนัดบนปฏิทิน
+                            </span>
+                            <a href="${targetFile}?cat_name=${encodeURIComponent(c.name)}&breed=${encodeURIComponent(c.breed)}&image=${encodeURIComponent(c.image)}" 
+                               onclick="event.stopPropagation();"
+                               class="btn btn-secondary btn-sm btn-vaccine-link" 
+                               style="font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 8px; color: #059669; background: #ECFDF5; border-color: #A7F3D0; text-decoration: none;">
+                                💉 สมุดวัคซีน ➔
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+    } catch(e) {}
+
+    // 4. Initialize Calendar
+    renderCalendar();
+
+    // 5. Handle initial tab selection from URL params
     const urlParams = new URLSearchParams(window.location.search);
     const initialTab = urlParams.get('tab');
     if (initialTab && document.getElementById('tab-' + initialTab)) {

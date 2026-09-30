@@ -462,9 +462,9 @@ function syncHeaderUserUI() {
             </button>
             <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                 ${isAdmin ? `
-                    <span class="top-badge-pill" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1px solid #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 4px;">
+                    <a href="admin.html" class="top-badge-pill" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1px solid #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
                         👑 ผู้ดูแลระบบ (Admin)
-                    </span>
+                    </a>
                 ` : `
                     <a href="profile.html?tab=points" class="top-badge-pill" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="ระบบสะสมแต้ม Paw Points">
                         🐾 ${Number(user.paw_points || 150).toLocaleString()} พอยท์
@@ -490,6 +490,7 @@ function syncHeaderUserUI() {
     // Sync Mobile Drawer User State if present
     const drawerGrid = document.querySelector('#mobile-nav-drawer .drawer-grid');
     if (user && drawerGrid) {
+        const isAdmin = (user.role === 'admin');
         // If drawer has guest login buttons, inject user profile card into mobile drawer
         const guestBox = drawerGrid.querySelector('div[style*="grid-template-columns"]');
         if (guestBox) {
@@ -504,6 +505,16 @@ function syncHeaderUserUI() {
                     </div>
                     <span class="drawer-badge-pill" style="background: var(--primary-coral); color: #fff;">โปรไฟล์ ➔</span>
                 </a>
+                ${isAdmin ? `
+                    <a href="admin.html" class="drawer-link-item drawer-admin-link" onclick="closeMobileDrawer()" style="background: linear-gradient(135deg, rgba(30, 27, 75, 0.08) 0%, rgba(49, 46, 129, 0.12) 100%); border-color: #F59E0B;">
+                        <span class="drawer-link-icon">👑</span>
+                        <div class="drawer-link-info">
+                            <span class="drawer-link-title" style="color: #92400E; font-weight: 800;">ผู้ดูแลระบบ (Admin)</span>
+                            <span class="drawer-link-sub">จัดการหลังบ้าน, ออเดอร์ & Tracking</span>
+                        </div>
+                        <span class="drawer-badge-pill" style="background: #F59E0B; color: #1E1B4B; font-weight: 800;">ADMIN</span>
+                    </a>
+                ` : ''}
                 <a href="profile.html?tab=coupons" class="drawer-link-item" onclick="closeMobileDrawer()">
                     <span class="drawer-link-icon">🎁</span>
                     <div class="drawer-link-info">
