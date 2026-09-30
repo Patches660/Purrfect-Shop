@@ -795,6 +795,46 @@
                     "timestamp": "2026-09-29 10:59:26"
                 }
             ]
+        },
+        "guest_8d82bcc214": {
+            "user_id": "guest_8d82bcc214",
+            "user_name": "ผู้เยี่ยมชม (c214)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-09-30 10:54:22",
+            "messages": [
+                {
+                    "id": "msg_init_1790740462",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-30 10:54:22"
+                }
+            ]
+        },
+        "guest_0c6283e699": {
+            "user_id": "guest_0c6283e699",
+            "user_name": "ผู้เยี่ยมชม (e699)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-09-30 16:05:02",
+            "messages": [
+                {
+                    "id": "msg_init_1790759102",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-09-30 16:05:02"
+                }
+            ]
         }
     }
 }
