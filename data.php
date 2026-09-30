@@ -807,6 +807,7 @@ function getOrders() {
         $initial = [
             [
                 'order_id' => 'PFC-260901-7A2B',
+                'tracking_id' => 'TRK-9960D410',
                 'user_id' => 'u_6a97f8b172436',
                 'username' => 'catlover',
                 'customer_name' => 'ผู้ทดสอบระบบ Cat Shop',
@@ -839,6 +840,7 @@ function getOrders() {
             ],
             [
                 'order_id' => 'PFC-260902-8F9C',
+                'tracking_id' => 'TRK-E1925A1B',
                 'user_id' => 'u_6a97ff2d0b8b8',
                 'username' => 'Meow',
                 'customer_name' => 'Meow',
@@ -886,7 +888,14 @@ function getOrders() {
 
     $content = file_get_contents(ORDERS_FILE);
     $data = json_decode($content, true);
-    return is_array($data) ? $data : [];
+    if (!is_array($data)) return [];
+
+    foreach ($data as &$order) {
+        if (empty($order['tracking_id'])) {
+            $order['tracking_id'] = 'TRK-' . strtoupper(substr(md5($order['order_id'] ?? ($order['invoice_id'] ?? uniqid())), 0, 8));
+        }
+    }
+    return $data;
 }
 
 function saveOrder($orderData) {

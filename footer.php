@@ -59,9 +59,32 @@
                     <li><a href="products.php">🐱 ดูสายพันธุ์น้องแมวทั้งหมด</a></li>
                 </ul>
             </div>
+
+            <div class="footer-col">
+                <h4>📜 Policies & Legal Center</h4>
+                <ul>
+                    <li><a href="policies.php?tab=privacy">🔒 Privacy Policy</a></li>
+                    <li><a href="policies.php?tab=terms">📝 Terms of Service</a></li>
+                    <li><a href="policies.php?tab=shipping">🚐 Shipping & Returns Policy</a></li>
+                    <li><a href="policies.php?tab=pet_welfare">🐾 Pet Adoption Policy</a></li>
+                    <li><a href="policies.php?tab=cookies">🍪 Cookie Policy</a></li>
+                </ul>
+            </div>
         </div>
 
         <div class="footer-bottom">
+            <!-- Quick Policy Links Strip -->
+            <div style="margin-bottom: 0.8rem; display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; font-size: 0.82rem;">
+                <a href="policies.php?tab=privacy" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;">🔒 Privacy Policy</a>
+                <span style="color: var(--border-color);">&bull;</span>
+                <a href="policies.php?tab=terms" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;">📝 Terms of Service</a>
+                <span style="color: var(--border-color);">&bull;</span>
+                <a href="policies.php?tab=shipping" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;">🚐 Shipping & Returns Policy</a>
+                <span style="color: var(--border-color);">&bull;</span>
+                <a href="policies.php?tab=pet_welfare" style="color: var(--primary-coral); font-weight: 700; text-decoration: none;">🐾 Pet Adoption Policy</a>
+                <span style="color: var(--border-color);">&bull;</span>
+                <a href="policies.php?tab=cookies" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;">🍪 Cookie Policy</a>
+            </div>
             <p>&copy; <?php echo date('Y'); ?> <strong>Purrfect Shop</strong> - คัดสรรและส่งมอบเพื่อนที่ดีที่สุดด้วยหัวใจ 🐾</p>
             <p>
                 พัฒนาโดย <strong>Purrfect Cattery Team</strong> (TH-CAT-8899 IT) &bull; Purrfect Boutique Cattery

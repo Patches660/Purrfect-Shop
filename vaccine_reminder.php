@@ -61,12 +61,12 @@ foreach ($user_orders as $ord) {
         <div id="adoptedCatsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem;">
             <?php if (!empty($adoptedCats)): ?>
                 <?php foreach ($adoptedCats as $idx => $cat): ?>
-                    <div class="adopted-cat-card" 
-                         onclick="selectAdoptedCat('<?php echo htmlspecialchars(addslashes($cat['name'])); ?>', '<?php echo htmlspecialchars(addslashes($cat['breed'])); ?>', '<?php echo htmlspecialchars(addslashes($cat['age'])); ?>', 'assets/images/<?php echo htmlspecialchars($cat['image']); ?>', this)"
-                         style="background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; gap: 12px; position: relative;">
+                    <div class="adopted-cat-card <?php echo $idx === 0 ? 'active-cat-card' : ''; ?>" 
+                         data-breed="<?php echo htmlspecialchars($cat['breed']); ?>"
+                         onclick="selectAdoptedCat('<?php echo htmlspecialchars(addslashes($cat['name'])); ?>', '<?php echo htmlspecialchars(addslashes($cat['breed'])); ?>', '<?php echo htmlspecialchars(addslashes($cat['age'])); ?>', 'assets/images/<?php echo htmlspecialchars($cat['image']); ?>', this)">
                         <img src="assets/images/<?php echo htmlspecialchars($cat['image']); ?>" 
                              alt="<?php echo htmlspecialchars($cat['name']); ?>" 
-                             style="width: 58px; height: 58px; border-radius: 12px; object-fit: cover; border: 2px solid #10B981; flex-shrink: 0;">
+                             style="width: 58px; height: 58px; border-radius: 12px; object-fit: cover; flex-shrink: 0;">
                         <div style="overflow: hidden; flex: 1;">
                             <strong style="display: block; font-size: 0.95rem; color: #1E293B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 <?php echo htmlspecialchars($cat['name']); ?>
@@ -83,9 +83,9 @@ foreach ($user_orders as $ord) {
             <?php else: ?>
                 <!-- Fallback Mock Cards for Demo / Guest -->
                 <div class="adopted-cat-card active-cat-card" 
-                     onclick="selectAdoptedCat('น้องปุยหิมะ', 'Persian', '3 เดือน', 'assets/images/cat_persian.jpg', this)"
-                     style="background: #ECFDF5; border: 2px solid #10B981; border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; gap: 12px;">
-                    <img src="assets/images/cat_persian.jpg" alt="น้องปุยหิมะ" style="width: 58px; height: 58px; border-radius: 12px; object-fit: cover; border: 2px solid #10B981; flex-shrink: 0;">
+                     data-breed="Persian"
+                     onclick="selectAdoptedCat('น้องปุยหิมะ', 'Persian', '3 เดือน', 'assets/images/cat_persian.jpg', this)">
+                    <img src="assets/images/cat_persian.jpg" alt="น้องปุยหิมะ" style="width: 58px; height: 58px; border-radius: 12px; object-fit: cover; flex-shrink: 0;">
                     <div style="flex: 1;">
                         <strong style="display: block; font-size: 0.95rem; color: #064E3B;">น้องปุยหิมะ</strong>
                         <span style="display: inline-block; font-size: 0.72rem; background: #10B981; color: #fff; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-top: 2px;">
@@ -96,9 +96,9 @@ foreach ($user_orders as $ord) {
                 </div>
 
                 <div class="adopted-cat-card" 
-                     onclick="selectAdoptedCat('น้องคอตตอน', 'Ragdoll', '2.5 เดือน', 'assets/images/cat_ragdoll.jpg', this)"
-                     style="background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; gap: 12px;">
-                    <img src="assets/images/cat_ragdoll.jpg" alt="น้องคอตตอน" style="width: 58px; height: 58px; border-radius: 12px; object-fit: cover; border: 2px solid #CBD5E1; flex-shrink: 0;">
+                     data-breed="Ragdoll"
+                     onclick="selectAdoptedCat('น้องคอตตอน', 'Ragdoll', '2.5 เดือน', 'assets/images/cat_ragdoll.jpg', this)">
+                    <img src="assets/images/cat_ragdoll.jpg" alt="น้องคอตตอน" style="width: 58px; height: 58px; border-radius: 12px; object-fit: cover; flex-shrink: 0;">
                     <div style="flex: 1;">
                         <strong style="display: block; font-size: 0.95rem; color: #1E293B;">น้องคอตตอน</strong>
                         <span style="display: inline-block; font-size: 0.72rem; background: #EDE9FE; color: #6D28D9; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-top: 2px;">
@@ -109,9 +109,9 @@ foreach ($user_orders as $ord) {
                 </div>
 
                 <div class="adopted-cat-card" 
-                     onclick="selectAdoptedCat('น้องการ์ฟิลด์', 'American Shorthair', '2.5 เดือน', 'assets/images/cat_americanshorthair.jpg', this)"
-                     style="background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; gap: 12px;">
-                    <img src="assets/images/cat_americanshorthair.jpg" alt="น้องการ์ฟิลด์" style="width: 58px; height: 58px; border-radius: 12px; object-fit: cover; border: 2px solid #CBD5E1; flex-shrink: 0;">
+                     data-breed="American Shorthair"
+                     onclick="selectAdoptedCat('น้องการ์ฟิลด์', 'American Shorthair', '2.5 เดือน', 'assets/images/cat_americanshorthair.jpg', this)">
+                    <img src="assets/images/cat_americanshorthair.jpg" alt="น้องการ์ฟิลด์" style="width: 58px; height: 58px; border-radius: 12px; object-fit: cover; flex-shrink: 0;">
                     <div style="flex: 1;">
                         <strong style="display: block; font-size: 0.95rem; color: #1E293B;">น้องการ์ฟิลด์</strong>
                         <span style="display: inline-block; font-size: 0.72rem; background: #FEF3C7; color: #92400E; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-top: 2px;">
@@ -122,9 +122,9 @@ foreach ($user_orders as $ord) {
                 </div>
 
                 <div class="adopted-cat-card" 
-                     onclick="selectAdoptedCat('น้องมิลค์กี้', 'Khao Manee', '2 เดือน', 'assets/images/cat_khao_manee.jpg', this)"
-                     style="background: #F8FAFC; border: 2px solid #E2E8F0; border-radius: 16px; padding: 1rem; cursor: pointer; transition: all 0.25s ease; display: flex; align-items: center; gap: 12px;">
-                    <img src="assets/images/cat_khao_manee.jpg" alt="น้องมิลค์กี้" style="width: 58px; height: 58px; border-radius: 12px; object-fit: cover; border: 2px solid #CBD5E1; flex-shrink: 0;">
+                     data-breed="Khao Manee"
+                     onclick="selectAdoptedCat('น้องมิลค์กี้', 'Khao Manee', '2 เดือน', 'assets/images/cat_khao_manee.jpg', this)">
+                    <img src="assets/images/cat_khao_manee.jpg" alt="น้องมิลค์กี้" style="width: 58px; height: 58px; border-radius: 12px; object-fit: cover; flex-shrink: 0;">
                     <div style="flex: 1;">
                         <strong style="display: block; font-size: 0.95rem; color: #1E293B;">น้องมิลค์กี้</strong>
                         <span style="display: inline-block; font-size: 0.72rem; background: #DBEAFE; color: #1E40AF; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-top: 2px;">
@@ -169,7 +169,7 @@ foreach ($user_orders as $ord) {
                     <label style="display: block; font-weight: 800; font-size: 0.85rem; color: #334155; margin-bottom: 0.4rem;">
                         สายพันธุ์น้องแมว (Breed)
                     </label>
-                    <select id="catBreedSelect" class="form-control" style="width: 100%; padding: 0.65rem 0.9rem; border-radius: 12px; border: 1.5px solid #CBD5E1; font-weight: 700;">
+                    <select id="catBreedSelect" class="form-control" onchange="handleBreedChange(this.value)" style="width: 100%; padding: 0.65rem 0.9rem; border-radius: 12px; border: 1.5px solid #CBD5E1; font-weight: 700;">
                         <option value="Persian">Persian (เปอร์เซีย)</option>
                         <option value="British Shorthair">British Shorthair (บริติช ช็อตแฮร์)</option>
                         <option value="Ragdoll">Ragdoll (แร็กดอลล์)</option>
@@ -180,6 +180,8 @@ foreach ($user_orders as $ord) {
                         <option value="Maine Coon">Maine Coon (เมนคูน)</option>
                         <option value="Siamese">Siamese (แมววิเชียรมาศ)</option>
                         <option value="Sphynx">Sphynx (สฟิงซ์)</option>
+                        <option value="Munchkin">Munchkin (มันช์กิ้น)</option>
+                        <option value="Russian Blue">Russian Blue (รัสเซียนบลู)</option>
                         <option value="Other">สายพันธุ์อื่นๆ</option>
                     </select>
                 </div>
@@ -275,15 +277,37 @@ foreach ($user_orders as $ord) {
 </div>
 
 <style>
+.adopted-cat-card {
+    background: #FFFFFF !important;
+    border: 2px solid #E2E8F0 !important;
+    border-radius: 16px !important;
+    padding: 1rem !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.02) !important;
+}
+.adopted-cat-card img {
+    border: 2px solid #E2E8F0 !important;
+    transition: all 0.2s ease !important;
+}
 .adopted-cat-card:hover {
     border-color: #10B981 !important;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15);
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15) !important;
+}
+.adopted-cat-card:hover img {
+    border-color: #10B981 !important;
 }
 .adopted-cat-card.active-cat-card {
     background: #ECFDF5 !important;
     border-color: #10B981 !important;
-    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.18);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.18) !important;
+}
+.adopted-cat-card.active-cat-card img {
+    border-color: #10B981 !important;
 }
 .timeline-card {
     border: 2px solid #E2E8F0;
@@ -387,6 +411,53 @@ defaultDob.setMonth(defaultDob.getMonth() - 2);
 defaultDob.setDate(defaultDob.getDate() - 15);
 document.getElementById('catDobInput').value = defaultDob.toISOString().split('T')[0];
 
+const breedImageMap = {
+    'Persian': { img: 'assets/images/cat_persian.jpg', name_th: 'เปอร์เซีย (Persian)', defaultName: 'น้องปุยหิมะ' },
+    'British Shorthair': { img: 'assets/images/cat_british.jpg', name_th: 'บริติช ช็อตแฮร์ (British Shorthair)', defaultName: 'น้องสโนว์' },
+    'Ragdoll': { img: 'assets/images/cat_ragdoll.jpg', name_th: 'แร็กดอลล์ (Ragdoll)', defaultName: 'น้องคอตตอน' },
+    'Scottish Fold': { img: 'assets/images/cat_scottish.jpg', name_th: 'สก็อตติช โฟลด์ (Scottish Fold)', defaultName: 'น้องพุดดิ้ง' },
+    'Bengal': { img: 'assets/images/cat_bengal.jpg', name_th: 'เบงกอล (Bengal)', defaultName: 'น้องจากัวร์' },
+    'Khao Manee': { img: 'assets/images/cat_khao_manee.jpg', name_th: 'ขาวมณี (Khao Manee)', defaultName: 'น้องมิลค์กี้' },
+    'American Shorthair': { img: 'assets/images/cat_americanshorthair.jpg', name_th: 'อเมริกันช็อตแฮร์ (American Shorthair)', defaultName: 'น้องการ์ฟิลด์' },
+    'Maine Coon': { img: 'assets/images/cat_mainecoon.jpg', name_th: 'เมนคูน (Maine Coon)', defaultName: 'น้องไททัน' },
+    'Siamese': { img: 'assets/images/cat_siamese.jpg', name_th: 'วิเชียรมาศ (Siamese)', defaultName: 'น้องมงคล' },
+    'Sphynx': { img: 'assets/images/cat_sphynx.jpg', name_th: 'สฟิงซ์ (Sphynx)', defaultName: 'น้องซีซาร์' },
+    'Munchkin': { img: 'assets/images/cat_munchkin.jpg', name_th: 'มันช์กิ้น (Munchkin)', defaultName: 'น้องชอร์ตตี้' },
+    'Russian Blue': { img: 'assets/images/cat_russian.jpg', name_th: 'รัสเซียนบลู (Russian Blue)', defaultName: 'น้องบลูสกาย' },
+    'Other': { img: 'assets/images/cat_persian.jpg', name_th: 'สายพันธุ์อื่นๆ (Other)', defaultName: 'น้องแมว' }
+};
+
+function handleBreedChange(breedVal) {
+    const breedInfo = breedImageMap[breedVal] || breedImageMap['Other'];
+    if (breedInfo) {
+        // Update photo and label immediately
+        document.getElementById('selectedCatImg').src = breedInfo.img;
+        document.getElementById('selectedCatBreedLabel').textContent = breedInfo.name_th;
+
+        // If cat name is still default or empty, auto-fill default name
+        const nameInput = document.getElementById('catNameInput');
+        if (!nameInput.value || Object.values(breedImageMap).some(b => b.defaultName === nameInput.value)) {
+            nameInput.value = breedInfo.defaultName;
+            document.getElementById('selectedCatNameLabel').textContent = breedInfo.defaultName;
+        }
+
+        // Highlight matching mock card if present
+        let matchedCard = null;
+        document.querySelectorAll('.adopted-cat-card').forEach(card => {
+            const b = (card.getAttribute('data-breed') || '').toLowerCase();
+            const bv = breedVal.toLowerCase();
+            if (b.includes(bv) || bv.includes(b)) {
+                matchedCard = card;
+            }
+        });
+        document.querySelectorAll('.adopted-cat-card').forEach(c => c.classList.remove('active-cat-card'));
+        if (matchedCard) {
+            matchedCard.classList.add('active-cat-card');
+        }
+    }
+    calculateVaccineSchedule();
+}
+
 function selectAdoptedCat(name, breed, ageStr, imageSrc, cardElem) {
     // Set form fields
     document.getElementById('catNameInput').value = name;
@@ -395,8 +466,10 @@ function selectAdoptedCat(name, breed, ageStr, imageSrc, cardElem) {
     const breedSelect = document.getElementById('catBreedSelect');
     let matched = false;
     for (let i = 0; i < breedSelect.options.length; i++) {
-        if (breed.toLowerCase().includes(breedSelect.options[i].value.toLowerCase()) || 
-            breedSelect.options[i].text.toLowerCase().includes(breed.toLowerCase())) {
+        const optVal = breedSelect.options[i].value.toLowerCase();
+        const optTxt = breedSelect.options[i].text.toLowerCase();
+        const bLower = breed.toLowerCase();
+        if (bLower.includes(optVal) || optVal.includes(bLower) || optTxt.includes(bLower) || bLower.includes(optTxt)) {
             breedSelect.selectedIndex = i;
             matched = true;
             break;
@@ -418,14 +491,16 @@ function selectAdoptedCat(name, breed, ageStr, imageSrc, cardElem) {
     catDob.setDate(catDob.getDate() - Math.round(monthsAgo * 30.5));
     document.getElementById('catDobInput').value = catDob.toISOString().split('T')[0];
 
-    // Update showcase card
-    if (imageSrc) {
-        document.getElementById('selectedCatImg').src = imageSrc;
-    }
-    document.getElementById('selectedCatNameLabel').textContent = name;
-    document.getElementById('selectedCatBreedLabel').textContent = breed;
+    // Determine correct image
+    const breedKey = breedSelect.value;
+    const fallbackInfo = breedImageMap[breedKey] || breedImageMap['Other'];
+    const finalImg = imageSrc || fallbackInfo.img;
 
-    // Update active highlight on cards
+    document.getElementById('selectedCatImg').src = finalImg;
+    document.getElementById('selectedCatNameLabel').textContent = name;
+    document.getElementById('selectedCatBreedLabel').textContent = fallbackInfo.name_th || breed;
+
+    // Update active highlight on cards cleanly
     document.querySelectorAll('.adopted-cat-card').forEach(c => c.classList.remove('active-cat-card'));
     if (cardElem) {
         cardElem.classList.add('active-cat-card');

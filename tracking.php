@@ -5,13 +5,29 @@ require_once __DIR__ . '/header.php';
 $orders_file = __DIR__ . '/data_orders.json';
 $all_orders = file_exists($orders_file) ? json_decode(file_get_contents($orders_file), true) : [];
 
-$track_id = trim($_GET['track'] ?? ($_GET['invoice'] ?? ''));
+$track_id = trim($_GET['track'] ?? ($_GET['track_id'] ?? ($_GET['order_id'] ?? ($_GET['invoice'] ?? ''))));
 $found_order = null;
 
 if (!empty($track_id)) {
+    $search_clean = strtoupper(trim($track_id));
     foreach ($all_orders as $ord) {
-        if (($ord['tracking_id'] ?? '') === $track_id || ($ord['invoice_id'] ?? '') === $track_id) {
+        $ord_id = strtoupper(trim($ord['order_id'] ?? ''));
+        $ord_inv = strtoupper(trim($ord['invoice_id'] ?? ''));
+        $ord_trk = strtoupper(trim($ord['tracking_id'] ?? ''));
+        $fallback_trk = strtoupper('TRK-' . substr(md5($ord['order_id'] ?? ($ord['invoice_id'] ?? '')), 0, 8));
+        
+        if ($ord_trk === $search_clean || 
+            $ord_inv === $search_clean || 
+            $ord_id === $search_clean || 
+            $fallback_trk === $search_clean ||
+            (!empty($ord_trk) && strpos($search_clean, $ord_trk) !== false) ||
+            (!empty($ord_id) && strpos($search_clean, $ord_id) !== false) ||
+            (!empty($fallback_trk) && strpos($search_clean, $fallback_trk) !== false)) {
             $found_order = $ord;
+            // Ensure tracking_id is explicitly set
+            if (empty($found_order['tracking_id'])) {
+                $found_order['tracking_id'] = $fallback_trk;
+            }
             break;
         }
     }
@@ -22,6 +38,9 @@ if (!$found_order && $logged_user) {
     foreach ($all_orders as $ord) {
         if (($ord['user_id'] ?? '') === $logged_user['id'] || ($ord['customer_email'] ?? '') === $logged_user['email']) {
             $found_order = $ord;
+            if (empty($found_order['tracking_id'])) {
+                $found_order['tracking_id'] = 'TRK-' . strtoupper(substr(md5($found_order['order_id'] ?? ($found_order['invoice_id'] ?? '')), 0, 8));
+            }
             break;
         }
     }
@@ -334,16 +353,19 @@ $current_step_num = $status_order_map[$current_status] ?? 3;
         <?php endif; ?>
 
     <?php else: ?>
+        <!-- Client-Side Hydration Container for localStorage Orders / Static Pages -->
+        <div id="clientTrackingContainer" style="display: none;"></div>
+
         <!-- Not Found / Sample State -->
-        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 3rem 2rem; text-align: center; box-shadow: var(--shadow-sm);">
+        <div id="trackingNotFoundBox" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 3rem 2rem; text-align: center; box-shadow: var(--shadow-sm);">
             <span style="font-size: 3rem; display: block; margin-bottom: 0.5rem;">🔍</span>
             <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); margin: 0 0 0.5rem 0;">
                 ไม่พบข้อมูลหมายเลขพัสดุที่คุณค้นหา
             </h3>
             <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 480px; margin: 0 auto 1.5rem auto;">
-                กรุณาตรวจสอบรหัสติดตามพัสดุ หรือเข้าสู่ระบบสมาชิกเพื่อดูประวัติการสั่งจองน้องแมวของคุณ
+                กรุณาตรวจสอบรหัสติดตามพัสดุ เช่น <strong>TRACK-TH-...</strong> หรือ <strong>TRK-...</strong> หรือเข้าสู่ระบบเพื่อดูประวัติการสั่งจอง
             </p>
-            <div style="display: flex; gap: 10px; justify-content: center;">
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                 <a href="profile.php" class="btn btn-secondary">
                     👤 ไปที่โปรไฟล์ของฉัน
                 </a>
@@ -354,5 +376,220 @@ $current_step_num = $status_order_map[$current_status] ?? 3;
         </div>
     <?php endif; ?>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Client-side fallback for localStorage orders and static page tracking
+    const notFoundBox = document.getElementById('trackingNotFoundBox');
+    const clientContainer = document.getElementById('clientTrackingContainer');
+    if (!notFoundBox || !clientContainer) return;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = (urlParams.get('track') || urlParams.get('track_id') || urlParams.get('order_id') || urlParams.get('invoice') || '').trim();
+
+    if (!searchParam) {
+        // If empty search, try to check if user has any recent orders in localStorage
+        try {
+            const localOrders = JSON.parse(localStorage.getItem('cat_shop_orders') || '[]');
+            if (localOrders.length > 0) {
+                renderClientTrackingOrder(localOrders[0]);
+            }
+        } catch(e) {}
+        return;
+    }
+
+    // Search in localStorage
+    try {
+        const localOrders = JSON.parse(localStorage.getItem('cat_shop_orders') || '[]');
+        const cleanSearch = searchParam.toUpperCase();
+        
+        let matchedOrder = localOrders.find(ord => {
+            const ordId = (ord.order_id || '').toUpperCase();
+            const trkId = (ord.tracking_id || '').toUpperCase();
+            const invId = (ord.invoice_id || '').toUpperCase();
+            return trkId === cleanSearch || 
+                   ordId === cleanSearch || 
+                   invId === cleanSearch ||
+                   cleanSearch.includes(trkId) ||
+                   cleanSearch.includes(ordId) ||
+                   (trkId && trkId.includes(cleanSearch)) ||
+                   (ordId && ordId.includes(cleanSearch));
+        });
+
+        if (matchedOrder) {
+            renderClientTrackingOrder(matchedOrder);
+        }
+    } catch(e) {
+        console.error('Error hydrating client tracking:', e);
+    }
+
+    function renderClientTrackingOrder(order) {
+        notFoundBox.style.display = 'none';
+        clientContainer.style.display = 'block';
+
+        const trkId = order.tracking_id || ('TRACK-TH-' + (order.order_id || 'CAT88').replace(/[^a-zA-Z0-9]/g, ''));
+        const orderId = order.order_id || 'PFC-XXXX';
+        const custName = order.customer_name || 'คุณผู้รับอุปการะ';
+        const custAddr = order.delivery_address || 'กรุงเทพมหานคร และปริมณฑล';
+        const delivDate = order.delivery_date || 'ตามเวลานัดหมาย';
+        const delivTime = order.delivery_timeslot || 'ช่วงบ่าย (13:00 - 17:00 น.)';
+        const status = order.status || 'อยู่ระหว่างจัดส่งด้วยรถตู้ปรับอากาศ (In Transit)';
+        const items = order.items || [];
+        const grandTotal = parseFloat(order.total || 0);
+
+        let itemsHtml = '';
+        if (items.length > 0) {
+            itemsHtml = items.map(it => `
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                    <img src="assets/images/${it.image || 'cat_persian.jpg'}" alt="${it.name || 'น้องแมว'}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: cover; border: 1.5px solid var(--primary-coral); flex-shrink: 0;" onerror="this.src='assets/images/logo.png'">
+                    <div>
+                        <div style="font-weight: 700; color: var(--text-main); font-size: 0.9rem;">${it.name || 'น้องแมว'}</div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted);">${it.breed || ''} • (x${it.qty || 1}) - ${(it.price * (it.qty || 1)).toLocaleString('th-TH')} ฿</div>
+                    </div>
+                </div>
+            `).join('');
+        } else {
+            itemsHtml = '<div style="font-weight: 700; color: var(--text-main);">น้องแมวสายพันธุ์แท้ Purrfect</div>';
+        }
+
+        clientContainer.innerHTML = `
+            <!-- Order Header Card -->
+            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.8rem; box-shadow: var(--shadow-sm); margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; border-bottom: 1.5px solid var(--border-color); padding-bottom: 1.2rem; margin-bottom: 1.4rem;">
+                    <div>
+                        <span style="font-size: 0.78rem; font-weight: 700; color: var(--primary-coral); text-transform: uppercase; letter-spacing: 0.5px;">หมายเลขติดตามพัสดุ (Tracking No.)</span>
+                        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-main); font-family: 'Outfit', sans-serif; margin: 2px 0 0 0;">
+                            ${trkId}
+                        </h2>
+                        <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
+                            รหัสคำสั่งจอง: <strong style="color: var(--primary-coral); font-family: 'Outfit';">${orderId}</strong>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">ประเภทการจัดส่ง</span>
+                        <strong style="color: var(--primary-coral); font-size: 0.95rem;">🚐 รถตู้ปรับอากาศส่งสัตว์เลี้ยง (Pet Taxi Express)</strong>
+                        <div style="font-size: 0.82rem; font-weight: 800; color: #059669; margin-top: 4px;">ยอดสุทธิ: ${grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ฿</div>
+                    </div>
+                </div>
+
+                <!-- Pet & Customer Summary Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.2rem; font-size: 0.88rem;">
+                    <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                        <div style="color: var(--text-muted); font-size: 0.76rem; font-weight: 700; margin-bottom: 6px;">🐱 น้องแมวที่ส่งมอบ</div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            ${itemsHtml}
+                        </div>
+                    </div>
+
+                    <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                        <div style="color: var(--text-muted); font-size: 0.76rem; font-weight: 700; margin-bottom: 4px;">👤 ผู้รับมอบ & ปลายทาง</div>
+                        <div style="font-weight: 700; color: var(--text-main);">${custName}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px;">📍 ${custAddr}</div>
+                    </div>
+
+                    <div style="background: var(--bg-card-subtle); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+                        <div style="color: var(--text-muted); font-size: 0.76rem; font-weight: 700; margin-bottom: 4px;">📅 นัดหมายวันส่งมอบ</div>
+                        <div style="font-weight: 700; color: #047857; font-size: 1rem;">${delivDate}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">ช่วงเวลา: ${delivTime}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4-Step Interactive Timeline -->
+            <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-lg); padding: 2.2rem; box-shadow: var(--shadow-sm); margin-bottom: 2rem;">
+                <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin: 0 0 2rem 0; display: flex; align-items: center; gap: 8px;">
+                    📍 ขั้นตอนการดูแล & ไทม์ไลน์การส่งมอบสด
+                </h3>
+
+                <div style="display: flex; flex-direction: column; gap: 1.8rem; position: relative;">
+                    <!-- Step 1 -->
+                    <div style="display: flex; gap: 1.4rem; position: relative;">
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: #0D9488; color: #fff; box-shadow: 0 2px 8px rgba(13,148,136,0.3);">✓</div>
+                            <div style="width: 3px; flex: 1; min-height: 40px; margin-top: 4px; border-radius: 2px; background: #0D9488;"></div>
+                        </div>
+                        <div style="flex: 1; border-radius: var(--radius-md); padding: 1.25rem 1.4rem; background: #F0FDF4; border: 1.5px solid #6EE7B7;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                                <h4 style="font-size: 1.05rem; font-weight: 800; margin: 0; color: #0F766E;">🩺 ตรวจสุขภาพก่อนเดินทาง (Vet Health Check & Lab Clear)</h4>
+                                <span style="font-size: 0.76rem; font-weight: 800; padding: 4px 12px; border-radius: 999px; background: #0D9488; color: #fff;">✓ สำเร็จแล้ว</span>
+                            </div>
+                            <p style="margin: 4px 0 0 0; font-size: 0.88rem; color: #334155; line-height: 1.55;">สัตวแพทย์ประจำฟาร์มตรวจร่างกาย ตรวจเลือดปลอดโรค FIV/FeLV 100% เรียบร้อย</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div style="display: flex; gap: 1.4rem; position: relative;">
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: #0284C7; color: #fff; box-shadow: 0 2px 8px rgba(2,132,199,0.3);">✓</div>
+                            <div style="width: 3px; flex: 1; min-height: 40px; margin-top: 4px; border-radius: 2px; background: #EA580C;"></div>
+                        </div>
+                        <div style="flex: 1; border-radius: var(--radius-md); padding: 1.25rem 1.4rem; background: #F0F9FF; border: 1.5px solid #7DD3FC;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                                <h4 style="font-size: 1.05rem; font-weight: 800; margin: 0; color: #0369A1;">🛁 เตรียมความพร้อม & กรูมมิ่ง (Grooming & Travel Kit)</h4>
+                                <span style="font-size: 0.76rem; font-weight: 800; padding: 4px 12px; border-radius: 999px; background: #0284C7; color: #fff;">✓ สำเร็จแล้ว</span>
+                            </div>
+                            <p style="margin: 4px 0 0 0; font-size: 0.88rem; color: #334155; line-height: 1.55;">อาบน้ำ ตัดเล็บ เช็ดหู และจัดเตรียมกล่องเดินทางปรับอากาศพร้อมเซ็ตของขวัญ Starter Kit</p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 (Active) -->
+                    <div style="display: flex; gap: 1.4rem; position: relative;">
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: linear-gradient(135deg, #EA580C 0%, #FF8E72 100%); color: #fff; box-shadow: 0 0 0 6px rgba(234, 88, 12, 0.28); transform: scale(1.06);">🚐</div>
+                            <div style="width: 3px; flex: 1; min-height: 40px; margin-top: 4px; border-radius: 2px; background: #E2E8F0;"></div>
+                        </div>
+                        <div style="flex: 1; border-radius: var(--radius-md); padding: 1.25rem 1.4rem; background: #FFF7ED; border: 2px solid #EA580C; box-shadow: 0 6px 18px rgba(234, 88, 12, 0.28);">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                                <h4 style="font-size: 1.05rem; font-weight: 800; margin: 0; color: #C2410C;">🚐 กำลังออกเดินทางส่งมอบ (In Transit / Pet Taxi)</h4>
+                                <span style="font-size: 0.76rem; font-weight: 800; padding: 4px 12px; border-radius: 999px; background: #EA580C; color: #fff; box-shadow: 0 2px 8px rgba(234,88,12,0.3);">● กำลังดำเนินการ</span>
+                            </div>
+                            <p style="margin: 4px 0 0 0; font-size: 0.88rem; color: #334155; line-height: 1.55;">น้องแมวอยู่บนรถปรับอากาศควบคุมอุณหภูมิ 25°C พร้อมพี่เลี้ยงผู้เชี่ยวชาญดูแลตลอดทาง</p>
+                            <div style="margin-top: 8px; font-size: 0.76rem; font-weight: 700; color: #C2410C; display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.8); padding: 2px 8px; border-radius: 4px; border: 1px dashed #FDBA74;">
+                                🏷️ อยู่ระหว่างเดินทาง
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div style="display: flex; gap: 1.4rem; position: relative;">
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: #F1F5F9; color: #94A3B8; border: 2px solid #CBD5E1;">4</div>
+                        </div>
+                        <div style="flex: 1; border-radius: var(--radius-md); padding: 1.25rem 1.4rem; background: #FAFAFA; border: 1.5px solid #E2E8F0; opacity: 0.7;">
+                            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                                <h4 style="font-size: 1.05rem; font-weight: 800; margin: 0; color: var(--text-muted);">🏡 ส่งมอบถึงมือผู้รับเรียบร้อย (Delivered & Home Welcome 🐾)</h4>
+                                <span style="font-size: 0.76rem; font-weight: 800; padding: 4px 12px; border-radius: 999px; background: #E2E8F0; color: #64748B;">รอดำเนินการ</span>
+                            </div>
+                            <p style="margin: 4px 0 0 0; font-size: 0.88rem; color: var(--text-muted); line-height: 1.55;">ส่งมอบน้องแมวถึงมือคุณลูกค้าหน้าบ้านเรียบร้อย พร้อมเซ็นตรวจรับและเปิดใช้งานประกันสุขภาพ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Driver Card -->
+            <div style="background: linear-gradient(135deg, #FFF9F6 0%, #FFF0EB 100%); border: 1.5px solid #FFD0C0; border-radius: var(--radius-lg); padding: 1.6rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.2rem; margin-bottom: 2rem;">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <div style="width: 52px; height: 52px; border-radius: 50%; background: #FF6B4A; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 4px 12px rgba(255,107,74,0.3);">
+                        👨‍⚕️
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin: 0 0 2px 0;">
+                            ผู้ดูแล & พี่เลี้ยงประจำรถจัดส่ง: <strong>คุณสมศักดิ์ ดูแลแมวดี</strong>
+                        </h4>
+                        <p style="font-size: 0.84rem; color: var(--text-muted); margin: 0;">
+                            ผ่านการอบรมการพยาบาลสัตว์เลี้ยงฉุกเฉิน • รถตู้ควบคุมอุณหภูมิ 25°C ทะเบียน 1กข-8899 กทม.
+                        </p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn btn-primary" onclick="if(typeof togglePurrfectChat==='function') togglePurrfectChat();" style="font-weight: 700; font-size: 0.88rem; padding: 10px 18px;">
+                        💬 แชทขอดูวิดีโอสด
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+});
+</script>
 
 <?php require_once __DIR__ . '/footer.php'; ?>

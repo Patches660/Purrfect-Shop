@@ -223,78 +223,141 @@ require_once __DIR__ . '/header.php';
         </div>
     </div>
 
-    <!-- Navigation Tabs for Profile -->
+    <!-- Navigation Tabs for Profile (Modern Card Blocks Grid) -->
     <div class="profile-tabs-nav">
         <button type="button" 
                 class="profile-nav-btn <?php echo $active_tab === 'profile' ? 'active' : ''; ?>" 
                 id="btn-tab-profile"
                 onclick="switchProfileTab('profile', this)">
-            <span class="nav-icon">👤</span>
-            <span class="nav-label">ข้อมูลส่วนตัว & รูปโปรไฟล์</span>
+            <div class="nav-btn-icon-wrap" style="background: rgba(255, 107, 74, 0.12); color: #FF533D;">
+                👤
+            </div>
+            <div class="nav-btn-content">
+                <div class="nav-btn-top">
+                    <span class="nav-label">ข้อมูลส่วนตัว & รูปโปรไฟล์</span>
+                </div>
+                <span class="nav-desc">จัดการข้อมูลผู้ใช้ อีเมล และรูปโปรไฟล์</span>
+            </div>
         </button>
 
         <button type="button" 
                 class="profile-nav-btn <?php echo $active_tab === 'vaccine' ? 'active' : ''; ?>" 
                 id="btn-tab-vaccine"
                 onclick="switchProfileTab('vaccine', this)">
-            <span class="nav-icon">💉</span>
-            <span class="nav-label">สมุดวัคซีน & สุขภาพ</span>
-            <span class="nav-badge nav-badge-mint" id="vaccine-counter-badge"><?php echo count($adoptedCats); ?></span>
+            <div class="nav-btn-icon-wrap" style="background: #ECFDF5; color: #059669;">
+                💉
+            </div>
+            <div class="nav-btn-content">
+                <div class="nav-btn-top">
+                    <span class="nav-label">สมุดวัคซีน & สุขภาพ</span>
+                    <span class="nav-badge nav-badge-mint" id="vaccine-counter-badge"><?php echo count($adoptedCats); ?></span>
+                </div>
+                <span class="nav-desc">ประวัติการฉีดวัคซีน & ตารางนัดหมาย</span>
+            </div>
         </button>
 
         <button type="button" 
                 class="profile-nav-btn <?php echo $active_tab === 'coupons' ? 'active' : ''; ?>" 
                 id="btn-tab-coupons"
                 onclick="switchProfileTab('coupons', this)">
-            <span class="nav-icon">🎁</span>
-            <span class="nav-label">คูปอง & รางวัลจากวงล้อ</span>
-            <span class="nav-badge nav-badge-coral" id="rewards-counter-badge">0</span>
+            <div class="nav-btn-icon-wrap" style="background: #FDF2F8; color: #DB2777;">
+                🎁
+            </div>
+            <div class="nav-btn-content">
+                <div class="nav-btn-top">
+                    <span class="nav-label">คูปอง & รางวัลจากวงล้อ</span>
+                    <span class="nav-badge nav-badge-coral" id="rewards-counter-badge">0</span>
+                </div>
+                <span class="nav-desc">โค้ดส่วนลด & ของรางวัลที่ได้รับ</span>
+            </div>
         </button>
 
         <button type="button" 
                 class="profile-nav-btn <?php echo $active_tab === 'payment' ? 'active' : ''; ?>" 
                 id="btn-tab-payment"
                 onclick="switchProfileTab('payment', this)">
-            <span class="nav-icon">💳</span>
-            <span class="nav-label">ข้อมูลการชำระเงิน & ที่อยู่จัดส่ง</span>
+            <div class="nav-btn-icon-wrap" style="background: #EFF6FF; color: #2563EB;">
+                💳
+            </div>
+            <div class="nav-btn-content">
+                <div class="nav-btn-top">
+                    <span class="nav-label">ข้อมูลการชำระเงิน & ที่อยู่</span>
+                </div>
+                <span class="nav-desc">บัญชีธนาคาร ที่อยู่ และใบกำกับภาษี</span>
+            </div>
         </button>
 
         <button type="button" 
                 class="profile-nav-btn <?php echo $active_tab === 'orders' ? 'active' : ''; ?>" 
                 id="btn-tab-orders"
                 onclick="switchProfileTab('orders', this)">
-            <span class="nav-icon">📦</span>
-            <span class="nav-label">ประวัติการสั่งซื้อ & แมวที่ชำระแล้ว</span>
-            <span class="nav-badge nav-badge-amber" id="orders-tab-count"><?php echo count($user_orders); ?></span>
+            <div class="nav-btn-icon-wrap" style="background: #FFFBEB; color: #D97706;">
+                📦
+            </div>
+            <div class="nav-btn-content">
+                <div class="nav-btn-top">
+                    <span class="nav-label">ประวัติการสั่งซื้อ & น้องแมว</span>
+                    <span class="nav-badge nav-badge-amber" id="orders-tab-count"><?php echo count($user_orders); ?></span>
+                </div>
+                <span class="nav-desc">คำสั่งจอง ใบเสร็จ และน้องแมวที่รับเลี้ยง</span>
+            </div>
         </button>
 
         <button type="button" 
                 class="profile-nav-btn <?php echo $active_tab === 'points' ? 'active' : ''; ?>" 
                 id="btn-tab-points"
                 onclick="switchProfileTab('points', this)">
-            <span class="nav-icon">🐾</span>
-            <span class="nav-label">สะสมแต้ม Paw Points & Tiers</span>
+            <div class="nav-btn-icon-wrap" style="background: #F5F3FF; color: #7C3AED;">
+                🐾
+            </div>
+            <div class="nav-btn-content">
+                <div class="nav-btn-top">
+                    <span class="nav-label">สะสมแต้ม Paw Points & Tiers</span>
+                </div>
+                <span class="nav-desc">คะแนนสะสม & สิทธิพิเศษระดับ VIP</span>
+            </div>
         </button>
 
         <button type="button" 
                 class="profile-nav-btn <?php echo $active_tab === 'inbox' ? 'active' : ''; ?>" 
                 id="btn-tab-inbox"
                 onclick="switchProfileTab('inbox', this)">
-            <span class="nav-icon">📬</span>
-            <span class="nav-label">กล่องจดหมาย & ข่าวสารร้านค้า</span>
-            <span class="nav-badge nav-badge-blue" id="inbox-tab-count"><?php echo count($user_messages); ?></span>
+            <div class="nav-btn-icon-wrap" style="background: #F0F9FF; color: #0284C7;">
+                📬
+            </div>
+            <div class="nav-btn-content">
+                <div class="nav-btn-top">
+                    <span class="nav-label">กล่องจดหมาย & ข่าวสารร้าน</span>
+                    <span class="nav-badge nav-badge-blue" id="inbox-tab-count"><?php echo count($user_messages); ?></span>
+                </div>
+                <span class="nav-desc">ข้อความแจ้งเตือน & ประกาศจากร้าน</span>
+            </div>
         </button>
 
         <a href="tracking.php" class="profile-nav-btn profile-nav-link-track" title="เปิดหน้าติดตามสถานะการจัดส่งแบบสด">
-            <span class="nav-icon">📍</span>
-            <span class="nav-label">ติดตามการจัดส่งสด</span>
-            <span class="nav-pulse-dot"></span>
+            <div class="nav-btn-icon-wrap" style="background: #FFF7ED; color: #EA580C;">
+                📍
+            </div>
+            <div class="nav-btn-content">
+                <div class="nav-btn-top">
+                    <span class="nav-label">ติดตามการจัดส่งสด</span>
+                    <span class="nav-pulse-dot" title="Live GPS"></span>
+                </div>
+                <span class="nav-desc">ตรวจสถานะ GPS พิกัดน้องแมวสดๆ</span>
+            </div>
         </a>
 
-        <a href="admin.php" class="profile-nav-btn profile-nav-link-admin" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1.5px solid #F59E0B; font-weight: 800; box-shadow: 0 4px 12px rgba(30, 27, 75, 0.25);" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
-            <span class="nav-icon">👑</span>
-            <span class="nav-label">ผู้ดูแลระบบ (Admin) &rarr;</span>
-            <span class="nav-badge" style="background: #F59E0B; color: #1E1B4B; font-weight: 900; font-size: 0.68rem;">MASTER</span>
+        <a href="admin.php" class="profile-nav-btn profile-nav-link-admin" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
+            <div class="nav-btn-icon-wrap" style="background: rgba(245, 158, 11, 0.2); color: #FCD34D;">
+                👑
+            </div>
+            <div class="nav-btn-content">
+                <div class="nav-btn-top">
+                    <span class="nav-label">ผู้ดูแลระบบ (Admin) &rarr;</span>
+                    <span class="nav-badge" style="background: #F59E0B; color: #1E1B4B; font-weight: 900; font-size: 0.68rem;">MASTER</span>
+                </div>
+                <span class="nav-desc">เข้าสู่แดชบอร์ดจัดการระบบหลังบ้าน</span>
+            </div>
         </a>
     </div>
 
@@ -501,6 +564,11 @@ require_once __DIR__ . '/header.php';
                                     <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: var(--primary-coral);">
                                         <?php echo htmlspecialchars($order['order_id']); ?>
                                     </strong>
+                                    <div style="margin-top: 4px;">
+                                        <span style="font-size: 0.78rem; font-weight: 800; background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 6px; border: 1px solid #BFDBFE; display: inline-flex; align-items: center; gap: 4px; font-family: 'Outfit', sans-serif;">
+                                            🚚 รหัส Tracking: <?php echo htmlspecialchars($order['tracking_id'] ?? ('TRK-' . strtoupper(substr(md5($order['order_id']), 0, 8)))); ?>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div>
                                     <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">วันที่ทำรายการ:</span>
@@ -1533,72 +1601,124 @@ require_once __DIR__ . '/header.php';
 </div>
 
 <style>
-/* Modern Profile & Luxury Buttons Redesign */
+/* Modern Luxury Profile Tab Navigation (Card Blocks Grid) */
 .profile-tabs-nav {
-    display: flex;
-    gap: 0.6rem;
-    margin-bottom: 1.8rem;
-    border-bottom: 2px solid var(--border-color);
-    padding-bottom: 0.8rem;
-    flex-wrap: wrap;
-}
-/* Modern Luxury Profile Tab Navigation */
-.profile-tabs-nav {
-    display: flex;
-    gap: 0.65rem;
-    margin-bottom: 2.2rem;
-    padding: 0.85rem;
-    background: #FFFFFF;
-    border: 1.5px solid #E2E8F0;
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-    flex-wrap: wrap;
-    align-items: center;
-}
-.profile-nav-btn {
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    padding: 0.7rem 1.25rem !important;
-    border-radius: 999px !important;
-    font-size: 0.88rem !important;
-    font-weight: 700 !important;
-    color: #475569 !important;
-    background: #F8FAFC !important;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1rem !important;
+    margin-bottom: 2.2rem !important;
+    padding: 1.25rem !important;
+    background: #FFFFFF !important;
     border: 1.5px solid #E2E8F0 !important;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.02) !important;
+    border-radius: 26px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+}
+
+@media (max-width: 990px) {
+    .profile-tabs-nav {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .profile-tabs-nav {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+        padding: 0.85rem !important;
+    }
+}
+
+.profile-nav-btn {
+    display: flex !important;
+    align-items: center !important;
+    text-align: left !important;
+    gap: 12px !important;
+    padding: 1rem 1.15rem !important;
+    border-radius: 18px !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #E2E8F0 !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03) !important;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
     cursor: pointer !important;
-    white-space: nowrap !important;
     text-decoration: none !important;
-    position: relative;
+    position: relative !important;
     user-select: none;
+    width: 100% !important;
 }
+
 .profile-nav-btn:hover {
-    color: var(--primary-coral) !important;
-    background: #FFFFFF !important;
-    border-color: rgba(255, 117, 86, 0.45) !important;
+    background: #FAFAFA !important;
+    border-color: #CBD5E1 !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 6px 18px rgba(255, 117, 86, 0.16) !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06) !important;
 }
+
 .profile-nav-btn.active {
     background: linear-gradient(135deg, #FF7556 0%, #FF533D 100%) !important;
     color: #FFFFFF !important;
-    border-color: transparent !important;
-    box-shadow: 0 8px 22px rgba(255, 117, 86, 0.38) !important;
-    transform: translateY(-1px) !important;
+    border-color: #FF533D !important;
+    box-shadow: 0 8px 24px rgba(255, 117, 86, 0.35) !important;
+    transform: translateY(-2px) !important;
 }
-.profile-nav-btn .nav-icon {
-    font-size: 1.1rem;
-    line-height: 1;
-    display: inline-flex;
+
+.nav-btn-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
 }
+
+.profile-nav-btn.active .nav-btn-icon-wrap {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: #FFFFFF !important;
+}
+
+.nav-btn-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+}
+
+.nav-btn-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
 .profile-nav-btn .nav-label {
-    font-size: 0.88rem;
-    font-weight: 750;
-    line-height: 1.2;
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: #1E293B;
+    line-height: 1.25;
+    transition: color 0.2s ease;
 }
+
+.profile-nav-btn.active .nav-label {
+    color: #FFFFFF !important;
+}
+
+.nav-desc {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    font-weight: 500;
+    line-height: 1.35;
+    display: block;
+    transition: color 0.2s ease;
+}
+
+.profile-nav-btn.active .nav-desc {
+    color: rgba(255, 255, 255, 0.88) !important;
+}
+
 .profile-nav-btn .nav-badge {
     font-size: 0.72rem;
     font-weight: 800;
@@ -1606,8 +1726,9 @@ require_once __DIR__ . '/header.php';
     border-radius: 999px;
     line-height: 1;
     display: inline-block;
-    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
+
 .nav-badge-coral {
     background: rgba(255, 117, 86, 0.15);
     color: var(--primary-coral);
@@ -1633,38 +1754,49 @@ require_once __DIR__ . '/header.php';
     color: #FFFFFF !important;
     border-color: rgba(255, 255, 255, 0.4) !important;
 }
+
 .profile-nav-link-track {
-    background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%) !important;
-    border-color: #FDBA74 !important;
-    color: #C2410C !important;
+    background: #FFFDF9 !important;
+    border-color: #FED7AA !important;
 }
 .profile-nav-link-track:hover {
-    background: #FFF !important;
-    border-color: #FF7556 !important;
-    color: #FF7556 !important;
+    border-color: #FB923C !important;
+    background: #FFF7ED !important;
 }
+.profile-nav-link-track .nav-label {
+    color: #C2410C !important;
+}
+
+.profile-nav-link-admin {
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%) !important;
+    border-color: #F59E0B !important;
+    color: #FCD34D !important;
+    box-shadow: 0 4px 15px rgba(30, 27, 75, 0.25) !important;
+}
+.profile-nav-link-admin:hover {
+    background: linear-gradient(135deg, #2E2A72 0%, #4338CA 100%) !important;
+    border-color: #FBBF24 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 22px rgba(49, 46, 129, 0.35) !important;
+}
+.profile-nav-link-admin .nav-label {
+    color: #FCD34D !important;
+}
+.profile-nav-link-admin .nav-desc {
+    color: rgba(252, 211, 77, 0.75) !important;
+}
+
 .nav-pulse-dot {
     width: 8px;
     height: 8px;
     background: #10B981;
     border-radius: 50%;
     display: inline-block;
-    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
     animation: pulseDot 2s infinite ease-in-out;
 }
 @keyframes pulseDot {
     0%, 100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.3); opacity: 0.7; }
-}
-.profile-nav-link-admin {
-    background: #1E293B !important;
-    color: #FBBF24 !important;
-    border-color: #F59E0B !important;
-}
-.profile-nav-link-admin:hover {
-    background: #0F172A !important;
-    color: #FDE68A !important;
-    box-shadow: 0 6px 18px rgba(245, 158, 11, 0.25) !important;
 }
 .cat-filter-btn {
     display: inline-flex !important;
@@ -2353,12 +2485,135 @@ document.addEventListener('DOMContentLoaded', () => {
                 `).join('');
             }
         }
-    } catch(e) {}
+    // 4. Hydrate Orders from localStorage (for client-side/test orders)
+    try {
+        const localOrders = JSON.parse(localStorage.getItem('cat_shop_orders') || '[]');
+        if (localOrders.length > 0) {
+            const orderContainer = document.querySelector('#tab-orders .checkout-block');
+            const emptyState = orderContainer ? orderContainer.querySelector('div[style*="text-align: center"]') : null;
+            let ordersListDiv = orderContainer ? orderContainer.querySelector('div[style*="flex-direction: column"]') : null;
 
-    // 4. Initialize Calendar
+            if (emptyState) {
+                emptyState.remove();
+            }
+
+            if (!ordersListDiv && orderContainer) {
+                ordersListDiv = document.createElement('div');
+                ordersListDiv.style.display = 'flex';
+                ordersListDiv.style.flexDirection = 'column';
+                ordersListDiv.style.gap = '1.5rem';
+                orderContainer.appendChild(ordersListDiv);
+            }
+
+            const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+            const trackingTarget = isStatic ? 'tracking.html' : 'tracking.php';
+            const vaccineTarget = isStatic ? 'vaccine_reminder.html' : 'vaccine_reminder.php';
+
+            localOrders.forEach(ord => {
+                const orderKey = 'order-' + (ord.order_id || '').replace(/[^a-zA-Z0-9_-]/g, '');
+                const existing = document.getElementById(orderKey);
+                if (!existing && ordersListDiv) {
+                    const trkId = ord.tracking_id || ('TRACK-TH-' + (ord.order_id || '9999').replace(/[^a-zA-Z0-9]/g, ''));
+                    const grandTotal = parseFloat(ord.total || 0);
+                    const items = ord.items || [];
+                    const itemsCount = items.length;
+                    const itemsHtml = items.map(it => `
+                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px dashed var(--border-color); flex-wrap: wrap;">
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <img src="assets/images/${it.image || 'cat_persian.jpg'}" alt="${it.name || 'น้องแมว'}" 
+                                     style="width: 58px; height: 58px; border-radius: 10px; object-fit: cover; border: 1.5px solid var(--border-color);" onerror="this.src='assets/images/logo.png'">
+                                <div>
+                                    <strong style="color: var(--text-main); font-size: 0.95rem; display: block;">${it.name || 'น้องแมว'}</strong>
+                                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">
+                                        ${it.breed || ''} • เพศ: ${it.gender || 'ไม่ระบุ'} (x${it.qty || 1})
+                                    </div>
+                                    <a href="${vaccineTarget}?cat_name=${encodeURIComponent(it.name || '')}&breed=${encodeURIComponent(it.breed || '')}&image=${encodeURIComponent(it.image || '')}" 
+                                       class="btn-vaccine-link" 
+                                       style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                        💉 ดูตารางวัคซีนน้องตัวนี้ ➔
+                                    </a>
+                                </div>
+                            </div>
+                            <span style="font-weight: 700; color: var(--primary-coral); font-family: 'Outfit'; font-size: 1.05rem;">
+                                ${(it.price * (it.qty || 1)).toLocaleString('th-TH')} ฿
+                            </span>
+                        </div>
+                    `).join('');
+
+                    const orderCard = document.createElement('div');
+                    orderCard.id = orderKey;
+                    orderCard.style.cssText = 'background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition);';
+                    orderCard.innerHTML = `
+                        <div style="background: var(--bg-card-subtle); padding: 1rem 1.4rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+                            <div>
+                                <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">รหัสคำสั่งจอง:</span>
+                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: var(--primary-coral);">${ord.order_id}</strong>
+                                <div style="margin-top: 4px;">
+                                    <span style="font-size: 0.78rem; font-weight: 800; background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 6px; border: 1px solid #BFDBFE; display: inline-flex; align-items: center; gap: 4px; font-family: 'Outfit', sans-serif;">
+                                        🚚 รหัส Tracking: ${trkId}
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">วันที่ทำรายการ:</span>
+                                <span style="font-size: 0.88rem; font-weight: 600; color: var(--text-main);">${ord.created_at ? new Date(ord.created_at).toLocaleString('th-TH') : 'ล่าสุด'}</span>
+                            </div>
+                            <div>
+                                <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">สถานะ:</span>
+                                <span style="background: var(--accent-mint-soft); color: #065F46; padding: 0.2rem 0.7rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.3);">
+                                    ✓ ชำระเงินแล้ว / เตรียมจัดส่ง
+                                </span>
+                            </div>
+                            <div>
+                                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                    <a href="${trackingTarget}?track_id=${encodeURIComponent(trkId)}&order_id=${encodeURIComponent(ord.order_id)}" 
+                                       class="btn btn-primary btn-sm" 
+                                       style="padding: 0.38rem 0.85rem; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;">
+                                        📍 ติดตามส่งมอบ
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding: 1.2rem 1.4rem;">
+                            <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem;">
+                                น้องแมวในรายการนี้ (จำนวน: ${itemsCount} ตัว)
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                                ${itemsHtml}
+                            </div>
+                            <div style="margin-top: 1.2rem; padding-top: 1rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+                                <div>
+                                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">ช่องทางชำระเงินที่ใช้:</span>
+                                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">ชำระเงินออนไลน์ / โอนเงินผ่านระบบ</span>
+                                </div>
+                                <div style="text-align: right;">
+                                    <span style="font-size: 0.82rem; color: var(--text-muted);">ยอดรวมสุทธิ:</span>
+                                    <span style="font-size: 1.3rem; font-weight: 800; color: var(--primary-coral); font-family: 'Outfit'; display: block;">
+                                        ${grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ฿
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    ordersListDiv.prepend(orderCard);
+                }
+            });
+
+            // Update badge counts
+            const allRenderedCards = ordersListDiv.querySelectorAll(':scope > div');
+            const badgeCount = document.getElementById('orders-tab-count');
+            const headerCount = document.querySelector('#tab-orders .checkout-block-title span:last-child');
+            if (badgeCount) badgeCount.textContent = allRenderedCards.length;
+            if (headerCount) headerCount.textContent = `(พบ ${allRenderedCards.length} รายการ)`;
+        }
+    } catch(e) {
+        console.error('Error hydrating profile orders:', e);
+    }
+
+    // 5. Initialize Calendar
     renderCalendar();
 
-    // 5. Handle initial tab selection from URL params
+    // 6. Handle initial tab selection from URL params
     const urlParams = new URLSearchParams(window.location.search);
     const initialTab = urlParams.get('tab');
     if (initialTab && document.getElementById('tab-' + initialTab)) {

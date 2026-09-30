@@ -980,8 +980,8 @@
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="delivery_date">วันที่สะดวกรับน้องแมว</label>
                                 <input type="date" name="delivery_date" id="delivery_date" class="form-control" 
-                                       value="2026-10-03" 
-                                       min="2026-10-01">
+                                       value="2026-10-04" 
+                                       min="2026-10-02">
                             </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="delivery_timeslot">ช่วงเวลาที่สะดวกรับ</label>
@@ -2356,10 +2356,10 @@ function syncClientCartUI() {
             }
 
             const vatVal = document.getElementById('summaryVatVal');
-            if (vatVal) vatVal.textContent = vat.toFixed(2) + ' ฿';
+            if (vatVal) vatVal.textContent = vat.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
 
             const grandVal = document.getElementById('summaryGrandTotalVal');
-            if (grandVal) grandVal.textContent = grandTotal.toFixed(2) + ' ฿';
+            if (grandVal) grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
         } else {
             if (emptyView) emptyView.style.display = 'block';
             if (formView) formView.style.display = 'none';
@@ -2385,7 +2385,7 @@ function syncClientCartUI() {
             if (couponDiscount > 0) {
                 couponRow.style.display = 'flex';
                 couponName.textContent = currentAppliedCoupon.code;
-                couponVal.textContent = '-' + couponDiscount.toLocaleString() + ' ฿';
+                couponVal.textContent = '-' + couponDiscount.toLocaleString('th-TH') + ' ฿';
             } else {
                 couponRow.style.display = 'none';
             }
@@ -2399,10 +2399,10 @@ function syncClientCartUI() {
         let grandTotal = afterDiscount + vat;
 
         const vatVal = document.getElementById('summaryVatVal');
-        if (vatVal) vatVal.textContent = vat.toFixed(2) + ' ฿';
+        if (vatVal) vatVal.textContent = vat.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
 
         const grandVal = document.getElementById('summaryGrandTotalVal');
-        if (grandVal) grandVal.textContent = grandTotal.toFixed(2) + ' ฿';
+        if (grandVal) grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
     }
 }
 
@@ -2584,7 +2584,8 @@ function handleCheckoutFormSubmit(e) {
             localStorage.removeItem('cat_shop_cart');
         } catch(err) {}
 
-        window.location.href = `tracking.html?track_id=${trackingId}&order_id=${orderId}`;
+        const targetTrackingPage = (window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php')) ? 'tracking.html' : 'tracking.php';
+        window.location.href = `${targetTrackingPage}?track_id=${trackingId}&order_id=${orderId}`;
     }
 }
 
@@ -2663,9 +2664,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     <li><a href="products.html">🐱 ดูสายพันธุ์น้องแมวทั้งหมด</a></li>
                 </ul>
             </div>
+
+            <div class="footer-col">
+                <h4>📜 Policies & Legal Center</h4>
+                <ul>
+                    <li><a href="policies.html?tab=privacy">🔒 Privacy Policy</a></li>
+                    <li><a href="policies.html?tab=terms">📝 Terms of Service</a></li>
+                    <li><a href="policies.html?tab=shipping">🚐 Shipping & Returns Policy</a></li>
+                    <li><a href="policies.html?tab=pet_welfare">🐾 Pet Adoption Policy</a></li>
+                    <li><a href="policies.html?tab=cookies">🍪 Cookie Policy</a></li>
+                </ul>
+            </div>
         </div>
 
         <div class="footer-bottom">
+            <!-- Quick Policy Links Strip -->
+            <div style="margin-bottom: 0.8rem; display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; font-size: 0.82rem;">
+                <a href="policies.html?tab=privacy" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;">🔒 Privacy Policy</a>
+                <span style="color: var(--border-color);">&bull;</span>
+                <a href="policies.html?tab=terms" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;">📝 Terms of Service</a>
+                <span style="color: var(--border-color);">&bull;</span>
+                <a href="policies.html?tab=shipping" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;">🚐 Shipping & Returns Policy</a>
+                <span style="color: var(--border-color);">&bull;</span>
+                <a href="policies.html?tab=pet_welfare" style="color: var(--primary-coral); font-weight: 700; text-decoration: none;">🐾 Pet Adoption Policy</a>
+                <span style="color: var(--border-color);">&bull;</span>
+                <a href="policies.html?tab=cookies" style="color: var(--text-muted); text-decoration: none; transition: color 0.2s;">🍪 Cookie Policy</a>
+            </div>
             <p>&copy; 2026 <strong>Purrfect Shop</strong> - คัดสรรและส่งมอบเพื่อนที่ดีที่สุดด้วยหัวใจ 🐾</p>
             <p>
                 พัฒนาโดย <strong>Purrfect Cattery Team</strong> (TH-CAT-8899 IT) &bull; Purrfect Boutique Cattery

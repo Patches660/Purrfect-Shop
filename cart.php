@@ -2343,10 +2343,10 @@ function syncClientCartUI() {
             }
 
             const vatVal = document.getElementById('summaryVatVal');
-            if (vatVal) vatVal.textContent = vat.toFixed(2) + ' ฿';
+            if (vatVal) vatVal.textContent = vat.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
 
             const grandVal = document.getElementById('summaryGrandTotalVal');
-            if (grandVal) grandVal.textContent = grandTotal.toFixed(2) + ' ฿';
+            if (grandVal) grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
         } else {
             if (emptyView) emptyView.style.display = 'block';
             if (formView) formView.style.display = 'none';
@@ -2372,7 +2372,7 @@ function syncClientCartUI() {
             if (couponDiscount > 0) {
                 couponRow.style.display = 'flex';
                 couponName.textContent = currentAppliedCoupon.code;
-                couponVal.textContent = '-' + couponDiscount.toLocaleString() + ' ฿';
+                couponVal.textContent = '-' + couponDiscount.toLocaleString('th-TH') + ' ฿';
             } else {
                 couponRow.style.display = 'none';
             }
@@ -2386,10 +2386,10 @@ function syncClientCartUI() {
         let grandTotal = afterDiscount + vat;
 
         const vatVal = document.getElementById('summaryVatVal');
-        if (vatVal) vatVal.textContent = vat.toFixed(2) + ' ฿';
+        if (vatVal) vatVal.textContent = vat.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
 
         const grandVal = document.getElementById('summaryGrandTotalVal');
-        if (grandVal) grandVal.textContent = grandTotal.toFixed(2) + ' ฿';
+        if (grandVal) grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
     }
 }
 
@@ -2571,7 +2571,8 @@ function handleCheckoutFormSubmit(e) {
             localStorage.removeItem('cat_shop_cart');
         } catch(err) {}
 
-        window.location.href = `tracking.html?track_id=${trackingId}&order_id=${orderId}`;
+        const targetTrackingPage = (window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php')) ? 'tracking.html' : 'tracking.php';
+        window.location.href = `${targetTrackingPage}?track_id=${trackingId}&order_id=${orderId}`;
     }
 }
 
