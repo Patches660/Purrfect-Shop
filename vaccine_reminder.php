@@ -472,7 +472,7 @@ function calculateVaccineSchedule(e) {
                         <span class="badge-age" style="background: ${item.badgeCol}15; color: ${item.badgeCol};">
                             อายุ ~${item.ageWeeks} สัปดาห์
                         </span>
-                        <span style="font-size: 0.78rem; font-weight: 800; color: #64748B;">
+                        <span style="font-size: 0.78rem; font-weight: 800; background: #FEF3C7; color: #92400E; border: 1.5px solid #FCD34D; padding: 2px 9px; border-radius: 8px; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
                             📅 กำหนดนัด: ${formattedDate}
                         </span>
                     </div>

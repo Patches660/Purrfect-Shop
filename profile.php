@@ -1503,18 +1503,18 @@ require_once __DIR__ . '/header.php';
                     </div>
 
                     <!-- Selected Date Appointment Details Section -->
-                    <div id="calendarEventDetailsBox" style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-radius: 16px; padding: 1.1rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
-                            <strong id="selectedDateLabel" style="font-size: 0.9rem; color: #1E293B; display: flex; align-items: center; gap: 6px;">
-                                📋 นัดหมายในวันที่เลือก
-                            </strong>
-                            <span id="appointmentCountBadge" style="font-size: 0.72rem; background: #D1FAE5; color: #065F46; font-weight: 800; padding: 2px 7px; border-radius: 999px;">
-                                1 นัดหมาย
+                    <div id="calendarEventDetailsBox" style="background: #FFFFFF; border: 2px solid #E2E8F0; border-radius: 18px; padding: 1.2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.04);">
+                        <div style="background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%); border: 1.5px solid #10B981; border-radius: 14px; padding: 0.65rem 1rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; box-shadow: 0 2px 8px rgba(16, 185, 129, 0.12);">
+                            <div id="selectedDateLabel" style="font-size: 0.92rem; font-weight: 800; color: #064E3B; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                📋 นัดหมายวันที่: <span style="background: #FFFFFF; color: #047857; font-weight: 900; padding: 0.2rem 0.65rem; border-radius: 8px; border: 1.5px solid #6EE7B7; box-shadow: 0 2px 4px rgba(0,0,0,0.04);">2026-09-30</span>
+                            </div>
+                            <span id="appointmentCountBadge" style="font-size: 0.75rem; background: #059669; color: #FFFFFF; font-weight: 800; padding: 3px 10px; border-radius: 999px; box-shadow: 0 2px 6px rgba(5, 150, 105, 0.3);">
+                                1 รายการ
                             </span>
                         </div>
 
                         <!-- Appointments List -->
-                        <div id="calendarEventsList" style="display: flex; flex-direction: column; gap: 0.7rem;">
+                        <div id="calendarEventsList" style="display: flex; flex-direction: column; gap: 0.75rem;">
                             <!-- Dynamically generated -->
                         </div>
                     </div>
@@ -1757,43 +1757,59 @@ require_once __DIR__ . '/header.php';
     box-shadow: 0 6px 18px rgba(16, 185, 129, 0.18) !important;
 }
 .cal-day-cell {
-    min-height: 42px;
-    padding: 3px;
-    border-radius: 10px;
-    border: 1px solid transparent;
+    min-height: 44px;
+    padding: 4px 2px;
+    border-radius: 12px;
+    border: 1.5px solid transparent;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    font-size: 0.78rem;
+    font-size: 0.82rem;
     font-weight: 700;
     color: #334155;
     cursor: pointer;
-    transition: all 0.18s ease;
+    transition: all 0.2s ease;
     position: relative;
+    background: #FAFAFA;
 }
 .cal-day-cell:hover {
     background: #F1F5F9;
+    border-color: #CBD5E1;
+    transform: translateY(-1px);
 }
 .cal-day-cell.other-month {
     color: #CBD5E1;
+    background: transparent;
+}
+.cal-day-cell.has-event {
+    border: 1.5px solid #10B981 !important;
+    background: #F0FDF4 !important;
+    color: #065F46 !important;
+    font-weight: 800 !important;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15) !important;
 }
 .cal-day-cell.today {
-    border-color: #FF7556;
-    background: rgba(255, 117, 86, 0.06);
-    color: var(--primary-coral);
-    font-weight: 900;
+    border-color: #FF7556 !important;
+    background: rgba(255, 117, 86, 0.08) !important;
+    color: var(--primary-coral) !important;
+    font-weight: 900 !important;
 }
 .cal-day-cell.selected-day {
-    background: #10B981 !important;
+    background: linear-gradient(135deg, #059669 0%, #10B981 100%) !important;
     color: #FFFFFF !important;
-    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+    border-color: #047857 !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35) !important;
+    transform: scale(1.05);
+    z-index: 2;
 }
 .cal-event-dot {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     margin-top: 2px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.25);
+    border: 1px solid #FFFFFF;
 }
 @media (max-width: 860px) {
     .vaccine-twocol-grid {
@@ -2043,21 +2059,22 @@ function renderCalendar() {
         const dayEvents = eventsMap[dStr] || [];
         const isToday = dStr === todayStr;
         const isSelected = dStr === selectedCalDayStr;
+        const hasEvents = dayEvents.length > 0;
 
         let dotsHtml = '';
-        if (dayEvents.length > 0) {
+        if (hasEvents) {
             dotsHtml = `
-                <div style="display: flex; gap: 2px; justify-content: center; margin-top: 2px; flex-wrap: wrap;">
-                    ${dayEvents.slice(0, 3).map(ev => `<span class="cal-event-dot" style="background: ${ev.color};"></span>`).join('')}
+                <div style="display: flex; gap: 2px; justify-content: center; margin-top: 3px; flex-wrap: wrap;">
+                    ${dayEvents.slice(0, 3).map(ev => `<span class="cal-event-dot" style="background: ${ev.color};" title="${ev.title}"></span>`).join('')}
                 </div>
             `;
         }
 
         html += `
-            <div class="cal-day-cell ${isToday ? 'today' : ''} ${isSelected ? 'selected-day' : ''}" 
+            <div class="cal-day-cell ${hasEvents ? 'has-event' : ''} ${isToday ? 'today' : ''} ${isSelected ? 'selected-day' : ''}" 
                  onclick="selectCalendarDate('${dStr}')" 
-                 title="${dayEvents.length > 0 ? dayEvents.length + ' นัดหมาย' : ''}">
-                <span>${day}</span>
+                 title="${hasEvents ? dayEvents.length + ' นัดหมาย: ' + dayEvents.map(e => e.title).join(', ') : ''}">
+                <span style="display: inline-block; line-height: 1;">${day}</span>
                 ${dotsHtml}
             </div>
         `;
@@ -2081,7 +2098,9 @@ function renderCalendarEventsDetails(eventsMap) {
 
     const dateObj = new Date(selectedCalDayStr);
     const dateFormatted = dateObj.toLocaleDateString('th-TH', { year: 'numeric', month: 'short', day: 'numeric', weekday: 'short' });
-    if (label) label.innerHTML = `📋 นัดหมายวันที่: <span style="color: #059669; font-weight: 800;">${dateFormatted}</span>`;
+    if (label) {
+        label.innerHTML = `📋 นัดหมายวันที่: <span style="background: #FFFFFF; color: #047857; font-weight: 900; padding: 0.2rem 0.7rem; border-radius: 8px; border: 1.5px solid #6EE7B7; box-shadow: 0 2px 4px rgba(0,0,0,0.04); display: inline-flex; align-items: center; gap: 4px;">📅 ${dateFormatted}</span>`;
+    }
 
     const dayEvents = eventsMap[selectedCalDayStr] || [];
     if (badge) badge.textContent = `${dayEvents.length} รายการ`;
@@ -2097,16 +2116,16 @@ function renderCalendarEventsDetails(eventsMap) {
 
         if (allMonthEvents.length > 0) {
             container.innerHTML = `
-                <div style="font-size: 0.78rem; color: #64748B; margin-bottom: 4px;">
+                <div style="font-size: 0.8rem; color: #64748B; margin-bottom: 4px; font-weight: 700;">
                     ไม่มีนัดในวันนี้ แต่มีนัดหมายอื่นๆ ในเดือนนี้:
                 </div>
                 ${allMonthEvents.slice(0, 3).map(ev => renderSingleEventCard(ev)).join('')}
             `;
         } else {
             container.innerHTML = `
-                <div style="text-align: center; padding: 1.2rem; color: #64748B; font-size: 0.82rem;">
+                <div style="text-align: center; padding: 1.4rem; color: #64748B; font-size: 0.85rem; background: #F8FAFC; border-radius: 12px; border: 1px dashed #CBD5E1;">
                     ✨ ไม่มีนัดหมายฉีดวัคซีนในวันที่เลือก<br>
-                    <span style="font-size: 0.75rem; color: #94A3B8;">(คลิกเลือกวันที่ที่มีจุดสีเพื่อดูรายละเอียด)</span>
+                    <span style="font-size: 0.75rem; color: #94A3B8;">(คลิกเลือกวันที่ที่มีกรอบสีเขียวและจุดสีบนปฏิทินเพื่อดูรายละเอียด)</span>
                 </div>
             `;
         }
@@ -2119,23 +2138,30 @@ function renderSingleEventCard(ev) {
     const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
     const trackerUrl = (isStatic ? 'vaccine_reminder.html' : 'vaccine_reminder.php') + `?cat_name=${encodeURIComponent(ev.catName)}&breed=${encodeURIComponent(ev.breed)}`;
 
+    const eventColor = ev.color || '#10B981';
+
     return `
-        <div style="background: #FFFFFF; border: 1.5px solid ${ev.isDone ? '#A7F3D0' : '#E2E8F0'}; border-radius: 12px; padding: 0.8rem; box-shadow: 0 2px 6px rgba(0,0,0,0.03); display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+        <div style="background: #FFFFFF; border: 1.5px solid ${ev.isDone ? '#A7F3D0' : eventColor}; border-left: 5.5px solid ${eventColor}; border-radius: 14px; padding: 0.85rem 1rem; box-shadow: 0 3px 10px rgba(0,0,0,0.04); display: flex; align-items: center; justify-content: space-between; gap: 10px; transition: transform 0.2s ease;">
             <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 1.5rem; background: ${ev.color}15; width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 1.4rem; background: ${eventColor}18; width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1.5px solid ${eventColor}35; flex-shrink: 0;">
                     ${ev.icon}
                 </span>
                 <div>
-                    <strong style="font-size: 0.88rem; color: #1E293B; display: block;">
+                    <strong style="font-size: 0.9rem; color: #1E293B; display: block; margin-bottom: 2px;">
                         ${ev.title}
                     </strong>
-                    <span style="font-size: 0.72rem; color: #64748B;">
-                        🐾 ${ev.catName} (${ev.breed}) &bull; ${ev.dateStr}
-                    </span>
+                    <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                        <span style="font-size: 0.72rem; color: #475569; font-weight: 700;">
+                            🐾 ${ev.catName} (${ev.breed})
+                        </span>
+                        <span style="font-size: 0.7rem; background: ${eventColor}15; color: ${eventColor}; font-weight: 800; padding: 1px 7px; border-radius: 6px; border: 1px solid ${eventColor}30;">
+                            📅 ${ev.dateStr}
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div style="text-align: right;">
-                <a href="${trackerUrl}" class="btn btn-secondary btn-sm" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; color: #059669; background: #ECFDF5; border-color: #A7F3D0; text-decoration: none;">
+            <div style="text-align: right; flex-shrink: 0;">
+                <a href="${trackerUrl}" class="btn btn-secondary btn-sm" style="font-size: 0.75rem; font-weight: 800; padding: 4px 10px; border-radius: 8px; color: #059669; background: #ECFDF5; border-color: #A7F3D0; text-decoration: none; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
                     บันทึก ✓
                 </a>
             </div>
