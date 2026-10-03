@@ -835,6 +835,65 @@
                     "timestamp": "2026-09-30 16:05:02"
                 }
             ]
+        },
+        "guest_6cfe6aac92": {
+            "user_id": "guest_6cfe6aac92",
+            "user_name": "ผู้เยี่ยมชม (ac92)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 1,
+            "unread_user": 0,
+            "last_active": "2026-10-03 16:27:47",
+            "messages": [
+                {
+                    "id": "msg_init_1791019667",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:27:47"
+                },
+                {
+                    "id": "msg_6ac0ca937f037",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (ac92)",
+                    "text": "ขอดูแมวสฟิงซ์หน่อยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:27:47"
+                },
+                {
+                    "id": "msg_bot_6ac0ca9381656",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "• Siamese \/ วิเชียรมาศ (12,000 – 16,000 ฿): แมวมงคลไทย แต้มสี 9 จุด ตาสีฟ้าคราม ช่างพูด ช่างเจรจา ฉลาด ซื่อสัตย์และผูกพันกับเจ้าของมาก\n• Canadian Sphynx (28,000 – 38,000 ฿): แมวไร้ขน ผิวนุ่มอุ่นดั่งลูกพีช ขี้อ้อนติดคนมาก ขนร่วง 0% ปลอดภัยสำหรับคนเป็นโรคภูมิแพ้ขนสัตว์ครับ",
+                    "cards": [
+                        {
+                            "id": "cat_sphynx",
+                            "name": "น้องซีซาร์ (Canadian Sphynx)",
+                            "breed": "สฟิงซ์ (Sphynx)",
+                            "price": 28000,
+                            "price_fmt": "฿28,000",
+                            "image": "assets\/images\/cat_sphynx.jpg",
+                            "hair": "ไร้ขน (ผิวสัมผัสพีช)",
+                            "highlight": "ขนร่วง 0% หมดปัญหาภูมิแพ้",
+                            "link": "products.php"
+                        },
+                        {
+                            "id": "cat_siamese",
+                            "name": "น้องมงคล (Siamese \/ วิเชียรมาศ)",
+                            "breed": "วิเชียรมาศ (Siamese Cat)",
+                            "price": 12000,
+                            "price_fmt": "฿12,000",
+                            "image": "assets\/images\/cat_siamese.jpg",
+                            "hair": "ขนสั้นเรียบเนียน",
+                            "highlight": "แมวมงคลนำโชคลาภ",
+                            "link": "products.php"
+                        }
+                    ],
+                    "timestamp": "2026-10-03 16:27:48"
+                }
+            ]
         }
     }
 }

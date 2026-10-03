@@ -122,6 +122,187 @@ if ($action === 'get_messages') {
     exit;
 }
 
+// Helper: Search AI Knowledge Base (78 Q&A dataset)
+function findBotKnowledgeAnswer($user_query) {
+    global $cats;
+    $kb_file = __DIR__ . '/chatbot_knowledge_base.json';
+    if (!file_exists($kb_file)) {
+        return null;
+    }
+    $kb = json_decode(file_get_contents($kb_file), true);
+    if (!is_array($kb) || empty($kb)) {
+        return null;
+    }
+
+    $raw_query = trim($user_query);
+    if (empty($raw_query)) return null;
+
+    $query_lower = mb_strtolower($raw_query, 'UTF-8');
+    
+    // Stopwords in Thai that could cause false positives if matched alone
+    $stopwords = ['ไหม', 'มั้ย', 'ได้', 'หรือ', 'และ', 'กับ', 'ให้', 'ของ', 'ที่', 'ใน', 'การ', 'ความ', 'ทาง', 'เป็น', 'อยู่', 'ช่วย', 'หน่อย', 'ครับ', 'ค่ะ', 'นะ', 'คะ', 'กี่', 'ตัว', 'ทำ', 'ยัง', 'ไง', 'บ้าง', 'มี', 'ถ้า', 'หาก', 'อยาก', 'จะ', 'ขอ'];
+
+    $best_score = 0;
+    $best_item = null;
+
+    // Cat breed keyword mapping to cat IDs for card attachments
+    $breed_map = [
+        'บริติช' => 'cat_british',
+        'british' => 'cat_british',
+        'สกอตติช' => 'cat_scottish',
+        'scottish' => 'cat_scottish',
+        'หูพับ' => 'cat_scottish',
+        'เปอร์เซีย' => 'cat_persian',
+        'persian' => 'cat_persian',
+        'เมนคูน' => 'cat_mainecoon',
+        'maine coon' => 'cat_mainecoon',
+        'สฟิงซ์' => 'cat_sphynx',
+        'sphynx' => 'cat_sphynx',
+        'ไร้ขน' => 'cat_sphynx',
+        'แร็กดอลล์' => 'cat_ragdoll',
+        'ragdoll' => 'cat_ragdoll',
+        'เบงกอล' => 'cat_bengal',
+        'bengal' => 'cat_bengal',
+        'ลายเสือ' => 'cat_bengal',
+        'มันช์กิ้น' => 'cat_munchkin',
+        'munchkin' => 'cat_munchkin',
+        'ขาสั้น' => 'cat_munchkin',
+        'วิเชียรมาศ' => 'cat_siamese',
+        'siamese' => 'cat_siamese',
+        'อเมริกัน' => 'cat_americanshorthair',
+        'american' => 'cat_americanshorthair',
+        'รัสเซียน' => 'cat_russian',
+        'russian' => 'cat_russian',
+        'ไซบีเรียน' => 'cat_siberian',
+        'siberian' => 'cat_siberian',
+        'เดวอน' => 'cat_devon_rex',
+        'devon' => 'cat_devon_rex',
+        'คอร์นิช' => 'cat_cornish_rex',
+        'cornish' => 'cat_cornish_rex',
+    ];
+
+    foreach ($kb as $item) {
+        $score = 0;
+        $q_text = mb_strtolower($item['question'], 'UTF-8');
+        $ans_text = mb_strtolower($item['answer'], 'UTF-8');
+        $cat_text = mb_strtolower($item['category'], 'UTF-8');
+        $tags = array_map(function($t) { return mb_strtolower($t, 'UTF-8'); }, $item['tags'] ?? []);
+
+        // 1. Tag matching (Tags are high-value keywords!)
+        foreach ($tags as $tag) {
+            if (!empty($tag)) {
+                if ($tag === $query_lower) {
+                    $score += 80;
+                } elseif (mb_strpos($query_lower, $tag) !== false) {
+                    $score += 40 + (mb_strlen($tag, 'UTF-8') * 5);
+                } elseif (mb_strpos($tag, $query_lower) !== false && mb_strlen($query_lower, 'UTF-8') >= 3) {
+                    $score += 30;
+                }
+            }
+        }
+
+        // 2. Full question exact or direct containment
+        if (mb_strpos($q_text, $query_lower) !== false || mb_strpos($query_lower, $q_text) !== false) {
+            $score += 60;
+        }
+
+        // 3. Sliding window on query (filtering stopwords)
+        $len = mb_strlen($query_lower, 'UTF-8');
+        for ($w = 3; $w <= min(6, $len); $w++) {
+            for ($i = 0; $i <= $len - $w; $i++) {
+                $sub = mb_substr($query_lower, $i, $w, 'UTF-8');
+                if (in_array($sub, $stopwords)) continue;
+
+                if (mb_strpos($q_text, $sub) !== false) {
+                    $score += $w * 3;
+                }
+                if (mb_strpos($ans_text, $sub) !== false) {
+                    $score += $w;
+                }
+            }
+        }
+
+        // Category relevance bonus
+        if (mb_strpos($query_lower, $cat_text) !== false) {
+            $score += 15;
+        }
+
+        if ($score > $best_score) {
+            $best_score = $score;
+            $best_item = $item;
+        }
+    }
+
+    // Determine relevant cards
+    $cards = [];
+    $matched_cat_ids = [];
+    foreach ($breed_map as $kw => $cid) {
+        if (mb_strpos($query_lower, $kw) !== false && !in_array($cid, $matched_cat_ids)) {
+            $matched_cat_ids[] = $cid;
+        }
+    }
+    // If best item has tags matching breed
+    if ($best_item && !empty($best_item['tags'])) {
+        foreach ($best_item['tags'] as $t) {
+            $t_l = mb_strtolower($t, 'UTF-8');
+            foreach ($breed_map as $kw => $cid) {
+                if ((mb_strpos($t_l, $kw) !== false || mb_strpos($kw, $t_l) !== false) && !in_array($cid, $matched_cat_ids)) {
+                    $matched_cat_ids[] = $cid;
+                }
+            }
+        }
+    }
+
+    if (!empty($matched_cat_ids)) {
+        foreach (array_slice($matched_cat_ids, 0, 3) as $cid) {
+            if (isset($cats[$cid])) {
+                $c = $cats[$cid];
+                $cards[] = [
+                    'id' => $c['id'],
+                    'name' => $c['name'],
+                    'breed' => $c['breed'],
+                    'price' => $c['price'],
+                    'price_fmt' => '฿' . number_format($c['price']),
+                    'image' => 'assets/images/' . $c['image'],
+                    'hair' => $c['hair_label'] ?? 'ขนสวยสุขภาพดี',
+                    'highlight' => $c['highlights'][0] ?? 'สายพันธุ์แท้ 100% มีใบเพ็ด',
+                    'link' => 'products.php'
+                ];
+            }
+        }
+    }
+
+    // Threshold check (score >= 20 means strong relevance)
+    if ($best_score >= 20 && $best_item) {
+        return [
+            'found' => true,
+            'score' => $best_score,
+            'id' => $best_item['id'],
+            'category' => $best_item['category'],
+            'question' => $best_item['question'],
+            'answer' => $best_item['answer'],
+            'cards' => $cards
+        ];
+    }
+
+    // Default friendly assistant fallback
+    $fallback_text = "ขอบคุณสำหรับข้อความครับ! 🐾 ผู้ช่วย Purrfect Bot ได้รับคำถามแล้ว\n\n" .
+        "💡 คุณลูกค้าสามารถสอบถามข้อมูลร้านได้ทันที เช่น:\n" .
+        "• ข้อมูลและราคาน้องแมวสายพันธุ์ต่างๆ (เช่น บริติช, สฟิงซ์, แร็กดอลล์)\n" .
+        "• เวลาเปิดทำการ, แผนที่ร้าน, เบอร์โทรติดต่อ หรือช่องทาง LINE OA\n" .
+        "• การรับประกันสุขภาพ 180 วัน, การฉีดวัคซีน, และไมโครชิป\n" .
+        "• การจัดส่งฟรีทั่วไทยด้วยรถ Pet Taxi ควบคุมอุณหภูมิ\n" .
+        "• โปรโมชั่นโค้ดส่วนลด และ Starter Kit 11 ชิ้น\n" .
+        "หรือกดปุ่ม ⚡ คำถาม ด้านล่างเพื่อดูคำถามด่วนยอดนิยมได้เลยครับ!";
+
+    return [
+        'found' => false,
+        'score' => $best_score,
+        'answer' => $fallback_text,
+        'cards' => $cards
+    ];
+}
+
 // -------------------------------------------------------------
 // Action 2: User / Customer sends a message
 // -------------------------------------------------------------
@@ -144,6 +325,22 @@ if ($action === 'send_message') {
     ];
 
     $data_store['conversations'][$user_id]['messages'][] = $msg;
+
+    // AI Knowledge Base Automated Reply
+    $bot_reply = findBotKnowledgeAnswer($text);
+    $bot_msg = null;
+    if ($bot_reply) {
+        $bot_msg = [
+            'id' => 'msg_bot_' . uniqid(),
+            'sender' => 'bot',
+            'sender_name' => 'Purrfect Bot 🐾',
+            'text' => $bot_reply['answer'],
+            'cards' => $bot_reply['cards'] ?? [],
+            'timestamp' => date('Y-m-d H:i:s', time() + 1)
+        ];
+        $data_store['conversations'][$user_id]['messages'][] = $bot_msg;
+    }
+
     $data_store['conversations'][$user_id]['last_active'] = date('Y-m-d H:i:s');
     $data_store['conversations'][$user_id]['unread_admin'] = ($data_store['conversations'][$user_id]['unread_admin'] ?? 0) + 1;
 
@@ -152,7 +349,22 @@ if ($action === 'send_message') {
     echo json_encode([
         'status' => 'success',
         'message' => 'ส่งข้อความสำเร็จ',
-        'data' => $msg
+        'data' => $msg,
+        'bot_message' => $bot_msg
+    ], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+// -------------------------------------------------------------
+// Action 2.5: Search Knowledge Base directly (API endpoint)
+// -------------------------------------------------------------
+if ($action === 'search_knowledge_base') {
+    $query = trim($_REQUEST['q'] ?? '');
+    $res = findBotKnowledgeAnswer($query);
+    echo json_encode([
+        'status' => 'success',
+        'query' => $query,
+        'result' => $res
     ], JSON_UNESCAPED_UNICODE);
     exit;
 }

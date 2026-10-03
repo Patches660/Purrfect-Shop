@@ -835,6 +835,339 @@
                     "timestamp": "2026-09-30 16:05:02"
                 }
             ]
+        },
+        "guest_6cfe6aac92": {
+            "user_id": "guest_6cfe6aac92",
+            "user_name": "ผู้เยี่ยมชม (ac92)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 1,
+            "unread_user": 0,
+            "last_active": "2026-10-03 16:27:47",
+            "messages": [
+                {
+                    "id": "msg_init_1791019667",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:27:47"
+                },
+                {
+                    "id": "msg_6ac0ca937f037",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (ac92)",
+                    "text": "ขอดูแมวสฟิงซ์หน่อยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:27:47"
+                },
+                {
+                    "id": "msg_bot_6ac0ca9381656",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "• Siamese \/ วิเชียรมาศ (12,000 – 16,000 ฿): แมวมงคลไทย แต้มสี 9 จุด ตาสีฟ้าคราม ช่างพูด ช่างเจรจา ฉลาด ซื่อสัตย์และผูกพันกับเจ้าของมาก\n• Canadian Sphynx (28,000 – 38,000 ฿): แมวไร้ขน ผิวนุ่มอุ่นดั่งลูกพีช ขี้อ้อนติดคนมาก ขนร่วง 0% ปลอดภัยสำหรับคนเป็นโรคภูมิแพ้ขนสัตว์ครับ",
+                    "cards": [
+                        {
+                            "id": "cat_sphynx",
+                            "name": "น้องซีซาร์ (Canadian Sphynx)",
+                            "breed": "สฟิงซ์ (Sphynx)",
+                            "price": 28000,
+                            "price_fmt": "฿28,000",
+                            "image": "assets\/images\/cat_sphynx.jpg",
+                            "hair": "ไร้ขน (ผิวสัมผัสพีช)",
+                            "highlight": "ขนร่วง 0% หมดปัญหาภูมิแพ้",
+                            "link": "products.php"
+                        },
+                        {
+                            "id": "cat_siamese",
+                            "name": "น้องมงคล (Siamese \/ วิเชียรมาศ)",
+                            "breed": "วิเชียรมาศ (Siamese Cat)",
+                            "price": 12000,
+                            "price_fmt": "฿12,000",
+                            "image": "assets\/images\/cat_siamese.jpg",
+                            "hair": "ขนสั้นเรียบเนียน",
+                            "highlight": "แมวมงคลนำโชคลาภ",
+                            "link": "products.php"
+                        }
+                    ],
+                    "timestamp": "2026-10-03 16:27:48"
+                }
+            ]
+        },
+        "guest_444a0553a3": {
+            "user_id": "guest_444a0553a3",
+            "user_name": "ผู้เยี่ยมชม (53a3)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 12,
+            "unread_user": 0,
+            "last_active": "2026-10-03 16:38:54",
+            "messages": [
+                {
+                    "id": "msg_init_1791020228",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:37:08"
+                },
+                {
+                    "id": "msg_6ac0ccdc119d8",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "ร้านเปิดกี่โมง",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:37:32"
+                },
+                {
+                    "id": "msg_bot_6ac0ccdc13afe",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "หน้าร้านเปิดบริการทุกวัน เวลา 09:00 – 19:00 น. (นัดหมายเข้าชมล่วงหน้า) ส่วนช่องทางแชทออนไลน์เปิดให้บริการตลอด 24 ชั่วโมง ติดต่อได้ทาง LINE OA: @purrfectshop, โทรสายด่วน: 02-888-9999 หรือ 095-888-7777, Facebook: Purrfect Shop (facebook.com\/purrfectshop), และอีเมล contact@purrfectshop.com ครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:37:33"
+                },
+                {
+                    "id": "msg_6ac0ccdf412e1",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "ฟหกฟก",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:37:35"
+                },
+                {
+                    "id": "msg_bot_6ac0ccdf41f8e",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "ขอบคุณสำหรับข้อความครับ! 🐾 ผู้ช่วย Purrfect Bot ได้รับคำถามแล้ว\n\n💡 คุณลูกค้าสามารถสอบถามข้อมูลร้านได้ทันที เช่น:\n• ข้อมูลและราคาน้องแมวสายพันธุ์ต่างๆ (เช่น บริติช, สฟิงซ์, แร็กดอลล์)\n• เวลาเปิดทำการ, แผนที่ร้าน, เบอร์โทรติดต่อ หรือช่องทาง LINE OA\n• การรับประกันสุขภาพ 180 วัน, การฉีดวัคซีน, และไมโครชิป\n• การจัดส่งฟรีทั่วไทยด้วยรถ Pet Taxi ควบคุมอุณหภูมิ\n• โปรโมชั่นโค้ดส่วนลด และ Starter Kit 11 ชิ้น\nหรือกดปุ่ม ⚡ คำถาม ด้านล่างเพื่อดูคำถามด่วนยอดนิยมได้เลยครับ!",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:37:36"
+                },
+                {
+                    "id": "msg_6ac0cce4081d1",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "แมว",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:37:40"
+                },
+                {
+                    "id": "msg_bot_6ac0cce408b24",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "มีทีมผู้เชี่ยวชาญด้านพฤติกรรมสัตว์เลี้ยงคอยให้คำแนะนำฟรีตลอดชีพผ่าน LINE OA สามารถสอบถามเทคนิคการปรับตัว การเข้ากับแมวเดิมในบ้าน หรือการปรับอาหารได้ตลอดเวลาครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:37:41"
+                },
+                {
+                    "id": "msg_q_c_6ac0cce870b8f",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "🎁 ตอนนี้มีโปรโมชั่นหรือดีลส่วนลดสมาชิกใหม่อะไรบ้าง?",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:37:44"
+                },
+                {
+                    "id": "msg_q_b_6ac0cce870bac",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Advisor 🐾",
+                    "text": "🎉 สิทธิพิเศษและโค้ดส่วนลดสุดฮอตประจำเดือนนี้:\n\n• 🏷️ โค้ด `NEWMEMBER5`: รับส่วนลด 5% ทุกรายการ สำหรับสมาชิกใหม่\n• 🏷️ โค้ด `CATNEWS10`: รับส่วนลด 10% เมื่อสมัครรับจดหมายข่าว\n• 🏷️ โค้ด `PURRFECT10`: ส่วนลด 10% สำหรับยอดสั่งซื้อ 25,000฿ ขึ้นไป\n• 🎁 ฟรี! Starter Kit เซ็ตของขวัญต้อนรับน้องแมว 11 รายการมูลค่า 4,500 บาท ฟรีทุกออเดอร์!",
+                    "cards": [
+                        {
+                            "id": "cat_british",
+                            "name": "น้องสโนว์ (British Shorthair)",
+                            "breed": "บริติช ช็อตแฮร์ (British Shorthair)",
+                            "price": 18000,
+                            "price_fmt": "฿18,000",
+                            "image": "assets\/images\/cat_british.jpg",
+                            "hair": "ดีลพิเศษลด 5-10%",
+                            "highlight": "แถมฟรี Starter Kit 11 ชิ้น",
+                            "link": "welcome_deal.php"
+                        },
+                        {
+                            "id": "cat_munchkin",
+                            "name": "น้องชอร์ตตี้ (Munchkin Short Legs)",
+                            "breed": "มันช์กิ้น ขาสั้น (Munchkin)",
+                            "price": 24000,
+                            "price_fmt": "฿24,000",
+                            "image": "assets\/images\/cat_munchkin.jpg",
+                            "hair": "ดีลพิเศษลด 5-10%",
+                            "highlight": "แถมฟรี Starter Kit 11 ชิ้น",
+                            "link": "welcome_deal.php"
+                        }
+                    ],
+                    "timestamp": "2026-10-03 16:37:44"
+                },
+                {
+                    "id": "msg_6ac0ccef5e5e7",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "สินค้า",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:37:51"
+                },
+                {
+                    "id": "msg_bot_6ac0ccef5f866",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สามารถแจ้งเปลี่ยนหรือคืนได้ภายใน 7 วัน หลังจากได้รับพัสดุ ในกรณีสินค้าชำรุด ใช้งานไม่ได้ หรือทางร้านจัดส่งผิดรุ่น โดยสินค้าต้องยังไม่ผ่านการใช้งานจริงและบรรจุภัณฑ์อยู่ในสภาพเดิมครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:37:52"
+                },
+                {
+                    "id": "msg_6ac0ccf9ebd6b",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "ขอดูแมวสฟิงซ์หน่อยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:01"
+                },
+                {
+                    "id": "msg_bot_6ac0ccf9eea0b",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "• Siamese \/ วิเชียรมาศ (12,000 – 16,000 ฿): แมวมงคลไทย แต้มสี 9 จุด ตาสีฟ้าคราม ช่างพูด ช่างเจรจา ฉลาด ซื่อสัตย์และผูกพันกับเจ้าของมาก\n• Canadian Sphynx (28,000 – 38,000 ฿): แมวไร้ขน ผิวนุ่มอุ่นดั่งลูกพีช ขี้อ้อนติดคนมาก ขนร่วง 0% ปลอดภัยสำหรับคนเป็นโรคภูมิแพ้ขนสัตว์ครับ",
+                    "cards": [
+                        {
+                            "id": "cat_sphynx",
+                            "name": "น้องซีซาร์ (Canadian Sphynx)",
+                            "breed": "สฟิงซ์ (Sphynx)",
+                            "price": 28000,
+                            "price_fmt": "฿28,000",
+                            "image": "assets\/images\/cat_sphynx.jpg",
+                            "hair": "ไร้ขน (ผิวสัมผัสพีช)",
+                            "highlight": "ขนร่วง 0% หมดปัญหาภูมิแพ้",
+                            "link": "products.php"
+                        },
+                        {
+                            "id": "cat_siamese",
+                            "name": "น้องมงคล (Siamese \/ วิเชียรมาศ)",
+                            "breed": "วิเชียรมาศ (Siamese Cat)",
+                            "price": 12000,
+                            "price_fmt": "฿12,000",
+                            "image": "assets\/images\/cat_siamese.jpg",
+                            "hair": "ขนสั้นเรียบเนียน",
+                            "highlight": "แมวมงคลนำโชคลาภ",
+                            "link": "products.php"
+                        }
+                    ],
+                    "timestamp": "2026-10-03 16:38:02"
+                },
+                {
+                    "id": "msg_6ac0cd0288b2e",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "ส่งต่างจังหวัดคิดค่าส่งไหม",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:10"
+                },
+                {
+                    "id": "msg_bot_6ac0cd028c8e6",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "มีบริการ Purrfect Cat Hotel & Spa โรงแรมแมวระดับพรีเมียมห้องแอร์ส่วนตัว โดยลูกค้ารับเลี้ยงจากร้านเราจะได้รับสิทธิ์ส่วนลด 20% ตลอดชีพครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:11"
+                },
+                {
+                    "id": "msg_6ac0cd0905d88",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "ส่งต่างจังหวัด",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:17"
+                },
+                {
+                    "id": "msg_bot_6ac0cd0907921",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "มีบริการ Purrfect Cat Hotel & Spa โรงแรมแมวระดับพรีเมียมห้องแอร์ส่วนตัว โดยลูกค้ารับเลี้ยงจากร้านเราจะได้รับสิทธิ์ส่วนลด 20% ตลอดชีพครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:18"
+                },
+                {
+                    "id": "msg_6ac0cd1122455",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "มีประกันสุขภาพอะไรบ้าง",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:25"
+                },
+                {
+                    "id": "msg_bot_6ac0cd11251e7",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "ใช้เพียง 2 อย่าง ได้แก่: 1) ใบรับรองแพทย์และผลตรวจแล็บจากสัตวแพทย์ผู้มีใบประกอบวิชาชีพ และ 2) สมุดวัคซีนประจำตัวน้องแมวที่ออกโดยฟาร์ม Purrfect Shop ครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:26"
+                },
+                {
+                    "id": "msg_6ac0cd15716da",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "ประกัน",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:29"
+                },
+                {
+                    "id": "msg_bot_6ac0cd1572314",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "ทางร้านมีพันธมิตรประกันภัยสัตว์เลี้ยงชั้นนำ มอบสิทธิ์คุ้มครองค่ารักษาพยาบาลอุบัติเหตุและเจ็บป่วยต่อเนื่องหลังครบกำหนด 180 วันในราคาพิเศษสำหรับลูกค้า Purrfect Shop ครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:30"
+                },
+                {
+                    "id": "msg_6ac0cd2079b5e",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "ผ่อน",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:40"
+                },
+                {
+                    "id": "msg_bot_6ac0cd207ab0f",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "มีครับ! ทางร้านมีโปรโมชั่น ผ่อนชำระ 0% นาน 3, 6, และ 10 เดือน ผ่านบัตรเครดิตธนาคารกสิกรไทย (KBank), ไทยพาณิชย์ (SCB), เคทีซี (KTC), กรุงเทพ (BBL) และกรุงศรี (Krungsri) สำหรับยอดชำระ 10,000 บาทขึ้นไปครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:41"
+                },
+                {
+                    "id": "msg_6ac0cd21f04d4",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "มีผ่อนชำระไหม",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:41"
+                },
+                {
+                    "id": "msg_bot_6ac0cd21f2086",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "มีครับ! ทางร้านมีโปรโมชั่น ผ่อนชำระ 0% นาน 3, 6, และ 10 เดือน ผ่านบัตรเครดิตธนาคารกสิกรไทย (KBank), ไทยพาณิชย์ (SCB), เคทีซี (KTC), กรุงเทพ (BBL) และกรุงศรี (Krungsri) สำหรับยอดชำระ 10,000 บาทขึ้นไปครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:42"
+                },
+                {
+                    "id": "msg_6ac0cd2ecb2e5",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (53a3)",
+                    "text": "มีผ่อนชำระไหม",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:54"
+                },
+                {
+                    "id": "msg_bot_6ac0cd2ecd9d7",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "มีครับ! ทางร้านมีโปรโมชั่น ผ่อนชำระ 0% นาน 3, 6, และ 10 เดือน ผ่านบัตรเครดิตธนาคารกสิกรไทย (KBank), ไทยพาณิชย์ (SCB), เคทีซี (KTC), กรุงเทพ (BBL) และกรุงศรี (Krungsri) สำหรับยอดชำระ 10,000 บาทขึ้นไปครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-03 16:38:55"
+                }
+            ]
         }
     }
 }

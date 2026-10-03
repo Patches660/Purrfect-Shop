@@ -174,6 +174,22 @@ if (file_exists($rootDir . '/email_showcase.html')) {
     echo "✓ Copied: email_showcase.html\n";
 }
 
+// Copy Chatbot Knowledge Base files
+$kb_files = [
+    'chatbot_knowledge_base.json',
+    'chatbot_knowledge_base.jsonl',
+    'chatbot_knowledge_base.txt',
+    'chatbot_knowledge_base.html',
+    'Purrfect_Shop_Chatbot_Knowledge_Base.pdf'
+];
+foreach ($kb_files as $kbf) {
+    if (file_exists($rootDir . '/' . $kbf)) {
+        copy($rootDir . '/' . $kbf, $exportDir . '/' . $kbf);
+        copy($rootDir . '/' . $kbf, $docsDir . '/' . $kbf);
+        echo "✓ Copied Chatbot Dataset: {$kbf}\n";
+    }
+}
+
 // Add a GitHub Pages README in GITHUB_PAGES_EXPORT
 $readmeContent = <<<MARKDOWN
 # 🐱 Purrfect Shop - Static Live Preview for GitHub Pages

@@ -1400,6 +1400,127 @@ document.addEventListener('DOMContentLoaded', calcExpenses);
         }
     };
 
+    let clientKnowledgeBase = null;
+
+    // Prefetch knowledge base JSON for static GitHub Pages
+    function initKnowledgeBase() {
+        if (!clientKnowledgeBase) {
+            fetch('chatbot_knowledge_base.json')
+                .then(res => res.json())
+                .then(data => {
+                    if (Array.isArray(data)) {
+                        clientKnowledgeBase = data;
+                    }
+                })
+                .catch(() => {});
+        }
+    }
+
+    function searchClientKnowledgeBase(userText) {
+        if (!clientKnowledgeBase || !Array.isArray(clientKnowledgeBase)) return null;
+
+        const qLower = userText.trim().toLowerCase();
+        if (!qLower) return null;
+
+        const stopwords = ['ไหม', 'มั้ย', 'ได้', 'หรือ', 'และ', 'กับ', 'ให้', 'ของ', 'ที่', 'ใน', 'การ', 'ความ', 'ทาง', 'เป็น', 'อยู่', 'ช่วย', 'หน่อย', 'ครับ', 'ค่ะ', 'นะ', 'คะ', 'กี่', 'ตัว', 'ทำ', 'ยัง', 'ไง', 'บ้าง', 'มี', 'ถ้า', 'หาก', 'อยาก', 'จะ', 'ขอ'];
+        let bestScore = 0;
+        let bestItem = null;
+
+        const breedMap = {
+            'บริติช': 'cat_british', 'british': 'cat_british',
+            'สกอตติช': 'cat_scottish', 'scottish': 'cat_scottish', 'หูพับ': 'cat_scottish',
+            'เปอร์เซีย': 'cat_persian', 'persian': 'cat_persian',
+            'เมนคูน': 'cat_mainecoon', 'maine coon': 'cat_mainecoon',
+            'สฟิงซ์': 'cat_sphynx', 'sphynx': 'cat_sphynx', 'ไร้ขน': 'cat_sphynx',
+            'แร็กดอลล์': 'cat_ragdoll', 'ragdoll': 'cat_ragdoll',
+            'เบงกอล': 'cat_bengal', 'bengal': 'cat_bengal', 'ลายเสือ': 'cat_bengal',
+            'มันช์กิ้น': 'cat_munchkin', 'munchkin': 'cat_munchkin', 'ขาสั้น': 'cat_munchkin',
+            'วิเชียรมาศ': 'cat_siamese', 'siamese': 'cat_siamese',
+            'อเมริกัน': 'cat_americanshorthair', 'american': 'cat_americanshorthair',
+            'รัสเซียน': 'cat_russian', 'russian': 'cat_russian',
+            'ไซบีเรียน': 'cat_siberian', 'siberian': 'cat_siberian',
+            'เดวอน': 'cat_devon_rex', 'devon': 'cat_devon_rex',
+            'คอร์นิช': 'cat_cornish_rex', 'cornish': 'cat_cornish_rex'
+        };
+
+        const catCatalog = {
+            'cat_british': { id: 'cat_british', name: 'น้องบริติช บลู', breed: 'British Shorthair', price: '฿35,000', image: 'assets/images/cat_british.jpg', highlight: 'นิสัยสุขุม น่ารัก ขี้อ้อน', link: 'products.html' },
+            'cat_americanshorthair': { id: 'cat_americanshorthair', name: 'น้องอเมริกัน ซิลเวอร์', breed: 'American Shorthair', price: '฿28,000', image: 'assets/images/cat_americanshorthair.jpg', highlight: 'ลายคมชัด ขี้เล่น เลี้ยงง่าย', link: 'products.html' },
+            'cat_scottish': { id: 'cat_scottish', name: 'น้องสกอตติช โฟลด์', breed: 'Scottish Fold', price: '฿32,000', image: 'assets/images/cat_scottish.jpg', highlight: 'หูพับหน้ากลม น่ารักติดคน', link: 'products.html' },
+            'cat_persian': { id: 'cat_persian', name: 'น้องเปอร์เซีย ขาวสำลี', breed: 'Persian', price: '฿29,000', image: 'assets/images/cat_persian.jpg', highlight: 'เงียบสงบ สุภาพ เรียบร้อย', link: 'recommend.html' },
+            'cat_russian': { id: 'cat_russian', name: 'น้องรัสเซียน บลู', breed: 'Russian Blue', price: '฿38,000', image: 'assets/images/cat_russian.jpg', highlight: 'ฉลาด รักความเงียบสงบ', link: 'recommend.html' },
+            'cat_ragdoll': { id: 'cat_ragdoll', name: 'น้องแร็กดอลล์ ตาฟ้า', breed: 'Ragdoll', price: '฿45,000', image: 'assets/images/cat_ragdoll.jpg', highlight: 'ตัวใหญ่นุ่มนิ่ม อ่อนโยน', link: 'recommend.html' },
+            'cat_sphynx': { id: 'cat_sphynx', name: 'น้องสฟิงซ์ ชมพู', breed: 'Sphynx', price: '฿42,000', image: 'assets/images/cat_sphynx.jpg', highlight: 'ขนร่วง 0% ไร้ภูมิแพ้ อบอุ่น', link: 'recommend.html' },
+            'cat_mainecoon': { id: 'cat_mainecoon', name: 'น้องเมนคูน ไจแอนท์', breed: 'Maine Coon', price: '฿55,000', image: 'assets/images/cat_mainecoon.jpg', highlight: 'ยักษ์ใหญ่ใจดี มีใบเพ็ด CFA', link: 'products.html' },
+            'cat_bengal': { id: 'cat_bengal', name: 'น้องเบงกอล ลายเสือดาว', breed: 'Bengal', price: '฿38,000', image: 'assets/images/cat_bengal.jpg', highlight: 'ลายคมชัด ปราดเปรียว', link: 'products.html' },
+            'cat_munchkin': { id: 'cat_munchkin', name: 'น้องมันช์กิ้น ขาสั้น', breed: 'Munchkin', price: '฿38,000', image: 'assets/images/cat_munchkin.jpg', highlight: 'ขาสั้นดุ๊กดิ๊ก น่ารักสุดๆ', link: 'products.html' },
+            'cat_siamese': { id: 'cat_siamese', name: 'น้องวิเชียรมาศ มงคล', breed: 'Siamese', price: '฿16,000', image: 'assets/images/cat_siamese.jpg', highlight: 'แมวมงคลไทย ตาสีฟ้าคราม', link: 'products.html' }
+        };
+
+        clientKnowledgeBase.forEach(item => {
+            let score = 0;
+            const qText = (item.question || '').toLowerCase();
+            const ansText = (item.answer || '').toLowerCase();
+            const tags = (item.tags || []).map(t => t.toLowerCase());
+
+            tags.forEach(tag => {
+                if (!tag) return;
+                if (tag === qLower) score += 80;
+                else if (qLower.includes(tag)) score += 40 + (tag.length * 5);
+                else if (tag.includes(qLower) && qLower.length >= 3) score += 30;
+            });
+
+            if (qText.includes(qLower) || qLower.includes(qText)) score += 60;
+
+            const len = qLower.length;
+            for (let w = 3; w <= Math.min(6, len); w++) {
+                for (let i = 0; i <= len - w; i++) {
+                    const sub = qLower.substring(i, i + w);
+                    if (stopwords.includes(sub)) continue;
+                    if (qText.includes(sub)) score += w * 3;
+                    if (ansText.includes(sub)) score += w;
+                }
+            }
+
+            if (score > bestScore) {
+                bestScore = score;
+                bestItem = item;
+            }
+        });
+
+        // Determine cards
+        const cards = [];
+        const matchedCatIds = [];
+        for (const [kw, cid] of Object.entries(breedMap)) {
+            if (qLower.includes(kw) && !matchedCatIds.includes(cid)) {
+                matchedCatIds.push(cid);
+            }
+        }
+        if (bestItem && Array.isArray(bestItem.tags)) {
+            bestItem.tags.forEach(t => {
+                const tl = t.toLowerCase();
+                for (const [kw, cid] of Object.entries(breedMap)) {
+                    if ((tl.includes(kw) || kw.includes(tl)) && !matchedCatIds.includes(cid)) {
+                        matchedCatIds.push(cid);
+                    }
+                }
+            });
+        }
+
+        matchedCatIds.slice(0, 3).forEach(cid => {
+            if (catCatalog[cid]) cards.push(catCatalog[cid]);
+        });
+
+        if (bestScore >= 20 && bestItem) {
+            return {
+                text: bestItem.answer,
+                cards: cards
+            };
+        }
+
+        return null;
+    }
+
     function triggerClientQuickReply(option, userText) {
         setTimeout(() => {
             isBotTyping = false;
@@ -1423,7 +1544,7 @@ document.addEventListener('DOMContentLoaded', calcExpenses);
             msgs.push({
                 id: 'msg_b_' + Date.now(),
                 sender: 'bot',
-                sender_name: 'Purrfect Advisor 🐾',
+                sender_name: 'Purrfect Bot 🐾',
                 text: botData.text,
                 cards: botData.cards || [],
                 timestamp: getCurrentTimeFormatted()
@@ -1431,7 +1552,7 @@ document.addEventListener('DOMContentLoaded', calcExpenses);
 
             saveLocalChatMessages(msgs);
             renderMessages(msgs, true);
-        }, 1200);
+        }, 800);
     }
 
     window.handleSendChatMessage = function(e) {
@@ -1452,13 +1573,13 @@ document.addEventListener('DOMContentLoaded', calcExpenses);
 
             fetch('api_chat.php', { method: 'POST', body: formData })
                 .then(res => res.json())
-                .then(() => {
+                .then(data => {
                     setTimeout(() => {
                         isBotTyping = false;
                         const typing = document.getElementById('chat-typing-indicator');
                         if (typing) typing.remove();
                         loadChatMessages(true);
-                    }, 1200);
+                    }, 800);
                 })
                 .catch(() => triggerClientChatMessage(text));
         } else {
@@ -1472,24 +1593,33 @@ document.addEventListener('DOMContentLoaded', calcExpenses);
             const typing = document.getElementById('chat-typing-indicator');
             if (typing) typing.remove();
 
-            let replyText = "ขอบคุณสำหรับข้อความครับ! 🐾 เจ้าหน้าที่หรือผู้ช่วย AI กำลังตรวจสอบข้อมูลน้องแมวและจะแนะนำให้คุณลูกค้าทันทีครับ หากต้องการดูคำถามด่วนสามารถกดปุ่ม ⚡ คำถาม ได้เลยครับ";
+            // Try searching client knowledge base first
+            const kbMatch = searchClientKnowledgeBase(text);
+            let replyText = "";
             let cards = [];
 
-            const lower = text.toLowerCase();
-            if (lower.includes('ราคา') || lower.includes('เท่าไหร่') || lower.includes('โปรโมชั่น') || lower.includes('ส่วนลด') || lower.includes('คูปอง') || lower.includes('cat10off')) {
-                replyText = "🎉 ตอนนี้มีโปรโมชั่นพิเศษ:\n• โค้ด CAT10OFF ลดทันที 10% (ขั้นต่ำ 300.-)\n• โค้ด NEWMEMBER5 ลด 5% สำหรับสมาชิกใหม่\n• แถมฟรี Starter Kit 11 ชิ้นมูลค่า 4,500.- ทุกออเดอร์ครับ!";
-                cards = BOT_RESPONSES[5].cards;
-            } else if (lower.includes('คอนโด') || lower.includes('ห้องพัก')) {
-                replyText = BOT_RESPONSES[2].text;
-                cards = BOT_RESPONSES[2].cards;
-            } else if (lower.includes('แพ้') || lower.includes('ภูมิแพ้') || lower.includes('ขนร่วง')) {
-                replyText = BOT_RESPONSES[3].text;
-                cards = BOT_RESPONSES[3].cards;
-            } else if (lower.includes('ส่ง') || lower.includes('ประกัน') || lower.includes('วัคซีน')) {
-                replyText = BOT_RESPONSES[6].text;
-            } else if (lower.includes('สวัสดี') || lower.includes('หวัดดี') || lower.includes('hello') || lower.includes('hi')) {
-                replyText = "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 สนใจน้องแมวพันธุ์ไหนเป็นพิเศษ หรือสอบถามการดูแล สามารถเลือกคำถามด่วนด้านล่างหรือพิมพ์คุยได้เลยครับ";
-                cards = BOT_RESPONSES[1].cards;
+            if (kbMatch) {
+                replyText = kbMatch.text;
+                cards = kbMatch.cards || [];
+            } else {
+                const lower = text.toLowerCase();
+                if (lower.includes('ราคา') || lower.includes('เท่าไหร่') || lower.includes('โปรโมชั่น') || lower.includes('ส่วนลด') || lower.includes('คูปอง') || lower.includes('cat10off')) {
+                    replyText = "🎉 ตอนนี้มีโปรโมชั่นพิเศษ:\n• โค้ด CAT10OFF ลดทันที 10% (ขั้นต่ำ 300.-)\n• โค้ด NEWMEMBER5 ลด 5% สำหรับสมาชิกใหม่\n• แถมฟรี Starter Kit 11 ชิ้นมูลค่า 4,500.- ทุกออเดอร์ครับ!";
+                    cards = BOT_RESPONSES[5].cards;
+                } else if (lower.includes('คอนโด') || lower.includes('ห้องพัก')) {
+                    replyText = BOT_RESPONSES[2].text;
+                    cards = BOT_RESPONSES[2].cards;
+                } else if (lower.includes('แพ้') || lower.includes('ภูมิแพ้') || lower.includes('ขนร่วง')) {
+                    replyText = BOT_RESPONSES[3].text;
+                    cards = BOT_RESPONSES[3].cards;
+                } else if (lower.includes('ส่ง') || lower.includes('ประกัน') || lower.includes('วัคซีน')) {
+                    replyText = BOT_RESPONSES[6].text;
+                } else if (lower.includes('สวัสดี') || lower.includes('หวัดดี') || lower.includes('hello') || lower.includes('hi')) {
+                    replyText = "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 สนใจน้องแมวพันธุ์ไหนเป็นพิเศษ หรือสอบถามการดูแล สามารถเลือกคำถามด่วนด้านล่างหรือพิมพ์คุยได้เลยครับ";
+                    cards = BOT_RESPONSES[1].cards;
+                } else {
+                    replyText = "ขอบคุณสำหรับข้อความครับ! 🐾 ผู้ช่วย Purrfect Bot ได้รับคำถามแล้ว\n\n💡 คุณลูกค้าสามารถสอบถามข้อมูลร้าน เช่น ข้อมูลสายพันธุ์, ราคา, เวลาเปิดทำการ, การจัดส่งฟรี Pet Taxi, การรับประกันสุขภาพ 180 วัน หรือกดปุ่ม ⚡ คำถาม เพื่อเลือกดูคำถามด่วนได้ทันทีครับ!";
+                }
             }
 
             const msgs = getLocalChatMessages();
@@ -1504,7 +1634,7 @@ document.addEventListener('DOMContentLoaded', calcExpenses);
             msgs.push({
                 id: 'msg_b_' + Date.now(),
                 sender: 'bot',
-                sender_name: 'Purrfect Advisor 🐾',
+                sender_name: 'Purrfect Bot 🐾',
                 text: replyText,
                 cards: cards,
                 timestamp: getCurrentTimeFormatted()
@@ -1512,7 +1642,7 @@ document.addEventListener('DOMContentLoaded', calcExpenses);
 
             saveLocalChatMessages(msgs);
             renderMessages(msgs, true);
-        }, 1200);
+        }, 800);
     }
 
     function escapeHtml(str) {
@@ -1526,6 +1656,7 @@ document.addEventListener('DOMContentLoaded', calcExpenses);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+        initKnowledgeBase();
         loadChatMessages(false);
         const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
         if (isPhpServer) {
