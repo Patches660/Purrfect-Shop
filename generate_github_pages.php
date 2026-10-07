@@ -190,6 +190,13 @@ foreach ($kb_files as $kbf) {
     }
 }
 
+// Copy DIFY_AI_PACKAGE folder
+if (is_dir($rootDir . '/DIFY_AI_PACKAGE')) {
+    copyDir($rootDir . '/DIFY_AI_PACKAGE', $exportDir . '/DIFY_AI_PACKAGE');
+    copyDir($rootDir . '/DIFY_AI_PACKAGE', $docsDir . '/DIFY_AI_PACKAGE');
+    echo "✓ Copied DIFY_AI_PACKAGE to docs/ and GITHUB_PAGES_EXPORT/\n";
+}
+
 // Add a GitHub Pages README in GITHUB_PAGES_EXPORT
 $readmeContent = <<<MARKDOWN
 # 🐱 Purrfect Shop - Static Live Preview for GitHub Pages
