@@ -1,10 +1,18 @@
 <?php
 require_once __DIR__ . '/data.php';
 
-// If already logged in, redirect to home
-if (isUserLoggedIn()) {
-    header("Location: index.php");
-    exit;
+// Allow switching/registering a new account directly
+if (isset($_GET['switch']) || isset($_GET['logout_first'])) {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    unset($_SESSION['user']);
+}
+
+// If already logged in and not explicitly registering/switching
+if (isUserLoggedIn() && ($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    $curr = getCurrentUser();
+    // Provide a banner to switch account instead of hard redirect
 }
 
 $errors = [];

@@ -439,20 +439,28 @@ function clientRegister(fullname, username, email, phone, password) {
     return { success: true, user: newUser };
 }
 
+function isPhpEnvironment() {
+    return window.location.port === '8000' || 
+           window.location.pathname.endsWith('.php') || 
+           (!window.location.pathname.endsWith('.html') && 
+            !window.location.protocol.startsWith('file') && 
+            !window.location.hostname.includes('github.io'));
+}
+
 function clientLogout() {
     try {
         localStorage.removeItem('cat_shop_logged_user');
     } catch(e) {}
-    window.location.href = 'index.html?msg=logged_out';
+    window.location.href = isPhpEnvironment() ? 'index.php?msg=logged_out' : 'index.html?msg=logged_out';
 }
 
 function syncHeaderUserUI() {
     // Only apply on static HTML pages where server session isn't active
-    const isStaticPage = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
-    if (!isStaticPage) return;
+    if (isPhpEnvironment()) return;
 
     const user = getClientLoggedUser();
     const topRight = document.querySelector('.top-utility-right');
+    const ext = isPhpEnvironment() ? '.php' : '.html';
     
     if (user && topRight) {
         const isAdmin = (user.role === 'admin');
@@ -462,21 +470,21 @@ function syncHeaderUserUI() {
             </button>
             <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                 ${isAdmin ? `
-                    <a href="admin.html" class="top-badge-pill" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1px solid #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
+                    <a href="admin${ext}" class="top-badge-pill" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1px solid #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
                         👑 ผู้ดูแลระบบ (Admin)
                     </a>
                 ` : `
-                    <a href="profile.html?tab=points" class="top-badge-pill" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="ระบบสะสมแต้ม Paw Points">
+                    <a href="profile${ext}?tab=points" class="top-badge-pill" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); color: #92400E; border: 1px solid #F59E0B; font-weight: 800; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="ระบบสะสมแต้ม Paw Points">
                         🐾 ${Number(user.paw_points || 150).toLocaleString()} พอยท์
                     </a>
                 `}
-                <a href="profile.html?tab=coupons" class="btn btn-sm" style="background: rgba(245, 158, 11, 0.12); color: #D97706; border: 1.5px solid #F59E0B; font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="คูปองและของรางวัลของคุณ">
+                <a href="profile${ext}?tab=coupons" class="btn btn-sm" style="background: rgba(245, 158, 11, 0.12); color: #D97706; border: 1.5px solid #F59E0B; font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;" title="คูปองและของรางวัลของคุณ">
                     🎁 คูปอง & รางวัล
                 </a>
-                <a href="subscribe.html" class="btn btn-sm" style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                <a href="subscribe${ext}" class="btn btn-sm" style="background: rgba(255, 117, 86, 0.12); color: var(--primary-coral); border: 1.5px solid var(--primary-coral); font-weight: 700; padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 999px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
                     📬 ข่าวสาร
                 </a>
-                <a href="profile.html" class="user-badge" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.25rem 0.75rem; background: var(--bg-card); border: 1.5px solid var(--primary-coral); border-radius: 999px; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="คลิกเพื่อเปิดดูโปรไฟล์และจัดการข้อมูลส่วนตัว">
+                <a href="profile${ext}" class="user-badge" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.25rem 0.75rem; background: var(--bg-card); border: 1.5px solid var(--primary-coral); border-radius: 999px; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="คลิกเพื่อเปิดดูโปรไฟล์และจัดการข้อมูลส่วนตัว">
                     <img src="${user.avatar || 'assets/images/logo.png'}" alt="Avatar" class="user-avatar-sm" style="width: 22px; height: 22px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--primary-coral);">
                     <strong style="color: var(--text-main); font-size: 0.85rem;">คุณ${user.username} 👤</strong>
                 </a>
@@ -491,13 +499,12 @@ function syncHeaderUserUI() {
     const drawerGrid = document.querySelector('#mobile-nav-drawer .drawer-grid');
     if (user && drawerGrid) {
         const isAdmin = (user.role === 'admin');
-        // If drawer has guest login buttons, inject user profile card into mobile drawer
         const guestBox = drawerGrid.querySelector('div[style*="grid-template-columns"]');
         if (guestBox) {
             const userProfileDrawer = document.createElement('div');
             userProfileDrawer.style.marginBottom = '0.5rem';
             userProfileDrawer.innerHTML = `
-                <a href="profile.html" class="drawer-link-item" onclick="closeMobileDrawer()" style="background: rgba(255, 117, 86, 0.08); border-color: rgba(255, 117, 86, 0.25);">
+                <a href="profile${ext}" class="drawer-link-item" onclick="closeMobileDrawer()" style="background: rgba(255, 117, 86, 0.08); border-color: rgba(255, 117, 86, 0.25);">
                     <img src="${user.avatar || 'assets/images/logo.png'}" alt="Avatar" class="drawer-avatar">
                     <div class="drawer-link-info">
                         <span class="drawer-link-title" style="color: var(--primary-coral); font-weight: 800;">คุณ${user.username}</span>
@@ -506,7 +513,7 @@ function syncHeaderUserUI() {
                     <span class="drawer-badge-pill" style="background: var(--primary-coral); color: #fff;">โปรไฟล์ ➔</span>
                 </a>
                 ${isAdmin ? `
-                    <a href="admin.html" class="drawer-link-item drawer-admin-link" onclick="closeMobileDrawer()" style="background: linear-gradient(135deg, rgba(30, 27, 75, 0.08) 0%, rgba(49, 46, 129, 0.12) 100%); border-color: #F59E0B;">
+                    <a href="admin${ext}" class="drawer-link-item drawer-admin-link" onclick="closeMobileDrawer()" style="background: linear-gradient(135deg, rgba(30, 27, 75, 0.08) 0%, rgba(49, 46, 129, 0.12) 100%); border-color: #F59E0B;">
                         <span class="drawer-link-icon">👑</span>
                         <div class="drawer-link-info">
                             <span class="drawer-link-title" style="color: #92400E; font-weight: 800;">ผู้ดูแลระบบ (Admin)</span>
@@ -515,14 +522,14 @@ function syncHeaderUserUI() {
                         <span class="drawer-badge-pill" style="background: #F59E0B; color: #1E1B4B; font-weight: 800;">ADMIN</span>
                     </a>
                 ` : ''}
-                <a href="profile.html?tab=coupons" class="drawer-link-item" onclick="closeMobileDrawer()">
+                <a href="profile${ext}?tab=coupons" class="drawer-link-item" onclick="closeMobileDrawer()">
                     <span class="drawer-link-icon">🎁</span>
                     <div class="drawer-link-info">
                         <span class="drawer-link-title">คูปอง & รางวัลจากวงล้อ</span>
                         <span class="drawer-link-sub">โค้ดส่วนลดและของขวัญของคุณ</span>
                     </div>
                 </a>
-                <a href="profile.html?tab=points" class="drawer-link-item" onclick="closeMobileDrawer()">
+                <a href="profile${ext}?tab=points" class="drawer-link-item" onclick="closeMobileDrawer()">
                     <span class="drawer-link-icon">🐾</span>
                     <div class="drawer-link-info">
                         <span class="drawer-link-title">Paw Points สะสม</span>
@@ -538,13 +545,22 @@ function syncHeaderUserUI() {
     }
 }
 
-// 8. Dynamic Form Interceptor for Static Pages (login.html, register.html, subscribe.html)
+// 8. Dynamic Form Interceptor ONLY for Static HTML Pages (login.html, register.html)
 document.addEventListener('DOMContentLoaded', () => {
+    const isPhp = window.location.pathname.endsWith('.php') || window.location.port === '8000' || (!window.location.pathname.endsWith('.html') && !window.location.protocol.startsWith('file'));
+
+    if (isPhp) {
+        // ON PHP: Do NOT intercept forms with JavaScript! Let native PHP POST handle login & register smoothly!
+        updateCartBadgeUI();
+        setupAddToCartInterceptors();
+        return;
+    }
+
     syncHeaderUserUI();
 
-    // Handle Login Form on login.html / login.php
+    // Handle Login Form ONLY on static login.html
     const loginForm = document.querySelector('.auth-container form');
-    if (loginForm && window.location.pathname.includes('login')) {
+    if (loginForm && window.location.pathname.includes('login.html')) {
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const idInput = document.getElementById('identifier');
@@ -579,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 syncHeaderUserUI();
 
                 setTimeout(() => {
-                    window.location.href = 'index.html?login=success';
+                    window.location.href = res.user.role === 'admin' ? 'admin.html?login=admin_success' : 'index.html?login=success';
                 }, 900);
             } else {
                 alertDiv.innerHTML = `
@@ -598,9 +614,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Handle Register Form on register.html
+    // Handle Register Form ONLY on static register.html
     const regForm = document.getElementById('register-form');
-    if (regForm && window.location.pathname.includes('register')) {
+    if (regForm && window.location.pathname.includes('register.html')) {
         regForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const fn = document.getElementById('fullname')?.value;
@@ -737,8 +753,7 @@ function updateCartBadgeUI() {
             void badge.offsetWidth; // trigger reflow
             badge.classList.add('bump');
         } else {
-            const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
-            if (isStatic) {
+            if (!isPhpEnvironment()) {
                 badge.style.display = 'none';
                 badge.textContent = '0';
             }
@@ -752,8 +767,7 @@ function updateCartBadgeUI() {
             badge.textContent = `${totalCount} ตัว`;
             badge.style.display = 'inline-flex';
         } else {
-            const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
-            if (isStatic) {
+            if (!isPhpEnvironment()) {
                 badge.style.display = 'none';
                 badge.textContent = '0 ตัว';
             }
@@ -780,8 +794,7 @@ function showCatAdoptToast(catItem, totalCount) {
         document.body.appendChild(toast);
     }
 
-    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
-    const cartUrl = isStatic ? 'cart.html' : 'cart.php';
+    const cartUrl = isPhpEnvironment() ? 'cart.php' : 'cart.html';
     const imgSrc = catItem.image ? (catItem.image.startsWith('http') || catItem.image.startsWith('assets/') ? catItem.image : `assets/images/${catItem.image}`) : 'assets/images/logo.png';
 
     toast.innerHTML = `
@@ -855,8 +868,7 @@ function setupAddToCartInterceptors() {
             const catIdInput = form.querySelector('input[name="cat_id"]');
             const catId = catIdInput ? catIdInput.value : '';
             if (catId) {
-                const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
-                if (isStatic) {
+                if (!isPhpEnvironment()) {
                     e.preventDefault();
                     addToCartClient(catId, 1, true);
                 } else {

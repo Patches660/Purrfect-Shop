@@ -115,11 +115,8 @@
                         🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
                     </button>
 
-                    <!-- Admin Console Shortcut Link (Clickable Royal Navy & Gold Badge) -->
-                    <a href="admin.html" class="top-badge-pill" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1px solid #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
-                        👑 ผู้ดูแลระบบ (Admin)
-                    </a>
-
+                    <!-- Admin Console Shortcut Link: Only visible to logged-in users with role === 'admin' -->
+                    
                     <!-- User Account / Profile Badge & Paw Points -->
                                             <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                             <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
@@ -509,6 +506,22 @@
             }
         } catch (e) {}
     };
+
+    // Auto-sync PHP Server Session with Browser localStorage
+    try {
+                    localStorage.removeItem('cat_shop_logged_user');
+        
+        // Client-side role visibility safeguard
+        const clientUser = JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        const adminElements = document.querySelectorAll('.admin-badge-pill, .drawer-admin-link, .profile-nav-link-admin');
+        adminElements.forEach(el => {
+            if (!clientUser || clientUser.role !== 'admin') {
+                el.style.display = 'none';
+            } else {
+                el.style.display = '';
+            }
+        });
+    } catch(e) {}
     </script>
     <main>
                 
@@ -980,8 +993,8 @@
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="delivery_date">วันที่สะดวกรับน้องแมว</label>
                                 <input type="date" name="delivery_date" id="delivery_date" class="form-control" 
-                                       value="2026-10-10" 
-                                       min="2026-10-08">
+                                       value="2026-10-12" 
+                                       min="2026-10-10">
                             </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="delivery_timeslot">ช่วงเวลาที่สะดวกรับ</label>
@@ -1218,18 +1231,18 @@
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem; font-size: 0.85rem;">
                                     <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.8rem; border-radius: 8px;">
                                         <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">แต้มสะสมของคุณปัจจุบัน:</span>
-                                        <strong style="color: #D97706; font-size: 1.15rem; font-family: 'Outfit';">🐾 150 พอยท์</strong>
+                                        <strong id="panel-user-pts-display" style="color: #D97706; font-size: 1.15rem; font-family: 'Outfit';">🐾 150 พอยท์</strong>
                                         <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">ระดับสมาชิก: <strong>สมาชิกระดับทั่วไป</strong></div>
                                     </div>
-                                    <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.8rem; border-radius: 8px;">
-                                        <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">อัตราแลกแต้มแทนเงินสด:</span>
-                                        <strong style="color: #047857; font-size: 1.05rem; font-family: 'Outfit';">100 แต้ม = 100 ฿</strong>
-                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">ใช้แต้มสะสมครอบคลุมยอดสินสอดทั้งหมด</div>
+                                    <div style="background: var(--bg-card); border: 1.5px solid #F59E0B; padding: 0.8rem; border-radius: 8px; background: #FFFBEB;">
+                                        <span style="color: #92400E; font-size: 0.75rem; font-weight: 700; display: block;">ยอดพอยท์ที่ต้องใช้ในออเดอร์นี้:</span>
+                                        <strong id="panel-pts-needed" style="color: #B45309; font-size: 1.2rem; font-family: 'Outfit'; font-weight: 800;">🐾 0 พอยท์</strong>
+                                        <div style="font-size: 0.75rem; color: #047857; margin-top: 0.15rem; font-weight: 600;">(อัตรา 100 พอยท์ = 100 ฿)</div>
                                     </div>
                                 </div>
 
-                                <div style="background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.82rem; color: #92400E; line-height: 1.5;">
-                                    ✨ <strong>สิทธิ์แลกรับเลี้ยงด้วยแต้ม:</strong> เมื่อกดยืนยันคำสั่งจอง ระบบจะทำการหักแต้มสะสม Paw Points สมาชิกตามยอดสุทธิและมอบสิทธิ์การรับเลี้ยงทันที
+                                <div id="panel-points-status-box" style="background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.82rem; color: #92400E; line-height: 1.5;">
+                                    ✨ <strong>สิทธิ์แลกรับเลี้ยงด้วยแต้ม:</strong> เมื่อกดยืนยันคำสั่งจอง ระบบจะแปลงราคาสั่งซื้อเป็น Paw Points และหักแต้มสะสมเพื่อมอบสิทธิ์รับเลี้ยงน้องแมวทันที
                                 </div>
                             </div>
                         </div>
@@ -1320,12 +1333,28 @@
                         </div>
 
                         <div class="summary-row total">
-                            <span>ยอดชำระสุทธิ:</span>
+                            <span id="summaryGrandTotalLabel">ยอดชำระสุทธิ:</span>
                             <span id="summaryGrandTotalVal">0.00 ฿</span>
+                        </div>
+                        <div id="summaryPointsEquivalent" style="display: none; font-size: 0.8rem; color: #78350F; text-align: right; margin-top: -4px; margin-bottom: 8px; font-weight: 600;">
+                            (เทียบเท่ายอดเงิน ฿0.00 บาท)
+                        </div>
+
+                        <div class="summary-points-reward-box" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border: 1.5px solid #F59E0B; border-radius: 12px; padding: 0.85rem 1rem; margin-top: 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 1.5rem;">🐾</span>
+                                <div>
+                                    <span id="summaryRewardTitle" style="font-size: 0.78rem; color: #92400E; font-weight: 800; display: block;">Paw Points ที่จะได้รับจากคำสั่งซื้อนี้:</span>
+                                    <span id="summaryRewardSub" style="font-size: 0.72rem; color: #78350F;">(1 พอยท์ ทุกๆ 100 ฿ ของยอดสุทธิ)</span>
+                                </div>
+                            </div>
+                            <strong id="summaryEarnedPointsVal" style="color: #92400E; font-size: 1.15rem; font-family: 'Outfit', sans-serif; font-weight: 800; white-space: nowrap;">
+                                +10 พอยท์
+                            </strong>
                         </div>
 
                         <div style="margin-top: 1.5rem;">
-                            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.95rem; font-size: 1.05rem;">
+                            <button type="submit" id="btnSubmitCheckout" class="btn btn-primary" style="width: 100%; padding: 0.95rem; font-size: 1.05rem; transition: all 0.3s ease;">
                                 ยืนยันคำสั่งจองและรับเลี้ยง 🐾
                             </button>
                         </div>
@@ -1420,6 +1449,121 @@ function switchPaymentChannel(channel) {
     const isTest = document.getElementById('test_skip_account')?.checked;
     if (bankAccountInput && !isTest) {
         bankAccountInput.required = (channel === 'bank_transfer');
+    }
+
+    // Dynamically sync Currency vs Paw Points UI
+    syncPointsPaymentDisplay(channel);
+}
+
+// Dynamically convert Order Total & Cart prices to Paw Points when selecting Paw Points payment
+function syncPointsPaymentDisplay(channel) {
+    const selectedChannel = channel || document.querySelector('input[name="payment_channel"]:checked')?.value || 'bank_transfer';
+    
+    // Extract current Grand Total from DOM or Session
+    let grandTotal = 0;
+    const grandValEl = document.getElementById('summaryGrandTotalVal');
+    if (grandValEl) {
+        const rawAttr = grandValEl.getAttribute('data-raw-grand-total');
+        if (rawAttr) {
+            grandTotal = parseFloat(rawAttr) || 0;
+        } else {
+            grandTotal = parseFloat(grandValEl.textContent.replace(/[^0-9.]/g, '')) || 0;
+        }
+    }
+
+    const totalLabel = document.getElementById('summaryGrandTotalLabel');
+    const totalVal = document.getElementById('summaryGrandTotalVal');
+    const equivEl = document.getElementById('summaryPointsEquivalent');
+    const btnSubmit = document.getElementById('btnSubmitCheckout');
+    const ptsNeededPanel = document.getElementById('panel-pts-needed');
+    const statusBox = document.getElementById('panel-points-status-box');
+    const userPtsDisplay = document.getElementById('panel-user-pts-display');
+
+    // Get live user points from localStorage or PHP
+    let userPoints = 150;
+    try {
+        const clientUser = JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        if (clientUser && clientUser.paw_points !== undefined) {
+            userPoints = parseInt(clientUser.paw_points, 10);
+        }
+    } catch(e) {}
+
+    if (userPtsDisplay) {
+        userPtsDisplay.textContent = '🐾 ' + userPoints.toLocaleString() + ' พอยท์';
+    }
+
+    const ptsNeeded = Math.round(grandTotal);
+
+    if (selectedChannel === 'paw_points') {
+        // 1. Order Summary Changes to Paw Points Currency
+        if (totalLabel) {
+            totalLabel.innerHTML = '🐾 ยอดพอยท์ที่ใช้แลกรับเลี้ยง:';
+            totalLabel.style.color = '#92400E';
+            totalLabel.style.fontWeight = '800';
+        }
+        if (totalVal) {
+            totalVal.innerHTML = `🐾 ${ptsNeeded.toLocaleString()} Paw Points`;
+            totalVal.style.color = '#D97706';
+            totalVal.style.fontFamily = "'Outfit', sans-serif";
+            totalVal.style.fontWeight = '800';
+            totalVal.style.fontSize = '1.25rem';
+        }
+        if (equivEl) {
+            equivEl.style.display = 'block';
+            equivEl.textContent = `(เทียบเท่ายอดเงิน ฿${grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท)`;
+        }
+        if (btnSubmit) {
+            btnSubmit.innerHTML = `🐾 ยืนยันใช้ ${ptsNeeded.toLocaleString()} Paw Points แลกรับเลี้ยง`;
+            btnSubmit.style.background = 'linear-gradient(135deg, #D97706 0%, #B45309 100%)';
+            btnSubmit.style.borderColor = '#B45309';
+            btnSubmit.style.boxShadow = '0 6px 16px rgba(217, 119, 6, 0.35)';
+        }
+
+        // 2. Detail Panel Status Changes
+        if (ptsNeededPanel) {
+            ptsNeededPanel.textContent = '🐾 ' + ptsNeeded.toLocaleString() + ' พอยท์';
+        }
+        if (statusBox) {
+            if (userPoints >= ptsNeeded) {
+                const remaining = userPoints - ptsNeeded;
+                statusBox.style.background = '#ECFDF5';
+                statusBox.style.borderColor = '#10B981';
+                statusBox.style.color = '#065F46';
+                statusBox.innerHTML = `✅ <strong>แต้มสะสมของคุณเพียงพอ:</strong> ยอดแต้มคงเหลือหลังแลกรับเลี้ยงคือ <strong>${remaining.toLocaleString()} พอยท์</strong> (กดยืนยันด้านล่างเพื่อรับเลี้ยงได้ทันที)`;
+            } else {
+                const missing = ptsNeeded - userPoints;
+                statusBox.style.background = '#FFFBEB';
+                statusBox.style.borderColor = '#F59E0B';
+                statusBox.style.color = '#92400E';
+                statusBox.innerHTML = `⚠️ <strong>แต้มสะสมปัจจุบันของคุณ (${userPoints.toLocaleString()} พอยท์) ไม่เพียงพอ:</strong> ยังขาดอีก <strong>${missing.toLocaleString()} พอยท์</strong> • สามารถสะสมแต้มเพิ่ม หรือเลือกวิธีชำระเงินอื่นเพื่อรับแต้มสะสมเพิ่มได้ครับ`;
+            }
+        }
+    } else {
+        // Reset to Standard Currency (฿)
+        if (totalLabel) {
+            totalLabel.innerHTML = 'ยอดชำระสุทธิ:';
+            totalLabel.style.color = '';
+            totalLabel.style.fontWeight = '';
+        }
+        if (totalVal) {
+            totalVal.innerHTML = `${grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ฿`;
+            totalVal.style.color = '';
+            totalVal.style.fontFamily = '';
+            totalVal.style.fontWeight = '';
+            totalVal.style.fontSize = '';
+        }
+        if (equivEl) {
+            equivEl.style.display = 'none';
+        }
+        if (btnSubmit) {
+            btnSubmit.innerHTML = `ยืนยันคำสั่งจองและรับเลี้ยง 🐾`;
+            btnSubmit.style.background = '';
+            btnSubmit.style.borderColor = '';
+            btnSubmit.style.boxShadow = '';
+        }
+        if (ptsNeededPanel) {
+            ptsNeededPanel.textContent = '🐾 ' + ptsNeeded.toLocaleString() + ' พอยท์';
+        }
     }
 }
 
@@ -2264,7 +2408,11 @@ function syncClientCartUI() {
             if (summaryCatCount) summaryCatCount.textContent = `${totalCount} ตัว`;
 
             if (cartWrapper) {
-                cartWrapper.innerHTML = clientCart.map(item => `
+                cartWrapper.innerHTML = clientCart.map(item => {
+                    const q = (item.qty && item.qty > 0) ? item.qty : 1;
+                    const itemSub = item.price * q;
+                    const itemPoints = Math.max(10, Math.floor(itemSub / 100));
+                    return `
                     <div class="cart-item" data-id="${item.id}">
                         <div class="cart-item-left">
                             <img src="assets/images/${item.image}" alt="${item.name}" class="cart-item-thumb">
@@ -2275,8 +2423,13 @@ function syncClientCartUI() {
                                     <span>${item.gender}</span> &bull; 
                                     <span>${item.age}</span>
                                 </div>
-                                <div style="font-size: 0.78rem; color: var(--accent-mint); font-weight: 600; margin-top: 0.2rem;">
-                                    ✓ ฉีดวัคซีนแล้ว 2 เข็ม • ตรวจสุขภาพพร้อมส่งมอบ
+                                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 0.35rem;">
+                                    <span style="font-size: 0.76rem; color: #065F46; background: #D1FAE5; font-weight: 700; padding: 2px 7px; border-radius: 6px; display: inline-flex; align-items: center; gap: 3px;">
+                                        ✓ วัคซีนครบ 2 เข็ม
+                                    </span>
+                                    <span class="cart-item-points-badge" style="font-size: 0.76rem; color: #92400E; background: #FEF3C7; font-weight: 800; padding: 2px 8px; border-radius: 6px; border: 1px solid #FCD34D; display: inline-flex; align-items: center; gap: 4px; font-family: 'Outfit', sans-serif;">
+                                        🐾 รับแต้ม: +<span class="item-points-val">${itemPoints.toLocaleString()}</span> Paw Points
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -2287,14 +2440,17 @@ function syncClientCartUI() {
                                 <button type="button" 
                                         onclick="updateCartQtyClient(event, '${item.id}', -1)"
                                         class="qty-btn" title="ลดจำนวน">-</button>
-                                <span class="qty-val">${item.qty || 1}</span>
+                                <span class="qty-val">${q}</span>
                                 <button type="button" 
                                         onclick="updateCartQtyClient(event, '${item.id}', 1)"
                                         class="qty-btn" title="เพิ่มจำนวน">+</button>
                             </div>
 
                             <div class="cart-item-price" style="min-width: 95px; text-align: right;">
-                                ${(item.price * (item.qty || 1)).toLocaleString()} ฿
+                                <div>${itemSub.toLocaleString()} ฿</div>
+                                <div style="font-size: 0.72rem; color: #92400E; font-weight: 700; margin-top: 2px;">
+                                    (+${itemPoints.toLocaleString()} pts)
+                                </div>
                             </div>
                             <a href="javascript:void(0)" 
                                onclick="removeCartItemClient(event, '${item.id}')"
@@ -2304,7 +2460,8 @@ function syncClientCartUI() {
                             </a>
                         </div>
                     </div>
-                `).join('');
+                `;
+                }).join('');
             }
 
             // 1. Coupon Discount Calculation
@@ -2359,7 +2516,14 @@ function syncClientCartUI() {
             if (vatVal) vatVal.textContent = vat.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
 
             const grandVal = document.getElementById('summaryGrandTotalVal');
-            if (grandVal) grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+            if (grandVal) {
+                grandVal.setAttribute('data-raw-grand-total', grandTotal);
+                grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+            }
+
+            const earnedPoints = Math.max(10, Math.floor(grandTotal / 100));
+            const ptsVal = document.getElementById('summaryEarnedPointsVal');
+            if (ptsVal) ptsVal.textContent = '+' + earnedPoints.toLocaleString() + ' พอยท์';
         } else {
             if (emptyView) emptyView.style.display = 'block';
             if (formView) formView.style.display = 'none';
@@ -2402,7 +2566,18 @@ function syncClientCartUI() {
         if (vatVal) vatVal.textContent = vat.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
 
         const grandVal = document.getElementById('summaryGrandTotalVal');
-        if (grandVal) grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+        if (grandVal) {
+            grandVal.setAttribute('data-raw-grand-total', grandTotal);
+            grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+        }
+
+        const earnedPoints = Math.max(10, Math.floor(grandTotal / 100));
+        const ptsVal = document.getElementById('summaryEarnedPointsVal');
+        if (ptsVal) ptsVal.textContent = '+' + earnedPoints.toLocaleString() + ' พอยท์';
+    }
+
+    if (typeof syncPointsPaymentDisplay === 'function') {
+        syncPointsPaymentDisplay();
     }
 }
 
@@ -2950,14 +3125,28 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isBotTyping && !forceScroll) return;
 
         const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+        const localUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
 
         if (isPhpServer) {
-            fetch('api_chat.php?action=get_messages')
+            let fetchUrl = 'api_chat.php?action=get_messages';
+            if (localUser) {
+                const params = new URLSearchParams();
+                params.append('action', 'get_messages');
+                if (localUser.username) params.append('client_username', localUser.username);
+                if (localUser.fullname || localUser.name) params.append('client_fullname', localUser.fullname || localUser.name);
+                if (localUser.email) params.append('client_email', localUser.email);
+                fetchUrl = 'api_chat.php?' + params.toString();
+            }
+
+            fetch(fetchUrl)
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === 'success' && data.conversation) {
                         const conv = data.conversation;
-                        const u = data.current_user;
+                        let u = data.current_user;
+                        if ((!u || !u.is_member) && localUser) {
+                            u = { name: localUser.fullname || localUser.username || localUser.name, is_member: true };
+                        }
                         updateUserStrip(u);
                         if (!isBotTyping) {
                             renderMessages(conv.messages || [], forceScroll);
@@ -2971,13 +3160,17 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     function fallbackClientLoad(forceScroll) {
-        const user = typeof getClientLoggedUser === 'function' ? getClientLoggedUser() : null;
-        updateUserStrip(user ? { name: user.username, is_member: true } : { name: 'ผู้เยี่ยมชม', is_member: false });
+        const user = typeof getClientLoggedUser === 'function' ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        updateUserStrip(user ? { name: user.fullname || user.username || user.name, is_member: true } : { name: 'ผู้เยี่ยมชม', is_member: false });
         const msgs = getLocalChatMessages();
         renderMessages(msgs, forceScroll);
     }
 
     function updateUserStrip(u) {
+        const localUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        if ((!u || !u.is_member) && localUser && (localUser.username || localUser.fullname || localUser.name)) {
+            u = { name: localUser.fullname || localUser.username || localUser.name, is_member: true };
+        }
         const strip = document.getElementById('chat-user-label');
         if (!strip) return;
         if (u && u.is_member) {
@@ -3026,7 +3219,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div class="chat-cat-breed">${escapeHtml(card.breed)}</div>
                                 <div class="chat-cat-highlight">${escapeHtml(card.highlight || '')}</div>
                                 <div class="chat-cat-price">${escapeHtml(card.price_fmt || card.price)}</div>
-                                <a href="${card.link || 'products.html'}" class="btn btn-primary btn-sm chat-card-action">
+                                <a href="${card.link || 'products.php'}" class="btn btn-primary btn-sm chat-card-action">
                                     ดูน้องตัวนี้ 🐾
                                 </a>
                             </div>
@@ -3133,11 +3326,17 @@ document.addEventListener('DOMContentLoaded', () => {
         showTypingIndicator(userText);
 
         const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+        const localUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
 
         if (isPhpServer) {
             const formData = new FormData();
             formData.append('action', 'quick_reply');
             formData.append('option', option);
+            if (localUser) {
+                if (localUser.username) formData.append('client_username', localUser.username);
+                if (localUser.fullname || localUser.name) formData.append('client_fullname', localUser.fullname || localUser.name);
+                if (localUser.email) formData.append('client_email', localUser.email);
+            }
 
             fetch('api_chat.php', { method: 'POST', body: formData })
                 .then(res => res.json())
@@ -3176,8 +3375,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const qLower = userText.trim().toLowerCase();
         if (!qLower) return null;
+        const qLen = qLower.length;
 
-        const stopwords = ['ไหม', 'มั้ย', 'ได้', 'หรือ', 'และ', 'กับ', 'ให้', 'ของ', 'ที่', 'ใน', 'การ', 'ความ', 'ทาง', 'เป็น', 'อยู่', 'ช่วย', 'หน่อย', 'ครับ', 'ค่ะ', 'นะ', 'คะ', 'กี่', 'ตัว', 'ทำ', 'ยัง', 'ไง', 'บ้าง', 'มี', 'ถ้า', 'หาก', 'อยาก', 'จะ', 'ขอ'];
+        // Check for single character or short gibberish
+        if (qLen < 2 || (/^[a-zA-Z0-9\s\.\,\?\!\@\#\$\%\^\&\*\(\)\_\+\-\=\[\]\{\}\;\:\'\"\\\|\<\>\/`~]+$/.test(userText.trim()) && qLen < 3)) {
+            if (qLower !== 'hi') {
+                return null;
+            }
+        }
+
+        const greetings = ['สวัสดี', 'หวัดดี', 'hello', 'hi', 'hey', 'ดีครับ', 'ดีค่ะ', 'ดีจ้า', 'ดีคับ', 'สวัสดิ'];
+        for (const g of greetings) {
+            if (qLower === g || (qLower.includes(g) && qLen <= 15)) {
+                return {
+                    text: "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้น้องบอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์เรื่องที่สนใจสอบถามได้เลยครับ",
+                    cards: []
+                };
+            }
+        }
+
+        const stopwords = ['ไหม', 'มั้ย', 'ได้', 'หรือ', 'และ', 'กับ', 'ให้', 'ของ', 'ที่', 'ใน', 'การ', 'ความ', 'ทาง', 'เป็น', 'อยู่', 'ช่วย', 'หน่อย', 'ครับ', 'ค่ะ', 'นะ', 'คะ', 'กี่', 'ตัว', 'ทำ', 'ยัง', 'ไง', 'บ้าง', 'มี', 'ถ้า', 'หาก', 'อยาก', 'จะ', 'ขอ', 'เอ'];
         let bestScore = 0;
         let bestItem = null;
 
@@ -3216,25 +3433,35 @@ document.addEventListener('DOMContentLoaded', () => {
             let score = 0;
             const qText = (item.question || '').toLowerCase();
             const ansText = (item.answer || '').toLowerCase();
+            const catText = (item.category || '').toLowerCase();
             const tags = (item.tags || []).map(t => t.toLowerCase());
 
             tags.forEach(tag => {
                 if (!tag) return;
                 if (tag === qLower) score += 80;
-                else if (qLower.includes(tag)) score += 40 + (tag.length * 5);
-                else if (tag.includes(qLower) && qLower.length >= 3) score += 30;
+                else if (tag.length >= 3 && qLower.includes(tag)) score += 40 + (tag.length * 5);
+                else if (qLen >= 3 && tag.includes(qLower)) score += 30;
             });
 
-            if (qText.includes(qLower) || qLower.includes(qText)) score += 60;
+            if (qText === qLower) {
+                score += 100;
+            } else if (qLen >= 3) {
+                if (qText.includes(qLower) || qLower.includes(qText)) score += 50;
+            }
 
-            const len = qLower.length;
-            for (let w = 3; w <= Math.min(6, len); w++) {
-                for (let i = 0; i <= len - w; i++) {
-                    const sub = qLower.substring(i, i + w);
-                    if (stopwords.includes(sub)) continue;
-                    if (qText.includes(sub)) score += w * 3;
-                    if (ansText.includes(sub)) score += w;
+            if (qLen >= 3) {
+                for (let w = 3; w <= Math.min(6, qLen); w++) {
+                    for (let i = 0; i <= qLen - w; i++) {
+                        const sub = qLower.substring(i, i + w);
+                        if (stopwords.includes(sub)) continue;
+                        if (qText.includes(sub)) score += w * 3;
+                        if (ansText.includes(sub)) score += w;
+                    }
                 }
+            }
+
+            if (qLen >= 3 && qLower.includes(catText)) {
+                score += 15;
             }
 
             if (score > bestScore) {
@@ -3243,30 +3470,30 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Determine cards
-        const cards = [];
-        const matchedCatIds = [];
-        for (const [kw, cid] of Object.entries(breedMap)) {
-            if (qLower.includes(kw) && !matchedCatIds.includes(cid)) {
-                matchedCatIds.push(cid);
-            }
-        }
-        if (bestItem && Array.isArray(bestItem.tags)) {
-            bestItem.tags.forEach(t => {
-                const tl = t.toLowerCase();
-                for (const [kw, cid] of Object.entries(breedMap)) {
-                    if ((tl.includes(kw) || kw.includes(tl)) && !matchedCatIds.includes(cid)) {
-                        matchedCatIds.push(cid);
-                    }
+        // Determine cards only if match is confident
+        if (bestScore >= 35 && bestItem) {
+            const cards = [];
+            const matchedCatIds = [];
+            for (const [kw, cid] of Object.entries(breedMap)) {
+                if (kw.length >= 3 && qLower.includes(kw) && !matchedCatIds.includes(cid)) {
+                    matchedCatIds.push(cid);
                 }
+            }
+            if (Array.isArray(bestItem.tags)) {
+                bestItem.tags.forEach(t => {
+                    const tl = t.toLowerCase();
+                    for (const [kw, cid] of Object.entries(breedMap)) {
+                        if ((tl.includes(kw) || kw.includes(tl)) && !matchedCatIds.includes(cid)) {
+                            matchedCatIds.push(cid);
+                        }
+                    }
+                });
+            }
+
+            matchedCatIds.slice(0, 3).forEach(cid => {
+                if (catCatalog[cid]) cards.push(catCatalog[cid]);
             });
-        }
 
-        matchedCatIds.slice(0, 3).forEach(cid => {
-            if (catCatalog[cid]) cards.push(catCatalog[cid]);
-        });
-
-        if (bestScore >= 20 && bestItem) {
             return {
                 text: bestItem.answer,
                 cards: cards
@@ -3320,11 +3547,17 @@ document.addEventListener('DOMContentLoaded', () => {
         showTypingIndicator(text);
 
         const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+        const localUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
 
         if (isPhpServer) {
             const formData = new FormData();
             formData.append('action', 'send_message');
             formData.append('message', text);
+            if (localUser) {
+                if (localUser.username) formData.append('client_username', localUser.username);
+                if (localUser.fullname || localUser.name) formData.append('client_fullname', localUser.fullname || localUser.name);
+                if (localUser.email) formData.append('client_email', localUser.email);
+            }
 
             fetch('api_chat.php', { method: 'POST', body: formData })
                 .then(res => res.json())
@@ -3357,7 +3590,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 replyText = kbMatch.text;
                 cards = kbMatch.cards || [];
             } else {
-                const lower = text.toLowerCase();
+                const lower = text.trim().toLowerCase();
                 if (lower.includes('ราคา') || lower.includes('เท่าไหร่') || lower.includes('โปรโมชั่น') || lower.includes('ส่วนลด') || lower.includes('คูปอง') || lower.includes('cat10off')) {
                     replyText = "🎉 ตอนนี้มีโปรโมชั่นพิเศษ:\n• โค้ด CAT10OFF ลดทันที 10% (ขั้นต่ำ 300.-)\n• โค้ด NEWMEMBER5 ลด 5% สำหรับสมาชิกใหม่\n• แถมฟรี Starter Kit 11 ชิ้นมูลค่า 4,500.- ทุกออเดอร์ครับ!";
                     cards = BOT_RESPONSES[5].cards;
@@ -3369,11 +3602,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     cards = BOT_RESPONSES[3].cards;
                 } else if (lower.includes('ส่ง') || lower.includes('ประกัน') || lower.includes('วัคซีน')) {
                     replyText = BOT_RESPONSES[6].text;
-                } else if (lower.includes('สวัสดี') || lower.includes('หวัดดี') || lower.includes('hello') || lower.includes('hi')) {
+                } else if (lower === 'สวัสดี' || lower === 'หวัดดี' || lower === 'hello' || lower === 'hi' || lower === 'ดีครับ' || lower === 'ดีค่ะ') {
                     replyText = "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 สนใจน้องแมวพันธุ์ไหนเป็นพิเศษ หรือสอบถามการดูแล สามารถเลือกคำถามด่วนด้านล่างหรือพิมพ์คุยได้เลยครับ";
-                    cards = BOT_RESPONSES[1].cards;
+                    cards = [];
                 } else {
-                    replyText = "ขอบคุณสำหรับข้อความครับ! 🐾 ผู้ช่วย Purrfect Bot ได้รับคำถามแล้ว\n\n💡 คุณลูกค้าสามารถสอบถามข้อมูลร้าน เช่น ข้อมูลสายพันธุ์, ราคา, เวลาเปิดทำการ, การจัดส่งฟรี Pet Taxi, การรับประกันสุขภาพ 180 วัน หรือกดปุ่ม ⚡ คำถาม เพื่อเลือกดูคำถามด่วนได้ทันทีครับ!";
+                    replyText = "🐱 เอ๊ะ... น้องบอทอ่านแล้วยังไม่ค่อยเข้าใจความหมายของข้อความนี้เลยครับ 🐾\n\n" +
+                        "รบกวนคุณลูกค้าช่วยพิมพ์คำถามใหม่อีกครั้ง หรือสอบถามเรื่องที่ต้องการให้บอทช่วยเหลือได้ไหมครับ เช่น:\n" +
+                        "• ข้อมูลและราคาน้องแมวสายพันธุ์ต่างๆ (เช่น บริติช, สฟิงซ์, แร็กดอลล์)\n" +
+                        "• เวลาเปิดทำการ, แผนที่ร้าน, เบอร์โทรติดต่อ หรือช่องทาง LINE OA\n" +
+                        "• การรับประกันสุขภาพ 180 วัน, การฉีดวัคซีน, และไมโครชิป\n" +
+                        "• การจัดส่งฟรีทั่วไทยด้วยรถ Pet Taxi ควบคุมอุณหภูมิ\n" +
+                        "• โปรโมชั่นโค้ดส่วนลด และ Starter Kit 11 ชิ้น\n" +
+                        "💡 หรือกดปุ่ม ⚡ คำถาม ด้านล่างเพื่อดูคำถามด่วนยอดนิยมได้ทันทีครับ!";
+                    cards = [];
                 }
             }
 

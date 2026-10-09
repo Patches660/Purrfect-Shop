@@ -634,7 +634,16 @@ function handleLineBotMessage($replyToken, $userMsg, $userId, $channelToken, $di
                           "👉 คลิกเปิดบัตรสะสมแต้มดิจิทัล: https://u.lin.ee/PHZxZGW\n\n" .
                           "💬 หรือแจ้งเบอร์โทรศัพท์/สลิปโอนเงินกับแอดมิน เพื่อให้แอดมินสะสมแต้มให้ได้เลยนะคะ 🙏"
             ],
-            getRewardCardCarouselMessage()
+            [
+                'type' => 'image',
+                'originalContentUrl' => 'https://files.catbox.moe/2bvd6y.png',
+                'previewImageUrl' => 'https://files.catbox.moe/2bvd6y.png'
+            ],
+            [
+                'type' => 'image',
+                'originalContentUrl' => 'https://files.catbox.moe/nu30dq.png',
+                'previewImageUrl' => 'https://files.catbox.moe/nu30dq.png'
+            ]
         ];
     }
     elseif (in_array($userMsg, ['วงล้อ', '🎡 วงล้อ', 'วงล้อลุ้นโชค'])) {

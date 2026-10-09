@@ -220,7 +220,13 @@ if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) &&
             $invoice_id = 'PFC-' . date('ymd') . '-' . strtoupper(substr(md5(uniqid()), 0, 4));
             $tracking_id = 'TRACK-TH-' . date('ym') . '-' . strtoupper(substr(md5(uniqid()), 0, 5));
             $shipping_method = trim($_POST['shipping_method'] ?? 'pet_taxi');
-            $paw_points_earned = floor($invoice_total / 100);
+            $paw_points_earned = max(10, floor($invoice_total / 100));
+
+            // Calculate total cats count accurately based on quantities
+            $cat_count_total = 0;
+            foreach ($invoice_data as $it) {
+                $cat_count_total += intval($it['qty'] ?? 1);
+            }
 
             // Save Order to JSON
             $newOrder = [
@@ -240,7 +246,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) &&
                 'delivery_date' => $delivery_date,
                 'delivery_timeslot' => $delivery_timeslot,
                 'items' => array_values($invoice_data),
-                'cat_count' => count($invoice_data),
+                'cat_count' => $cat_count_total,
                 'subtotal' => $invoice_subtotal,
                 'member_discount' => $member_discount,
                 'coupon_code' => $applied_coupon,
@@ -257,7 +263,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action']) &&
             ];
             saveOrder($newOrder);
 
-            // Clear Cart ก่อน (ทำก่อน email เพื่อไม่ให้ cart ค้าง)
+            // Award Paw Points to user in database & session
+            if ($currUser) {
+                addPawPoints($currUser['id'], $paw_points_earned);
+            }
+
+            // Clear Cart session immediately
             $_SESSION['cart'] = [];
 
             // Send Order Confirmation Email (non-blocking — ส่งหลัง clear cart เสมอ)
@@ -502,6 +513,39 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
 </div>
 
 <?php if ($checkout_success): ?>
+    <script>
+    // 🧹 IMMEDIATELY CLEAR CART & SYNC LOCALSTORAGE ON CHECKOUT SUCCESS
+    try {
+        localStorage.removeItem('cat_shop_cart');
+        localStorage.setItem('cat_shop_cart', '[]');
+
+        // Sync new order to localStorage my_orders for instant profile & vaccine reflection
+        const newOrderData = <?php echo json_encode($newOrder ?? []); ?>;
+        if (newOrderData && newOrderData.order_id) {
+            const currentOrders = JSON.parse(localStorage.getItem('cat_shop_my_orders') || localStorage.getItem('cat_shop_orders') || '[]');
+            const exists = currentOrders.some(o => o.order_id === newOrderData.order_id);
+            if (!exists) {
+                currentOrders.unshift(newOrderData);
+                localStorage.setItem('cat_shop_my_orders', JSON.stringify(currentOrders));
+                localStorage.setItem('cat_shop_orders', JSON.stringify(currentOrders));
+            }
+        }
+
+        // Add Paw Points to logged user in localStorage
+        const loggedUser = JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        if (loggedUser) {
+            const earned = <?php echo intval($paw_points_earned); ?>;
+            loggedUser.paw_points = (parseInt(loggedUser.paw_points || 100, 10)) + earned;
+            localStorage.setItem('cat_shop_logged_user', JSON.stringify(loggedUser));
+        }
+
+        if (typeof updateCartBadgeUI === 'function') {
+            updateCartBadgeUI();
+        }
+    } catch(err) {
+        console.error('Checkout sync error:', err);
+    }
+    </script>
     <!-- =========================================================
          OFFICIAL ADOPTION CERTIFICATE & INVOICE (ใบเสร็จรับเงิน & ส่งมอบ)
          ========================================================= -->
@@ -715,7 +759,11 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                         </div>
 
                         <div id="cart-items-wrapper">
-                        <?php foreach ($_SESSION['cart'] as $id => $item): ?>
+                        <?php foreach ($_SESSION['cart'] as $id => $item): 
+                            $item_qty = intval($item['qty'] ?? 1);
+                            $item_subtotal = $item['price'] * $item_qty;
+                            $item_points = max(10, floor($item_subtotal / 100));
+                        ?>
                             <div class="cart-item" data-id="<?php echo htmlspecialchars($id); ?>">
                                 <div class="cart-item-left">
                                     <img src="assets/images/<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>" class="cart-item-thumb">
@@ -726,8 +774,13 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                                             <span><?php echo $item['gender']; ?></span> &bull; 
                                             <span><?php echo $item['age']; ?></span>
                                         </div>
-                                        <div style="font-size: 0.78rem; color: var(--accent-mint); font-weight: 600; margin-top: 0.2rem;">
-                                            ✓ ฉีดวัคซีนแล้ว 2 เข็ม • ตรวจสุขภาพพร้อมส่งมอบ
+                                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 0.35rem;">
+                                            <span style="font-size: 0.76rem; color: #065F46; background: #D1FAE5; font-weight: 700; padding: 2px 7px; border-radius: 6px; display: inline-flex; align-items: center; gap: 3px;">
+                                                ✓ วัคซีนครบ 2 เข็ม
+                                            </span>
+                                            <span class="cart-item-points-badge" style="font-size: 0.76rem; color: #92400E; background: #FEF3C7; font-weight: 800; padding: 2px 8px; border-radius: 6px; border: 1px solid #FCD34D; display: inline-flex; align-items: center; gap: 4px; font-family: 'Outfit', sans-serif;">
+                                                🐾 รับแต้ม: +<span class="item-points-val"><?php echo number_format($item_points); ?></span> Paw Points
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -738,14 +791,17 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                                         <a href="cart.php?action=update_qty&id=<?php echo urlencode($id); ?>&delta=-1" 
                                            onclick="updateCartQtyClient(event, '<?php echo htmlspecialchars($id); ?>', -1)"
                                            class="qty-btn" title="ลดจำนวน">-</a>
-                                        <span class="qty-val"><?php echo $item['qty'] ?? 1; ?></span>
+                                        <span class="qty-val"><?php echo $item_qty; ?></span>
                                         <a href="cart.php?action=update_qty&id=<?php echo urlencode($id); ?>&delta=1" 
                                            onclick="updateCartQtyClient(event, '<?php echo htmlspecialchars($id); ?>', 1)"
                                            class="qty-btn" title="เพิ่มจำนวน">+</a>
                                     </div>
 
                                     <div class="cart-item-price" style="min-width: 95px; text-align: right;">
-                                        <?php echo number_format($item['price'] * $item['qty']); ?> ฿
+                                        <div><?php echo number_format($item_subtotal); ?> ฿</div>
+                                        <div style="font-size: 0.72rem; color: #92400E; font-weight: 700; margin-top: 2px;">
+                                            (+<?php echo number_format($item_points); ?> pts)
+                                        </div>
                                     </div>
                                     <a href="cart.php?action=remove&id=<?php echo urlencode($id); ?>" 
                                        onclick="removeCartItemClient(event, '<?php echo htmlspecialchars($id); ?>')"
@@ -1198,18 +1254,18 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 1rem; font-size: 0.85rem;">
                                     <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.8rem; border-radius: 8px;">
                                         <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">แต้มสะสมของคุณปัจจุบัน:</span>
-                                        <strong style="color: #D97706; font-size: 1.15rem; font-family: 'Outfit';">🐾 <?php echo number_format($user_points); ?> พอยท์</strong>
+                                        <strong id="panel-user-pts-display" style="color: #D97706; font-size: 1.15rem; font-family: 'Outfit';">🐾 <?php echo number_format($user_points); ?> พอยท์</strong>
                                         <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">ระดับสมาชิก: <strong><?php echo $currUser ? htmlspecialchars($currUser['tier'] ?? 'Gold Member') : 'สมาชิกระดับทั่วไป'; ?></strong></div>
                                     </div>
-                                    <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 0.8rem; border-radius: 8px;">
-                                        <span style="color: var(--text-muted); font-size: 0.75rem; display: block;">อัตราแลกแต้มแทนเงินสด:</span>
-                                        <strong style="color: #047857; font-size: 1.05rem; font-family: 'Outfit';">100 แต้ม = 100 ฿</strong>
-                                        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.15rem;">ใช้แต้มสะสมครอบคลุมยอดสินสอดทั้งหมด</div>
+                                    <div style="background: var(--bg-card); border: 1.5px solid #F59E0B; padding: 0.8rem; border-radius: 8px; background: #FFFBEB;">
+                                        <span style="color: #92400E; font-size: 0.75rem; font-weight: 700; display: block;">ยอดพอยท์ที่ต้องใช้ในออเดอร์นี้:</span>
+                                        <strong id="panel-pts-needed" style="color: #B45309; font-size: 1.2rem; font-family: 'Outfit'; font-weight: 800;">🐾 <?php echo number_format(floor($cart_grand_total)); ?> พอยท์</strong>
+                                        <div style="font-size: 0.75rem; color: #047857; margin-top: 0.15rem; font-weight: 600;">(อัตรา 100 พอยท์ = 100 ฿)</div>
                                     </div>
                                 </div>
 
-                                <div style="background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.82rem; color: #92400E; line-height: 1.5;">
-                                    ✨ <strong>สิทธิ์แลกรับเลี้ยงด้วยแต้ม:</strong> เมื่อกดยืนยันคำสั่งจอง ระบบจะทำการหักแต้มสะสม Paw Points สมาชิกตามยอดสุทธิและมอบสิทธิ์การรับเลี้ยงทันที
+                                <div id="panel-points-status-box" style="background: #FFFBEB; border: 1px solid #FCD34D; border-radius: 8px; padding: 0.85rem 1rem; font-size: 0.82rem; color: #92400E; line-height: 1.5;">
+                                    ✨ <strong>สิทธิ์แลกรับเลี้ยงด้วยแต้ม:</strong> เมื่อกดยืนยันคำสั่งจอง ระบบจะแปลงราคาสั่งซื้อเป็น Paw Points และหักแต้มสะสมเพื่อมอบสิทธิ์รับเลี้ยงน้องแมวทันที
                                 </div>
                             </div>
                         </div>
@@ -1306,12 +1362,28 @@ $cart_grand_total = $cart_after_discount + $cart_vat;
                         </div>
 
                         <div class="summary-row total">
-                            <span>ยอดชำระสุทธิ:</span>
+                            <span id="summaryGrandTotalLabel">ยอดชำระสุทธิ:</span>
                             <span id="summaryGrandTotalVal"><?php echo number_format($cart_grand_total, 2); ?> ฿</span>
+                        </div>
+                        <div id="summaryPointsEquivalent" style="display: none; font-size: 0.8rem; color: #78350F; text-align: right; margin-top: -4px; margin-bottom: 8px; font-weight: 600;">
+                            (เทียบเท่ายอดเงิน ฿<?php echo number_format($cart_grand_total, 2); ?> บาท)
+                        </div>
+
+                        <div class="summary-points-reward-box" style="background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border: 1.5px solid #F59E0B; border-radius: 12px; padding: 0.85rem 1rem; margin-top: 1.2rem; display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 1.5rem;">🐾</span>
+                                <div>
+                                    <span id="summaryRewardTitle" style="font-size: 0.78rem; color: #92400E; font-weight: 800; display: block;">Paw Points ที่จะได้รับจากคำสั่งซื้อนี้:</span>
+                                    <span id="summaryRewardSub" style="font-size: 0.72rem; color: #78350F;">(1 พอยท์ ทุกๆ 100 ฿ ของยอดสุทธิ)</span>
+                                </div>
+                            </div>
+                            <strong id="summaryEarnedPointsVal" style="color: #92400E; font-size: 1.15rem; font-family: 'Outfit', sans-serif; font-weight: 800; white-space: nowrap;">
+                                +<?php echo number_format(max(10, floor($cart_grand_total / 100))); ?> พอยท์
+                            </strong>
                         </div>
 
                         <div style="margin-top: 1.5rem;">
-                            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.95rem; font-size: 1.05rem;">
+                            <button type="submit" id="btnSubmitCheckout" class="btn btn-primary" style="width: 100%; padding: 0.95rem; font-size: 1.05rem; transition: all 0.3s ease;">
                                 ยืนยันคำสั่งจองและรับเลี้ยง 🐾
                             </button>
                         </div>
@@ -1407,6 +1479,121 @@ function switchPaymentChannel(channel) {
     const isTest = document.getElementById('test_skip_account')?.checked;
     if (bankAccountInput && !isTest) {
         bankAccountInput.required = (channel === 'bank_transfer');
+    }
+
+    // Dynamically sync Currency vs Paw Points UI
+    syncPointsPaymentDisplay(channel);
+}
+
+// Dynamically convert Order Total & Cart prices to Paw Points when selecting Paw Points payment
+function syncPointsPaymentDisplay(channel) {
+    const selectedChannel = channel || document.querySelector('input[name="payment_channel"]:checked')?.value || 'bank_transfer';
+    
+    // Extract current Grand Total from DOM or Session
+    let grandTotal = 0;
+    const grandValEl = document.getElementById('summaryGrandTotalVal');
+    if (grandValEl) {
+        const rawAttr = grandValEl.getAttribute('data-raw-grand-total');
+        if (rawAttr) {
+            grandTotal = parseFloat(rawAttr) || 0;
+        } else {
+            grandTotal = parseFloat(grandValEl.textContent.replace(/[^0-9.]/g, '')) || 0;
+        }
+    }
+
+    const totalLabel = document.getElementById('summaryGrandTotalLabel');
+    const totalVal = document.getElementById('summaryGrandTotalVal');
+    const equivEl = document.getElementById('summaryPointsEquivalent');
+    const btnSubmit = document.getElementById('btnSubmitCheckout');
+    const ptsNeededPanel = document.getElementById('panel-pts-needed');
+    const statusBox = document.getElementById('panel-points-status-box');
+    const userPtsDisplay = document.getElementById('panel-user-pts-display');
+
+    // Get live user points from localStorage or PHP
+    let userPoints = <?php echo intval($user_points); ?>;
+    try {
+        const clientUser = JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        if (clientUser && clientUser.paw_points !== undefined) {
+            userPoints = parseInt(clientUser.paw_points, 10);
+        }
+    } catch(e) {}
+
+    if (userPtsDisplay) {
+        userPtsDisplay.textContent = '🐾 ' + userPoints.toLocaleString() + ' พอยท์';
+    }
+
+    const ptsNeeded = Math.round(grandTotal);
+
+    if (selectedChannel === 'paw_points') {
+        // 1. Order Summary Changes to Paw Points Currency
+        if (totalLabel) {
+            totalLabel.innerHTML = '🐾 ยอดพอยท์ที่ใช้แลกรับเลี้ยง:';
+            totalLabel.style.color = '#92400E';
+            totalLabel.style.fontWeight = '800';
+        }
+        if (totalVal) {
+            totalVal.innerHTML = `🐾 ${ptsNeeded.toLocaleString()} Paw Points`;
+            totalVal.style.color = '#D97706';
+            totalVal.style.fontFamily = "'Outfit', sans-serif";
+            totalVal.style.fontWeight = '800';
+            totalVal.style.fontSize = '1.25rem';
+        }
+        if (equivEl) {
+            equivEl.style.display = 'block';
+            equivEl.textContent = `(เทียบเท่ายอดเงิน ฿${grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} บาท)`;
+        }
+        if (btnSubmit) {
+            btnSubmit.innerHTML = `🐾 ยืนยันใช้ ${ptsNeeded.toLocaleString()} Paw Points แลกรับเลี้ยง`;
+            btnSubmit.style.background = 'linear-gradient(135deg, #D97706 0%, #B45309 100%)';
+            btnSubmit.style.borderColor = '#B45309';
+            btnSubmit.style.boxShadow = '0 6px 16px rgba(217, 119, 6, 0.35)';
+        }
+
+        // 2. Detail Panel Status Changes
+        if (ptsNeededPanel) {
+            ptsNeededPanel.textContent = '🐾 ' + ptsNeeded.toLocaleString() + ' พอยท์';
+        }
+        if (statusBox) {
+            if (userPoints >= ptsNeeded) {
+                const remaining = userPoints - ptsNeeded;
+                statusBox.style.background = '#ECFDF5';
+                statusBox.style.borderColor = '#10B981';
+                statusBox.style.color = '#065F46';
+                statusBox.innerHTML = `✅ <strong>แต้มสะสมของคุณเพียงพอ:</strong> ยอดแต้มคงเหลือหลังแลกรับเลี้ยงคือ <strong>${remaining.toLocaleString()} พอยท์</strong> (กดยืนยันด้านล่างเพื่อรับเลี้ยงได้ทันที)`;
+            } else {
+                const missing = ptsNeeded - userPoints;
+                statusBox.style.background = '#FFFBEB';
+                statusBox.style.borderColor = '#F59E0B';
+                statusBox.style.color = '#92400E';
+                statusBox.innerHTML = `⚠️ <strong>แต้มสะสมปัจจุบันของคุณ (${userPoints.toLocaleString()} พอยท์) ไม่เพียงพอ:</strong> ยังขาดอีก <strong>${missing.toLocaleString()} พอยท์</strong> • สามารถสะสมแต้มเพิ่ม หรือเลือกวิธีชำระเงินอื่นเพื่อรับแต้มสะสมเพิ่มได้ครับ`;
+            }
+        }
+    } else {
+        // Reset to Standard Currency (฿)
+        if (totalLabel) {
+            totalLabel.innerHTML = 'ยอดชำระสุทธิ:';
+            totalLabel.style.color = '';
+            totalLabel.style.fontWeight = '';
+        }
+        if (totalVal) {
+            totalVal.innerHTML = `${grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ฿`;
+            totalVal.style.color = '';
+            totalVal.style.fontFamily = '';
+            totalVal.style.fontWeight = '';
+            totalVal.style.fontSize = '';
+        }
+        if (equivEl) {
+            equivEl.style.display = 'none';
+        }
+        if (btnSubmit) {
+            btnSubmit.innerHTML = `ยืนยันคำสั่งจองและรับเลี้ยง 🐾`;
+            btnSubmit.style.background = '';
+            btnSubmit.style.borderColor = '';
+            btnSubmit.style.boxShadow = '';
+        }
+        if (ptsNeededPanel) {
+            ptsNeededPanel.textContent = '🐾 ' + ptsNeeded.toLocaleString() + ' พอยท์';
+        }
     }
 }
 
@@ -2251,7 +2438,11 @@ function syncClientCartUI() {
             if (summaryCatCount) summaryCatCount.textContent = `${totalCount} ตัว`;
 
             if (cartWrapper) {
-                cartWrapper.innerHTML = clientCart.map(item => `
+                cartWrapper.innerHTML = clientCart.map(item => {
+                    const q = (item.qty && item.qty > 0) ? item.qty : 1;
+                    const itemSub = item.price * q;
+                    const itemPoints = Math.max(10, Math.floor(itemSub / 100));
+                    return `
                     <div class="cart-item" data-id="${item.id}">
                         <div class="cart-item-left">
                             <img src="assets/images/${item.image}" alt="${item.name}" class="cart-item-thumb">
@@ -2262,8 +2453,13 @@ function syncClientCartUI() {
                                     <span>${item.gender}</span> &bull; 
                                     <span>${item.age}</span>
                                 </div>
-                                <div style="font-size: 0.78rem; color: var(--accent-mint); font-weight: 600; margin-top: 0.2rem;">
-                                    ✓ ฉีดวัคซีนแล้ว 2 เข็ม • ตรวจสุขภาพพร้อมส่งมอบ
+                                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 0.35rem;">
+                                    <span style="font-size: 0.76rem; color: #065F46; background: #D1FAE5; font-weight: 700; padding: 2px 7px; border-radius: 6px; display: inline-flex; align-items: center; gap: 3px;">
+                                        ✓ วัคซีนครบ 2 เข็ม
+                                    </span>
+                                    <span class="cart-item-points-badge" style="font-size: 0.76rem; color: #92400E; background: #FEF3C7; font-weight: 800; padding: 2px 8px; border-radius: 6px; border: 1px solid #FCD34D; display: inline-flex; align-items: center; gap: 4px; font-family: 'Outfit', sans-serif;">
+                                        🐾 รับแต้ม: +<span class="item-points-val">${itemPoints.toLocaleString()}</span> Paw Points
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -2274,14 +2470,17 @@ function syncClientCartUI() {
                                 <button type="button" 
                                         onclick="updateCartQtyClient(event, '${item.id}', -1)"
                                         class="qty-btn" title="ลดจำนวน">-</button>
-                                <span class="qty-val">${item.qty || 1}</span>
+                                <span class="qty-val">${q}</span>
                                 <button type="button" 
                                         onclick="updateCartQtyClient(event, '${item.id}', 1)"
                                         class="qty-btn" title="เพิ่มจำนวน">+</button>
                             </div>
 
                             <div class="cart-item-price" style="min-width: 95px; text-align: right;">
-                                ${(item.price * (item.qty || 1)).toLocaleString()} ฿
+                                <div>${itemSub.toLocaleString()} ฿</div>
+                                <div style="font-size: 0.72rem; color: #92400E; font-weight: 700; margin-top: 2px;">
+                                    (+${itemPoints.toLocaleString()} pts)
+                                </div>
                             </div>
                             <a href="javascript:void(0)" 
                                onclick="removeCartItemClient(event, '${item.id}')"
@@ -2291,7 +2490,8 @@ function syncClientCartUI() {
                             </a>
                         </div>
                     </div>
-                `).join('');
+                `;
+                }).join('');
             }
 
             // 1. Coupon Discount Calculation
@@ -2346,7 +2546,14 @@ function syncClientCartUI() {
             if (vatVal) vatVal.textContent = vat.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
 
             const grandVal = document.getElementById('summaryGrandTotalVal');
-            if (grandVal) grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+            if (grandVal) {
+                grandVal.setAttribute('data-raw-grand-total', grandTotal);
+                grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+            }
+
+            const earnedPoints = Math.max(10, Math.floor(grandTotal / 100));
+            const ptsVal = document.getElementById('summaryEarnedPointsVal');
+            if (ptsVal) ptsVal.textContent = '+' + earnedPoints.toLocaleString() + ' พอยท์';
         } else {
             if (emptyView) emptyView.style.display = 'block';
             if (formView) formView.style.display = 'none';
@@ -2389,7 +2596,18 @@ function syncClientCartUI() {
         if (vatVal) vatVal.textContent = vat.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
 
         const grandVal = document.getElementById('summaryGrandTotalVal');
-        if (grandVal) grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+        if (grandVal) {
+            grandVal.setAttribute('data-raw-grand-total', grandTotal);
+            grandVal.textContent = grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ฿';
+        }
+
+        const earnedPoints = Math.max(10, Math.floor(grandTotal / 100));
+        const ptsVal = document.getElementById('summaryEarnedPointsVal');
+        if (ptsVal) ptsVal.textContent = '+' + earnedPoints.toLocaleString() + ' พอยท์';
+    }
+
+    if (typeof syncPointsPaymentDisplay === 'function') {
+        syncPointsPaymentDisplay();
     }
 }
 

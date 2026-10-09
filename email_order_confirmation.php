@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * email_order_confirmation.php
  * Renders the HTML body for Order Confirmation emails with Product Images.
@@ -15,65 +15,21 @@ if (!function_exists('getOrderProductImageUrl')) {
             return $img;
         }
 
+        // Clean filename
+        $filename = basename($img);
+        if (empty($filename) || $filename === '.' || $filename === '..') {
+            $filename = !empty($id) ? ((strpos($id, '.') !== false) ? $id : $id . '.jpg') : 'cat_british.jpg';
+        }
+
         $is_local = empty($baseUrl) || (strpos($baseUrl, 'localhost') !== false || strpos($baseUrl, '127.0.0.1') !== false);
 
-        // Curated high-res Unsplash CDN images matching all cat breeds
-        $cdnMap = [
-            'cat_british'            => 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=200&auto=format&fit=crop&q=80',
-            'cat_persian'            => 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=200&auto=format&fit=crop&q=80',
-            'cat_sphynx'             => 'https://images.unsplash.com/photo-1513360309081-38f0762daed1?w=200&auto=format&fit=crop&q=80',
-            'cat_siamese'            => 'https://images.unsplash.com/photo-1513245543132-31f507417b26?w=200&auto=format&fit=crop&q=80',
-            'cat_mainecoon'          => 'https://images.unsplash.com/photo-1561948955-570b270e7c36?w=200&auto=format&fit=crop&q=80',
-            'cat_ragdoll'            => 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=200&auto=format&fit=crop&q=80',
-            'cat_bengal'             => 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=200&auto=format&fit=crop&q=80',
-            'cat_scottish'           => 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&auto=format&fit=crop&q=80',
-            'cat_munchkin'           => 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=200&auto=format&fit=crop&q=80',
-            'cat_russian'            => 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&auto=format&fit=crop&q=80',
-            'cat_abyssinian'         => 'https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=200&auto=format&fit=crop&q=80',
-            'cat_americanshorthair'  => 'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=200&auto=format&fit=crop&q=80',
-            'cat_norwegian'          => 'https://images.unsplash.com/photo-1535930891776-0c2dfb7fda1a?w=200&auto=format&fit=crop&q=80',
-            'cat_japanese_bobtail'   => 'https://images.unsplash.com/photo-1561948955-570b270e7c36?w=200&auto=format&fit=crop&q=80',
-            'cat_siberian'           => 'https://images.unsplash.com/photo-1535930891776-0c2dfb7fda1a?w=200&auto=format&fit=crop&q=80',
-            'cat_turkish_angora'     => 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=200&auto=format&fit=crop&q=80',
-            'cat_turkish_van'        => 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&auto=format&fit=crop&q=80',
-            'cat_cornish_rex'        => 'https://images.unsplash.com/photo-1513360309081-38f0762daed1?w=200&auto=format&fit=crop&q=80',
-            'cat_devon_rex'          => 'https://images.unsplash.com/photo-1513360309081-38f0762daed1?w=200&auto=format&fit=crop&q=80',
-            'cat_singapura'          => 'https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=200&auto=format&fit=crop&q=80',
-            'cat_american_curl'      => 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&auto=format&fit=crop&q=80',
-            'cat_bombay'             => 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&auto=format&fit=crop&q=80',
-            'cat_burmese'            => 'https://images.unsplash.com/photo-1513245543132-31f507417b26?w=200&auto=format&fit=crop&q=80',
-            'cat_chartreux'          => 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&auto=format&fit=crop&q=80',
-            'cat_khao_manee'         => 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=200&auto=format&fit=crop&q=80',
-            'cat_korat'              => 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&auto=format&fit=crop&q=80',
-            'cat_savannah'           => 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=200&auto=format&fit=crop&q=80',
-            'cat_egyptian_mau'       => 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=200&auto=format&fit=crop&q=80',
-            'cat_scottish_straight'  => 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&auto=format&fit=crop&q=80',
-            'cat_somali'             => 'https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=200&auto=format&fit=crop&q=80',
-            'cat_australian_mist'    => 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=200&auto=format&fit=crop&q=80',
-            'cat_kurilian_bobtail'   => 'https://images.unsplash.com/photo-1561948955-570b270e7c36?w=200&auto=format&fit=crop&q=80',
-        ];
-
-        $cleanKey = strtolower(str_replace(['.jpg', '.jpeg', '.png', 'assets/images/'], '', $img));
-        if (empty($cleanKey)) {
-            $cleanKey = strtolower($id);
-        }
-
         if ($is_local) {
-            if (isset($cdnMap[$cleanKey])) {
-                return $cdnMap[$cleanKey];
-            }
-            if (isset($cdnMap[$id])) {
-                return $cdnMap[$id];
-            }
-            return 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&auto=format&fit=crop&q=80';
+            // High-fidelity public CDN serving the exact genuine store photos from GitHub repository
+            return 'https://patches660.github.io/Purrfect-Shop/assets/images/' . ltrim($filename, '/');
         }
 
-        if (!empty($img)) {
-            $relPath = (strpos($img, 'assets/') === 0) ? $img : 'assets/images/' . ltrim($img, '/');
-            return rtrim($baseUrl, '/') . '/' . ltrim($relPath, '/');
-        }
-
-        return 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&auto=format&fit=crop&q=80';
+        $relPath = (strpos($img, 'assets/') === 0) ? $img : 'assets/images/' . ltrim($filename, '/');
+        return rtrim($baseUrl, '/') . '/' . ltrim($relPath, '/');
     }
 }
 
@@ -93,6 +49,9 @@ function renderOrderConfirmationEmail(
 ): string {
 
     $email_base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . ($_SERVER['HTTP_HOST'] ?? 'localhost:8000');
+    $is_local = (strpos($email_base_url, 'localhost') !== false || strpos($email_base_url, '127.0.0.1') !== false);
+    $github_home_url = 'https://patches660.github.io/Purrfect-Shop';
+    $shop_url = $is_local ? $github_home_url : $email_base_url;
     $displayName    = !empty($customerName)  ? htmlspecialchars($customerName)  : 'คุณลูกค้า';
     $displayEmail   = htmlspecialchars($customerEmail);
     $displayOrderId = htmlspecialchars($orderId);
@@ -253,9 +212,11 @@ function renderOrderConfirmationEmail(
 
     // CTA Button
     echo '<tr><td style="padding:0 28px 30px;text-align:center;">
-<a href="' . htmlspecialchars($email_base_url) . '" style="display:inline-block;background:linear-gradient(135deg,#e07c5a,#f0a07a);color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;padding:14px 36px;border-radius:50px;letter-spacing:.5px;box-shadow:0 4px 16px rgba(224,124,90,.35);">
+<a href="' . htmlspecialchars($shop_url) . '" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#e07c5a,#f0a07a);color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;padding:14px 36px;border-radius:50px;letter-spacing:.5px;box-shadow:0 4px 16px rgba(224,124,90,.35);">
 &#x1F3E0; กลับหน้าร้าน Purrfect Shop
-</a></td></tr>';
+</a>
+<div style="font-size:11px;color:#b87a5a;margin-top:8px;">🏠 เว็บไซต์ทางการ: <a href="' . htmlspecialchars($github_home_url) . '" target="_blank" style="color:#b87a5a;font-weight:700;text-decoration:underline;">' . htmlspecialchars($github_home_url) . '</a></div>
+</td></tr>';
 
     // Footer
     echo '<tr><td style="background:#fdf0e8;padding:22px 28px;text-align:center;border-top:1px solid #f0d0b8;">

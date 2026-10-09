@@ -681,7 +681,7 @@ function showWinningPrize(prize) {
     document.getElementById('modalPrizeDesc').textContent = prize.desc;
     document.getElementById('modalCouponCode').textContent = prize.code;
     
-    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    const isStatic = typeof isPhpEnvironment === 'function' ? !isPhpEnvironment() : (window.location.pathname.endsWith('.html') && !window.location.port);
     const applyCartBtn = document.getElementById('modalApplyCartBtn');
     if (applyCartBtn) {
         applyCartBtn.href = isStatic 

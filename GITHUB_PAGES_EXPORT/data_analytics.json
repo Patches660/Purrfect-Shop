@@ -1,0 +1,327 @@
+{
+    "quiz_stats": {
+        "total_taken": 399,
+        "matched_breeds": {
+            "Scottish Fold": 146,
+            "British Shorthair": 110,
+            "Ragdoll": 65,
+            "Bengal": 40,
+            "Persian": 20,
+            "Khao Manee": 10,
+            "Scottish Fold (สก็อตติช โฟลด์)": 8
+        },
+        "living_preferences": {
+            "condo": 174,
+            "townhome": 135,
+            "single_house": 90
+        },
+        "personality_preferences": {
+            "cuddly": 204,
+            "calm": 110,
+            "playful": 55,
+            "gentle_giant": 30
+        },
+        "grooming_preferences": {
+            "easy": 219,
+            "medium": 125,
+            "fluffy": 55
+        }
+    },
+    "quiz_submissions": [
+        {
+            "id": "quiz_1791434309_391",
+            "timestamp": "2026-10-08 11:38:29",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "matched_breed": "Scottish Fold (สก็อตติช โฟลด์)",
+            "match_score": 99,
+            "answers": {
+                "living": "condo",
+                "time": "low",
+                "personality": "cuddly",
+                "grooming": "easy",
+                "exp": "beginner"
+            },
+            "trait_scores": {
+                "living_match": 97,
+                "time_match": 95,
+                "personality_match": 97,
+                "grooming_match": 96,
+                "exp_match": 96
+            },
+            "voucher": "PAW100SURVEY"
+        },
+        {
+            "id": "quiz_1791433436_735",
+            "timestamp": "2026-10-08 11:23:56",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "matched_breed": "Scottish Fold (สก็อตติช โฟลด์)",
+            "match_score": 98.2,
+            "answers": {
+                "living": "condo",
+                "time": "low",
+                "personality": "cuddly",
+                "grooming": "easy",
+                "exp": "beginner"
+            },
+            "trait_scores": {
+                "living_match": 97,
+                "time_match": 96,
+                "personality_match": 97,
+                "grooming_match": 98,
+                "exp_match": 90
+            },
+            "voucher": "PAW100SURVEY"
+        },
+        {
+            "id": "quiz_1791432904_415",
+            "timestamp": "2026-10-08 11:15:04",
+            "user_name": "ทดสอบ Live Quiz",
+            "matched_breed": "Scottish Fold (สก็อตติช โฟลด์)",
+            "match_score": 99.4,
+            "answers": {
+                "living": "condo",
+                "time": "high",
+                "personality": "cuddly",
+                "grooming": "easy",
+                "exp": "beginner"
+            },
+            "trait_scores": {
+                "living_match": 99,
+                "time_match": 96,
+                "personality_match": 100,
+                "grooming_match": 95,
+                "exp_match": 94
+            },
+            "voucher": "PAW100SURVEY"
+        },
+        {
+            "id": "quiz_1791432658_127",
+            "timestamp": "2026-10-08 11:10:58",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "matched_breed": "Scottish Fold (สก็อตติช โฟลด์)",
+            "match_score": 98.8,
+            "answers": {
+                "living": "condo",
+                "time": "low",
+                "personality": "cuddly",
+                "grooming": "easy",
+                "exp": "beginner"
+            },
+            "trait_scores": {
+                "living_match": 96,
+                "time_match": 95,
+                "personality_match": 98,
+                "grooming_match": 96,
+                "exp_match": 93
+            },
+            "voucher": "PAW100SURVEY"
+        },
+        {
+            "id": "quiz_1791432293_606",
+            "timestamp": "2026-10-08 11:04:53",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "matched_breed": "Scottish Fold (สก็อตติช โฟลด์)",
+            "match_score": 99.3,
+            "answers": {
+                "living": "condo",
+                "time": "low",
+                "personality": "cuddly",
+                "grooming": "easy",
+                "exp": "beginner"
+            },
+            "trait_scores": {
+                "living_match": 97,
+                "time_match": 98,
+                "personality_match": 99,
+                "grooming_match": 98,
+                "exp_match": 92
+            },
+            "voucher": "PAW100SURVEY"
+        },
+        {
+            "id": "quiz_1791432264_552",
+            "timestamp": "2026-10-08 11:04:24",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "matched_breed": "Scottish Fold (สก็อตติช โฟลด์)",
+            "match_score": 97.2,
+            "answers": {
+                "living": "condo",
+                "time": "low",
+                "personality": "cuddly",
+                "grooming": "easy",
+                "exp": "beginner"
+            },
+            "trait_scores": {
+                "living_match": 97,
+                "time_match": 97,
+                "personality_match": 98,
+                "grooming_match": 92,
+                "exp_match": 97
+            },
+            "voucher": "PAW100SURVEY"
+        },
+        {
+            "id": "quiz_1791432002_791",
+            "timestamp": "2026-10-08 11:00:02",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "matched_breed": "Scottish Fold (สก็อตติช โฟลด์)",
+            "match_score": 97.3,
+            "answers": {
+                "living": "condo",
+                "time": "low",
+                "personality": "cuddly",
+                "grooming": "easy",
+                "exp": "beginner"
+            },
+            "trait_scores": {
+                "living_match": 97,
+                "time_match": 95,
+                "personality_match": 96,
+                "grooming_match": 96,
+                "exp_match": 97
+            },
+            "voucher": "PAW100SURVEY"
+        },
+        {
+            "id": "quiz_1791431966_394",
+            "timestamp": "2026-10-08 10:59:26",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "matched_breed": "Scottish Fold (สก็อตติช โฟลด์)",
+            "match_score": 96.9,
+            "answers": {
+                "living": "condo",
+                "time": "low",
+                "personality": "cuddly",
+                "grooming": "easy",
+                "exp": "beginner"
+            },
+            "trait_scores": {
+                "living_match": 94,
+                "time_match": 93,
+                "personality_match": 96,
+                "grooming_match": 94,
+                "exp_match": 95
+            },
+            "voucher": "PAW100SURVEY"
+        },
+        {
+            "id": "quiz_1791431456_509",
+            "timestamp": "2026-10-08 10:50:56",
+            "user_name": "Admin Tester",
+            "matched_breed": "Scottish Fold",
+            "match_score": 98.6,
+            "answers": {
+                "living": "condo",
+                "time": "medium",
+                "personality": "cuddly",
+                "grooming": "easy",
+                "exp": "beginner"
+            },
+            "trait_scores": {
+                "living_match": 98,
+                "time_match": 96,
+                "personality_match": 99,
+                "grooming_match": 95
+            },
+            "voucher": "PAW100SURVEY"
+        }
+    ],
+    "clicks_by_feature": {
+        "cat_match_quiz": 1
+    },
+    "recent_activities": [
+        {
+            "id": "act_1791435148_956",
+            "timestamp": "2026-10-08 11:52:28",
+            "user_name": "ผู้เยี่ยมชม (Guest)",
+            "action": "click",
+            "target": "unknown",
+            "category": "general",
+            "icon": "✨"
+        },
+        {
+            "id": "act_1791434309_494",
+            "timestamp": "2026-10-08 11:38:29",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "action": "ทำแบบทดสอบ AI Matchmaker",
+            "target": "AI Matchmaker: Scottish Fold (สก็อตติช โฟลด์) (99%)",
+            "category": "AI Matchmaker",
+            "icon": "🔮"
+        },
+        {
+            "id": "act_1791433436_877",
+            "timestamp": "2026-10-08 11:23:56",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "action": "ทำแบบทดสอบ AI Matchmaker",
+            "target": "AI Matchmaker: Scottish Fold (สก็อตติช โฟลด์) (98.2%)",
+            "category": "AI Matchmaker",
+            "icon": "🔮"
+        },
+        {
+            "id": "act_1791432904_468",
+            "timestamp": "2026-10-08 11:15:04",
+            "user_name": "ทดสอบ Live Quiz",
+            "action": "ทำแบบทดสอบ AI Matchmaker",
+            "target": "AI Matchmaker: Scottish Fold (สก็อตติช โฟลด์) (99.4%)",
+            "category": "AI Matchmaker",
+            "icon": "🔮"
+        },
+        {
+            "id": "act_1791432658_489",
+            "timestamp": "2026-10-08 11:10:58",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "action": "ทำแบบทดสอบ AI Matchmaker",
+            "target": "AI Matchmaker: Scottish Fold (สก็อตติช โฟลด์) (98.8%)",
+            "category": "AI Matchmaker",
+            "icon": "🔮"
+        },
+        {
+            "id": "act_1791432293_558",
+            "timestamp": "2026-10-08 11:04:53",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "action": "ทำแบบทดสอบ AI Matchmaker",
+            "target": "AI Matchmaker: Scottish Fold (สก็อตติช โฟลด์) (99.3%)",
+            "category": "AI Matchmaker",
+            "icon": "🔮"
+        },
+        {
+            "id": "act_1791432264_162",
+            "timestamp": "2026-10-08 11:04:24",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "action": "ทำแบบทดสอบ AI Matchmaker",
+            "target": "AI Matchmaker: Scottish Fold (สก็อตติช โฟลด์) (97.2%)",
+            "category": "AI Matchmaker",
+            "icon": "🔮"
+        },
+        {
+            "id": "act_1791432002_913",
+            "timestamp": "2026-10-08 11:00:02",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "action": "ทำแบบทดสอบ AI Matchmaker",
+            "target": "AI Matchmaker: Scottish Fold (สก็อตติช โฟลด์) (97.3%)",
+            "category": "AI Matchmaker",
+            "icon": "🔮"
+        },
+        {
+            "id": "act_1791431966_786",
+            "timestamp": "2026-10-08 10:59:26",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "action": "ทำแบบทดสอบ AI Matchmaker",
+            "target": "AI Matchmaker: Scottish Fold (สก็อตติช โฟลด์) (96.9%)",
+            "category": "AI Matchmaker",
+            "icon": "🔮"
+        },
+        {
+            "id": "act_1791431456_135",
+            "timestamp": "2026-10-08 10:50:56",
+            "user_name": "Admin Tester",
+            "action": "ทำแบบทดสอบ AI Matchmaker",
+            "target": "AI Matchmaker: Scottish Fold (98.6%)",
+            "category": "general",
+            "icon": "🔮"
+        }
+    ],
+    "clicks_by_cat": {
+        "cat_scottish": 6
+    }
+}

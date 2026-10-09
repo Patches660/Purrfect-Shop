@@ -206,10 +206,10 @@ require_once __DIR__ . '/header.php';
                     </svg>
                     📲 แชร์รายงานค่าเลี้ยงดูเข้า LINE (1-Click)
                 </button>
-                <a href="products.html" class="btn btn-primary" style="text-align: center; padding: 0.95rem; font-weight: 900; border-radius: 14px; background: linear-gradient(135deg, #EA580C 0%, #F97316 100%); border-color: #EA580C;">
+                <a href="products.php" class="btn btn-primary" style="text-align: center; padding: 0.95rem; font-weight: 900; border-radius: 14px; background: linear-gradient(135deg, #EA580C 0%, #F97316 100%); border-color: #EA580C;">
                     🐱 เลือกชมน้องแมวพร้อมย้ายบ้าน >
                 </a>
-                <a href="welcome_deal.html" class="btn btn-secondary" style="text-align: center; padding: 0.85rem; font-weight: 800; border-radius: 14px; background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">
+                <a href="welcome_deal.php" class="btn btn-secondary" style="text-align: center; padding: 0.85rem; font-weight: 800; border-radius: 14px; background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">
                     🎁 รับ Starter Kit ของแถม 2,500.- ฟรี
                 </a>
             </div>

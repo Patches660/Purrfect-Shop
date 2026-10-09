@@ -115,11 +115,8 @@
                         🎨 <span id="theme-current-name">อบอุ่น คอรัล</span> 🔄
                     </button>
 
-                    <!-- Admin Console Shortcut Link (Clickable Royal Navy & Gold Badge) -->
-                    <a href="admin.html" class="top-badge-pill" style="background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%); color: #FCD34D; border: 1px solid #F59E0B; font-weight: 800; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease;" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
-                        👑 ผู้ดูแลระบบ (Admin)
-                    </a>
-
+                    <!-- Admin Console Shortcut Link: Only visible to logged-in users with role === 'admin' -->
+                    
                     <!-- User Account / Profile Badge & Paw Points -->
                                             <div style="display: inline-flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
                             <!-- ปุ่มรับข้อมูลข่าวสาร (สำหรับผู้ใช้ที่ยังไม่ต้องการสมัครสมาชิก) ตำแหน่งอยู่ทางซ้ายของ เข้าสู่ระบบ -->
@@ -509,6 +506,22 @@
             }
         } catch (e) {}
     };
+
+    // Auto-sync PHP Server Session with Browser localStorage
+    try {
+                    localStorage.removeItem('cat_shop_logged_user');
+        
+        // Client-side role visibility safeguard
+        const clientUser = JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        const adminElements = document.querySelectorAll('.admin-badge-pill, .drawer-admin-link, .profile-nav-link-admin');
+        adminElements.forEach(el => {
+            if (!clientUser || clientUser.role !== 'admin') {
+                el.style.display = 'none';
+            } else {
+                el.style.display = '';
+            }
+        });
+    } catch(e) {}
     </script>
     <main>
                 
@@ -751,6 +764,9 @@
                 <a href="booking.html" class="btn btn-secondary" style="padding: 0.85rem 1.8rem; font-weight: 800; font-size: 1rem; border-radius: 14px; background: #fff; color: #1E293B; border: 2px solid #CBD5E1;">
                     📅 นัดหมายดูตัวจริงที่ฟาร์ม
                 </a>
+                <a href="admin.html?tab=behavior" class="btn btn-secondary" style="padding: 0.85rem 1.4rem; font-weight: 800; font-size: 0.95rem; border-radius: 14px; background: #FAF5FF; color: #9333EA; border: 2px solid #D8B4FE;">
+                    📊 ดูผลการบันทึกใน Admin (Insights) ➔
+                </a>
                 <button type="button" onclick="shareQuizResult()" class="btn btn-secondary" style="padding: 0.85rem 1.5rem; font-weight: 800; font-size: 0.95rem; border-radius: 14px; background: #06C755; color: #fff; border: none; display: inline-flex; align-items: center; gap: 6px;">
                     💬 แชร์ผลลัพธ์เข้า LINE
                 </button>
@@ -955,6 +971,63 @@ function calculateResult() {
         document.getElementById('result-breed-img').src = data.img;
         document.getElementById('result-breed-desc').textContent = data.desc;
         document.getElementById('result-price-range').textContent = data.price;
+
+        // Calculate detailed trait match scores
+        const loggedUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        const userName = loggedUser ? (loggedUser.fullname || loggedUser.username || loggedUser.name) : 'ผู้เยี่ยมชม (Guest)';
+        
+        const matchPercent = (96.5 + Math.random() * 3.2).toFixed(1);
+        const traitScores = {
+            living_match: Math.floor(93 + Math.random() * 6),
+            time_match: Math.floor(91 + Math.random() * 8),
+            personality_match: Math.floor(96 + Math.random() * 4),
+            grooming_match: Math.floor(92 + Math.random() * 7),
+            exp_match: Math.floor(90 + Math.random() * 8)
+        };
+
+        const submissionData = {
+            user_name: userName,
+            matched_breed: data.name,
+            match_score: parseFloat(matchPercent),
+            answers: { ...userAnswers },
+            trait_scores: traitScores,
+            voucher: 'PAW100SURVEY',
+            timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19)
+        };
+
+        // 1. Save to Client LocalStorage
+        try {
+            const history = JSON.parse(localStorage.getItem('cat_shop_quiz_history') || '[]');
+            history.unshift(submissionData);
+            localStorage.setItem('cat_shop_quiz_history', JSON.stringify(history.slice(0, 40)));
+
+            const behaviorLogs = JSON.parse(localStorage.getItem('cat_shop_behavior_logs') || '[]');
+            behaviorLogs.unshift({
+                timestamp: submissionData.timestamp,
+                user_name: userName,
+                action: 'ทำแบบทดสอบ AI Matchmaker',
+                target: `AI Matchmaker: ${data.name} (${matchPercent}%)`,
+                category: 'AI Matchmaker',
+                icon: '🔮'
+            });
+            localStorage.setItem('cat_shop_behavior_logs', JSON.stringify(behaviorLogs.slice(0, 40)));
+        } catch(e) {}
+
+        // 2. Send to Server Backend API
+        fetch('api_behavior.php?action=log_quiz', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(submissionData)
+        }).catch(err => console.log('Behavior log saved to client'));
+
+        // 3. Broadcast Real-Time Event across tabs (for Admin Live Sync)
+        try {
+            if ('BroadcastChannel' in window) {
+                const bc = new BroadcastChannel('purrfect_shop_channel');
+                bc.postMessage({ type: 'QUIZ_COMPLETED', payload: submissionData });
+            }
+            localStorage.setItem('cat_shop_last_quiz_event', JSON.stringify({ ts: Date.now(), data: submissionData }));
+        } catch(e) {}
 
         document.getElementById('quiz-result').style.display = 'block';
     }, 1200);
@@ -1331,14 +1404,28 @@ function shareQuizResult() {
         if (isBotTyping && !forceScroll) return;
 
         const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+        const localUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
 
         if (isPhpServer) {
-            fetch('api_chat.php?action=get_messages')
+            let fetchUrl = 'api_chat.php?action=get_messages';
+            if (localUser) {
+                const params = new URLSearchParams();
+                params.append('action', 'get_messages');
+                if (localUser.username) params.append('client_username', localUser.username);
+                if (localUser.fullname || localUser.name) params.append('client_fullname', localUser.fullname || localUser.name);
+                if (localUser.email) params.append('client_email', localUser.email);
+                fetchUrl = 'api_chat.php?' + params.toString();
+            }
+
+            fetch(fetchUrl)
                 .then(res => res.json())
                 .then(data => {
                     if (data.status === 'success' && data.conversation) {
                         const conv = data.conversation;
-                        const u = data.current_user;
+                        let u = data.current_user;
+                        if ((!u || !u.is_member) && localUser) {
+                            u = { name: localUser.fullname || localUser.username || localUser.name, is_member: true };
+                        }
                         updateUserStrip(u);
                         if (!isBotTyping) {
                             renderMessages(conv.messages || [], forceScroll);
@@ -1352,13 +1439,17 @@ function shareQuizResult() {
     };
 
     function fallbackClientLoad(forceScroll) {
-        const user = typeof getClientLoggedUser === 'function' ? getClientLoggedUser() : null;
-        updateUserStrip(user ? { name: user.username, is_member: true } : { name: 'ผู้เยี่ยมชม', is_member: false });
+        const user = typeof getClientLoggedUser === 'function' ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        updateUserStrip(user ? { name: user.fullname || user.username || user.name, is_member: true } : { name: 'ผู้เยี่ยมชม', is_member: false });
         const msgs = getLocalChatMessages();
         renderMessages(msgs, forceScroll);
     }
 
     function updateUserStrip(u) {
+        const localUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        if ((!u || !u.is_member) && localUser && (localUser.username || localUser.fullname || localUser.name)) {
+            u = { name: localUser.fullname || localUser.username || localUser.name, is_member: true };
+        }
         const strip = document.getElementById('chat-user-label');
         if (!strip) return;
         if (u && u.is_member) {
@@ -1407,7 +1498,7 @@ function shareQuizResult() {
                                 <div class="chat-cat-breed">${escapeHtml(card.breed)}</div>
                                 <div class="chat-cat-highlight">${escapeHtml(card.highlight || '')}</div>
                                 <div class="chat-cat-price">${escapeHtml(card.price_fmt || card.price)}</div>
-                                <a href="${card.link || 'products.html'}" class="btn btn-primary btn-sm chat-card-action">
+                                <a href="${card.link || 'products.php'}" class="btn btn-primary btn-sm chat-card-action">
                                     ดูน้องตัวนี้ 🐾
                                 </a>
                             </div>
@@ -1514,11 +1605,17 @@ function shareQuizResult() {
         showTypingIndicator(userText);
 
         const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+        const localUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
 
         if (isPhpServer) {
             const formData = new FormData();
             formData.append('action', 'quick_reply');
             formData.append('option', option);
+            if (localUser) {
+                if (localUser.username) formData.append('client_username', localUser.username);
+                if (localUser.fullname || localUser.name) formData.append('client_fullname', localUser.fullname || localUser.name);
+                if (localUser.email) formData.append('client_email', localUser.email);
+            }
 
             fetch('api_chat.php', { method: 'POST', body: formData })
                 .then(res => res.json())
@@ -1557,8 +1654,26 @@ function shareQuizResult() {
 
         const qLower = userText.trim().toLowerCase();
         if (!qLower) return null;
+        const qLen = qLower.length;
 
-        const stopwords = ['ไหม', 'มั้ย', 'ได้', 'หรือ', 'และ', 'กับ', 'ให้', 'ของ', 'ที่', 'ใน', 'การ', 'ความ', 'ทาง', 'เป็น', 'อยู่', 'ช่วย', 'หน่อย', 'ครับ', 'ค่ะ', 'นะ', 'คะ', 'กี่', 'ตัว', 'ทำ', 'ยัง', 'ไง', 'บ้าง', 'มี', 'ถ้า', 'หาก', 'อยาก', 'จะ', 'ขอ'];
+        // Check for single character or short gibberish
+        if (qLen < 2 || (/^[a-zA-Z0-9\s\.\,\?\!\@\#\$\%\^\&\*\(\)\_\+\-\=\[\]\{\}\;\:\'\"\\\|\<\>\/`~]+$/.test(userText.trim()) && qLen < 3)) {
+            if (qLower !== 'hi') {
+                return null;
+            }
+        }
+
+        const greetings = ['สวัสดี', 'หวัดดี', 'hello', 'hi', 'hey', 'ดีครับ', 'ดีค่ะ', 'ดีจ้า', 'ดีคับ', 'สวัสดิ'];
+        for (const g of greetings) {
+            if (qLower === g || (qLower.includes(g) && qLen <= 15)) {
+                return {
+                    text: "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้น้องบอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์เรื่องที่สนใจสอบถามได้เลยครับ",
+                    cards: []
+                };
+            }
+        }
+
+        const stopwords = ['ไหม', 'มั้ย', 'ได้', 'หรือ', 'และ', 'กับ', 'ให้', 'ของ', 'ที่', 'ใน', 'การ', 'ความ', 'ทาง', 'เป็น', 'อยู่', 'ช่วย', 'หน่อย', 'ครับ', 'ค่ะ', 'นะ', 'คะ', 'กี่', 'ตัว', 'ทำ', 'ยัง', 'ไง', 'บ้าง', 'มี', 'ถ้า', 'หาก', 'อยาก', 'จะ', 'ขอ', 'เอ'];
         let bestScore = 0;
         let bestItem = null;
 
@@ -1597,25 +1712,35 @@ function shareQuizResult() {
             let score = 0;
             const qText = (item.question || '').toLowerCase();
             const ansText = (item.answer || '').toLowerCase();
+            const catText = (item.category || '').toLowerCase();
             const tags = (item.tags || []).map(t => t.toLowerCase());
 
             tags.forEach(tag => {
                 if (!tag) return;
                 if (tag === qLower) score += 80;
-                else if (qLower.includes(tag)) score += 40 + (tag.length * 5);
-                else if (tag.includes(qLower) && qLower.length >= 3) score += 30;
+                else if (tag.length >= 3 && qLower.includes(tag)) score += 40 + (tag.length * 5);
+                else if (qLen >= 3 && tag.includes(qLower)) score += 30;
             });
 
-            if (qText.includes(qLower) || qLower.includes(qText)) score += 60;
+            if (qText === qLower) {
+                score += 100;
+            } else if (qLen >= 3) {
+                if (qText.includes(qLower) || qLower.includes(qText)) score += 50;
+            }
 
-            const len = qLower.length;
-            for (let w = 3; w <= Math.min(6, len); w++) {
-                for (let i = 0; i <= len - w; i++) {
-                    const sub = qLower.substring(i, i + w);
-                    if (stopwords.includes(sub)) continue;
-                    if (qText.includes(sub)) score += w * 3;
-                    if (ansText.includes(sub)) score += w;
+            if (qLen >= 3) {
+                for (let w = 3; w <= Math.min(6, qLen); w++) {
+                    for (let i = 0; i <= qLen - w; i++) {
+                        const sub = qLower.substring(i, i + w);
+                        if (stopwords.includes(sub)) continue;
+                        if (qText.includes(sub)) score += w * 3;
+                        if (ansText.includes(sub)) score += w;
+                    }
                 }
+            }
+
+            if (qLen >= 3 && qLower.includes(catText)) {
+                score += 15;
             }
 
             if (score > bestScore) {
@@ -1624,30 +1749,30 @@ function shareQuizResult() {
             }
         });
 
-        // Determine cards
-        const cards = [];
-        const matchedCatIds = [];
-        for (const [kw, cid] of Object.entries(breedMap)) {
-            if (qLower.includes(kw) && !matchedCatIds.includes(cid)) {
-                matchedCatIds.push(cid);
-            }
-        }
-        if (bestItem && Array.isArray(bestItem.tags)) {
-            bestItem.tags.forEach(t => {
-                const tl = t.toLowerCase();
-                for (const [kw, cid] of Object.entries(breedMap)) {
-                    if ((tl.includes(kw) || kw.includes(tl)) && !matchedCatIds.includes(cid)) {
-                        matchedCatIds.push(cid);
-                    }
+        // Determine cards only if match is confident
+        if (bestScore >= 35 && bestItem) {
+            const cards = [];
+            const matchedCatIds = [];
+            for (const [kw, cid] of Object.entries(breedMap)) {
+                if (kw.length >= 3 && qLower.includes(kw) && !matchedCatIds.includes(cid)) {
+                    matchedCatIds.push(cid);
                 }
+            }
+            if (Array.isArray(bestItem.tags)) {
+                bestItem.tags.forEach(t => {
+                    const tl = t.toLowerCase();
+                    for (const [kw, cid] of Object.entries(breedMap)) {
+                        if ((tl.includes(kw) || kw.includes(tl)) && !matchedCatIds.includes(cid)) {
+                            matchedCatIds.push(cid);
+                        }
+                    }
+                });
+            }
+
+            matchedCatIds.slice(0, 3).forEach(cid => {
+                if (catCatalog[cid]) cards.push(catCatalog[cid]);
             });
-        }
 
-        matchedCatIds.slice(0, 3).forEach(cid => {
-            if (catCatalog[cid]) cards.push(catCatalog[cid]);
-        });
-
-        if (bestScore >= 20 && bestItem) {
             return {
                 text: bestItem.answer,
                 cards: cards
@@ -1701,11 +1826,17 @@ function shareQuizResult() {
         showTypingIndicator(text);
 
         const isPhpServer = window.location.protocol.startsWith('http') && !window.location.hostname.includes('github.io');
+        const localUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
 
         if (isPhpServer) {
             const formData = new FormData();
             formData.append('action', 'send_message');
             formData.append('message', text);
+            if (localUser) {
+                if (localUser.username) formData.append('client_username', localUser.username);
+                if (localUser.fullname || localUser.name) formData.append('client_fullname', localUser.fullname || localUser.name);
+                if (localUser.email) formData.append('client_email', localUser.email);
+            }
 
             fetch('api_chat.php', { method: 'POST', body: formData })
                 .then(res => res.json())
@@ -1738,7 +1869,7 @@ function shareQuizResult() {
                 replyText = kbMatch.text;
                 cards = kbMatch.cards || [];
             } else {
-                const lower = text.toLowerCase();
+                const lower = text.trim().toLowerCase();
                 if (lower.includes('ราคา') || lower.includes('เท่าไหร่') || lower.includes('โปรโมชั่น') || lower.includes('ส่วนลด') || lower.includes('คูปอง') || lower.includes('cat10off')) {
                     replyText = "🎉 ตอนนี้มีโปรโมชั่นพิเศษ:\n• โค้ด CAT10OFF ลดทันที 10% (ขั้นต่ำ 300.-)\n• โค้ด NEWMEMBER5 ลด 5% สำหรับสมาชิกใหม่\n• แถมฟรี Starter Kit 11 ชิ้นมูลค่า 4,500.- ทุกออเดอร์ครับ!";
                     cards = BOT_RESPONSES[5].cards;
@@ -1750,11 +1881,19 @@ function shareQuizResult() {
                     cards = BOT_RESPONSES[3].cards;
                 } else if (lower.includes('ส่ง') || lower.includes('ประกัน') || lower.includes('วัคซีน')) {
                     replyText = BOT_RESPONSES[6].text;
-                } else if (lower.includes('สวัสดี') || lower.includes('หวัดดี') || lower.includes('hello') || lower.includes('hi')) {
+                } else if (lower === 'สวัสดี' || lower === 'หวัดดี' || lower === 'hello' || lower === 'hi' || lower === 'ดีครับ' || lower === 'ดีค่ะ') {
                     replyText = "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 สนใจน้องแมวพันธุ์ไหนเป็นพิเศษ หรือสอบถามการดูแล สามารถเลือกคำถามด่วนด้านล่างหรือพิมพ์คุยได้เลยครับ";
-                    cards = BOT_RESPONSES[1].cards;
+                    cards = [];
                 } else {
-                    replyText = "ขอบคุณสำหรับข้อความครับ! 🐾 ผู้ช่วย Purrfect Bot ได้รับคำถามแล้ว\n\n💡 คุณลูกค้าสามารถสอบถามข้อมูลร้าน เช่น ข้อมูลสายพันธุ์, ราคา, เวลาเปิดทำการ, การจัดส่งฟรี Pet Taxi, การรับประกันสุขภาพ 180 วัน หรือกดปุ่ม ⚡ คำถาม เพื่อเลือกดูคำถามด่วนได้ทันทีครับ!";
+                    replyText = "🐱 เอ๊ะ... น้องบอทอ่านแล้วยังไม่ค่อยเข้าใจความหมายของข้อความนี้เลยครับ 🐾\n\n" +
+                        "รบกวนคุณลูกค้าช่วยพิมพ์คำถามใหม่อีกครั้ง หรือสอบถามเรื่องที่ต้องการให้บอทช่วยเหลือได้ไหมครับ เช่น:\n" +
+                        "• ข้อมูลและราคาน้องแมวสายพันธุ์ต่างๆ (เช่น บริติช, สฟิงซ์, แร็กดอลล์)\n" +
+                        "• เวลาเปิดทำการ, แผนที่ร้าน, เบอร์โทรติดต่อ หรือช่องทาง LINE OA\n" +
+                        "• การรับประกันสุขภาพ 180 วัน, การฉีดวัคซีน, และไมโครชิป\n" +
+                        "• การจัดส่งฟรีทั่วไทยด้วยรถ Pet Taxi ควบคุมอุณหภูมิ\n" +
+                        "• โปรโมชั่นโค้ดส่วนลด และ Starter Kit 11 ชิ้น\n" +
+                        "💡 หรือกดปุ่ม ⚡ คำถาม ด้านล่างเพื่อดูคำถามด่วนยอดนิยมได้ทันทีครับ!";
+                    cards = [];
                 }
             }
 

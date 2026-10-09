@@ -796,6 +796,86 @@ function updateUserProfile($userId, $data) {
     return ['success' => false, 'message' => 'ไม่พบข้อมูลผู้ใช้ในระบบ'];
 }
 
+function addPawPoints($userId, $points) {
+    if ($points <= 0) return 0;
+    $users = getUsers();
+    $newPoints = 0;
+    $found = false;
+
+    foreach ($users as &$user) {
+        if ($user['id'] === $userId || (isset($user['username']) && $user['username'] === $userId) || (isset($user['email']) && strtolower($user['email']) === strtolower($userId))) {
+            $found = true;
+            $current = intval($user['paw_points'] ?? 100);
+            $user['paw_points'] = $current + $points;
+            $newPoints = $user['paw_points'];
+
+            if (isset($_SESSION['user']) && ($_SESSION['user']['id'] === $user['id'] || $_SESSION['user']['username'] === $user['username'] || $_SESSION['user']['email'] === $user['email'])) {
+                $_SESSION['user']['paw_points'] = $newPoints;
+            }
+            break;
+        }
+    }
+
+    if ($found) {
+        file_put_contents(USERS_FILE, json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    }
+    return $newPoints;
+}
+
+function adjustUserPawPoints($userId, $delta, $reason = '') {
+    $users = getUsers();
+    $newPoints = 0;
+    $found = false;
+    $targetUsername = '';
+
+    foreach ($users as &$user) {
+        if ($user['id'] === $userId || (isset($user['username']) && $user['username'] === $userId) || (isset($user['email']) && strtolower($user['email']) === strtolower($userId))) {
+            $found = true;
+            $targetUsername = $user['username'] ?? $user['fullname'];
+            $current = intval($user['paw_points'] ?? 100);
+            $newPoints = max(0, $current + intval($delta));
+            $user['paw_points'] = $newPoints;
+
+            if (isset($_SESSION['user']) && ($_SESSION['user']['id'] === $user['id'] || $_SESSION['user']['username'] === $user['username'] || $_SESSION['user']['email'] === $user['email'])) {
+                $_SESSION['user']['paw_points'] = $newPoints;
+            }
+            break;
+        }
+    }
+
+    if ($found) {
+        file_put_contents(USERS_FILE, json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        return ['success' => true, 'new_points' => $newPoints, 'username' => $targetUsername];
+    }
+    return ['success' => false, 'message' => 'ไม่พบบัญชีผู้ใช้ในระบบ'];
+}
+
+function setUserPawPoints($userId, $points, $reason = '') {
+    $users = getUsers();
+    $newPoints = max(0, intval($points));
+    $found = false;
+    $targetUsername = '';
+
+    foreach ($users as &$user) {
+        if ($user['id'] === $userId || (isset($user['username']) && $user['username'] === $userId) || (isset($user['email']) && strtolower($user['email']) === strtolower($userId))) {
+            $found = true;
+            $targetUsername = $user['username'] ?? $user['fullname'];
+            $user['paw_points'] = $newPoints;
+
+            if (isset($_SESSION['user']) && ($_SESSION['user']['id'] === $user['id'] || $_SESSION['user']['username'] === $user['username'] || $_SESSION['user']['email'] === $user['email'])) {
+                $_SESSION['user']['paw_points'] = $newPoints;
+            }
+            break;
+        }
+    }
+
+    if ($found) {
+        file_put_contents(USERS_FILE, json_encode($users, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+        return ['success' => true, 'new_points' => $newPoints, 'username' => $targetUsername];
+    }
+    return ['success' => false, 'message' => 'ไม่พบบัญชีผู้ใช้ในระบบ'];
+}
+
 // -------------------------------------------------------------
 // 3.1 Order & Adoption History Persistence (JSON-based)
 // -------------------------------------------------------------
@@ -1733,9 +1813,156 @@ function trackUserBehavior($event_type, $target, $category = 'general', $details
     return true;
 }
 
+function recordQuizSubmission($sub) {
+    $data = getAnalyticsData();
+    if (!isset($data['quiz_stats'])) {
+        $data['quiz_stats'] = [
+            'total_taken' => 390,
+            'matched_breeds' => [
+                'Scottish Fold' => 145,
+                'British Shorthair' => 110,
+                'Ragdoll' => 65,
+                'Bengal' => 40,
+                'Persian' => 20,
+                'Khao Manee' => 10
+            ],
+            'living_preferences' => ['condo' => 165, 'townhome' => 135, 'single_house' => 90],
+            'personality_preferences' => ['cuddly' => 195, 'calm' => 110, 'playful' => 55, 'gentle_giant' => 30],
+            'grooming_preferences' => ['easy' => 210, 'medium' => 125, 'fluffy' => 55]
+        ];
+    }
+    if (!isset($data['quiz_submissions'])) {
+        $data['quiz_submissions'] = [];
+    }
+
+    $matched_breed = $sub['matched_breed'] ?? 'Scottish Fold';
+    $user_name = $sub['user_name'] ?? 'ผู้เยี่ยมชม (Guest)';
+    $score = floatval($sub['match_score'] ?? 98.6);
+    $answers = $sub['answers'] ?? [];
+    $trait_scores = $sub['trait_scores'] ?? [
+        'living_match' => 98,
+        'time_match' => 95,
+        'personality_match' => 99,
+        'grooming_match' => 94,
+        'exp_match' => 92
+    ];
+
+    $item = [
+        'id' => 'quiz_' . time() . '_' . rand(100, 999),
+        'timestamp' => date('Y-m-d H:i:s'),
+        'user_name' => $user_name,
+        'matched_breed' => $matched_breed,
+        'match_score' => $score,
+        'answers' => $answers,
+        'trait_scores' => $trait_scores,
+        'voucher' => 'PAW100SURVEY'
+    ];
+
+    array_unshift($data['quiz_submissions'], $item);
+    $data['quiz_submissions'] = array_slice($data['quiz_submissions'], 0, 50);
+
+    $data['quiz_stats']['total_taken'] = ($data['quiz_stats']['total_taken'] ?? 390) + 1;
+    $data['quiz_stats']['matched_breeds'][$matched_breed] = ($data['quiz_stats']['matched_breeds'][$matched_breed] ?? 0) + 1;
+    
+    // Map breed name to cat key for click tracking
+    $breed_to_cat = [
+        'Scottish Fold' => 'cat_scottish',
+        'British Shorthair' => 'cat_british',
+        'Ragdoll' => 'cat_ragdoll',
+        'Bengal' => 'cat_bengal',
+        'Persian' => 'cat_persian',
+        'Maine Coon' => 'cat_mainecoon',
+        'Sphynx' => 'cat_sphynx',
+        'Khao Manee' => 'cat_khao_manee'
+    ];
+    foreach ($breed_to_cat as $b_name => $c_key) {
+        if (stripos($matched_breed, $b_name) !== false) {
+            $data['clicks_by_cat'][$c_key] = ($data['clicks_by_cat'][$c_key] ?? 0) + 1;
+            break;
+        }
+    }
+
+    if (!empty($answers['living'])) {
+        $data['quiz_stats']['living_preferences'][$answers['living']] = ($data['quiz_stats']['living_preferences'][$answers['living']] ?? 0) + 1;
+    }
+    if (!empty($answers['personality'])) {
+        $data['quiz_stats']['personality_preferences'][$answers['personality']] = ($data['quiz_stats']['personality_preferences'][$answers['personality']] ?? 0) + 1;
+    }
+    if (!empty($answers['grooming'])) {
+        $data['quiz_stats']['grooming_preferences'][$answers['grooming']] = ($data['quiz_stats']['grooming_preferences'][$answers['grooming']] ?? 0) + 1;
+    }
+
+    $act = [
+        'id' => 'act_' . time() . '_' . rand(100, 999),
+        'timestamp' => date('Y-m-d H:i:s'),
+        'user_name' => $user_name,
+        'action' => 'ทำแบบทดสอบ AI Matchmaker',
+        'target' => "AI Matchmaker: {$matched_breed} ({$score}%)",
+        'category' => 'AI Matchmaker',
+        'icon' => '🔮'
+    ];
+    if (!isset($data['recent_activities'])) {
+        $data['recent_activities'] = [];
+    }
+    array_unshift($data['recent_activities'], $act);
+    $data['recent_activities'] = array_slice($data['recent_activities'], 0, 40);
+
+    saveAnalyticsData($data);
+    return $item;
+}
+
 function getAnalyticsSummary() {
     $data = getAnalyticsData();
     $orders = getOrders();
+
+    $quiz_stats = $data['quiz_stats'] ?? [];
+    $matched_breeds = $quiz_stats['matched_breeds'] ?? [];
+    $clicks_by_cat = $data['clicks_by_cat'] ?? [];
+
+    $scottish_matches = 0;
+    $british_matches = 0;
+    $ragdoll_matches = 0;
+    $bengal_matches = 0;
+    $persian_matches = 0;
+    $mainecoon_matches = 0;
+    $sphynx_matches = 0;
+
+    foreach ($matched_breeds as $bName => $count) {
+        if (stripos($bName, 'Scottish') !== false) $scottish_matches += $count;
+        elseif (stripos($bName, 'British') !== false) $british_matches += $count;
+        elseif (stripos($bName, 'Ragdoll') !== false) $ragdoll_matches += $count;
+        elseif (stripos($bName, 'Bengal') !== false) $bengal_matches += $count;
+        elseif (stripos($bName, 'Persian') !== false) $persian_matches += $count;
+        elseif (stripos($bName, 'Maine') !== false) $mainecoon_matches += $count;
+        elseif (stripos($bName, 'Sphynx') !== false) $sphynx_matches += $count;
+    }
+
+    $breed_clicks_labels = ['Scottish Fold', 'British Shorthair', 'Ragdoll', 'Maine Coon', 'Sphynx', 'Persian'];
+    $breed_clicks_data = [
+        1420 + $scottish_matches + ($clicks_by_cat['cat_scottish'] ?? 0) * 8,
+        1280 + $british_matches + ($clicks_by_cat['cat_british'] ?? 0) * 8,
+        1150 + $ragdoll_matches + ($clicks_by_cat['cat_ragdoll'] ?? 0) * 8,
+        980 + $mainecoon_matches + ($clicks_by_cat['cat_mainecoon'] ?? 0) * 8,
+        840 + $sphynx_matches + ($clicks_by_cat['cat_sphynx'] ?? 0) * 8,
+        760 + $persian_matches + ($clicks_by_cat['cat_persian'] ?? 0) * 8
+    ];
+
+    $living_condo = $quiz_stats['living_preferences']['condo'] ?? 0;
+    $living_house = $quiz_stats['living_preferences']['single_house'] ?? 0;
+    $member_needs_labels = [
+        '🏢 เลี้ยงในคอนโด (35%)',
+        '🤧 ภูมิแพ้/ไม่ผลัดขน (25%)',
+        '🐱 มือใหม่เลี้ยงง่าย (20%)',
+        '👑 พรีเมียมมีใบเพ็ด (12%)',
+        '🎾 แมวขี้เล่นร่าเริง (8%)'
+    ];
+    $member_needs_data = [
+        35 + round($living_condo * 0.05),
+        25 + round(($clicks_by_cat['cat_sphynx'] ?? 0) * 0.4),
+        20,
+        12,
+        8 + round($living_house * 0.03)
+    ];
 
     // 1. Calculate Daily Revenue (Past 7 Days)
     $daily_labels = [];
@@ -1791,6 +2018,10 @@ function getAnalyticsSummary() {
 
     return [
         'analytics' => $data,
+        'breed_clicks_labels' => $breed_clicks_labels,
+        'breed_clicks_data' => $breed_clicks_data,
+        'member_needs_labels' => $member_needs_labels,
+        'member_needs_data' => $member_needs_data,
         'daily' => [
             'labels' => $daily_labels,
             'values' => $daily_values,

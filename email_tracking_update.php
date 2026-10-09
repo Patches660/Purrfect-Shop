@@ -69,8 +69,8 @@ function renderTrackingStatusEmail($customerName, $customerEmail, $orderId, $tra
         $catNames[] = $it['name'] . (!empty($it['breed']) ? ' (' . $it['breed'] . ')' : '');
 
         $cat_img = function_exists('getOrderProductImageUrl') 
-            ? getOrderProductImageUrl($it, 'https://patches660.github.io/Purrfect-Shop-Files')
-            : 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&auto=format&fit=crop&q=80';
+            ? getOrderProductImageUrl($it, 'https://patches660.github.io/Purrfect-Shop')
+            : 'https://patches660.github.io/Purrfect-Shop/assets/images/' . (basename($it['image'] ?? 'cat_british.jpg'));
         
         $cat_name = htmlspecialchars($it['name'] ?? 'น้องแมวสายพันธุ์แท้');
         $cat_breed = htmlspecialchars($it['breed'] ?? 'Purrfect Cattery');
@@ -95,7 +95,7 @@ HTML;
     }
     $catNamesStr = !empty($catNames) ? implode(', ', $catNames) : 'น้องแมวสายพันธุ์แท้ Purrfect';
 
-    $homepageUrl = 'https://patches660.github.io/Purrfect-Shop-Files/';
+    $homepageUrl = 'https://patches660.github.io/Purrfect-Shop/';
     $trackingUrl = $homepageUrl;
 
     $gps_html = '';

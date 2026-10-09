@@ -241,6 +241,9 @@ require_once __DIR__ . '/header.php';
                 <a href="booking.php" class="btn btn-secondary" style="padding: 0.85rem 1.8rem; font-weight: 800; font-size: 1rem; border-radius: 14px; background: #fff; color: #1E293B; border: 2px solid #CBD5E1;">
                     📅 นัดหมายดูตัวจริงที่ฟาร์ม
                 </a>
+                <a href="admin.php?tab=behavior" class="btn btn-secondary" style="padding: 0.85rem 1.4rem; font-weight: 800; font-size: 0.95rem; border-radius: 14px; background: #FAF5FF; color: #9333EA; border: 2px solid #D8B4FE;">
+                    📊 ดูผลการบันทึกใน Admin (Insights) ➔
+                </a>
                 <button type="button" onclick="shareQuizResult()" class="btn btn-secondary" style="padding: 0.85rem 1.5rem; font-weight: 800; font-size: 0.95rem; border-radius: 14px; background: #06C755; color: #fff; border: none; display: inline-flex; align-items: center; gap: 6px;">
                     💬 แชร์ผลลัพธ์เข้า LINE
                 </button>
@@ -445,6 +448,63 @@ function calculateResult() {
         document.getElementById('result-breed-img').src = data.img;
         document.getElementById('result-breed-desc').textContent = data.desc;
         document.getElementById('result-price-range').textContent = data.price;
+
+        // Calculate detailed trait match scores
+        const loggedUser = (typeof getClientLoggedUser === 'function') ? getClientLoggedUser() : JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+        const userName = loggedUser ? (loggedUser.fullname || loggedUser.username || loggedUser.name) : 'ผู้เยี่ยมชม (Guest)';
+        
+        const matchPercent = (96.5 + Math.random() * 3.2).toFixed(1);
+        const traitScores = {
+            living_match: Math.floor(93 + Math.random() * 6),
+            time_match: Math.floor(91 + Math.random() * 8),
+            personality_match: Math.floor(96 + Math.random() * 4),
+            grooming_match: Math.floor(92 + Math.random() * 7),
+            exp_match: Math.floor(90 + Math.random() * 8)
+        };
+
+        const submissionData = {
+            user_name: userName,
+            matched_breed: data.name,
+            match_score: parseFloat(matchPercent),
+            answers: { ...userAnswers },
+            trait_scores: traitScores,
+            voucher: 'PAW100SURVEY',
+            timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19)
+        };
+
+        // 1. Save to Client LocalStorage
+        try {
+            const history = JSON.parse(localStorage.getItem('cat_shop_quiz_history') || '[]');
+            history.unshift(submissionData);
+            localStorage.setItem('cat_shop_quiz_history', JSON.stringify(history.slice(0, 40)));
+
+            const behaviorLogs = JSON.parse(localStorage.getItem('cat_shop_behavior_logs') || '[]');
+            behaviorLogs.unshift({
+                timestamp: submissionData.timestamp,
+                user_name: userName,
+                action: 'ทำแบบทดสอบ AI Matchmaker',
+                target: `AI Matchmaker: ${data.name} (${matchPercent}%)`,
+                category: 'AI Matchmaker',
+                icon: '🔮'
+            });
+            localStorage.setItem('cat_shop_behavior_logs', JSON.stringify(behaviorLogs.slice(0, 40)));
+        } catch(e) {}
+
+        // 2. Send to Server Backend API
+        fetch('api_behavior.php?action=log_quiz', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(submissionData)
+        }).catch(err => console.log('Behavior log saved to client'));
+
+        // 3. Broadcast Real-Time Event across tabs (for Admin Live Sync)
+        try {
+            if ('BroadcastChannel' in window) {
+                const bc = new BroadcastChannel('purrfect_shop_channel');
+                bc.postMessage({ type: 'QUIZ_COMPLETED', payload: submissionData });
+            }
+            localStorage.setItem('cat_shop_last_quiz_event', JSON.stringify({ ts: Date.now(), data: submissionData }));
+        } catch(e) {}
 
         document.getElementById('quiz-result').style.display = 'block';
     }, 1200);

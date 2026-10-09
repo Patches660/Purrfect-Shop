@@ -11,7 +11,8 @@
         "consent_phone": true,
         "consent_terms": true,
         "registered_at": "2026-09-01 00:00:00",
-        "avatar": "assets\/images\/logo.png"
+        "avatar": "assets\/images\/logo.png",
+        "paw_points": 942
     },
     {
         "id": "u_6a97f8b172436",
@@ -57,34 +58,6 @@
         "role": "admin"
     },
     {
-        "id": "u_6aab71660b2fe",
-        "fullname": "oavatan@gmail.com",
-        "username": "oavatan@gmail.com",
-        "email": "oavatan@gmail.com",
-        "phone": "0634169812",
-        "password": "$2y$10$ENBm5HyMUJBiXuQfSbGf6.iXFct7TBCBeb\/arh5XXBOleb.WmsFSm",
-        "role": "customer",
-        "avatar": "assets\/images\/logo.png",
-        "consent_email": true,
-        "consent_phone": true,
-        "consent_terms": true,
-        "registered_at": "2026-09-17 06:49:42"
-    },
-    {
-        "id": "u_6aab7678b247f",
-        "fullname": "kaitock@gmail.com",
-        "username": "kaitock@gmail.com",
-        "email": "kaitock@gmail.com",
-        "phone": "0634169812",
-        "password": "$2y$10$7c7PgC6nwSl51BgjbZhHh.McJdOuyr6c5AEWBTjMCVk06LE4W37IS",
-        "role": "customer",
-        "avatar": "assets\/images\/logo.png",
-        "consent_email": true,
-        "consent_phone": true,
-        "consent_terms": true,
-        "registered_at": "2026-09-17 07:11:20"
-    },
-    {
         "id": "u_6aab98b91604f",
         "fullname": "patanunkohotmail@gmail.com",
         "username": "patanunkohotmail@gmail.com",
@@ -97,5 +70,63 @@
         "consent_phone": true,
         "consent_terms": true,
         "registered_at": "2026-09-17 09:37:29"
+    },
+    {
+        "id": "u_6ac873c8612d7",
+        "fullname": "yoyouhpop@gmail.com",
+        "username": "yoyouhpop@gmail.com",
+        "email": "yoyouhpop@gmail.com",
+        "phone": "0634169812",
+        "password": "$2y$10$oliExEsorqW721dEjrvpw.8PfYV\/R4DCsqgj7\/yRmcA5ExQFZvFwW",
+        "role": "customer",
+        "avatar": "assets\/images\/logo.png",
+        "consent_email": true,
+        "consent_phone": true,
+        "consent_terms": true,
+        "registered_at": "2026-10-09 11:55:36"
+    },
+    {
+        "id": "u_6ac87402610ad",
+        "fullname": "oavatan@gmail.com",
+        "username": "oavatan@gmail.com",
+        "email": "oavatan@gmail.com",
+        "phone": "0634169812",
+        "password": "$2y$10$bntLCUXS1ZN3.vwtOjW6i.A4LQrjgI3bTELyL61nYb0sqkR.773GO",
+        "role": "customer",
+        "avatar": "assets\/images\/logo.png",
+        "consent_email": true,
+        "consent_phone": true,
+        "consent_terms": true,
+        "registered_at": "2026-10-09 11:56:34",
+        "paw_points": 282
+    },
+    {
+        "id": "u_6ac8759a2c20d",
+        "fullname": "purrfectshop.cattery@gmail.com",
+        "username": "purrfectshop.cattery@gmail.com",
+        "email": "purrfectshop.cattery@gmail.com",
+        "phone": "0634169812",
+        "password": "$2y$10$yjSvpw4OAUwLuFFof0r8p.1ZLW.vhekP2QWad5zFSFQZW51eNJnp2",
+        "role": "customer",
+        "avatar": "assets\/images\/logo.png",
+        "consent_email": true,
+        "consent_phone": true,
+        "consent_terms": true,
+        "registered_at": "2026-10-09 12:03:22"
+    },
+    {
+        "id": "u_6ac88d0ab40e2",
+        "fullname": "วรรณ์สิริ",
+        "username": "วรรณ์สิริ",
+        "email": "kaitock@gmail.com",
+        "phone": "0634169812",
+        "password": "$2y$10$MDTvhvV34R3SQJYWtHkRaO8L9qO8VgKgkrMNVdixWFBzc7DHtZTCq",
+        "role": "customer",
+        "avatar": "assets\/images\/logo.png",
+        "consent_email": true,
+        "consent_phone": true,
+        "consent_terms": true,
+        "registered_at": "2026-10-09 13:43:22",
+        "paw_points": 668
     }
 ]

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 // api_analytics.php - Realtime Behavior Tracking API
 date_default_timezone_set('Asia/Bangkok');
 header('Content-Type: application/json; charset=utf-8');

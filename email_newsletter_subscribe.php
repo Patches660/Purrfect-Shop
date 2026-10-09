@@ -18,12 +18,17 @@ function renderNewsletterSubscribeEmail($recipient_name = 'คนรักน้
     $recipient_email = htmlspecialchars($recipient_email);
     $voucher_code = htmlspecialchars($voucher_code);
 
-    // Smart CDN Image Fallback: When running on localhost, use HTTPS CDN for images so Gmail can display them
+    // High-Fidelity CDN Image Fallback & GitHub Pages URLs:
+    // Ensure all links and images point to the live GitHub Pages homepage and assets
     $is_local = (strpos($email_base_url, 'localhost') !== false || strpos($email_base_url, '127.0.0.1') !== false);
-    $logo_img_url = $is_local ? 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&auto=format&fit=crop&q=80' : "{$email_base_url}/assets/images/logo.png";
-    $cat_scottish_url = $is_local ? 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=600&auto=format&fit=crop&q=80' : "{$email_base_url}/assets/images/cat_scottish.jpg";
-    $cat_british_url = $is_local ? 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=600&auto=format&fit=crop&q=80' : "{$email_base_url}/assets/images/cat_british.jpg";
-    $cat_ragdoll_url = $is_local ? 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=600&auto=format&fit=crop&q=80' : "{$email_base_url}/assets/images/cat_ragdoll.jpg";
+    $github_home_url = 'https://patches660.github.io/Purrfect-Shop';
+    $base_asset_url = $github_home_url;
+    $products_url = "{$github_home_url}/products.html";
+    $subscribe_url = "{$github_home_url}/subscribe.html";
+    $logo_img_url = "{$base_asset_url}/assets/images/logo.png";
+    $cat_scottish_url = "{$base_asset_url}/assets/images/cat_scottish.jpg";
+    $cat_british_url = "{$base_asset_url}/assets/images/cat_british.jpg";
+    $cat_ragdoll_url = "{$base_asset_url}/assets/images/cat_ragdoll.jpg";
 
     $issue_date = date('d F Y');
 
@@ -74,7 +79,9 @@ function renderNewsletterSubscribeEmail($recipient_name = 'คนรักน้
                                 </span>
                             </div>
 
-                            <img src="{$logo_img_url}" alt="Purrfect Shop Logo" width="80" height="80" style="display: block; margin: 0 auto 15px auto; border-radius: 50%; border: 3px solid #6EE7B7; box-shadow: 0 6px 20px rgba(0,0,0,0.25); object-fit: cover;">
+                            <a href="{$github_home_url}" target="_blank" style="text-decoration: none; display: inline-block;">
+                                <img src="{$logo_img_url}" alt="Purrfect Shop Logo" width="80" height="80" style="display: block; margin: 0 auto 15px auto; border-radius: 50%; border: 3px solid #6EE7B7; box-shadow: 0 6px 20px rgba(0,0,0,0.25); object-fit: cover;">
+                            </a>
                             
                             <h1 style="color: #FFFFFF; font-size: 25px; font-weight: 800; margin: 0 0 8px 0; line-height: 1.35; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
                                 ขอบคุณที่ติดตามข่าวสาร Purrfect Shop! 🐾
@@ -166,7 +173,7 @@ function renderNewsletterSubscribeEmail($recipient_name = 'คนรักน้
                                                 <div style="font-weight: 800; font-size: 13px; color: #0F172A;">น้องโมจิ 🍡</div>
                                                 <div style="font-size: 11px; color: #64748B; margin-bottom: 6px;">สก็อตติช โฟลด์ หางแน่น</div>
                                                 <div style="font-size: 14px; font-weight: 900; color: #059669;">18,700 ฿</div>
-                                                <a href="{$email_base_url}/products.php" style="display: inline-block; background: #ECFDF5; color: #047857; text-decoration: none; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 999px; margin-top: 6px; border: 1px solid #A7F3D0;">
+                                                <a href="{$products_url}" target="_blank" style="display: inline-block; background: #ECFDF5; color: #047857; text-decoration: none; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 999px; margin-top: 6px; border: 1px solid #A7F3D0;">
                                                     ดูตัวจริง &rarr;
                                                 </a>
                                             </div>
@@ -184,7 +191,7 @@ function renderNewsletterSubscribeEmail($recipient_name = 'คนรักน้
                                                 <div style="font-weight: 800; font-size: 13px; color: #0F172A;">น้องบราวนี่ 🧸</div>
                                                 <div style="font-size: 11px; color: #64748B; margin-bottom: 6px;">บริติช ช็อตแฮร์ แท้</div>
                                                 <div style="font-size: 14px; font-weight: 900; color: #059669;">21,250 ฿</div>
-                                                <a href="{$email_base_url}/products.php" style="display: inline-block; background: #ECFDF5; color: #047857; text-decoration: none; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 999px; margin-top: 6px; border: 1px solid #A7F3D0;">
+                                                <a href="{$products_url}" target="_blank" style="display: inline-block; background: #ECFDF5; color: #047857; text-decoration: none; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 999px; margin-top: 6px; border: 1px solid #A7F3D0;">
                                                     ดูตัวจริง &rarr;
                                                 </a>
                                             </div>
@@ -202,7 +209,7 @@ function renderNewsletterSubscribeEmail($recipient_name = 'คนรักน้
                                                 <div style="font-weight: 800; font-size: 13px; color: #0F172A;">น้องสโนว์ ❄️</div>
                                                 <div style="font-size: 11px; color: #64748B; margin-bottom: 6px;">แร็กดอลล์ บลูไบคัลเลอร์</div>
                                                 <div style="font-size: 14px; font-weight: 900; color: #059669;">27,200 ฿</div>
-                                                <a href="{$email_base_url}/products.php" style="display: inline-block; background: #ECFDF5; color: #047857; text-decoration: none; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 999px; margin-top: 6px; border: 1px solid #A7F3D0;">
+                                                <a href="{$products_url}" target="_blank" style="display: inline-block; background: #ECFDF5; color: #047857; text-decoration: none; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 999px; margin-top: 6px; border: 1px solid #A7F3D0;">
                                                     ดูตัวจริง &rarr;
                                                 </a>
                                             </div>
@@ -262,8 +269,8 @@ function renderNewsletterSubscribeEmail($recipient_name = 'คนรักน้
                     <!-- Call To Action Button -->
                     <tr>
                         <td align="center" style="padding: 5px 24px 28px 24px; text-align: center;">
-                            <a href="{$email_base_url}/products.php" style="display: inline-block; background: #059669; color: #FFFFFF; font-size: 15px; font-weight: 800; text-decoration: none; padding: 13px 34px; border-radius: 999px; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.35);">
-                                🐾 เลือกชมน้องแมวและช้อปปิ้งของใช้
+                            <a href="{$products_url}" target="_blank" style="display: inline-block; background: #059669; color: #FFFFFF; font-size: 15px; font-weight: 800; text-decoration: none; padding: 13px 34px; border-radius: 999px; box-shadow: 0 4px 15px rgba(5, 150, 105, 0.35);">
+                                🐾 เลือกชมน้องแมวและช้อปปิ้งของใช้ &rarr;
                             </a>
                             <div style="font-size: 11.5px; color: #64748B; margin-top: 10px;">
                                 จัดส่งรถตู้แอร์ปรับอุณหภูมิฟรีทั่วประเทศ &bull; ปรึกษาสัตวแพทย์ฟรีตลอดชีพ
@@ -277,9 +284,12 @@ function renderNewsletterSubscribeEmail($recipient_name = 'คนรักน้
                             <div style="font-size: 12px; font-weight: 800; color: #064E3B; margin-bottom: 4px;">
                                 Purrfect Cattery & Boutique 🐾 &bull; Cat Gazette Editorial Team
                             </div>
+                            <div style="font-size: 11px; color: #059669; margin-bottom: 8px;">
+                                🏠 เว็บไซต์หลัก Purrfect Shop: <a href="{$github_home_url}" target="_blank" style="color: #047857; font-weight: 800; text-decoration: underline;">{$github_home_url}</a>
+                            </div>
                             <div style="font-size: 11px; color: #64748B; line-height: 1.6; margin-bottom: 10px;">
                                 คุณได้รับอีเมลฉบับนี้เนื่องจากได้กด Subscribe รับข่าวสารทางอีเมล: <strong>{$recipient_email}</strong><br>
-                                หากไม่ต้องการรับจดหมายข่าว สามารถกดปรับแต่งความถี่หรือ <a href="{$email_base_url}/subscribe.php" style="color: #059669; text-decoration: underline;">ยกเลิกรับข่าวสาร (Unsubscribe)</a> ได้ตลอดเวลา
+                                หากไม่ต้องการรับจดหมายข่าว สามารถกดปรับแต่งความถี่หรือ <a href="{$subscribe_url}" target="_blank" style="color: #059669; text-decoration: underline;">ยกเลิกรับข่าวสาร (Unsubscribe)</a> ได้ตลอดเวลา
                             </div>
                             <div style="font-size: 10.5px; color: #94A3B8;">
                                 &copy; 2026 Purrfect Shop. พัฒนาโดย Purrfect Cattery Team 🐾

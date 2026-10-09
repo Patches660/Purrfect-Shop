@@ -104,37 +104,44 @@ if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action'])) {
     }
 }
 
-// Fetch user's orders
-$user_orders = getUserOrders($currUser['email']);
+// Fetch user's personal orders strictly matching this user
+$user_orders = getUserOrders($currUser['email'] ?? '');
 if (empty($user_orders)) {
-    $user_orders = getUserOrders($currUser['username']);
+    $user_orders = getUserOrders($currUser['username'] ?? '');
 }
 if (empty($user_orders)) {
-    $user_orders = getUserOrders($currUser['id']);
+    $user_orders = getUserOrders($currUser['id'] ?? '');
 }
 
-// Compute metrics
+// Compute metrics strictly for this user
 $total_cats_adopted = 0;
 // Fetch user's messages and newsletters
-$user_messages = getCustomerMessages($currUser['email'], $currUser['id']);
+$user_messages = getCustomerMessages($currUser['email'] ?? '', $currUser['id'] ?? '');
 
 $total_spent = 0;
 $adoptedCats = [];
 foreach ($user_orders as $ord) {
-    $total_cats_adopted += $ord['cat_count'] ?? 0;
-    $total_spent += $ord['total'] ?? 0;
-    foreach ($ord['items'] ?? [] as $it) {
-        $adoptedCats[] = [
-            'id' => $it['id'] ?? '',
-            'name' => $it['name'] ?? 'น้องแมว',
-            'breed' => $it['breed'] ?? 'สายพันธุ์แท้',
-            'image' => $it['image'] ?? 'cat_british.jpg',
-            'age' => $it['age'] ?? '2.5 เดือน',
-            'gender' => $it['gender'] ?? 'ไม่ระบุ',
-            'order_id' => $ord['order_id'] ?? '',
-            'created_at' => $ord['created_at'] ?? ''
-        ];
+    $items = $ord['items'] ?? [];
+    $orderCatCount = 0;
+    foreach ($items as $it) {
+        $qty = max(1, intval($it['qty'] ?? 1));
+        $orderCatCount += $qty;
+        for ($q = 0; $q < $qty; $q++) {
+            $suffix = $qty > 1 ? ' (#' . ($q + 1) . ')' : '';
+            $adoptedCats[] = [
+                'id' => $it['id'] ?? '',
+                'name' => ($it['name'] ?? 'น้องแมว') . $suffix,
+                'breed' => $it['breed'] ?? 'สายพันธุ์แท้',
+                'image' => $it['image'] ?? 'cat_british.jpg',
+                'age' => $it['age'] ?? '2.5 เดือน',
+                'gender' => $it['gender'] ?? 'ไม่ระบุ',
+                'order_id' => $ord['order_id'] ?? '',
+                'created_at' => $ord['created_at'] ?? ''
+            ];
+        }
     }
+    $total_cats_adopted += ($ord['cat_count'] ?? $orderCatCount);
+    $total_spent += floatval($ord['total'] ?? 0);
 }
 
 require_once __DIR__ . '/header.php';
@@ -215,7 +222,7 @@ require_once __DIR__ . '/header.php';
             <!-- Logout Button -->
             <a href="logout.php" 
                class="btn btn-secondary" 
-               onclick="if(typeof clientLogout === 'function' && (window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php'))){ event.preventDefault(); clientLogout(); } else { return confirm('คุณต้องการออกจากระบบ Cat Shop ใช่หรือไม่?'); }" 
+               onclick="if(typeof clientLogout === 'function' && (typeof isPhpEnvironment === 'function' ? !isPhpEnvironment() : (window.location.pathname.endsWith('.html') && !window.location.port))){ event.preventDefault(); clientLogout(); } else { return confirm('คุณต้องการออกจากระบบ Cat Shop ใช่หรือไม่?'); }" 
                style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.3rem; border-color: rgba(239, 68, 68, 0.4); color: #EF4444; font-weight: 700; background: rgba(239, 68, 68, 0.06); border-radius: var(--radius-md); text-decoration: none;" 
                title="กดเพื่อออกจากระบบ">
                 ออกจากระบบ 🚪
@@ -347,6 +354,7 @@ require_once __DIR__ . '/header.php';
             </div>
         </a>
 
+        <?php if (($currUser['role'] ?? '') === 'admin'): ?>
         <a href="admin.php" class="profile-nav-btn profile-nav-link-admin" title="เปิดหน้าจัดการระบบหลังบ้าน (Admin Control Panel)">
             <div class="nav-btn-icon-wrap" style="background: rgba(245, 158, 11, 0.2); color: #FCD34D;">
                 👑
@@ -359,6 +367,7 @@ require_once __DIR__ . '/header.php';
                 <span class="nav-desc">เข้าสู่แดชบอร์ดจัดการระบบหลังบ้าน</span>
             </div>
         </a>
+        <?php endif; ?>
     </div>
 
     <!-- =========================================================
@@ -713,8 +722,24 @@ require_once __DIR__ . '/header.php';
         $tier_progress_percent = min(100, max(5, round(($user_points / 500) * 100)));
     }
 
-    // Global Scale for the big visual tube (0 to 5,000 points)
-    $global_progress_percent = min(100, max(3, round(($user_points / 5000) * 100)));
+    // Global Scale for the visual tube based on 4 milestone nodes:
+    // Node 0: Bronze (0 pts) -> 0%
+    // Node 1: Silver (500 pts) -> 33.33%
+    // Node 2: Gold VIP (1,500 pts) -> 66.67%
+    // Node 3: Diamond VIP (5,000 pts) -> 100%
+    if ($user_points >= 5000) {
+        $global_progress_percent = 100;
+    } elseif ($user_points >= 1500) {
+        $seg_fraction = ($user_points - 1500) / (5000 - 1500);
+        $global_progress_percent = round(66.67 + ($seg_fraction * 33.33), 1);
+    } elseif ($user_points >= 500) {
+        $seg_fraction = ($user_points - 500) / (1500 - 500);
+        $global_progress_percent = round(33.33 + ($seg_fraction * 33.33), 1);
+    } else {
+        $seg_fraction = max(0, $user_points) / 500;
+        $global_progress_percent = round($seg_fraction * 33.33, 1);
+    }
+    $global_progress_percent = min(100, max(3, $global_progress_percent));
     ?>
 
     <div id="tab-points" class="profile-tab-panel" style="<?php echo $active_tab === 'points' ? 'display: block;' : 'display: none;'; ?>">
@@ -738,10 +763,10 @@ require_once __DIR__ . '/header.php';
                         <span style="font-size: 0.82rem; font-weight: 800; background: rgba(255,255,255,0.25); padding: 4px 14px; border-radius: 999px; letter-spacing: 0.5px; text-transform: uppercase;">
                             🐾 PURRFECT REWARDS CLUB
                         </span>
-                        <h2 style="font-size: 2.6rem; font-weight: 900; margin: 0.7rem 0 0.2rem 0; font-family: 'Outfit'; letter-spacing: -0.5px;">
+                        <h2 id="loyalty-hero-points-num" style="font-size: 2.6rem; font-weight: 900; margin: 0.7rem 0 0.2rem 0; font-family: 'Outfit'; letter-spacing: -0.5px;">
                             <?php echo number_format($user_points); ?> <span style="font-size: 1.3rem; font-weight: 600;">Paw Points</span>
                         </h2>
-                        <p style="margin: 0; font-size: 0.95rem; opacity: 0.95; line-height: 1.5;">
+                        <p id="loyalty-cash-val" style="margin: 0; font-size: 0.95rem; opacity: 0.95; line-height: 1.5;">
                             มูลค่าเทียบเท่าส่วนลดเงินสด <strong>฿<?php echo number_format($user_points); ?> บาท</strong> (อัตรา 100 พอยท์ = 100 บาท)
                         </p>
                     </div>
@@ -749,11 +774,11 @@ require_once __DIR__ . '/header.php';
                     <!-- Current Tier Badge Box -->
                     <div style="background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); padding: 1.2rem 1.6rem; border-radius: var(--radius-md); box-shadow: 0 6px 16px rgba(0,0,0,0.1); min-width: 220px; text-align: center;">
                         <span style="font-size: 0.78rem; color: #64748B; font-weight: 700; display: block; margin-bottom: 4px;">ระดับสมาชิกปัจจุบันของคุณ:</span>
-                        <div style="font-size: 1.4rem; font-weight: 800; color: <?php echo $current_tier_color; ?>; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <div id="loyalty-current-tier-display" style="font-size: 1.4rem; font-weight: 800; color: <?php echo $current_tier_color; ?>; display: flex; align-items: center; justify-content: center; gap: 6px;">
                             <span><?php echo $current_tier_icon; ?></span>
                             <span><?php echo $current_tier_name; ?></span>
                         </div>
-                        <div style="font-size: 0.82rem; color: var(--primary-coral); font-weight: 700; margin-top: 4px; background: rgba(255,107,74,0.1); padding: 2px 8px; border-radius: 999px; display: inline-block;">
+                        <div id="loyalty-discount-badge" style="font-size: 0.82rem; color: var(--primary-coral); font-weight: 700; margin-top: 4px; background: rgba(255,107,74,0.1); padding: 2px 8px; border-radius: 999px; display: inline-block;">
                             สิทธิพิเศษ: ส่วนลด <?php echo $current_discount; ?> ทุกรายการ
                         </div>
                     </div>
@@ -767,7 +792,7 @@ require_once __DIR__ . '/header.php';
                         <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin: 0 0 4px 0; display: flex; align-items: center; gap: 6px;">
                             <span>📊 หลอดแต้มสะสมเพื่อเลื่อนขั้นสู่ระดับถัดไป</span>
                         </h4>
-                        <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+                        <p id="loyalty-needed-text" style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
                             <?php if ($user_points >= 5000): ?>
                                 🎉 <strong>ยินดีด้วยครับ!</strong> คุณสะสมครบระดับสูงสุด <strong>Diamond Paw VIP</strong> ได้รับสิทธิประโยชน์สูงสุดตลอดชีพ
                             <?php else: ?>
@@ -775,7 +800,7 @@ require_once __DIR__ . '/header.php';
                             <?php endif; ?>
                         </p>
                     </div>
-                    <div style="background: var(--primary-coral-soft); color: var(--primary-coral); font-weight: 800; font-size: 0.9rem; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,107,74,0.3);">
+                    <div id="loyalty-target-badge" style="background: var(--primary-coral-soft); color: var(--primary-coral); font-weight: 800; font-size: 0.9rem; padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,107,74,0.3);">
                         ⚡ เป้าหมายถัดไป: <?php echo number_format($next_tier_target); ?> แต้ม (สำเร็จ <?php echo $tier_progress_percent; ?>%)
                     </div>
                 </div>
@@ -785,7 +810,7 @@ require_once __DIR__ . '/header.php';
                     <!-- Outer Tube Track -->
                     <div style="background: #E2E8F0; height: 26px; border-radius: 999px; overflow: hidden; position: relative; box-shadow: inset 0 2px 5px rgba(0,0,0,0.12); border: 2px solid #CBD5E1;">
                         <!-- Inner Gradient Fill -->
-                        <div style="width: <?php echo $global_progress_percent; ?>%; height: 100%; background: linear-gradient(90deg, #FF9E7A 0%, #FF6B4A 45%, #F59E0B 80%, #7C3AED 100%); border-radius: 999px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 12px rgba(255,107,74,0.6); position: relative;">
+                        <div id="loyalty-progress-fill" style="width: <?php echo $global_progress_percent; ?>%; height: 100%; background: linear-gradient(90deg, #FF9E7A 0%, #FF6B4A 33%, #F59E0B 66%, #7C3AED 100%); border-radius: 999px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 0 12px rgba(255,107,74,0.6); position: relative;">
                             <!-- Animated Light Shimmer -->
                             <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%); animation: shimmerBar 2.5s infinite;"></div>
                         </div>
@@ -795,7 +820,7 @@ require_once __DIR__ . '/header.php';
                     <div style="display: flex; justify-content: space-between; position: absolute; top: -7px; left: 0; right: 0; pointer-events: none;">
                         <!-- Node 1: Bronze (0) -->
                         <div style="text-align: center; width: 40px; margin-left: -5px;">
-                            <div style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 0 ? '#10B981' : '#FFFFFF'; ?>; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid #FFFFFF; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                            <div id="loyalty-node-bronze" style="width: 38px; height: 38px; border-radius: 50%; background: #10B981; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid #FFFFFF; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
                                 🥉
                             </div>
                             <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Bronze</span>
@@ -804,7 +829,7 @@ require_once __DIR__ . '/header.php';
 
                         <!-- Node 2: Silver (500) -->
                         <div style="text-align: center; width: 50px;">
-                            <div style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 500 ? '#10B981' : '#FFFFFF'; ?>; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid <?php echo $user_points >= 500 ? '#10B981' : '#CBD5E1'; ?>; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                            <div id="loyalty-node-silver" style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 500 ? '#10B981' : '#FFFFFF'; ?>; color: <?php echo $user_points >= 500 ? '#FFFFFF' : '#475569'; ?>; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid <?php echo $user_points >= 500 ? '#10B981' : '#CBD5E1'; ?>; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
                                 <?php echo $user_points >= 500 ? '✓' : '🥈'; ?>
                             </div>
                             <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Silver</span>
@@ -813,7 +838,7 @@ require_once __DIR__ . '/header.php';
 
                         <!-- Node 3: Gold VIP (1,500) -->
                         <div style="text-align: center; width: 60px;">
-                            <div style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 1500 ? '#10B981' : '#FFFFFF'; ?>; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid <?php echo $user_points >= 1500 ? '#10B981' : '#CBD5E1'; ?>; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                            <div id="loyalty-node-gold" style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 1500 ? '#10B981' : '#FFFFFF'; ?>; color: <?php echo $user_points >= 1500 ? '#FFFFFF' : '#475569'; ?>; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid <?php echo $user_points >= 1500 ? '#10B981' : '#CBD5E1'; ?>; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
                                 <?php echo $user_points >= 1500 ? '✓' : '🥇'; ?>
                             </div>
                             <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Gold VIP</span>
@@ -822,7 +847,7 @@ require_once __DIR__ . '/header.php';
 
                         <!-- Node 4: Diamond VIP (5,000) -->
                         <div style="text-align: center; width: 70px; margin-right: -10px;">
-                            <div style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 5000 ? '#7C3AED' : '#FFFFFF'; ?>; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid <?php echo $user_points >= 5000 ? '#7C3AED' : '#CBD5E1'; ?>; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
+                            <div id="loyalty-node-diamond" style="width: 38px; height: 38px; border-radius: 50%; background: <?php echo $user_points >= 5000 ? '#7C3AED' : '#FFFFFF'; ?>; color: <?php echo $user_points >= 5000 ? '#FFFFFF' : '#475569'; ?>; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; border: 3px solid <?php echo $user_points >= 5000 ? '#7C3AED' : '#CBD5E1'; ?>; box-shadow: 0 3px 8px rgba(0,0,0,0.15); margin: 0 auto;">
                                 <?php echo $user_points >= 5000 ? '👑' : '💎'; ?>
                             </div>
                             <span style="font-size: 0.72rem; font-weight: 800; color: var(--text-main); display: block; margin-top: 6px;">Diamond</span>
@@ -1455,67 +1480,73 @@ require_once __DIR__ . '/header.php';
 
                     <!-- Cats List Container -->
                     <div id="profile-vaccine-cats-container" style="display: flex; flex-direction: column; gap: 1rem;">
-                        <!-- Dynamically populated or rendered from PHP -->
-                        <?php 
-                        // Fallback sample cats if empty
-                        $renderCats = !empty($adoptedCats) ? $adoptedCats : [
-                            ['id' => 'cat_persian', 'name' => 'น้องปุยหิมะ', 'breed' => 'เปอร์เซีย (Persian)', 'image' => 'cat_persian.jpg', 'age' => '3 เดือน', 'gender' => 'เมีย'],
-                            ['id' => 'cat_ragdoll', 'name' => 'น้องคอตตอน', 'breed' => 'แร็กดอลล์ (Ragdoll)', 'image' => 'cat_ragdoll.jpg', 'age' => '2.5 เดือน', 'gender' => 'เมีย'],
-                            ['id' => 'cat_americanshorthair', 'name' => 'น้องการ์ฟิลด์', 'breed' => 'American Shorthair', 'image' => 'cat_americanshorthair.jpg', 'age' => '2.5 เดือน', 'gender' => 'ผู้']
-                        ];
-                        ?>
-                        <?php foreach ($renderCats as $idx => $c): ?>
-                            <div class="cat-vaccine-item-card <?php echo $idx === 0 ? 'selected-cat-card' : ''; ?>" 
-                                 data-cat-name="<?php echo htmlspecialchars($c['name']); ?>"
-                                 data-cat-breed="<?php echo htmlspecialchars($c['breed']); ?>"
-                                 data-cat-image="<?php echo htmlspecialchars($c['image']); ?>"
-                                 data-cat-age="<?php echo htmlspecialchars($c['age']); ?>"
-                                 onclick="selectCatForCalendar('<?php echo htmlspecialchars(addslashes($c['name'])); ?>', '<?php echo htmlspecialchars(addslashes($c['breed'])); ?>', '<?php echo htmlspecialchars(addslashes($c['image'])); ?>', this)"
-                                 style="background: #FFFFFF; border: 2px solid <?php echo $idx === 0 ? '#10B981' : '#E2E8F0'; ?>; border-radius: 16px; padding: 1.1rem; box-shadow: 0 4px 14px rgba(0,0,0,0.03); cursor: pointer; transition: all 0.25s ease; position: relative;">
-                                
-                                <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 0.8rem;">
-                                    <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
-                                        <img src="assets/images/<?php echo htmlspecialchars($c['image']); ?>" alt="<?php echo htmlspecialchars($c['name']); ?>" 
-                                             style="width: 60px; height: 60px; border-radius: 14px; object-fit: cover; border: 2px solid #10B981; flex-shrink: 0;">
-                                        <div style="overflow: hidden;">
-                                            <strong style="font-size: 1.05rem; color: #1E293B; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                                <?php echo htmlspecialchars($c['name']); ?>
-                                            </strong>
-                                            <span style="display: inline-block; font-size: 0.72rem; background: #D1FAE5; color: #065F46; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-top: 2px;">
-                                                <?php echo htmlspecialchars($c['breed']); ?>
-                                            </span>
+                        <?php if (!empty($adoptedCats)): ?>
+                            <?php foreach ($adoptedCats as $idx => $c): ?>
+                                <div class="cat-vaccine-item-card <?php echo $idx === 0 ? 'selected-cat-card' : ''; ?>" 
+                                     data-cat-name="<?php echo htmlspecialchars($c['name']); ?>"
+                                     data-cat-breed="<?php echo htmlspecialchars($c['breed']); ?>"
+                                     data-cat-image="<?php echo htmlspecialchars($c['image']); ?>"
+                                     data-cat-age="<?php echo htmlspecialchars($c['age']); ?>"
+                                     onclick="selectCatForCalendar('<?php echo htmlspecialchars(addslashes($c['name'])); ?>', '<?php echo htmlspecialchars(addslashes($c['breed'])); ?>', '<?php echo htmlspecialchars(addslashes($c['image'])); ?>', this)"
+                                     style="background: #FFFFFF; border: 2px solid <?php echo $idx === 0 ? '#10B981' : '#E2E8F0'; ?>; border-radius: 16px; padding: 1.1rem; box-shadow: 0 4px 14px rgba(0,0,0,0.03); cursor: pointer; transition: all 0.25s ease; position: relative;">
+                                    
+                                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 0.8rem;">
+                                        <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
+                                            <img src="assets/images/<?php echo htmlspecialchars($c['image']); ?>" alt="<?php echo htmlspecialchars($c['name']); ?>" 
+                                                 style="width: 60px; height: 60px; border-radius: 14px; object-fit: cover; border: 2px solid #10B981; flex-shrink: 0;">
+                                            <div style="overflow: hidden;">
+                                                <strong style="font-size: 1.05rem; color: #1E293B; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                    <?php echo htmlspecialchars($c['name']); ?>
+                                                </strong>
+                                                <span style="display: inline-block; font-size: 0.72rem; background: #D1FAE5; color: #065F46; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-top: 2px;">
+                                                    <?php echo htmlspecialchars($c['breed']); ?>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <span class="cat-status-badge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #EFF6FF; color: #1E40AF; white-space: nowrap;">
+                                            ⏳ ติดตามวัคซีน
+                                        </span>
+                                    </div>
+
+                                    <!-- Vaccine Progress bar -->
+                                    <div style="background: #F8FAFC; border-radius: 10px; padding: 0.6rem 0.8rem; margin-bottom: 0.8rem; border: 1px solid #E2E8F0;">
+                                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: #475569; margin-bottom: 4px;">
+                                            <span>ความคืบหน้าการฉีด:</span>
+                                            <span class="cat-progress-text" style="color: #059669;">2/6 เข็ม (33%)</span>
+                                        </div>
+                                        <div style="width: 100%; height: 6px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
+                                            <div class="cat-progress-bar" style="width: 33%; height: 100%; background: linear-gradient(90deg, #10B981, #059669); border-radius: 999px;"></div>
                                         </div>
                                     </div>
-                                    <span class="cat-status-badge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #EFF6FF; color: #1E40AF; white-space: nowrap;">
-                                        ⏳ ติดตามวัคซีน
-                                    </span>
-                                </div>
 
-                                <!-- Vaccine Progress bar -->
-                                <div style="background: #F8FAFC; border-radius: 10px; padding: 0.6rem 0.8rem; margin-bottom: 0.8rem; border: 1px solid #E2E8F0;">
-                                    <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: #475569; margin-bottom: 4px;">
-                                        <span>ความคืบหน้าการฉีด:</span>
-                                        <span class="cat-progress-text" style="color: #059669;">2/6 เข็ม (33%)</span>
-                                    </div>
-                                    <div style="width: 100%; height: 6px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
-                                        <div class="cat-progress-bar" style="width: 33%; height: 100%; background: linear-gradient(90deg, #10B981, #059669); border-radius: 999px;"></div>
+                                    <!-- Card Action Footer -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                        <span style="font-size: 0.75rem; color: #059669; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                                            📅 คลิกเพื่อดูนัดบนปฏิทิน
+                                        </span>
+                                        <a href="vaccine_reminder.php?cat_name=<?php echo urlencode($c['name']); ?>&breed=<?php echo urlencode($c['breed']); ?>&image=<?php echo urlencode($c['image']); ?>" 
+                                           onclick="event.stopPropagation();"
+                                           class="btn btn-secondary btn-sm btn-vaccine-link" 
+                                           style="font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 8px; color: #059669; background: #ECFDF5; border-color: #A7F3D0; text-decoration: none;">
+                                            💉 สมุดวัคซีน ➔
+                                        </a>
                                     </div>
                                 </div>
-
-                                <!-- Card Action Footer -->
-                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
-                                    <span style="font-size: 0.75rem; color: #059669; font-weight: 700; display: flex; align-items: center; gap: 4px;">
-                                        📅 คลิกเพื่อดูนัดบนปฏิทิน
-                                    </span>
-                                    <a href="vaccine_reminder.php?cat_name=<?php echo urlencode($c['name']); ?>&breed=<?php echo urlencode($c['breed']); ?>&image=<?php echo urlencode($c['image']); ?>" 
-                                       onclick="event.stopPropagation();"
-                                       class="btn btn-secondary btn-sm btn-vaccine-link" 
-                                       style="font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 8px; color: #059669; background: #ECFDF5; border-color: #A7F3D0; text-decoration: none;">
-                                        💉 สมุดวัคซีน ➔
-                                    </a>
-                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div style="text-align: center; padding: 2.5rem 1.5rem; background: #FFFFFF; border-radius: 18px; border: 2px dashed #CBD5E1; box-shadow: 0 4px 14px rgba(0,0,0,0.02);">
+                                <span style="font-size: 2.8rem; display: block; margin-bottom: 0.8rem;">💉🐾</span>
+                                <h4 style="font-size: 1.1rem; font-weight: 800; color: #1E293B; margin-bottom: 0.4rem;">
+                                    ยังไม่มีน้องแมวในความดูแลของคุณ
+                                </h4>
+                                <p style="font-size: 0.88rem; color: #64748B; max-width: 420px; margin: 0 auto 1.3rem auto; line-height: 1.5;">
+                                    เมื่อคุณสั่งซื้อและรับเลี้ยงน้องแมวกับทางร้าน รายชื่อและสมุดวัคซีนจะบันทึกเข้าสู่ระบบให้อัตโนมัติครับ
+                                </p>
+                                <a href="products.php" class="btn btn-primary btn-sm" style="display: inline-flex; align-items: center; gap: 6px; padding: 0.5rem 1.2rem; border-radius: 10px; font-weight: 800; text-decoration: none; box-shadow: 0 4px 12px rgba(255, 117, 86, 0.25);">
+                                    🐱 เลือกชมน้องแมวพร้อมย้ายบ้าน
+                                </a>
                             </div>
-                        <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -1528,7 +1559,7 @@ require_once __DIR__ . '/header.php';
                             <span style="font-size: 1.4rem;">📅</span>
                             <div>
                                 <span style="font-size: 0.72rem; color: #047857; font-weight: 800; text-transform: uppercase; display: block;">ปฏิทินนัดหมายสำหรับ:</span>
-                                <strong id="cal-selected-cat-name" style="font-size: 0.95rem; color: #064E3B;">น้องปุยหิมะ (ทุกรายการ)</strong>
+                                <strong id="cal-selected-cat-name" style="font-size: 0.95rem; color: #064E3B;"><?php echo !empty($adoptedCats) ? htmlspecialchars($adoptedCats[0]['name']) . ' (ทุกรายการ)' : 'น้องแมวทุกตัว (All Cats)'; ?></strong>
                             </div>
                         </div>
                         <button type="button" onclick="showAllCatsOnCalendar()" class="btn btn-secondary btn-sm" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 8px; background: #FFFFFF; color: #065F46; border: 1px solid #6EE7B7;">
@@ -1951,13 +1982,20 @@ require_once __DIR__ . '/header.php';
 </style>
 
 <script>
-function switchProfileTab(tabName, btnElement) {
+function switchProfileTab(tabName, btnElement, shouldScroll = true) {
     // Hide all panels
     document.querySelectorAll('.profile-tab-panel').forEach(p => p.style.display = 'none');
     
     // Show chosen panel
     const target = document.getElementById('tab-' + tabName);
-    if (target) target.style.display = 'block';
+    if (target) {
+        target.style.display = 'block';
+        if (shouldScroll) {
+            const yOffset = -90; // offset for sticky header
+            const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+    }
 
     // Update active button state
     document.querySelectorAll('.profile-nav-btn, .cat-filter-btn').forEach(b => b.classList.remove('active'));
@@ -1974,7 +2012,7 @@ function switchProfileTab(tabName, btnElement) {
     }
 
     // Update URL query string without reload
-    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    const isStatic = typeof isPhpEnvironment === 'function' ? !isPhpEnvironment() : (window.location.pathname.endsWith('.html') && !window.location.port);
     const base = isStatic ? 'profile.html' : 'profile.php';
     window.history.replaceState(null, null, base + '?tab=' + tabName);
 }
@@ -2267,7 +2305,7 @@ function renderCalendarEventsDetails(eventsMap) {
 }
 
 function renderSingleEventCard(ev) {
-    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    const isStatic = typeof isPhpEnvironment === 'function' ? !isPhpEnvironment() : (window.location.pathname.endsWith('.html') && !window.location.port);
     const trackerUrl = (isStatic ? 'vaccine_reminder.html' : 'vaccine_reminder.php') + `?cat_name=${encodeURIComponent(ev.catName)}&breed=${encodeURIComponent(ev.breed)}`;
 
     const eventColor = ev.color || '#10B981';
@@ -2303,7 +2341,7 @@ function renderSingleEventCard(ev) {
 
 // Client-side hydration for Profile & Lucky Wheel Rewards & Vaccine Cats
 document.addEventListener('DOMContentLoaded', () => {
-    const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
+    const isStatic = typeof isPhpEnvironment === 'function' ? !isPhpEnvironment() : (window.location.pathname.endsWith('.html') && !window.location.port);
     
     // Adjust links if static
     if (isStatic) {
@@ -2347,9 +2385,94 @@ document.addEventListener('DOMContentLoaded', () => {
             if (loggedUser.paw_points !== undefined) {
                 const pt = document.getElementById('profile-points-text');
                 if (pt) pt.textContent = Number(loggedUser.paw_points).toLocaleString();
+                updateClientLoyaltyUI(loggedUser.paw_points);
+            }
+            const adminNavBtn = document.querySelector('.profile-nav-link-admin');
+            if (adminNavBtn) {
+                adminNavBtn.style.display = (loggedUser.role === 'admin') ? '' : 'none';
             }
         }
     } catch(e) {}
+
+    function updateClientLoyaltyUI(points) {
+        const pts = Number(points) || 0;
+        
+        const heroPts = document.getElementById('loyalty-hero-points-num');
+        if (heroPts) heroPts.innerHTML = `${pts.toLocaleString()} <span style="font-size: 1.3rem; font-weight: 600;">Paw Points</span>`;
+        
+        const cashVal = document.getElementById('loyalty-cash-val');
+        if (cashVal) cashVal.innerHTML = `มูลค่าเทียบเท่าส่วนลดเงินสด <strong>฿${pts.toLocaleString()} บาท</strong> (อัตรา 100 พอยท์ = 100 บาท)`;
+        
+        let tierKey = 'bronze', tierName = 'Bronze Paw', tierIcon = '🥉', tierColor = '#B45309', discount = '5%';
+        let nextTierName = 'Silver Paw 🥈', nextTarget = 500, needed = 500 - pts, tierPct = 0;
+        let globalPct = 0;
+        
+        if (pts >= 5000) {
+            tierKey = 'diamond'; tierName = 'Diamond Paw VIP'; tierIcon = '👑'; tierColor = '#7C3AED'; discount = '15%';
+            nextTierName = 'Max Level (ระดับสูงสุด)'; nextTarget = 5000; needed = 0; tierPct = 100; globalPct = 100;
+        } else if (pts >= 1500) {
+            tierKey = 'gold'; tierName = 'Gold Paw VIP'; tierIcon = '🥇'; tierColor = '#EA580C'; discount = '10%';
+            nextTierName = 'Diamond Paw VIP 👑'; nextTarget = 5000; needed = 5000 - pts;
+            tierPct = Math.min(100, Math.max(5, Math.round(((pts - 1500) / 3500) * 100)));
+            globalPct = Math.round(66.67 + (((pts - 1500) / 3500) * 33.33));
+        } else if (pts >= 500) {
+            tierKey = 'silver'; tierName = 'Silver Paw'; tierIcon = '🥈'; tierColor = '#475569'; discount = '7%';
+            nextTierName = 'Gold Paw VIP 🥇'; nextTarget = 1500; needed = 1500 - pts;
+            tierPct = Math.min(100, Math.max(5, Math.round(((pts - 500) / 1000) * 100)));
+            globalPct = Math.round(33.33 + (((pts - 500) / 1000) * 33.33));
+        } else {
+            tierKey = 'bronze'; tierName = 'Bronze Paw'; tierIcon = '🥉'; tierColor = '#B45309'; discount = '5%';
+            nextTierName = 'Silver Paw 🥈'; nextTarget = 500; needed = 500 - pts;
+            tierPct = Math.min(100, Math.max(5, Math.round((pts / 500) * 100)));
+            globalPct = Math.round((pts / 500) * 33.33);
+        }
+        globalPct = Math.min(100, Math.max(3, globalPct));
+
+        const bar = document.getElementById('loyalty-progress-fill');
+        if (bar) bar.style.width = globalPct + '%';
+
+        const badge = document.getElementById('loyalty-target-badge');
+        if (badge) badge.textContent = `⚡ เป้าหมายถัดไป: ${nextTarget.toLocaleString()} แต้ม (สำเร็จ ${tierPct}%)`;
+
+        const neededText = document.getElementById('loyalty-needed-text');
+        if (neededText) {
+            if (pts >= 5000) {
+                neededText.innerHTML = `🎉 <strong>ยินดีด้วยครับ!</strong> คุณสะสมครบระดับสูงสุด <strong>Diamond Paw VIP</strong> ได้รับสิทธิประโยชน์สูงสุดตลอดชีพ`;
+            } else {
+                neededText.innerHTML = `คุณมี <strong>${pts.toLocaleString()}</strong> แต้ม • ขาดอีกเพียง <strong style="color: var(--primary-coral);">${needed.toLocaleString()} แต้ม</strong> จะได้เลื่อนขั้นสู่ <strong style="color: #92400E;">${nextTierName}</strong>`;
+            }
+        }
+
+        const tierDisplay = document.getElementById('loyalty-current-tier-display');
+        if (tierDisplay) {
+            tierDisplay.style.color = tierColor;
+            tierDisplay.innerHTML = `<span>${tierIcon}</span> <span>${tierName}</span>`;
+        }
+        const discBadge = document.getElementById('loyalty-discount-badge');
+        if (discBadge) discBadge.textContent = `สิทธิพิเศษ: ส่วนลด ${discount} ทุกรายการ`;
+
+        const nodeSilver = document.getElementById('loyalty-node-silver');
+        if (nodeSilver) {
+            nodeSilver.style.background = pts >= 500 ? '#10B981' : '#FFFFFF';
+            nodeSilver.style.borderColor = pts >= 500 ? '#10B981' : '#CBD5E1';
+            nodeSilver.style.color = pts >= 500 ? '#FFFFFF' : '#475569';
+            nodeSilver.textContent = pts >= 500 ? '✓' : '🥈';
+        }
+        const nodeGold = document.getElementById('loyalty-node-gold');
+        if (nodeGold) {
+            nodeGold.style.background = pts >= 1500 ? '#10B981' : '#FFFFFF';
+            nodeGold.style.borderColor = pts >= 1500 ? '#10B981' : '#CBD5E1';
+            nodeGold.style.color = pts >= 1500 ? '#FFFFFF' : '#475569';
+            nodeGold.textContent = pts >= 1500 ? '✓' : '🥇';
+        }
+        const nodeDiamond = document.getElementById('loyalty-node-diamond');
+        if (nodeDiamond) {
+            nodeDiamond.style.background = pts >= 5000 ? '#7C3AED' : '#FFFFFF';
+            nodeDiamond.style.borderColor = pts >= 5000 ? '#7C3AED' : '#CBD5E1';
+            nodeDiamond.style.color = pts >= 5000 ? '#FFFFFF' : '#475569';
+            nodeDiamond.textContent = pts >= 5000 ? '👑' : '💎';
+        }
+    }
 
     // 2. Sync Lucky Wheel Rewards from LocalStorage
     try {
@@ -2410,204 +2533,268 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } catch(e) {}
 
-    // 3. Sync Vaccine Cats from LocalStorage if available
-    try {
-        const storedOrders = JSON.parse(localStorage.getItem('cat_shop_my_orders') || '[]');
-        const vaccineContainer = document.getElementById('profile-vaccine-cats-container');
-        if (storedOrders && storedOrders.length > 0 && vaccineContainer) {
-            const localCats = [];
-            storedOrders.forEach(ord => {
-                if (ord.items && Array.isArray(ord.items)) {
-                    ord.items.forEach(it => {
-                        localCats.push({
-                            id: it.id,
-                            name: it.name || 'น้องแมว',
-                            breed: it.breed || 'สายพันธุ์แท้',
-                            image: it.image || 'cat_british.jpg',
-                            age: it.age || '2.5 เดือน',
-                            gender: it.gender || 'ไม่ระบุ'
+    // 3. Sync Vaccine Cats from LocalStorage if available (Static Only)
+    if (isStatic) {
+        try {
+            const loggedUser = JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+            let storedOrders = JSON.parse(localStorage.getItem('cat_shop_my_orders') || localStorage.getItem('cat_shop_orders') || '[]');
+            if (loggedUser && (loggedUser.email || loggedUser.username)) {
+                storedOrders = storedOrders.filter(o => 
+                    (loggedUser.email && (o.customer_email === loggedUser.email || o.email === loggedUser.email)) ||
+                    (loggedUser.username && (o.customer_username === loggedUser.username || o.user_id === loggedUser.id || o.user === loggedUser.username))
+                );
+            }
+            const vaccineContainer = document.getElementById('profile-vaccine-cats-container');
+            if (storedOrders && storedOrders.length > 0 && vaccineContainer) {
+                const localCats = [];
+                storedOrders.forEach(ord => {
+                    if (ord.items && Array.isArray(ord.items)) {
+                        ord.items.forEach(it => {
+                            const qty = Math.max(1, parseInt(it.qty || 1, 10));
+                            for (let k = 0; k < qty; k++) {
+                                const suffix = qty > 1 ? ` (#${k + 1})` : '';
+                                localCats.push({
+                                    id: it.id,
+                                    name: (it.name || 'น้องแมว') + suffix,
+                                    breed: it.breed || 'สายพันธุ์แท้',
+                                    image: it.image || 'cat_british.jpg',
+                                    age: it.age || '2.5 เดือน',
+                                    gender: it.gender || 'ไม่ระบุ'
+                                });
+                            }
                         });
-                    });
-                }
-            });
+                    }
+                });
 
-            if (localCats.length > 0) {
-                const targetFile = isStatic ? 'vaccine_reminder.html' : 'vaccine_reminder.php';
-                vaccineContainer.innerHTML = localCats.map((c, idx) => `
-                    <div class="cat-vaccine-item-card ${idx === 0 ? 'selected-cat-card' : ''}" 
-                         data-cat-name="${c.name}"
-                         data-cat-breed="${c.breed}"
-                         data-cat-image="${c.image}"
-                         data-cat-age="${c.age}"
-                         onclick="selectCatForCalendar('${c.name.replace(/'/g, "\\'")}', '${c.breed.replace(/'/g, "\\'")}', '${c.image.replace(/'/g, "\\'")}', this)"
-                         style="background: #FFFFFF; border: 2px solid ${idx === 0 ? '#10B981' : '#E2E8F0'}; border-radius: 16px; padding: 1.1rem; box-shadow: 0 4px 14px rgba(0,0,0,0.03); cursor: pointer; transition: all 0.25s ease; position: relative;">
-                        
-                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 0.8rem;">
-                            <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
-                                <img src="assets/images/${c.image}" alt="${c.name}" 
-                                     style="width: 60px; height: 60px; border-radius: 14px; object-fit: cover; border: 2px solid #10B981; flex-shrink: 0;">
-                                <div style="overflow: hidden;">
-                                    <strong style="font-size: 1.05rem; color: #1E293B; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                                        ${c.name}
-                                    </strong>
-                                    <span style="display: inline-block; font-size: 0.72rem; background: #D1FAE5; color: #065F46; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-top: 2px;">
-                                        ${c.breed}
-                                    </span>
-                                </div>
-                            </div>
-                            <span class="cat-status-badge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #EFF6FF; color: #1E40AF; white-space: nowrap;">
-                                ⏳ ติดตามวัคซีน
-                            </span>
-                        </div>
-
-                        <div style="background: #F8FAFC; border-radius: 10px; padding: 0.6rem 0.8rem; margin-bottom: 0.8rem; border: 1px solid #E2E8F0;">
-                            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: #475569; margin-bottom: 4px;">
-                                <span>ความคืบหน้าการฉีด:</span>
-                                <span class="cat-progress-text" style="color: #059669;">2/6 เข็ม (33%)</span>
-                            </div>
-                            <div style="width: 100%; height: 6px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
-                                <div class="cat-progress-bar" style="width: 33%; height: 100%; background: linear-gradient(90deg, #10B981, #059669); border-radius: 999px;"></div>
-                            </div>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
-                            <span style="font-size: 0.75rem; color: #059669; font-weight: 700; display: flex; align-items: center; gap: 4px;">
-                                📅 คลิกเพื่อดูนัดบนปฏิทิน
-                            </span>
-                            <a href="${targetFile}?cat_name=${encodeURIComponent(c.name)}&breed=${encodeURIComponent(c.breed)}&image=${encodeURIComponent(c.image)}" 
-                               onclick="event.stopPropagation();"
-                               class="btn btn-secondary btn-sm btn-vaccine-link" 
-                               style="font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 8px; color: #059669; background: #ECFDF5; border-color: #A7F3D0; text-decoration: none;">
-                                💉 สมุดวัคซีน ➔
-                            </a>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-    // 4. Hydrate Orders from localStorage (for client-side/test orders)
-    try {
-        const localOrders = JSON.parse(localStorage.getItem('cat_shop_orders') || '[]');
-        if (localOrders.length > 0) {
-            const orderContainer = document.querySelector('#tab-orders .checkout-block');
-            const emptyState = orderContainer ? orderContainer.querySelector('div[style*="text-align: center"]') : null;
-            let ordersListDiv = orderContainer ? orderContainer.querySelector('div[style*="flex-direction: column"]') : null;
-
-            if (emptyState) {
-                emptyState.remove();
-            }
-
-            if (!ordersListDiv && orderContainer) {
-                ordersListDiv = document.createElement('div');
-                ordersListDiv.style.display = 'flex';
-                ordersListDiv.style.flexDirection = 'column';
-                ordersListDiv.style.gap = '1.5rem';
-                orderContainer.appendChild(ordersListDiv);
-            }
-
-            const isStatic = window.location.pathname.endsWith('.html') || !window.location.pathname.includes('.php');
-            const trackingTarget = isStatic ? 'tracking.html' : 'tracking.php';
-            const vaccineTarget = isStatic ? 'vaccine_reminder.html' : 'vaccine_reminder.php';
-
-            localOrders.forEach(ord => {
-                const orderKey = 'order-' + (ord.order_id || '').replace(/[^a-zA-Z0-9_-]/g, '');
-                const existing = document.getElementById(orderKey);
-                if (!existing && ordersListDiv) {
-                    const trkId = ord.tracking_id || ('TRACK-TH-' + (ord.order_id || '9999').replace(/[^a-zA-Z0-9]/g, ''));
-                    const grandTotal = parseFloat(ord.total || 0);
-                    const items = ord.items || [];
-                    const itemsCount = items.length;
-                    const itemsHtml = items.map(it => `
-                        <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px dashed var(--border-color); flex-wrap: wrap;">
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <img src="assets/images/${it.image || 'cat_persian.jpg'}" alt="${it.name || 'น้องแมว'}" 
-                                     style="width: 58px; height: 58px; border-radius: 10px; object-fit: cover; border: 1.5px solid var(--border-color);" onerror="this.src='assets/images/logo.png'">
-                                <div>
-                                    <strong style="color: var(--text-main); font-size: 0.95rem; display: block;">${it.name || 'น้องแมว'}</strong>
-                                    <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">
-                                        ${it.breed || ''} • เพศ: ${it.gender || 'ไม่ระบุ'} (x${it.qty || 1})
+                if (localCats.length > 0) {
+                    const targetFile = 'vaccine_reminder.html';
+                    vaccineContainer.innerHTML = localCats.map((c, idx) => `
+                        <div class="cat-vaccine-item-card ${idx === 0 ? 'selected-cat-card' : ''}" 
+                             data-cat-name="${c.name}"
+                             data-cat-breed="${c.breed}"
+                             data-cat-image="${c.image}"
+                             data-cat-age="${c.age}"
+                             onclick="selectCatForCalendar('${c.name.replace(/'/g, "\\'")}', '${c.breed.replace(/'/g, "\\'")}', '${c.image.replace(/'/g, "\\'")}', this)"
+                             style="background: #FFFFFF; border: 2px solid ${idx === 0 ? '#10B981' : '#E2E8F0'}; border-radius: 16px; padding: 1.1rem; box-shadow: 0 4px 14px rgba(0,0,0,0.03); cursor: pointer; transition: all 0.25s ease; position: relative;">
+                            
+                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 0.8rem;">
+                                <div style="display: flex; align-items: center; gap: 12px; overflow: hidden;">
+                                    <img src="assets/images/${c.image}" alt="${c.name}" 
+                                         style="width: 60px; height: 60px; border-radius: 14px; object-fit: cover; border: 2px solid #10B981; flex-shrink: 0;">
+                                    <div style="overflow: hidden;">
+                                        <strong style="font-size: 1.05rem; color: #1E293B; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                            ${c.name}
+                                        </strong>
+                                        <span style="display: inline-block; font-size: 0.72rem; background: #D1FAE5; color: #065F46; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-top: 2px;">
+                                            ${c.breed}
+                                        </span>
                                     </div>
-                                    <a href="${vaccineTarget}?cat_name=${encodeURIComponent(it.name || '')}&breed=${encodeURIComponent(it.breed || '')}&image=${encodeURIComponent(it.image || '')}" 
-                                       class="btn-vaccine-link" 
-                                       style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
-                                        💉 ดูตารางวัคซีนน้องตัวนี้ ➔
-                                    </a>
+                                </div>
+                                <span class="cat-status-badge" style="font-size: 0.72rem; font-weight: 800; padding: 3px 8px; border-radius: 999px; background: #EFF6FF; color: #1E40AF; white-space: nowrap;">
+                                    ⏳ ติดตามวัคซีน
+                                </span>
+                            </div>
+
+                            <div style="background: #F8FAFC; border-radius: 10px; padding: 0.6rem 0.8rem; margin-bottom: 0.8rem; border: 1px solid #E2E8F0;">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; color: #475569; margin-bottom: 4px;">
+                                    <span>ความคืบหน้าการฉีด:</span>
+                                    <span class="cat-progress-text" style="color: #059669;">2/6 เข็ม (33%)</span>
+                                </div>
+                                <div style="width: 100%; height: 6px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
+                                    <div class="cat-progress-bar" style="width: 33%; height: 100%; background: linear-gradient(90deg, #10B981, #059669); border-radius: 999px;"></div>
                                 </div>
                             </div>
-                            <span style="font-weight: 700; color: var(--primary-coral); font-family: 'Outfit'; font-size: 1.05rem;">
-                                ${(it.price * (it.qty || 1)).toLocaleString('th-TH')} ฿
-                            </span>
+
+                            <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                <span style="font-size: 0.75rem; color: #059669; font-weight: 700; display: flex; align-items: center; gap: 4px;">
+                                    📅 คลิกเพื่อดูนัดบนปฏิทิน
+                                </span>
+                                <a href="${targetFile}?cat_name=${encodeURIComponent(c.name)}&breed=${encodeURIComponent(c.breed)}&image=${encodeURIComponent(c.image)}" 
+                                   onclick="event.stopPropagation();"
+                                   class="btn btn-secondary btn-sm btn-vaccine-link" 
+                                   style="font-size: 0.75rem; font-weight: 800; padding: 3px 9px; border-radius: 8px; color: #059669; background: #ECFDF5; border-color: #A7F3D0; text-decoration: none;">
+                                    💉 สมุดวัคซีน ➔
+                                </a>
+                            </div>
                         </div>
                     `).join('');
 
-                    const orderCard = document.createElement('div');
-                    orderCard.id = orderKey;
-                    orderCard.style.cssText = 'background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition);';
-                    orderCard.innerHTML = `
-                        <div style="background: var(--bg-card-subtle); padding: 1rem 1.4rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
-                            <div>
-                                <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">รหัสคำสั่งจอง:</span>
-                                <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: var(--primary-coral);">${ord.order_id}</strong>
-                                <div style="margin-top: 4px;">
-                                    <span style="font-size: 0.78rem; font-weight: 800; background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 6px; border: 1px solid #BFDBFE; display: inline-flex; align-items: center; gap: 4px; font-family: 'Outfit', sans-serif;">
-                                        🚚 รหัส Tracking: ${trkId}
-                                    </span>
+                    const vaccineBadge = document.getElementById('vaccine-counter-badge');
+                    if (vaccineBadge) vaccineBadge.textContent = localCats.length;
+                }
+            }
+        } catch(e) {}
+
+        // 4. Hydrate Orders from localStorage (for client-side/test orders)
+        try {
+            const loggedUser = JSON.parse(localStorage.getItem('cat_shop_logged_user') || 'null');
+            let localOrders = JSON.parse(localStorage.getItem('cat_shop_orders') || '[]');
+            if (loggedUser && (loggedUser.email || loggedUser.username)) {
+                localOrders = localOrders.filter(o => 
+                    (loggedUser.email && (o.customer_email === loggedUser.email || o.email === loggedUser.email)) ||
+                    (loggedUser.username && (o.customer_username === loggedUser.username || o.user_id === loggedUser.id || o.user === loggedUser.username))
+                );
+            }
+            if (localOrders.length > 0) {
+                const orderContainer = document.querySelector('#tab-orders .checkout-block');
+                const emptyState = orderContainer ? orderContainer.querySelector('div[style*="text-align: center"]') : null;
+                let ordersListDiv = orderContainer ? orderContainer.querySelector('div[style*="flex-direction: column"]') : null;
+
+                if (emptyState) {
+                    emptyState.remove();
+                }
+
+                if (!ordersListDiv && orderContainer) {
+                    ordersListDiv = document.createElement('div');
+                    ordersListDiv.style.display = 'flex';
+                    ordersListDiv.style.flexDirection = 'column';
+                    ordersListDiv.style.gap = '1.5rem';
+                    orderContainer.appendChild(ordersListDiv);
+                }
+
+                const trackingTarget = 'tracking.html';
+                const vaccineTarget = 'vaccine_reminder.html';
+
+                localOrders.forEach(ord => {
+                    const orderKey = 'order-' + (ord.order_id || '').replace(/[^a-zA-Z0-9_-]/g, '');
+                    const existing = document.getElementById(orderKey);
+                    if (!existing && ordersListDiv) {
+                        const trkId = ord.tracking_id || ('TRACK-TH-' + (ord.order_id || '9999').replace(/[^a-zA-Z0-9]/g, ''));
+                        const grandTotal = parseFloat(ord.total || 0);
+                        const items = ord.items || [];
+                        const itemsCount = items.length;
+                        const itemsHtml = items.map(it => `
+                            <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px dashed var(--border-color); flex-wrap: wrap;">
+                                <div style="display: flex; align-items: center; gap: 1rem;">
+                                    <img src="assets/images/${it.image || 'cat_persian.jpg'}" alt="${it.name || 'น้องแมว'}" 
+                                         style="width: 58px; height: 58px; border-radius: 10px; object-fit: cover; border: 1.5px solid var(--border-color);" onerror="this.src='assets/images/logo.png'">
+                                    <div>
+                                        <strong style="color: var(--text-main); font-size: 0.95rem; display: block;">${it.name || 'น้องแมว'}</strong>
+                                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px;">
+                                            ${it.breed || ''} • เพศ: ${it.gender || 'ไม่ระบุ'} (x${it.qty || 1})
+                                        </div>
+                                        <a href="${vaccineTarget}?cat_name=${encodeURIComponent(it.name || '')}&breed=${encodeURIComponent(it.breed || '')}&image=${encodeURIComponent(it.image || '')}" 
+                                           class="btn-vaccine-link" 
+                                           style="font-size: 0.78rem; font-weight: 800; color: #059669; background: #ECFDF5; border: 1px solid #A7F3D0; padding: 2px 8px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                                            💉 ดูตารางวัคซีนน้องตัวนี้ ➔
+                                        </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">วันที่ทำรายการ:</span>
-                                <span style="font-size: 0.88rem; font-weight: 600; color: var(--text-main);">${ord.created_at ? new Date(ord.created_at).toLocaleString('th-TH') : 'ล่าสุด'}</span>
-                            </div>
-                            <div>
-                                <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">สถานะ:</span>
-                                <span style="background: var(--accent-mint-soft); color: #065F46; padding: 0.2rem 0.7rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.3);">
-                                    ✓ ชำระเงินแล้ว / เตรียมจัดส่ง
+                                <span style="font-weight: 700; color: var(--primary-coral); font-family: 'Outfit'; font-size: 1.05rem;">
+                                    ${(it.price * (it.qty || 1)).toLocaleString('th-TH')} ฿
                                 </span>
                             </div>
-                            <div>
-                                <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                                    <a href="${trackingTarget}?track_id=${encodeURIComponent(trkId)}&order_id=${encodeURIComponent(ord.order_id)}" 
-                                       class="btn btn-primary btn-sm" 
-                                       style="padding: 0.38rem 0.85rem; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;">
-                                        📍 ติดตามส่งมอบ
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="padding: 1.2rem 1.4rem;">
-                            <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem;">
-                                น้องแมวในรายการนี้ (จำนวน: ${itemsCount} ตัว)
-                            </div>
-                            <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-                                ${itemsHtml}
-                            </div>
-                            <div style="margin-top: 1.2rem; padding-top: 1rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+                        `).join('');
+
+                        const orderCard = document.createElement('div');
+                        orderCard.id = orderKey;
+                        orderCard.style.cssText = 'background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition);';
+                        orderCard.innerHTML = `
+                            <div style="background: var(--bg-card-subtle); padding: 1rem 1.4rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
                                 <div>
-                                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">ช่องทางชำระเงินที่ใช้:</span>
-                                    <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">ชำระเงินออนไลน์ / โอนเงินผ่านระบบ</span>
+                                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">รหัสคำสั่งจอง:</span>
+                                    <strong style="font-family: 'Outfit'; font-size: 1.1rem; color: var(--primary-coral);">${ord.order_id}</strong>
+                                    <div style="margin-top: 4px;">
+                                        <span style="font-size: 0.78rem; font-weight: 800; background: #EFF6FF; color: #1D4ED8; padding: 2px 8px; border-radius: 6px; border: 1px solid #BFDBFE; display: inline-flex; align-items: center; gap: 4px; font-family: 'Outfit', sans-serif;">
+                                            🚚 รหัส Tracking: ${trkId}
+                                        </span>
+                                    </div>
                                 </div>
-                                <div style="text-align: right;">
-                                    <span style="font-size: 0.82rem; color: var(--text-muted);">ยอดรวมสุทธิ:</span>
-                                    <span style="font-size: 1.3rem; font-weight: 800; color: var(--primary-coral); font-family: 'Outfit'; display: block;">
-                                        ${grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ฿
+                                <div>
+                                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">วันที่ทำรายการ:</span>
+                                    <span style="font-size: 0.88rem; font-weight: 600; color: var(--text-main);">${ord.created_at ? new Date(ord.created_at).toLocaleString('th-TH') : 'ล่าสุด'}</span>
+                                </div>
+                                <div>
+                                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">สถานะ:</span>
+                                    <span style="background: var(--accent-mint-soft); color: #065F46; padding: 0.2rem 0.7rem; border-radius: 9999px; font-size: 0.8rem; font-weight: 700; border: 1px solid rgba(16, 185, 129, 0.3);">
+                                        ✓ ชำระเงินแล้ว / เตรียมจัดส่ง
                                     </span>
                                 </div>
+                                <div>
+                                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                        <a href="${trackingTarget}?track_id=${encodeURIComponent(trkId)}&order_id=${encodeURIComponent(ord.order_id)}" 
+                                           class="btn btn-primary btn-sm" 
+                                           style="padding: 0.38rem 0.85rem; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; text-decoration: none;">
+                                            📍 ติดตามส่งมอบ
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    `;
-                    ordersListDiv.prepend(orderCard);
-                }
-            });
+                            <div style="padding: 1.2rem 1.4rem;">
+                                <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem;">
+                                    น้องแมวในรายการนี้ (จำนวน: ${itemsCount} ตัว)
+                                </div>
+                                <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                                    ${itemsHtml}
+                                </div>
+                                <div style="margin-top: 1.2rem; padding-top: 1rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+                                    <div>
+                                        <span style="font-size: 0.78rem; color: var(--text-muted); display: block;">ช่องทางชำระเงินที่ใช้:</span>
+                                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);">ชำระเงินออนไลน์ / โอนเงินผ่านระบบ</span>
+                                    </div>
+                                    <div style="text-align: right;">
+                                        <span style="font-size: 0.82rem; color: var(--text-muted);">ยอดรวมสุทธิ:</span>
+                                        <span style="font-size: 1.3rem; font-weight: 800; color: var(--primary-coral); font-family: 'Outfit'; display: block;">
+                                            ${grandTotal.toLocaleString('th-TH', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ฿
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        ordersListDiv.prepend(orderCard);
+                    }
+                });
 
-            // Update badge counts
-            const allRenderedCards = ordersListDiv.querySelectorAll(':scope > div');
-            const badgeCount = document.getElementById('orders-tab-count');
-            const headerCount = document.querySelector('#tab-orders .checkout-block-title span:last-child');
-            if (badgeCount) badgeCount.textContent = allRenderedCards.length;
-            if (headerCount) headerCount.textContent = `(พบ ${allRenderedCards.length} รายการ)`;
+                // Update badge counts
+                const allRenderedCards = ordersListDiv.querySelectorAll(':scope > div');
+                const badgeCount = document.getElementById('orders-tab-count');
+                const headerCount = document.querySelector('#tab-orders .checkout-block-title span:last-child');
+                if (badgeCount) badgeCount.textContent = allRenderedCards.length;
+                if (headerCount) headerCount.textContent = `(พบ ${allRenderedCards.length} รายการ)`;
+            }
+        } catch(e) {
+            console.error('Error hydrating profile orders:', e);
         }
-    } catch(e) {
-        console.error('Error hydrating profile orders:', e);
+
+        // 4.5 Recalculate Top Summary Counters (Cats count, Total Spent, Orders count, Vaccine badge)
+        try {
+            const vaccineCards = document.querySelectorAll('#profile-vaccine-cats-container .cat-vaccine-item-card');
+            const ordersCards = document.querySelectorAll('#tab-orders .checkout-block div[id^="order-"]');
+            const vaccineBadge = document.getElementById('vaccine-counter-badge');
+            const profileCatsEl = document.getElementById('profile-cats-count');
+            const profileSpentEl = document.getElementById('profile-spent-total');
+            const profileOrdersEl = document.getElementById('profile-orders-count');
+            const ordersBadge = document.getElementById('orders-tab-count');
+
+            let totalCats = vaccineCards.length;
+            let totalOrders = ordersCards.length;
+
+            if (totalCats > 0 && vaccineBadge) {
+                vaccineBadge.textContent = totalCats;
+            }
+            if (totalCats > 0 && profileCatsEl) {
+                profileCatsEl.textContent = `${totalCats} ตัว`;
+            }
+            if (totalOrders > 0 && profileOrdersEl) {
+                profileOrdersEl.textContent = `${totalOrders} ครั้ง`;
+            }
+            if (totalOrders > 0 && ordersBadge) {
+                ordersBadge.textContent = totalOrders;
+            }
+            if (profileSpentEl) {
+                let totalSpentCalc = 0;
+                ordersCards.forEach(card => {
+                    const priceEl = card.querySelector('div[style*="text-align: right"] span[style*="font-size: 1.3rem"]');
+                    if (priceEl) {
+                        const val = parseFloat(priceEl.textContent.replace(/[^0-9.]/g, '')) || 0;
+                        totalSpentCalc += val;
+                    }
+                });
+                if (totalSpentCalc > 0) {
+                    profileSpentEl.textContent = `${totalSpentCalc.toLocaleString('th-TH')} ฿`;
+                }
+            }
+        } catch(e) {}
     }
 
     // 5. Initialize Calendar
@@ -2617,7 +2804,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const initialTab = urlParams.get('tab');
     if (initialTab && document.getElementById('tab-' + initialTab)) {
-        switchProfileTab(initialTab, document.getElementById('btn-tab-' + initialTab));
+        switchProfileTab(initialTab, document.getElementById('btn-tab-' + initialTab), false);
     }
 });
 </script>

@@ -132,7 +132,8 @@ $jsonFiles = [
     'data_newsletters.json',
     'data_reviews.json',
     'data_bookings.json',
-    'data_pedigrees.json'
+    'data_pedigrees.json',
+    'data_analytics.json'
 ];
 foreach ($jsonFiles as $jf) {
     if (file_exists($rootDir . '/' . $jf)) {
@@ -160,10 +161,10 @@ foreach ($pages as $phpFile => $htmlFile) {
         // 2. Save to docs/
         file_put_contents($docsDir . '/' . $htmlFile, $convertedHtml);
 
-        // 3. Save to root directory (Ensures GitHub Pages works whether source is root or /docs)
+        // 3. Save to root directory
         file_put_contents($rootDir . '/' . $htmlFile, $convertedHtml);
 
-        echo "✓ Exported & Synchronized: {$phpFile} -> {$htmlFile} (Root, docs/, GITHUB_PAGES_EXPORT/)\n";
+        echo "✓ Exported: {$phpFile} -> {$htmlFile} (root, docs/, GITHUB_PAGES_EXPORT/)\n";
     }
 }
 

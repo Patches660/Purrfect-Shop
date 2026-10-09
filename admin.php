@@ -214,6 +214,44 @@ if (($_SERVER['REQUEST_METHOD'] ?? '')  === 'POST' && isset($_POST['action'])) {
         }
     }
 
+    // 3.1 Adjust or Set User Paw Points
+    if ($action === 'adjust_user_points') {
+        $user_id = trim($_POST['user_id'] ?? '');
+        $point_mode = trim($_POST['point_mode'] ?? 'add'); // 'add', 'deduct', 'set'
+        $amount = intval($_POST['amount'] ?? 0);
+        $reason = trim($_POST['reason'] ?? '');
+
+        if (!empty($user_id) && $amount >= 0) {
+            if ($point_mode === 'add') {
+                $res = adjustUserPawPoints($user_id, $amount, $reason);
+                if ($res['success']) {
+                    $success_msg = "✓ เพิ่มแต้ม Paw Points จำนวน +{$amount} แต้ม ให้กับ @{$res['username']} สำเร็จ! (ยอดรวมปัจจุบัน: " . number_format($res['new_points']) . " แต้ม)";
+                    $active_tab = 'users';
+                } else {
+                    $error_msg = $res['message'];
+                }
+            } elseif ($point_mode === 'deduct') {
+                $res = adjustUserPawPoints($user_id, -$amount, $reason);
+                if ($res['success']) {
+                    $success_msg = "✓ ลดแต้ม Paw Points จำนวน -{$amount} แต้ม ของ @{$res['username']} สำเร็จ! (แต้มคงเหลือปัจจุบัน: " . number_format($res['new_points']) . " แต้ม)";
+                    $active_tab = 'users';
+                } else {
+                    $error_msg = $res['message'];
+                }
+            } elseif ($point_mode === 'set') {
+                $res = setUserPawPoints($user_id, $amount, $reason);
+                if ($res['success']) {
+                    $success_msg = "✓ กำหนดแต้ม Paw Points ของ @{$res['username']} เป็น " . number_format($res['new_points']) . " แต้ม เรียบร้อยแล้ว!";
+                    $active_tab = 'users';
+                } else {
+                    $error_msg = $res['message'];
+                }
+            }
+        } else {
+            $error_msg = "กรุณาระบุจำนวนแต้มที่ถูกต้อง";
+        }
+    }
+
     // 4. Delete User
     if ($action === 'delete_user') {
         $user_id = trim($_POST['user_id'] ?? '');
@@ -277,6 +315,74 @@ $analytics_data = $analytics_summary['analytics'];
 $daily_rev = $analytics_summary['daily'];
 $weekly_rev = $analytics_summary['weekly'];
 $monthly_rev = $analytics_summary['monthly'];
+
+// Hybrid Merge: Mockup Base + Real User Interactions + Real Matchmaker Results
+$quiz_stats = $analytics_data['quiz_stats'] ?? [];
+$matched_breeds = $quiz_stats['matched_breeds'] ?? [];
+$quiz_submissions = $analytics_data['quiz_submissions'] ?? [];
+$clicks_by_cat = $analytics_data['clicks_by_cat'] ?? [];
+
+$scottish_matches = 0;
+$british_matches = 0;
+$ragdoll_matches = 0;
+$bengal_matches = 0;
+$persian_matches = 0;
+$mainecoon_matches = 0;
+$sphynx_matches = 0;
+
+foreach ($matched_breeds as $bName => $count) {
+    if (stripos($bName, 'Scottish') !== false) $scottish_matches += $count;
+    elseif (stripos($bName, 'British') !== false) $british_matches += $count;
+    elseif (stripos($bName, 'Ragdoll') !== false) $ragdoll_matches += $count;
+    elseif (stripos($bName, 'Bengal') !== false) $bengal_matches += $count;
+    elseif (stripos($bName, 'Persian') !== false) $persian_matches += $count;
+    elseif (stripos($bName, 'Maine') !== false) $mainecoon_matches += $count;
+    elseif (stripos($bName, 'Sphynx') !== false) $sphynx_matches += $count;
+}
+
+$breed_clicks_labels = ['Scottish Fold', 'British Shorthair', 'Ragdoll', 'Maine Coon', 'Sphynx', 'Persian'];
+$breed_clicks_data = [
+    1420 + $scottish_matches + ($clicks_by_cat['cat_scottish'] ?? 0) * 8,
+    1280 + $british_matches + ($clicks_by_cat['cat_british'] ?? 0) * 8,
+    1150 + $ragdoll_matches + ($clicks_by_cat['cat_ragdoll'] ?? 0) * 8,
+    980 + $mainecoon_matches + ($clicks_by_cat['cat_mainecoon'] ?? 0) * 8,
+    840 + $sphynx_matches + ($clicks_by_cat['cat_sphynx'] ?? 0) * 8,
+    760 + $persian_matches + ($clicks_by_cat['cat_persian'] ?? 0) * 8
+];
+
+// Dynamic Member Needs Calculation (Base Mockup + Actual Live Quiz Submissions)
+$base_c1 = 165; // Condo
+$base_c2 = 120; // Allergy / Low shed
+$base_c3 = 95;  // Beginner
+$base_c4 = 60;  // Pedigree
+$base_c5 = 40;  // Playful
+
+foreach ($quiz_submissions as $qs_item) {
+    $ans = $qs_item['answers'] ?? [];
+    $mb = $qs_item['matched_breed'] ?? '';
+    if (($ans['living'] ?? '') === 'condo' || stripos($mb, 'Scottish') !== false || stripos($mb, 'British') !== false) {
+        $base_c1++;
+    }
+    if (($ans['grooming'] ?? '') === 'easy' || stripos($mb, 'Sphynx') !== false || stripos($mb, 'Siam') !== false || stripos($mb, 'Khao') !== false) {
+        $base_c2++;
+    }
+    if (($ans['exp'] ?? '') === 'beginner' || ($ans['personality'] ?? '') === 'cuddly' || stripos($mb, 'Ragdoll') !== false) {
+        $base_c3++;
+    }
+    if (($ans['exp'] ?? '') === 'expert' || ($ans['grooming'] ?? '') === 'fluffy' || stripos($mb, 'Maine') !== false || stripos($mb, 'Persian') !== false) {
+        $base_c4++;
+    }
+    if (($ans['personality'] ?? '') === 'playful' || ($ans['living'] ?? '') === 'single_house' || stripos($mb, 'Bengal') !== false) {
+        $base_c5++;
+    }
+}
+
+$total_needs_count = max(1, $base_c1 + $base_c2 + $base_c3 + $base_c4 + $base_c5);
+$pct_condo = round(($base_c1 / $total_needs_count) * 100);
+$pct_allergy = round(($base_c2 / $total_needs_count) * 100);
+$pct_beginner = round(($base_c3 / $total_needs_count) * 100);
+$pct_pedigree = round(($base_c4 / $total_needs_count) * 100);
+$pct_playful = round(($base_c5 / $total_needs_count) * 100);
 
 // Compute Dashboard Metrics
 $total_revenue = 0;
@@ -897,7 +1003,7 @@ require_once __DIR__ . '/header.php';
                             <th>หมวดหมู่ความต้องการ</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="admin-activity-tbody-dashboard">
                         <?php 
                         $recent_acts = $analytics_data['recent_activities'] ?? [];
                         foreach (array_slice($recent_acts, 0, 8) as $act): 
@@ -1064,22 +1170,22 @@ require_once __DIR__ . '/header.php';
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin-bottom: 2rem;">
                 <div style="background: #FFF9F6; border: 1.5px solid #FFE4D6; border-radius: var(--radius-md); padding: 1.4rem;">
                     <span style="font-size: 2.2rem; display: block; margin-bottom: 8px;">🐱</span>
-                    <span style="font-size: 0.78rem; font-weight: 800; color: var(--primary-coral);">สายพันธุ์ที่ครองใจสมาชิก</span>
+                    <span style="font-size: 0.78rem; font-weight: 800; color: var(--primary-coral);">สายพันธุ์ที่ครองใจสมาชิก (Clicks & AI Match)</span>
                     <h3 style="font-size: 1.3rem; font-weight: 800; margin: 4px 0 6px 0; color: #1E293B;">สก็อตติช โฟลด์ (Scottish Fold)</h3>
-                    <p style="font-size: 0.84rem; color: var(--text-secondary); margin: 0;">มียอดคลิกดูสูงถึง <strong>1,420 ครั้ง</strong> (คิดเป็น 28% ของยอดดูทั้งหมด)</p>
+                    <p style="font-size: 0.84rem; color: var(--text-secondary); margin: 0;">มียอดคลิกดูและแมตช์สูงถึง <strong>1,420+ ครั้ง</strong> (คิดเป็น 28% ของทั้งหมด)</p>
                 </div>
 
                 <div style="background: #F8FAFF; border: 1.5px solid #E0E7FF; border-radius: var(--radius-md); padding: 1.4rem;">
                     <span style="font-size: 2.2rem; display: block; margin-bottom: 8px;">🏢</span>
-                    <span style="font-size: 0.78rem; font-weight: 800; color: #4F46E5;">ไลฟ์สไตล์ที่อยู่อาศัย</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 800; margin: 4px 0 6px 0; color: #1E293B;">เลี้ยงในคอนโด / ห้องพัก (35%)</h3>
+                    <span style="font-size: 0.78rem; font-weight: 800; color: #4F46E5;">ไลฟ์สไตล์ที่อยู่อาศัย (Quiz Insights)</span>
+                    <h3 id="card-condo-pct" style="font-size: 1.3rem; font-weight: 800; margin: 4px 0 6px 0; color: #1E293B;">เลี้ยงในคอนโด / ห้องพัก (<?php echo $pct_condo; ?>%)</h3>
                     <p style="font-size: 0.84rem; color: var(--text-secondary); margin: 0;">สมาชิกให้ความสำคัญกับความเงียบสงบ ไม่ส่งเสียงดังรบกวน</p>
                 </div>
 
                 <div style="background: #FFFDF5; border: 1.5px solid #FEF3C7; border-radius: var(--radius-md); padding: 1.4rem;">
                     <span style="font-size: 2.2rem; display: block; margin-bottom: 8px;">🤧</span>
                     <span style="font-size: 0.78rem; font-weight: 800; color: #D97706;">ปัญหาสุขภาพของผู้เลี้ยง</span>
-                    <h3 style="font-size: 1.3rem; font-weight: 800; margin: 4px 0 6px 0; color: #1E293B;">คนเป็นภูมิแพ้ / ขนไม่ร่วง (25%)</h3>
+                    <h3 id="card-allergy-pct" style="font-size: 1.3rem; font-weight: 800; margin: 4px 0 6px 0; color: #1E293B;">คนเป็นภูมิแพ้ / ขนไม่ร่วง (<?php echo $pct_allergy; ?>%)</h3>
                     <p style="font-size: 0.84rem; color: var(--text-secondary); margin: 0;">ต้องการแมวสายพันธุ์สฟิงซ์ และบริติชขนสั้นที่ผลัดขนน้อย</p>
                 </div>
 
@@ -1091,17 +1197,105 @@ require_once __DIR__ . '/header.php';
                 </div>
             </div>
 
+            <!-- 🔮 AI Matchmaker Quiz Submissions & Score Analytics Table -->
+            <div style="background: linear-gradient(135deg, #FAF5FF 0%, #FFFFFF 100%); border: 2px solid #E9D5FF; border-radius: var(--radius-md); padding: 1.6rem; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <div style="display: inline-flex; align-items: center; gap: 6px; background: #9333EA; color: #fff; padding: 3px 12px; border-radius: 999px; font-weight: 800; font-size: 0.78rem; margin-bottom: 4px;">
+                            🔮 AI CAT MATCHMAKER ANALYTICS
+                        </div>
+                        <h3 style="font-size: 1.25rem; font-weight: 800; margin: 0; color: #581C87;">
+                            ผลการทำแบบทดสอบหาสายพันธุ์ที่เหมาะกับสมาชิก & คะแนนความเข้ากันได้
+                        </h3>
+                        <p style="font-size: 0.84rem; color: #6B21A8; margin: 2px 0 0 0;">
+                            บันทึกผลคะแนนจริงจากการทำแบบทดสอบ (Quiz Submissions) และความต้องการเชิงลึกของสมาชิกแต่ละคน
+                        </p>
+                    </div>
+                    <span style="font-size: 0.82rem; font-weight: 800; background: #F3E8FF; color: #7E22CE; padding: 6px 14px; border-radius: 999px; border: 1px solid #D8B4FE;">
+                        ทำแบบทดสอบแล้ว: <strong id="admin-quiz-count"><?php echo number_format($analytics_data['quiz_stats']['total_taken'] ?? 391); ?></strong> ครั้ง
+                    </span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>เวลา</th>
+                                <th>สมาชิก / ผู้ใช้งาน</th>
+                                <th>สายพันธุ์ที่ AI แนะนำ</th>
+                                <th>ความเข้ากันได้ (Overall Match)</th>
+                                <th>คะแนนแต่ละด้าน (Trait Scores Breakdown)</th>
+                                <th>คูปองที่ได้รับ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-quiz-tbody">
+                            <?php 
+                            $quiz_subs = $analytics_data['quiz_submissions'] ?? [];
+                            if (empty($quiz_subs)):
+                            ?>
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 1.5rem;">ยังไม่มีประวัติการทำแบบทดสอบ</td>
+                                </tr>
+                            <?php 
+                            else:
+                                foreach ($quiz_subs as $qs):
+                                    $score = floatval($qs['match_score'] ?? 98.6);
+                                    $traits = $qs['trait_scores'] ?? [];
+                            ?>
+                                <tr>
+                                    <td style="font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">
+                                        <?php echo htmlspecialchars($qs['timestamp'] ?? ''); ?>
+                                    </td>
+                                    <td>
+                                        <strong style="color: var(--text-main);"><?php echo htmlspecialchars($qs['user_name'] ?? 'ผู้เยี่ยมชม'); ?></strong>
+                                    </td>
+                                    <td>
+                                        <span style="background: #FAF5FF; color: #9333EA; border: 1px solid #D8B4FE; padding: 3px 10px; border-radius: 8px; font-weight: 800; font-size: 0.86rem; display: inline-flex; align-items: center; gap: 4px;">
+                                            🐱 <?php echo htmlspecialchars($qs['matched_breed'] ?? 'Scottish Fold'); ?>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <div style="flex: 1; height: 8px; background: #F3E8FF; border-radius: 999px; overflow: hidden; min-width: 60px;">
+                                                <div style="width: <?php echo min(100, $score); ?>%; height: 100%; background: linear-gradient(90deg, #9333EA, #EC4899); border-radius: 999px;"></div>
+                                            </div>
+                                            <strong style="color: #059669; font-size: 0.88rem;"><?php echo $score; ?>%</strong>
+                                        </div>
+                                    </td>
+                                    <td style="font-size: 0.78rem;">
+                                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                                            <span style="background: #EFF6FF; color: #1D4ED8; padding: 2px 6px; border-radius: 4px; font-weight: 600;">🏡 พื้นที่ <?php echo $traits['living_match'] ?? 95; ?>%</span>
+                                            <span style="background: #F0FDF4; color: #15803D; padding: 2px 6px; border-radius: 4px; font-weight: 600;">⏰ เวลา <?php echo $traits['time_match'] ?? 92; ?>%</span>
+                                            <span style="background: #FDF2F8; color: #BE185D; padding: 2px 6px; border-radius: 4px; font-weight: 600;">💖 นิสัย <?php echo $traits['personality_match'] ?? 99; ?>%</span>
+                                            <span style="background: #FEF3C7; color: #B45309; padding: 2px 6px; border-radius: 4px; font-weight: 600;">✂️ ขน <?php echo $traits['grooming_match'] ?? 94; ?>%</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span style="background: #FEF3C7; color: #B45309; border: 1px dashed #F59E0B; padding: 2px 8px; border-radius: 6px; font-weight: 800; font-size: 0.78rem;">
+                                            🎟️ <?php echo htmlspecialchars($qs['voucher'] ?? 'PAW100SURVEY'); ?> (฿100)
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php 
+                                endforeach;
+                            endif;
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- Detailed Visual Charts in Behavior Tab -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
                 <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); padding: 1.6rem;">
-                    <h4 style="font-size: 1.05rem; font-weight: 700; margin: 0 0 1rem 0;">🐱 อันดับสายพันธุ์ที่สมาชิกคลิกดูมากที่สุด</h4>
+                    <h4 style="font-size: 1.05rem; font-weight: 700; margin: 0 0 1rem 0;">🐱 อันดับสายพันธุ์ที่สมาชิกคลิกดู & จับคู่มากที่สุด</h4>
                     <div style="position: relative; height: 260px; width: 100%;">
                         <canvas id="catClicksChart2"></canvas>
                     </div>
                 </div>
 
                 <div style="background: var(--bg-card); border: 1.5px solid var(--border-color); border-radius: var(--radius-md); padding: 1.6rem;">
-                    <h4 style="font-size: 1.05rem; font-weight: 700; margin: 0 0 1rem 0;">🥧 สัดส่วนความต้องการของสมาชิก</h4>
+                    <h4 style="font-size: 1.05rem; font-weight: 700; margin: 0 0 1rem 0;">🥧 สัดส่วนความต้องการของสมาชิก (Behavior & Needs)</h4>
                     <div style="position: relative; height: 260px; width: 100%;">
                         <canvas id="memberNeedsChart2"></canvas>
                     </div>
@@ -1123,7 +1317,7 @@ require_once __DIR__ . '/header.php';
                             <th>หมวดหมู่ความต้องการ</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="admin-activity-tbody">
                         <?php 
                         $recent_acts_full = $analytics_data['recent_activities'] ?? [];
                         foreach ($recent_acts_full as $act): 
@@ -1582,12 +1776,17 @@ require_once __DIR__ . '/header.php';
          TAB 3: USERS MANAGEMENT
          ========================================================= -->
     <div id="admin-tab-users" class="admin-tab-panel" style="<?php echo $active_tab === 'users' ? 'display: block;' : 'display: none;'; ?>">
-        <div style="display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; align-items: start;">
+        <div style="display: grid; grid-template-columns: 1fr 360px; gap: 1.5rem; align-items: start;">
             <!-- User List Table -->
             <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.8rem; box-shadow: var(--shadow-sm);">
-                <h2 style="font-size: 1.35rem; font-weight: 800; margin: 0 0 1.2rem 0; color: var(--text-main);">
-                    👥 รายชื่อบัญชีผู้ใช้ในระบบ (<?php echo count($all_users); ?>)
-                </h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 10px;">
+                    <h2 style="font-size: 1.35rem; font-weight: 800; margin: 0; color: var(--text-main);">
+                        👥 รายชื่อบัญชีผู้ใช้ & ระบบแต้มสะสม (<?php echo count($all_users); ?>)
+                    </h2>
+                    <span style="font-size: 0.82rem; background: #FEF3C7; color: #92400E; font-weight: 700; padding: 4px 10px; border-radius: 9999px; border: 1px solid #FCD34D;">
+                        🐾 1 Paw Point = 1 บาทส่วนลด (สะสมได้ไม่จำกัด)
+                    </span>
+                </div>
 
                 <div class="table-responsive">
                     <table class="admin-table">
@@ -1595,13 +1794,16 @@ require_once __DIR__ . '/header.php';
                             <tr>
                                 <th>ผู้ใช้งาน</th>
                                 <th>การติดต่อ</th>
+                                <th>🐾 Paw Points</th>
                                 <th>บทบาท (Role)</th>
                                 <th>สลับสิทธิ์</th>
                                 <th>ลบ</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($all_users as $u): ?>
+                            <?php foreach ($all_users as $u): 
+                                $u_pts = intval($u['paw_points'] ?? 100);
+                            ?>
                                 <tr>
                                     <td>
                                         <div style="display: flex; align-items: center; gap: 10px;">
@@ -1620,6 +1822,21 @@ require_once __DIR__ . '/header.php';
                                     <td>
                                         <div style="font-size: 0.85rem; color: var(--text-main);"><?php echo htmlspecialchars($u['email']); ?></div>
                                         <div style="font-size: 0.8rem; color: var(--text-muted);"><?php echo htmlspecialchars($u['phone']); ?></div>
+                                    </td>
+
+                                    <td>
+                                        <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                            <span style="font-family: 'Outfit', sans-serif; font-weight: 800; color: #92400E; background: #FEF3C7; border: 1px solid #FCD34D; padding: 3px 9px; border-radius: 9999px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px;">
+                                                🐾 <?php echo number_format($u_pts); ?> pts
+                                            </span>
+                                            <button type="button" 
+                                                    class="btn btn-secondary btn-sm" 
+                                                    onclick="openPointsModal('<?php echo htmlspecialchars($u['id']); ?>', '<?php echo htmlspecialchars(addslashes($u['username'])); ?>', <?php echo $u_pts; ?>)"
+                                                    style="padding: 3px 8px; font-size: 0.75rem; border-radius: 6px; cursor: pointer;" 
+                                                    title="เพิ่มหรือลดแต้มให้สมาชิก">
+                                                ✏️ จัดการแต้ม
+                                            </button>
+                                        </div>
                                     </td>
 
                                     <td>
@@ -1676,52 +1893,171 @@ require_once __DIR__ . '/header.php';
                 </div>
             </div>
 
-            <!-- Add User Form -->
-            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.6rem; box-shadow: var(--shadow-sm);">
-                <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--text-main);">
-                    ➕ เพิ่มบัญชีผู้ใช้ใหม่
-                </h3>
-                <form method="POST" action="admin.php?tab=users" style="display: flex; flex-direction: column; gap: 12px;">
-                    <input type="hidden" name="action" value="add_user">
+            <!-- Right Column Sidebars -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- 1. Quick Adjust Paw Points Form -->
+                <div style="background: var(--bg-card); border: 1.5px solid #FCD34D; border-radius: var(--radius-md); padding: 1.6rem; box-shadow: var(--shadow-sm); background: linear-gradient(to bottom, #FFFBEB 0%, var(--bg-card) 60px);">
+                    <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0 0 0.8rem 0; color: #92400E; display: flex; align-items: center; gap: 8px;">
+                        <span>🐾</span> จัดการแต้ม Paw Points สมาชิก
+                    </h3>
+                    <p style="font-size: 0.8rem; color: #78350F; margin: 0 0 1rem 0;">
+                        เพิ่มหรือลดแต้มสะสมให้สมาชิกเพื่อใช้เป็นส่วนลดและสิทธิประโยชน์
+                    </p>
+                    <form method="POST" action="admin.php?tab=users" style="display: flex; flex-direction: column; gap: 12px;">
+                        <input type="hidden" name="action" value="adjust_user_points">
 
-                    <div>
-                        <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">ชื่อ-นามสกุล *</label>
-                        <input type="text" name="fullname" required placeholder="เช่น สมชาย ใจดี" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle);">
-                    </div>
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 4px;">เลือกสมาชิก *</label>
+                            <select name="user_id" required style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.88rem;">
+                                <option value="">-- กรุณาเลือกสมาชิก --</option>
+                                <?php foreach ($all_users as $u_opt): ?>
+                                    <option value="<?php echo htmlspecialchars($u_opt['id']); ?>">
+                                        @<?php echo htmlspecialchars($u_opt['username']); ?> (<?php echo htmlspecialchars($u_opt['fullname']); ?>) - [<?php echo number_format(intval($u_opt['paw_points'] ?? 100)); ?> pts]
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-                    <div>
-                        <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">ชื่อผู้ใช้ (Username) *</label>
-                        <input type="text" name="username" required placeholder="เช่น somchai_admin" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle);">
-                    </div>
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 4px;">ประเภทการทำรายการ *</label>
+                            <select name="point_mode" required style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-main); font-size: 0.88rem; font-weight: 600;">
+                                <option value="add">➕ เพิ่มแต้มให้สมาชิก (Add Points)</option>
+                                <option value="deduct">➖ หัก/ลดแต้มสมาชิก (Deduct Points)</option>
+                                <option value="set">🎯 กำหนดแต้มโดยตรง (Set Exact Points)</option>
+                            </select>
+                        </div>
 
-                    <div>
-                        <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">อีเมล *</label>
-                        <input type="email" name="email" required placeholder="somchai@example.com" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle);">
-                    </div>
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 4px;">จำนวนแต้ม (พอยท์) *</label>
+                            <input type="number" name="amount" min="1" step="1" required placeholder="เช่น 50, 100, 500" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); font-weight: 700; font-size: 1rem;">
+                        </div>
 
-                    <div>
-                        <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">เบอร์โทรศัพท์</label>
-                        <input type="text" name="phone" placeholder="08xxxxxxxx" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle);">
-                    </div>
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 4px;">เหตุผล / บันทึกกำกับ</label>
+                            <input type="text" name="reason" placeholder="เช่น โบนัสกิจกรรม, ปรับสิทธิ์พิเศษ" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); font-size: 0.85rem;">
+                        </div>
 
-                    <div>
-                        <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">รหัสผ่านเริ่มต้น</label>
-                        <input type="password" name="password" value="123456" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle);">
-                    </div>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 6px; padding: 10px; background: #D97706; border-color: #D97706; font-weight: 800; justify-content: center;">
+                            บันทึกการปรับแต้ม 🐾
+                        </button>
+                    </form>
+                </div>
 
-                    <div>
-                        <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">ระดับสิทธิ์ (Role)</label>
-                        <select name="role" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle); color: var(--text-main);">
-                            <option value="customer">👤 ลูกค้าสมาชิก (Customer)</option>
-                            <option value="admin">👑 ผู้ดูแลระบบ (Admin)</option>
-                        </select>
-                    </div>
+                <!-- 2. Add User Form -->
+                <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.6rem; box-shadow: var(--shadow-sm);">
+                    <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0 0 1rem 0; color: var(--text-main);">
+                        ➕ เพิ่มบัญชีผู้ใช้ใหม่
+                    </h3>
+                    <form method="POST" action="admin.php?tab=users" style="display: flex; flex-direction: column; gap: 12px;">
+                        <input type="hidden" name="action" value="add_user">
 
-                    <button type="submit" class="btn btn-primary" style="margin-top: 8px; justify-content: center;">
-                        บันทึกบัญชีใหม่ ✨
-                    </button>
-                </form>
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">ชื่อ-นามสกุล *</label>
+                            <input type="text" name="fullname" required placeholder="เช่น สมชาย ใจดี" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle);">
+                        </div>
+
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">ชื่อผู้ใช้ (Username) *</label>
+                            <input type="text" name="username" required placeholder="เช่น somchai_admin" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle);">
+                        </div>
+
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">อีเมล *</label>
+                            <input type="email" name="email" required placeholder="somchai@example.com" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle);">
+                        </div>
+
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">เบอร์โทรศัพท์</label>
+                            <input type="text" name="phone" placeholder="08xxxxxxxx" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle);">
+                        </div>
+
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">รหัสผ่านเริ่มต้น</label>
+                            <input type="password" name="password" value="123456" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle);">
+                        </div>
+
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); display: block; margin-bottom: 4px;">ระดับสิทธิ์ (Role)</label>
+                            <select name="role" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card-subtle); color: var(--text-main);">
+                                <option value="customer">👤 ลูกค้าสมาชิก (Customer)</option>
+                                <option value="admin">👑 ผู้ดูแลระบบ (Admin)</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 8px; justify-content: center;">
+                            บันทึกบัญชีใหม่ ✨
+                        </button>
+                    </form>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal: Interactive Manage Points for Specific User -->
+    <div id="pointsManageModal" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem;">
+        <div style="background: var(--bg-card, #FFFFFF); border: 1px solid var(--border-color, #E2E8F0); border-radius: 16px; max-width: 480px; width: 100%; padding: 1.8rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); animation: modalFadeIn 0.2s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; border-bottom: 1px solid var(--border-color, #E2E8F0); padding-bottom: 0.8rem;">
+                <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: var(--text-main, #1E293B); display: flex; align-items: center; gap: 8px;">
+                    <span>🐾</span> ปรับแต้ม Paw Points สมาชิก
+                </h3>
+                <button type="button" onclick="closePointsModal()" style="background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--text-muted, #64748B);">&times;</button>
+            </div>
+
+            <form method="POST" action="admin.php?tab=users" style="display: flex; flex-direction: column; gap: 14px;">
+                <input type="hidden" name="action" value="adjust_user_points">
+                <input type="hidden" name="user_id" id="modal_point_user_id" value="">
+
+                <div style="background: #FEF3C7; border: 1.5px solid #FCD34D; border-radius: 12px; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <div style="font-size: 0.78rem; color: #78350F; font-weight: 600;">สมาชิกที่เลือก:</div>
+                        <strong id="modal_point_username" style="font-size: 1.05rem; color: #92400E;">@user</strong>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 0.78rem; color: #78350F; font-weight: 600;">แต้มสะสมปัจจุบัน:</div>
+                        <strong id="modal_point_current" style="font-size: 1.2rem; color: #92400E; font-family: 'Outfit', sans-serif;">0 pts</strong>
+                    </div>
+                </div>
+
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary, #475569); display: block; margin-bottom: 6px;">เลือกประเภทการทำรายการ *</label>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                        <label style="display: flex; align-items: center; gap: 6px; border: 1.5px solid var(--border-color, #CBD5E1); padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 700; background: var(--bg-card-subtle);">
+                            <input type="radio" name="point_mode" value="add" checked> ➕ เพิ่มแต้ม
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 6px; border: 1.5px solid var(--border-color, #CBD5E1); padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 700; background: var(--bg-card-subtle);">
+                            <input type="radio" name="point_mode" value="deduct"> ➖ ลดแต้ม
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 6px; border: 1.5px solid var(--border-color, #CBD5E1); padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: 0.82rem; font-weight: 700; background: var(--bg-card-subtle);">
+                            <input type="radio" name="point_mode" value="set"> 🎯 กำหนดค่า
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary, #475569); display: block; margin-bottom: 4px;">จำนวนแต้ม (Points) *</label>
+                    <input type="number" name="amount" id="modal_point_amount" min="1" step="1" required placeholder="เช่น 100" class="form-input" style="width: 100%; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--border-color, #CBD5E1); font-size: 1.05rem; font-weight: 700;">
+                    <!-- Quick points presets -->
+                    <div style="display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('modal_point_amount').value=50" style="padding: 2px 8px; font-size: 0.75rem;">+50</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('modal_point_amount').value=100" style="padding: 2px 8px; font-size: 0.75rem;">+100</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('modal_point_amount').value=200" style="padding: 2px 8px; font-size: 0.75rem;">+200</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('modal_point_amount').value=500" style="padding: 2px 8px; font-size: 0.75rem;">+500</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('modal_point_amount').value=1000" style="padding: 2px 8px; font-size: 0.75rem;">+1,000</button>
+                    </div>
+                </div>
+
+                <div>
+                    <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary, #475569); display: block; margin-bottom: 4px;">เหตุผล / บันทึกช่วยจำ</label>
+                    <input type="text" name="reason" placeholder="เช่น โบนัสสมาชิกใหม่, ของขวัญวันเกิด, สิทธิ์พิเศษ" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-color, #CBD5E1);">
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+                    <button type="button" onclick="closePointsModal()" class="btn btn-secondary" style="padding: 8px 16px;">ยกเลิก</button>
+                    <button type="submit" class="btn btn-primary" style="padding: 8px 20px; background: #D97706; border-color: #D97706; font-weight: 700;">
+                        บันทึกการปรับแต้ม 🐾
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -2364,6 +2700,39 @@ function switchAdminTab(tabName, btnEl, event) {
     }
 })();
 
+// Modal Points Management Controller
+function openPointsModal(userId, username, currentPoints) {
+    const modal = document.getElementById('pointsManageModal');
+    if (!modal) return;
+    const uidInput = document.getElementById('modal_point_user_id');
+    const uNameText = document.getElementById('modal_point_username');
+    const uCurrText = document.getElementById('modal_point_current');
+    const uAmtInput = document.getElementById('modal_point_amount');
+
+    if (uidInput) uidInput.value = userId;
+    if (uNameText) uNameText.textContent = '@' + username;
+    if (uCurrText) uCurrText.textContent = Number(currentPoints).toLocaleString() + ' pts';
+    if (uAmtInput) {
+        uAmtInput.value = '';
+        setTimeout(() => uAmtInput.focus(), 50);
+    }
+    modal.style.display = 'flex';
+}
+
+function closePointsModal() {
+    const modal = document.getElementById('pointsManageModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// Close points modal on ESC key or backdrop click
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePointsModal();
+});
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('pointsManageModal');
+    if (modal && e.target === modal) closePointsModal();
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 1. Chart.js: Dynamic Revenue Chart (Daily / Weekly / Monthly)
@@ -2482,18 +2851,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // -------------------------------------------------------------
-    // 2. Chart.js: Top Clicked Cat Breeds (Horizontal Bar)
+    // 2. Chart.js: Top Clicked Cat Breeds (Horizontal Bar - Hybrid Mockup + Real Live Interactions)
     // -------------------------------------------------------------
+    const hybridBreedLabels = <?php echo json_encode($breed_clicks_labels); ?>;
+    const hybridBreedData = <?php echo json_encode($breed_clicks_data); ?>;
+
+    window.catClicksChartInstances = [];
+    window.memberNeedsChartInstances = [];
+
     const initCatClicksChart = (canvasId) => {
         const catCanvas = document.getElementById(canvasId);
         if (catCanvas) {
-            new Chart(catCanvas, {
+            const chart = new Chart(catCanvas, {
                 type: 'bar',
                 data: {
-                    labels: ['Scottish Fold', 'British Shorthair', 'Ragdoll', 'Maine Coon', 'Sphynx', 'Persian'],
+                    labels: hybridBreedLabels,
                     datasets: [{
-                        label: 'จำนวนคลิกดู (Clicks)',
-                        data: [1420, 1280, 1150, 980, 840, 760],
+                        label: 'จำนวนคลิกดู & จับคู่ (Clicks & AI Match)',
+                        data: [...hybridBreedData],
                         backgroundColor: [
                             '#FF6B4A',
                             '#F59E0B',
@@ -2514,7 +2889,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
-                                    return ` 🐾 ยอดคลิก: ${context.raw.toLocaleString()} ครั้ง`;
+                                    return ` 🐾 ยอดคลิก & แมตช์: ${context.raw.toLocaleString()} ครั้ง`;
                                 }
                             }
                         }
@@ -2525,6 +2900,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             });
+            window.catClicksChartInstances.push(chart);
         }
     };
     initCatClicksChart('catClicksChart');
@@ -2533,21 +2909,56 @@ document.addEventListener('DOMContentLoaded', () => {
     // -------------------------------------------------------------
     // 3. Chart.js: Member Preferences & Needs (Doughnut)
     // -------------------------------------------------------------
+    let memberNeedsCounts = [<?php echo "{$base_c1}, {$base_c2}, {$base_c3}, {$base_c4}, {$base_c5}"; ?>];
+    const memberNeedsBaseLabels = [
+        '🏢 เลี้ยงในคอนโด',
+        '🤧 ภูมิแพ้/ไม่ผลัดขน',
+        '🐱 มือใหม่เลี้ยงง่าย',
+        '👑 พรีเมียมมีใบเพ็ด',
+        '🎾 แมวขี้เล่นร่าเริง'
+    ];
+
+    function calculateMemberNeedsData() {
+        const total = memberNeedsCounts.reduce((a, b) => a + b, 0) || 1;
+        const labels = memberNeedsBaseLabels.map((lbl, idx) => {
+            const pct = Math.round((memberNeedsCounts[idx] / total) * 100);
+            return `${lbl} (${pct}%)`;
+        });
+        return {
+            labels: labels,
+            data: [...memberNeedsCounts]
+        };
+    }
+
+    function updateAllMemberNeedsCharts() {
+        const calc = calculateMemberNeedsData();
+        window.memberNeedsChartInstances.forEach(chart => {
+            if (chart && chart.data) {
+                chart.data.labels = calc.labels;
+                chart.data.datasets[0].data = calc.data;
+                chart.update();
+            }
+        });
+
+        const total = memberNeedsCounts.reduce((a, b) => a + b, 0) || 1;
+        const condoPct = Math.round((memberNeedsCounts[0] / total) * 100);
+        const allergyPct = Math.round((memberNeedsCounts[1] / total) * 100);
+        const condoEl = document.getElementById('card-condo-pct');
+        if (condoEl) condoEl.textContent = `เลี้ยงในคอนโด / ห้องพัก (${condoPct}%)`;
+        const allergyEl = document.getElementById('card-allergy-pct');
+        if (allergyEl) allergyEl.textContent = `คนเป็นภูมิแพ้ / ขนไม่ร่วง (${allergyPct}%)`;
+    }
+
     const initMemberNeedsChart = (canvasId) => {
         const needsCanvas = document.getElementById(canvasId);
         if (needsCanvas) {
-            new Chart(needsCanvas, {
+            const calc = calculateMemberNeedsData();
+            const chart = new Chart(needsCanvas, {
                 type: 'doughnut',
                 data: {
-                    labels: [
-                        '🏢 เลี้ยงในคอนโด (35%)',
-                        '🤧 ภูมิแพ้/ไม่ผลัดขน (25%)',
-                        '🐱 มือใหม่เลี้ยงง่าย (20%)',
-                        '👑 พรีเมียมมีใบเพ็ด (12%)',
-                        '🎾 แมวขี้เล่นร่าเริง (8%)'
-                    ],
+                    labels: calc.labels,
                     datasets: [{
-                        data: [35, 25, 20, 12, 8],
+                        data: calc.data,
                         backgroundColor: [
                             '#3B82F6',
                             '#10B981',
@@ -2575,6 +2986,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     cutout: '62%'
                 }
             });
+            window.memberNeedsChartInstances.push(chart);
         }
     };
     initMemberNeedsChart('memberNeedsChart');
@@ -2621,6 +3033,278 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // -------------------------------------------------------------
+    // 5. Toast Notification System
+    // -------------------------------------------------------------
+    window.showAdminToast = function(messageHtml) {
+        let toastContainer = document.getElementById('admin-toast-container');
+        if (!toastContainer) {
+            toastContainer = document.createElement('div');
+            toastContainer.id = 'admin-toast-container';
+            toastContainer.style.cssText = 'position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; max-width: 380px;';
+            document.body.appendChild(toastContainer);
+        }
+
+        const toast = document.createElement('div');
+        toast.style.cssText = 'background: #1E293B; color: #FFFFFF; padding: 12px 18px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.25); border-left: 4px solid #9333EA; font-size: 0.88rem; line-height: 1.5; transform: translateY(20px); opacity: 0; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);';
+        toast.innerHTML = messageHtml;
+        toastContainer.appendChild(toast);
+
+        requestAnimationFrame(() => {
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+        });
+
+        setTimeout(() => {
+            toast.style.transform = 'translateY(10px)';
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 350);
+        }, 4500);
+    };
+
+    // -------------------------------------------------------------
+    // 6. Real-Time Quiz & Behavior Live Handler
+    // -------------------------------------------------------------
+    const seenQuizIds = new Set();
+    
+    // Register existing rows rendered on the server
+    document.querySelectorAll('#admin-quiz-tbody tr').forEach(tr => {
+        const text = (tr.innerText || '').trim();
+        if (text) seenQuizIds.add(text);
+    });
+    document.querySelectorAll('#admin-activity-tbody tr').forEach(tr => {
+        const text = (tr.innerText || '').trim();
+        if (text) seenQuizIds.add(text);
+    });
+    
+    window.handleIncomingLiveQuiz = function(qs) {
+        if (!qs) return;
+        const qId = qs.id || (qs.user_name + '_' + (qs.timestamp || '') + '_' + (qs.matched_breed || ''));
+        if (seenQuizIds.has(qId)) return;
+        seenQuizIds.add(qId);
+
+        const tbody = document.getElementById('admin-quiz-tbody');
+        const countBadge = document.getElementById('admin-quiz-count');
+        const actTbody = document.getElementById('admin-activity-tbody');
+        const actDashTbody = document.getElementById('admin-activity-tbody-dashboard');
+
+        const score = parseFloat(qs.match_score || 98.6);
+        const traits = qs.trait_scores || {};
+        const userSafe = escapeHtml(qs.user_name || 'สมาชิก');
+        const breedSafe = escapeHtml(qs.matched_breed || 'Scottish Fold');
+        const timeSafe = escapeHtml(qs.timestamp || 'สดๆ ร้อนๆ');
+
+        if (tbody) {
+            const newRow = document.createElement('tr');
+            newRow.style.background = 'rgba(147, 51, 234, 0.08)';
+            newRow.style.transition = 'all 0.6s ease';
+            newRow.innerHTML = `
+                <td style="font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">
+                    ${timeSafe} <span style="background:#DCFCE7; color:#15803D; font-size:0.7rem; padding:1px 5px; border-radius:4px; font-weight:800;">LIVE ⚡</span>
+                </td>
+                <td>
+                    <strong style="color: var(--text-main);">${userSafe}</strong>
+                </td>
+                <td>
+                    <span style="background: #FAF5FF; color: #9333EA; border: 1px solid #D8B4FE; padding: 3px 10px; border-radius: 8px; font-weight: 800; font-size: 0.86rem; display: inline-flex; align-items: center; gap: 4px;">
+                        🐱 ${breedSafe}
+                    </span>
+                </td>
+                <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div style="flex: 1; height: 8px; background: #F3E8FF; border-radius: 999px; overflow: hidden; min-width: 60px;">
+                            <div style="width: ${Math.min(100, score)}%; height: 100%; background: linear-gradient(90deg, #9333EA, #EC4899); border-radius: 999px;"></div>
+                        </div>
+                        <strong style="color: #059669; font-size: 0.88rem;">${score}%</strong>
+                    </div>
+                </td>
+                <td style="font-size: 0.78rem;">
+                    <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                        <span style="background: #EFF6FF; color: #1D4ED8; padding: 2px 6px; border-radius: 4px; font-weight: 600;">🏡 พื้นที่ ${traits.living_match || 95}%</span>
+                        <span style="background: #F0FDF4; color: #15803D; padding: 2px 6px; border-radius: 4px; font-weight: 600;">⏰ เวลา ${traits.time_match || 92}%</span>
+                        <span style="background: #FDF2F8; color: #BE185D; padding: 2px 6px; border-radius: 4px; font-weight: 600;">💖 นิสัย ${traits.personality_match || 99}%</span>
+                        <span style="background: #FEF3C7; color: #B45309; padding: 2px 6px; border-radius: 4px; font-weight: 600;">✂️ ขน ${traits.grooming_match || 94}%</span>
+                    </div>
+                </td>
+                <td>
+                    <span style="background: #FEF3C7; color: #B45309; border: 1px dashed #F59E0B; padding: 2px 8px; border-radius: 6px; font-weight: 800; font-size: 0.78rem;">
+                        🎟️ ${escapeHtml(qs.voucher || 'PAW100SURVEY')} (฿100)
+                    </span>
+                </td>
+            `;
+            if (tbody.innerHTML.includes('ยังไม่มีประวัติ')) {
+                tbody.innerHTML = '';
+            }
+            tbody.insertBefore(newRow, tbody.firstChild);
+        }
+
+        // Add to Activity Logs Tables (Both Insights tab and Main Dashboard)
+        [actTbody, actDashTbody].forEach(tb => {
+            if (tb) {
+                const actRow = document.createElement('tr');
+                actRow.style.background = 'rgba(147, 51, 234, 0.06)';
+                actRow.style.transition = 'all 0.5s ease';
+                actRow.innerHTML = `
+                    <td style="font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">
+                        ${timeSafe} <span style="background:#DCFCE7; color:#15803D; font-size:0.7rem; padding:1px 4px; border-radius:4px; font-weight:800;">LIVE</span>
+                    </td>
+                    <td><strong style="color: var(--text-main);">${userSafe}</strong></td>
+                    <td>
+                        <span style="background: #FAF5FF; color: #9333EA; padding: 3px 8px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; border: 1px solid #D8B4FE;">
+                            🔮 ทำแบบทดสอบ AI Matchmaker
+                        </span>
+                    </td>
+                    <td><strong style="color: var(--primary-coral); font-size: 0.88rem;">แมตช์: ${breedSafe} (${score}%)</strong></td>
+                    <td><span style="font-size: 0.78rem; color: #9333EA; background: #F3E8FF; padding: 2px 8px; border-radius: 4px; font-weight: 700;">AI Matchmaker</span></td>
+                `;
+                tb.insertBefore(actRow, tb.firstChild);
+            }
+        });
+
+        // Update Quiz Count
+        if (countBadge) {
+            const currentVal = parseInt(countBadge.textContent.replace(/,/g, '')) || 391;
+            countBadge.textContent = (currentVal + 1).toLocaleString();
+        }
+
+        // Real-Time Update Chart 1: Top Clicked & Matched Breeds
+        window.catClicksChartInstances.forEach(chart => {
+            if (chart && chart.data && chart.data.labels) {
+                const idx = chart.data.labels.findIndex(l => breedSafe.toLowerCase().includes(l.toLowerCase()) || l.toLowerCase().includes(breedSafe.toLowerCase()));
+                if (idx !== -1) {
+                    chart.data.datasets[0].data[idx] = (chart.data.datasets[0].data[idx] || 0) + 1;
+                    chart.update();
+                }
+            }
+        });
+
+        // Real-Time Update Chart 2: Member Needs (Dynamic Scores & Percentages)
+        const answers = qs.answers || {};
+        let needsUpdated = false;
+
+        // 0: เลี้ยงในคอนโด
+        if (answers.living === 'condo' || breedSafe.includes('Scottish') || breedSafe.includes('British')) {
+            memberNeedsCounts[0] += 1;
+            needsUpdated = true;
+        }
+        // 1: ภูมิแพ้/ไม่ผลัดขน
+        if (answers.grooming === 'easy' || breedSafe.includes('Sphynx') || breedSafe.includes('Siam') || breedSafe.includes('Khao')) {
+            memberNeedsCounts[1] += 1;
+            needsUpdated = true;
+        }
+        // 2: มือใหม่เลี้ยงง่าย
+        if (answers.exp === 'beginner' || answers.personality === 'cuddly' || breedSafe.includes('Ragdoll')) {
+            memberNeedsCounts[2] += 1;
+            needsUpdated = true;
+        }
+        // 3: พรีเมียมมีใบเพ็ด
+        if (answers.exp === 'expert' || answers.grooming === 'fluffy' || breedSafe.includes('Maine') || breedSafe.includes('Persian')) {
+            memberNeedsCounts[3] += 1;
+            needsUpdated = true;
+        }
+        // 4: แมวขี้เล่นร่าเริง
+        if (answers.personality === 'playful' || answers.living === 'single_house' || breedSafe.includes('Bengal')) {
+            memberNeedsCounts[4] += 1;
+            needsUpdated = true;
+        }
+
+        if (!needsUpdated) {
+            memberNeedsCounts[0] += 1;
+        }
+
+        updateAllMemberNeedsCharts();
+
+        // Show Toast Notification
+        showAdminToast(`🔔 <strong>${userSafe}</strong> ทำแบบทดสอบ AI Matchmaker สำเร็จ!<br>แมตช์ได้: <strong style="color:#A855F7;">${breedSafe}</strong> (${score}%)`);
+    };
+
+    // -------------------------------------------------------------
+    // 7. Multi-Tab BroadcastChannel & Storage Event Listeners
+    // -------------------------------------------------------------
+    if ('BroadcastChannel' in window) {
+        const bc = new BroadcastChannel('purrfect_shop_channel');
+        bc.onmessage = (ev) => {
+            if (ev.data && ev.data.type === 'QUIZ_COMPLETED') {
+                window.handleIncomingLiveQuiz(ev.data.payload);
+            }
+        };
+    }
+
+    window.addEventListener('storage', (e) => {
+        if (e.key === 'cat_shop_last_quiz_event' && e.newValue) {
+            try {
+                const parsed = JSON.parse(e.newValue);
+                if (parsed && parsed.data) {
+                    window.handleIncomingLiveQuiz(parsed.data);
+                }
+            } catch(err) {}
+        }
+    });
+
+    // -------------------------------------------------------------
+    // 8. Background Polling to Server for Live Multi-Device Sync
+    // -------------------------------------------------------------
+    const pollBehaviorLive = () => {
+        const isPhp = window.location.pathname.endsWith('.php') || window.location.port === '8000';
+        const url = isPhp ? 'api_behavior.php?action=get_behavior' : 'data_analytics.json?t=' + Date.now();
+
+        fetch(url)
+            .then(res => res.json())
+            .then(res => {
+                const analytics = res.data ? res.data : res;
+                if (analytics && analytics.quiz_submissions) {
+                    const subs = analytics.quiz_submissions;
+                    if (subs.length > 0) {
+                        subs.slice(0, 15).reverse().forEach(subItem => {
+                            window.handleIncomingLiveQuiz(subItem);
+                        });
+                    }
+                }
+            })
+            .catch(() => {});
+    };
+    pollBehaviorLive();
+    setInterval(pollBehaviorLive, 2500);
+
+    // Initial Load of Local Quiz History and Behavior Logs if any
+    try {
+        const localHistory = JSON.parse(localStorage.getItem('cat_shop_quiz_history') || '[]');
+        if (localHistory.length > 0) {
+            localHistory.slice(0, 10).reverse().forEach(qs => {
+                window.handleIncomingLiveQuiz(qs);
+            });
+        }
+
+        const localBehaviorLogs = JSON.parse(localStorage.getItem('cat_shop_behavior_logs') || '[]');
+        if (localBehaviorLogs.length > 0) {
+            const actTbody = document.getElementById('admin-activity-tbody');
+            const actDashTbody = document.getElementById('admin-activity-tbody-dashboard');
+            localBehaviorLogs.slice(0, 10).reverse().forEach(act => {
+                const actId = (act.timestamp || '') + '_' + (act.action || '') + '_' + (act.user_name || '');
+                if (!seenQuizIds.has(actId)) {
+                    seenQuizIds.add(actId);
+                    [actTbody, actDashTbody].forEach(tb => {
+                        if (tb) {
+                            const actRow = document.createElement('tr');
+                            actRow.innerHTML = `
+                                <td style="font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">${escapeHtml(act.timestamp || '')}</td>
+                                <td><strong style="color: var(--text-main);">${escapeHtml(act.user_name || 'สมาชิก')}</strong></td>
+                                <td>
+                                    <span style="background: var(--bg-card-subtle); padding: 3px 8px; border-radius: 6px; font-size: 0.82rem; font-weight: 600; border: 1px solid var(--border-color);">
+                                        ${escapeHtml(act.icon || '🐾')} ${escapeHtml(act.action || 'กิจกรรม')}
+                                    </span>
+                                </td>
+                                <td><strong style="color: var(--primary-coral); font-size: 0.88rem;">${escapeHtml(act.target || '-')}</strong></td>
+                                <td><span style="font-size: 0.78rem; color: var(--text-secondary); background: #F1F5F9; padding: 2px 8px; border-radius: 4px;">${escapeHtml(act.category || 'ทั่วไป')}</span></td>
+                            `;
+                            tb.insertBefore(actRow, tb.firstChild);
+                        }
+                    });
+                }
+            });
+        }
+    } catch(e) {}
 });
 </script>
 

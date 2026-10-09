@@ -602,9 +602,9 @@
             "user_email": "admin@catboutique.shop",
             "is_member": true,
             "avatar": "assets\/images\/logo.png",
-            "unread_admin": 0,
+            "unread_admin": 3,
             "unread_user": 0,
-            "last_active": "2026-09-18 16:51:12",
+            "last_active": "2026-10-09 12:17:54",
             "messages": [
                 {
                     "id": "msg_init_1789725072",
@@ -613,6 +613,70 @@
                     "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
                     "cards": [],
                     "timestamp": "2026-09-18 16:51:12"
+                },
+                {
+                    "id": "msg_q_c_6ac72005bcb59",
+                    "sender": "customer",
+                    "sender_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+                    "text": "🩺 การรับประกันสุขภาพและบริการหลังการขายมีอะไรบ้าง?",
+                    "cards": [],
+                    "timestamp": "2026-10-08 11:45:57"
+                },
+                {
+                    "id": "msg_q_b_6ac72005bcb68",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Advisor 🐾",
+                    "text": "🩺 การันตีมาตรฐานสุขภาพระดับสากลจาก Purrfect Cattery:\n\n1. 💉 วัคซีนครบ 2 เข็ม + ถ่ายพยาธิ + หยดยาป้องกันเห็บหมัด\n2. 🔬 ตรวจผลแล็บ ปลอดโรคลิวคีเมีย (FeLV) และเอดส์แมว (FIV) 100%\n3. 🛡️ การันตีคุ้มครองสุขภาพโรคร้ายแรงนานถึง 180 วันเต็ม\n4. 🚗 บริการจัดส่งด้วยรถ Pet Taxi ควบคุมอุณหภูมิถึงหน้าบ้านทั่วประเทศ\n5. 👨‍⚕️ ปรึกษาสัตวแพทย์ประจำฟาร์มฟรีตลอดอายุขัยของน้องแมวครับ!",
+                    "cards": [],
+                    "timestamp": "2026-10-08 11:45:57"
+                },
+                {
+                    "id": "msg_6ac7200877d2f",
+                    "sender": "customer",
+                    "sender_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+                    "text": "5+",
+                    "cards": [],
+                    "timestamp": "2026-10-08 11:46:00"
+                },
+                {
+                    "id": "msg_bot_6ac7200877eb5",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "🐱 เอ๊ะ... น้องบอทอ่านแล้วยังไม่ค่อยเข้าใจความหมายของข้อความนี้เลยครับ 🐾\n\nรบกวนคุณลูกค้าช่วยพิมพ์คำถามใหม่อีกครั้ง หรือสอบถามเรื่องที่ต้องการให้บอทช่วยเหลือได้ไหมครับ เช่น:\n• สอบถามข้อมูลและราคาน้องแมวแต่ละสายพันธุ์ (เช่น บริติช, สฟิงซ์, แร็กดอลล์, เมนคูน)\n• บริการจัดส่งฟรี Pet Taxi ควบคุมอุณหภูมิทั่วไทย\n• การรับประกันสุขภาพ 180 วัน, การฉีดวัคซีน, และฝังไมโครชิป\n• โปรโมชั่นโค้ดส่วนลด และสิทธิพิเศษสมาชิก\n• เวลาเปิด-ปิดหน้าร้าน หรือแผนที่เดินทาง\n\n💡 หรือกดปุ่ม ⚡ คำถาม ด้านล่างเพื่อเลือกดูคำถามด่วนยอดนิยมได้ทันทีครับ!",
+                    "cards": [],
+                    "timestamp": "2026-10-08 11:46:01"
+                },
+                {
+                    "id": "msg_6ac7200cd1b74",
+                    "sender": "customer",
+                    "sender_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+                    "text": "แมว",
+                    "cards": [],
+                    "timestamp": "2026-10-08 11:46:04"
+                },
+                {
+                    "id": "msg_bot_6ac7200cd2423",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "มีทีมผู้เชี่ยวชาญด้านพฤติกรรมสัตว์เลี้ยงคอยให้คำแนะนำฟรีตลอดชีพผ่าน LINE OA สามารถสอบถามเทคนิคการปรับตัว การเข้ากับแมวเดิมในบ้าน หรือการปรับอาหารได้ตลอดเวลาครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-08 11:46:05"
+                },
+                {
+                    "id": "msg_6ac87902c4109",
+                    "sender": "customer",
+                    "sender_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+                    "text": "admin",
+                    "cards": [],
+                    "timestamp": "2026-10-09 12:17:54"
+                },
+                {
+                    "id": "msg_bot_6ac87902c4d3a",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "🐱 เอ๊ะ... น้องบอทอ่านแล้วยังไม่ค่อยเข้าใจความหมายของข้อความนี้เลยครับ 🐾\n\nรบกวนคุณลูกค้าช่วยพิมพ์คำถามใหม่อีกครั้ง หรือสอบถามเรื่องที่ต้องการให้บอทช่วยเหลือได้ไหมครับ เช่น:\n• สอบถามข้อมูลและราคาน้องแมวแต่ละสายพันธุ์ (เช่น บริติช, สฟิงซ์, แร็กดอลล์, เมนคูน)\n• บริการจัดส่งฟรี Pet Taxi ควบคุมอุณหภูมิทั่วไทย\n• การรับประกันสุขภาพ 180 วัน, การฉีดวัคซีน, และฝังไมโครชิป\n• โปรโมชั่นโค้ดส่วนลด และสิทธิพิเศษสมาชิก\n• เวลาเปิด-ปิดหน้าร้าน หรือแผนที่เดินทาง\n\n💡 หรือกดปุ่ม ⚡ คำถาม ด้านล่างเพื่อเลือกดูคำถามด่วนยอดนิยมได้ทันทีครับ!",
+                    "cards": [],
+                    "timestamp": "2026-10-09 12:17:55"
                 }
             ]
         },
@@ -1306,6 +1370,446 @@
                     "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
                     "cards": [],
                     "timestamp": "2026-10-08 01:30:48"
+                }
+            ]
+        },
+        "guest_0d34da6f97": {
+            "user_id": "guest_0d34da6f97",
+            "user_name": "ผู้เยี่ยมชม (6f97)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 2,
+            "unread_user": 0,
+            "last_active": "2026-10-08 10:37:01",
+            "messages": [
+                {
+                    "id": "msg_init_1791429754",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-08 10:22:34"
+                },
+                {
+                    "id": "msg_6ac70fb5b92dd",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (6f97)",
+                    "text": "g",
+                    "cards": [],
+                    "timestamp": "2026-10-08 10:36:21"
+                },
+                {
+                    "id": "msg_bot_6ac70fb5b9b3d",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "ราคา: 29,000 – 39,000 บาท | ใบรับรอง: TICA | ลักษณะเด่น: ตาสีฟ้าครามประกายเพชร ขนยาวนุ่มฟู มาร์คกิ้งคมชัด ตัวนิ่มปวกเปียกเวลาอุ้มเหมือนตุ๊กตาผ้า | นิสัย: อ่อนหวาน ใจดี ไม่กางเล็บ ปลอดภัยสำหรับบ้านที่มีเด็กเล็กและผู้สูงอายุ 100% | สถานะ: มีพร้อมย้ายบ้าน ตรวจยีนหัวใจ HCM ผ่านสมบูรณ์ครับ",
+                    "cards": [
+                        {
+                            "id": "cat_ragdoll",
+                            "name": "น้องคอตตอน (Ragdoll)",
+                            "breed": "แร็กดอลล์ (Ragdoll)",
+                            "price": 29000,
+                            "price_fmt": "฿29,000",
+                            "image": "assets\/images\/cat_ragdoll.jpg",
+                            "hair": "ขนกึ่งยาวนุ่มลื่น",
+                            "highlight": "ตาสีฟ้าเปล่งประกายสวยงาม",
+                            "link": "products.php"
+                        }
+                    ],
+                    "timestamp": "2026-10-08 10:36:22"
+                },
+                {
+                    "id": "msg_6ac70fdd63b12",
+                    "sender": "customer",
+                    "sender_name": "ผู้เยี่ยมชม (6f97)",
+                    "text": "1",
+                    "cards": [],
+                    "timestamp": "2026-10-08 10:37:01"
+                },
+                {
+                    "id": "msg_bot_6ac70fdd6427e",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "ครอบคลุม 4 โรคติดต่อร้ายแรงในแมว ได้แก่: 1) ไข้หัดแมว (FPV - Feline Panleukopenia), 2) โรคลิวคีเมียในแมว (FeLV - Feline Leukemia Virus), 3) โรคเอดส์แมว (FIV - Feline Immunodeficiency Virus), 4) โรคเยื่อบุช่องท้องอักเสบติดต่อ (FIP - Feline Infectious Peritonitis) ครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-08 10:37:02"
+                }
+            ]
+        },
+        "guest_7f432abc47": {
+            "user_id": "guest_7f432abc47",
+            "user_name": "ผู้เยี่ยมชม (bc47)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-08 10:43:16",
+            "messages": [
+                {
+                    "id": "msg_init_1791430996",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-08 10:43:16"
+                }
+            ]
+        },
+        "guest_16c80d1654": {
+            "user_id": "guest_16c80d1654",
+            "user_name": "ผู้เยี่ยมชม (1654)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-08 10:43:30",
+            "messages": [
+                {
+                    "id": "msg_init_1791431010",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-08 10:43:30"
+                }
+            ]
+        },
+        "u_4b4628330d50": {
+            "user_id": "u_4b4628330d50",
+            "user_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+            "user_email": "admin@catboutique.shop",
+            "is_member": true,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 1,
+            "unread_user": 0,
+            "last_active": "2026-10-08 10:45:32",
+            "messages": [
+                {
+                    "id": "msg_init_1791431013",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-08 10:43:33"
+                },
+                {
+                    "id": "msg_6ac711dc3b3e4",
+                    "sender": "customer",
+                    "sender_name": "ผู้ดูแลระบบสูงสุด (Master Admin)",
+                    "text": "ยบสากเ",
+                    "cards": [],
+                    "timestamp": "2026-10-08 10:45:32"
+                },
+                {
+                    "id": "msg_bot_6ac711dc3c111",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "🐱 เอ๊ะ... น้องบอทอ่านแล้วยังไม่ค่อยเข้าใจความหมายของข้อความนี้เลยครับ 🐾\n\nรบกวนคุณลูกค้าช่วยพิมพ์คำถามใหม่อีกครั้ง หรือสอบถามเรื่องที่ต้องการให้บอทช่วยเหลือได้ไหมครับ เช่น:\n• สอบถามข้อมูลและราคาน้องแมวแต่ละสายพันธุ์ (เช่น บริติช, สฟิงซ์, แร็กดอลล์, เมนคูน)\n• บริการจัดส่งฟรี Pet Taxi ควบคุมอุณหภูมิทั่วไทย\n• การรับประกันสุขภาพ 180 วัน, การฉีดวัคซีน, และฝังไมโครชิป\n• โปรโมชั่นโค้ดส่วนลด และสิทธิพิเศษสมาชิก\n• เวลาเปิด-ปิดหน้าร้าน หรือแผนที่เดินทาง\n\n💡 หรือกดปุ่ม ⚡ คำถาม ด้านล่างเพื่อเลือกดูคำถามด่วนยอดนิยมได้ทันทีครับ!",
+                    "cards": [],
+                    "timestamp": "2026-10-08 10:45:33"
+                }
+            ]
+        },
+        "guest_affe9e6181": {
+            "user_id": "guest_affe9e6181",
+            "user_name": "ผู้เยี่ยมชม (6181)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-08 11:52:28",
+            "messages": [
+                {
+                    "id": "msg_init_1791435148",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-08 11:52:28"
+                }
+            ]
+        },
+        "u_6ac873c8612d7": {
+            "user_id": "u_6ac873c8612d7",
+            "user_name": "yoyouhpop@gmail.com",
+            "user_email": "yoyouhpop@gmail.com",
+            "is_member": true,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 11:55:39",
+            "messages": [
+                {
+                    "id": "msg_init_1791521739",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 11:55:39"
+                }
+            ]
+        },
+        "u_6ac87402610ad": {
+            "user_id": "u_6ac87402610ad",
+            "user_name": "oavatan@gmail.com",
+            "user_email": "oavatan@gmail.com",
+            "is_member": true,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 11:56:36",
+            "messages": [
+                {
+                    "id": "msg_init_1791521796",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 11:56:36"
+                }
+            ]
+        },
+        "guest_4f88986740": {
+            "user_id": "guest_4f88986740",
+            "user_name": "ผู้เยี่ยมชม (6740)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 12:01:26",
+            "messages": [
+                {
+                    "id": "msg_init_1791522086",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 12:01:26"
+                }
+            ]
+        },
+        "guest_ea279b5d28": {
+            "user_id": "guest_ea279b5d28",
+            "user_name": "ผู้เยี่ยมชม (5d28)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 12:02:42",
+            "messages": [
+                {
+                    "id": "msg_init_1791522162",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 12:02:42"
+                }
+            ]
+        },
+        "guest_daf268b5a1": {
+            "user_id": "guest_daf268b5a1",
+            "user_name": "ผู้เยี่ยมชม (b5a1)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 12:03:11",
+            "messages": [
+                {
+                    "id": "msg_init_1791522191",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 12:03:11"
+                }
+            ]
+        },
+        "u_6ac8759a2c20d": {
+            "user_id": "u_6ac8759a2c20d",
+            "user_name": "purrfectshop.cattery@gmail.com",
+            "user_email": "purrfectshop.cattery@gmail.com",
+            "is_member": true,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 12:03:23",
+            "messages": [
+                {
+                    "id": "msg_init_1791522203",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 12:03:23"
+                }
+            ]
+        },
+        "guest_42b97444ec": {
+            "user_id": "guest_42b97444ec",
+            "user_name": "ผู้เยี่ยมชม (44ec)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 12:03:46",
+            "messages": [
+                {
+                    "id": "msg_init_1791522226",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 12:03:46"
+                }
+            ]
+        },
+        "guest_c3a21bc3a4": {
+            "user_id": "guest_c3a21bc3a4",
+            "user_name": "ผู้เยี่ยมชม (c3a4)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 12:06:35",
+            "messages": [
+                {
+                    "id": "msg_init_1791522395",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 12:06:35"
+                }
+            ]
+        },
+        "guest_cd60b5544a": {
+            "user_id": "guest_cd60b5544a",
+            "user_name": "ผู้เยี่ยมชม (544a)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 12:11:46",
+            "messages": [
+                {
+                    "id": "msg_init_1791522706",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 12:11:46"
+                }
+            ]
+        },
+        "guest_c4d0b21192": {
+            "user_id": "guest_c4d0b21192",
+            "user_name": "ผู้เยี่ยมชม (1192)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 12:57:26",
+            "messages": [
+                {
+                    "id": "msg_init_1791525446",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 12:57:26"
+                }
+            ]
+        },
+        "guest_657b31f2e9": {
+            "user_id": "guest_657b31f2e9",
+            "user_name": "ผู้เยี่ยมชม (f2e9)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 13:28:03",
+            "messages": [
+                {
+                    "id": "msg_init_1791527283",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 13:28:03"
+                }
+            ]
+        },
+        "guest_b05a01c044": {
+            "user_id": "guest_b05a01c044",
+            "user_name": "ผู้เยี่ยมชม (c044)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 13:43:00",
+            "messages": [
+                {
+                    "id": "msg_init_1791528180",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 13:43:00"
+                }
+            ]
+        },
+        "u_6ac88d0ab40e2": {
+            "user_id": "u_6ac88d0ab40e2",
+            "user_name": "วรรณ์สิริ",
+            "user_email": "kaitock@gmail.com",
+            "is_member": true,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 13:43:26",
+            "messages": [
+                {
+                    "id": "msg_init_1791528206",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 13:43:26"
+                }
+            ]
+        },
+        "guest_8d3f19e470": {
+            "user_id": "guest_8d3f19e470",
+            "user_name": "ผู้เยี่ยมชม (e470)",
+            "user_email": "guest@purrfect.shop",
+            "is_member": false,
+            "avatar": "assets\/images\/logo.png",
+            "unread_admin": 0,
+            "unread_user": 0,
+            "last_active": "2026-10-09 13:47:08",
+            "messages": [
+                {
+                    "id": "msg_init_1791528428",
+                    "sender": "bot",
+                    "sender_name": "Purrfect Bot 🐾",
+                    "text": "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้บอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์ข้อความพูดคุยได้เลยครับ",
+                    "cards": [],
+                    "timestamp": "2026-10-09 13:47:08"
                 }
             ]
         }

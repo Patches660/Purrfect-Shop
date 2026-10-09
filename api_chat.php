@@ -30,6 +30,10 @@ function saveChats($chat_file, $data) {
 $current_user = getCurrentUser();
 $is_admin = $current_user && ($current_user['role'] ?? '') === 'admin';
 
+$client_username = trim($_REQUEST['client_username'] ?? '');
+$client_fullname = trim($_REQUEST['client_fullname'] ?? '');
+$client_email = trim($_REQUEST['client_email'] ?? '');
+
 $user_id = '';
 $user_name = '';
 $user_email = '';
@@ -44,6 +48,12 @@ if ($current_user) {
     if (!empty($current_user['avatar'])) {
         $user_avatar = $current_user['avatar'];
     }
+} elseif (!empty($client_username) || !empty($client_fullname) || !empty($client_email)) {
+    $uname = !empty($client_fullname) ? $client_fullname : (!empty($client_username) ? $client_username : $client_email);
+    $user_id = 'u_' . substr(md5($client_email ?: $client_username ?: $client_fullname), 0, 12);
+    $user_name = $uname;
+    $user_email = $client_email ?: ($client_username . '@purrfect.shop');
+    $is_member = true;
 } else {
     if (!isset($_SESSION['chat_guest_id'])) {
         $_SESSION['chat_guest_id'] = 'guest_' . substr(md5(session_id() . time()), 0, 10);
@@ -138,9 +148,50 @@ function findBotKnowledgeAnswer($user_query) {
     if (empty($raw_query)) return null;
 
     $query_lower = mb_strtolower($raw_query, 'UTF-8');
-    
+    $query_len = mb_strlen($query_lower, 'UTF-8');
+
+    // Confused fallback message when input has no meaning or is not understood
+    $confused_text = "🐱 เอ๊ะ... น้องบอทอ่านแล้วยังไม่ค่อยเข้าใจความหมายของข้อความนี้เลยครับ 🐾\n\n" .
+        "รบกวนคุณลูกค้าช่วยพิมพ์คำถามใหม่อีกครั้ง หรือสอบถามเรื่องที่ต้องการให้บอทช่วยเหลือได้ไหมครับ เช่น:\n" .
+        "• สอบถามข้อมูลและราคาน้องแมวแต่ละสายพันธุ์ (เช่น บริติช, สฟิงซ์, แร็กดอลล์, เมนคูน)\n" .
+        "• บริการจัดส่งฟรี Pet Taxi ควบคุมอุณหภูมิทั่วไทย\n" .
+        "• การรับประกันสุขภาพ 180 วัน, การฉีดวัคซีน, และฝังไมโครชิป\n" .
+        "• โปรโมชั่นโค้ดส่วนลด และสิทธิพิเศษสมาชิก\n" .
+        "• เวลาเปิด-ปิดหน้าร้าน หรือแผนที่เดินทาง\n\n" .
+        "💡 หรือกดปุ่ม ⚡ คำถาม ด้านล่างเพื่อเลือกดูคำถามด่วนยอดนิยมได้ทันทีครับ!";
+
+    // 1. Check for single-character or pure gibberish/symbol inputs
+    if ($query_len < 2 || (preg_match('/^[a-zA-Z0-9\s\.\,\?\!\@\#\$\%\^\&\*\(\)\_\+\-\=\[\]\{\}\;\:\'\"\\\|\<\>\/`~]+$/', $raw_query) && $query_len < 3)) {
+        // Only allow recognized 2-letter words like "hi"
+        $valid_short = ['hi'];
+        if (!in_array($query_lower, $valid_short)) {
+            return [
+                'found' => false,
+                'score' => 0,
+                'answer' => $confused_text,
+                'cards' => []
+            ];
+        }
+    }
+
+    // 2. Greeting check
+    $greetings = ['สวัสดี', 'หวัดดี', 'hello', 'hi', 'hey', 'ดีครับ', 'ดีค่ะ', 'ดีจ้า', 'ดีคับ', 'สวัสดิ'];
+    foreach ($greetings as $g) {
+        if ($query_lower === $g || (mb_strpos($query_lower, $g) !== false && $query_len <= 15)) {
+            return [
+                'found' => true,
+                'score' => 100,
+                'id' => 'GREETING',
+                'category' => 'ทักทาย',
+                'question' => 'ทักทาย',
+                'answer' => "สวัสดีครับยินดีต้อนรับสู่ Purrfect Shop! 🐾 มีอะไรให้น้องบอทหรือแอดมินดูแล สามารถเลือกคำถามด่วนด้านล่าง หรือพิมพ์เรื่องที่สนใจสอบถามได้เลยครับ",
+                'cards' => []
+            ];
+        }
+    }
+
     // Stopwords in Thai that could cause false positives if matched alone
-    $stopwords = ['ไหม', 'มั้ย', 'ได้', 'หรือ', 'และ', 'กับ', 'ให้', 'ของ', 'ที่', 'ใน', 'การ', 'ความ', 'ทาง', 'เป็น', 'อยู่', 'ช่วย', 'หน่อย', 'ครับ', 'ค่ะ', 'นะ', 'คะ', 'กี่', 'ตัว', 'ทำ', 'ยัง', 'ไง', 'บ้าง', 'มี', 'ถ้า', 'หาก', 'อยาก', 'จะ', 'ขอ'];
+    $stopwords = ['ไหม', 'มั้ย', 'ได้', 'หรือ', 'และ', 'กับ', 'ให้', 'ของ', 'ที่', 'ใน', 'การ', 'ความ', 'ทาง', 'เป็น', 'อยู่', 'ช่วย', 'หน่อย', 'ครับ', 'ค่ะ', 'นะ', 'คะ', 'กี่', 'ตัว', 'ทำ', 'ยัง', 'ไง', 'บ้าง', 'มี', 'ถ้า', 'หาก', 'อยาก', 'จะ', 'ขอ', 'เอ'];
 
     $best_score = 0;
     $best_item = null;
@@ -193,37 +244,42 @@ function findBotKnowledgeAnswer($user_query) {
             if (!empty($tag)) {
                 if ($tag === $query_lower) {
                     $score += 80;
-                } elseif (mb_strpos($query_lower, $tag) !== false) {
+                } elseif (mb_strlen($tag, 'UTF-8') >= 3 && mb_strpos($query_lower, $tag) !== false) {
                     $score += 40 + (mb_strlen($tag, 'UTF-8') * 5);
-                } elseif (mb_strpos($tag, $query_lower) !== false && mb_strlen($query_lower, 'UTF-8') >= 3) {
+                } elseif (mb_strlen($query_lower, 'UTF-8') >= 3 && mb_strpos($tag, $query_lower) !== false) {
                     $score += 30;
                 }
             }
         }
 
         // 2. Full question exact or direct containment
-        if (mb_strpos($q_text, $query_lower) !== false || mb_strpos($query_lower, $q_text) !== false) {
-            $score += 60;
+        if ($q_text === $query_lower) {
+            $score += 100;
+        } elseif ($query_len >= 3) {
+            if (mb_strpos($q_text, $query_lower) !== false || mb_strpos($query_lower, $q_text) !== false) {
+                $score += 50;
+            }
         }
 
         // 3. Sliding window on query (filtering stopwords)
-        $len = mb_strlen($query_lower, 'UTF-8');
-        for ($w = 3; $w <= min(6, $len); $w++) {
-            for ($i = 0; $i <= $len - $w; $i++) {
-                $sub = mb_substr($query_lower, $i, $w, 'UTF-8');
-                if (in_array($sub, $stopwords)) continue;
+        if ($query_len >= 3) {
+            for ($w = 3; $w <= min(6, $query_len); $w++) {
+                for ($i = 0; $i <= $query_len - $w; $i++) {
+                    $sub = mb_substr($query_lower, $i, $w, 'UTF-8');
+                    if (in_array($sub, $stopwords)) continue;
 
-                if (mb_strpos($q_text, $sub) !== false) {
-                    $score += $w * 3;
-                }
-                if (mb_strpos($ans_text, $sub) !== false) {
-                    $score += $w;
+                    if (mb_strpos($q_text, $sub) !== false) {
+                        $score += $w * 3;
+                    }
+                    if (mb_strpos($ans_text, $sub) !== false) {
+                        $score += $w;
+                    }
                 }
             }
         }
 
         // Category relevance bonus
-        if (mb_strpos($query_lower, $cat_text) !== false) {
+        if ($query_len >= 3 && mb_strpos($query_lower, $cat_text) !== false) {
             $score += 15;
         }
 
@@ -233,47 +289,46 @@ function findBotKnowledgeAnswer($user_query) {
         }
     }
 
-    // Determine relevant cards
+    // Determine relevant cards only if match is confident
     $cards = [];
-    $matched_cat_ids = [];
-    foreach ($breed_map as $kw => $cid) {
-        if (mb_strpos($query_lower, $kw) !== false && !in_array($cid, $matched_cat_ids)) {
-            $matched_cat_ids[] = $cid;
+    if ($best_score >= 35) {
+        $matched_cat_ids = [];
+        foreach ($breed_map as $kw => $cid) {
+            if (mb_strlen($kw, 'UTF-8') >= 3 && mb_strpos($query_lower, $kw) !== false && !in_array($cid, $matched_cat_ids)) {
+                $matched_cat_ids[] = $cid;
+            }
         }
-    }
-    // If best item has tags matching breed
-    if ($best_item && !empty($best_item['tags'])) {
-        foreach ($best_item['tags'] as $t) {
-            $t_l = mb_strtolower($t, 'UTF-8');
-            foreach ($breed_map as $kw => $cid) {
-                if ((mb_strpos($t_l, $kw) !== false || mb_strpos($kw, $t_l) !== false) && !in_array($cid, $matched_cat_ids)) {
-                    $matched_cat_ids[] = $cid;
+        // If best item has tags matching breed
+        if ($best_item && !empty($best_item['tags'])) {
+            foreach ($best_item['tags'] as $t) {
+                $t_l = mb_strtolower($t, 'UTF-8');
+                foreach ($breed_map as $kw => $cid) {
+                    if ((mb_strpos($t_l, $kw) !== false || mb_strpos($kw, $t_l) !== false) && !in_array($cid, $matched_cat_ids)) {
+                        $matched_cat_ids[] = $cid;
+                    }
                 }
             }
         }
-    }
 
-    if (!empty($matched_cat_ids)) {
-        foreach (array_slice($matched_cat_ids, 0, 3) as $cid) {
-            if (isset($cats[$cid])) {
-                $c = $cats[$cid];
-                $cards[] = [
-                    'id' => $c['id'],
-                    'name' => $c['name'],
-                    'breed' => $c['breed'],
-                    'price' => $c['price'],
-                    'price_fmt' => '฿' . number_format($c['price']),
-                    'image' => 'assets/images/' . $c['image'],
-                    'hair' => $c['hair_label'] ?? 'ขนสวยสุขภาพดี',
-                    'highlight' => $c['highlights'][0] ?? 'สายพันธุ์แท้ 100% มีใบเพ็ด',
-                    'link' => 'products.php'
-                ];
+        if (!empty($matched_cat_ids)) {
+            foreach (array_slice($matched_cat_ids, 0, 3) as $cid) {
+                if (isset($cats[$cid])) {
+                    $c = $cats[$cid];
+                    $cards[] = [
+                        'id' => $c['id'],
+                        'name' => $c['name'],
+                        'breed' => $c['breed'],
+                        'price' => $c['price'],
+                        'price_fmt' => '฿' . number_format($c['price']),
+                        'image' => 'assets/images/' . $c['image'],
+                        'hair' => $c['hair_label'] ?? 'ขนสวยสุขภาพดี',
+                        'highlight' => $c['highlights'][0] ?? 'สายพันธุ์แท้ 100% มีใบเพ็ด',
+                        'link' => 'products.php'
+                    ];
+                }
             }
         }
-    }
 
-    // Threshold check (score >= 20 means strong relevance)
-    if ($best_score >= 20 && $best_item) {
         return [
             'found' => true,
             'score' => $best_score,
@@ -285,21 +340,12 @@ function findBotKnowledgeAnswer($user_query) {
         ];
     }
 
-    // Default friendly assistant fallback
-    $fallback_text = "ขอบคุณสำหรับข้อความครับ! 🐾 ผู้ช่วย Purrfect Bot ได้รับคำถามแล้ว\n\n" .
-        "💡 คุณลูกค้าสามารถสอบถามข้อมูลร้านได้ทันที เช่น:\n" .
-        "• ข้อมูลและราคาน้องแมวสายพันธุ์ต่างๆ (เช่น บริติช, สฟิงซ์, แร็กดอลล์)\n" .
-        "• เวลาเปิดทำการ, แผนที่ร้าน, เบอร์โทรติดต่อ หรือช่องทาง LINE OA\n" .
-        "• การรับประกันสุขภาพ 180 วัน, การฉีดวัคซีน, และไมโครชิป\n" .
-        "• การจัดส่งฟรีทั่วไทยด้วยรถ Pet Taxi ควบคุมอุณหภูมิ\n" .
-        "• โปรโมชั่นโค้ดส่วนลด และ Starter Kit 11 ชิ้น\n" .
-        "หรือกดปุ่ม ⚡ คำถาม ด้านล่างเพื่อดูคำถามด่วนยอดนิยมได้เลยครับ!";
-
+    // Unrecognized / Low confidence fallback
     return [
         'found' => false,
         'score' => $best_score,
-        'answer' => $fallback_text,
-        'cards' => $cards
+        'answer' => $confused_text,
+        'cards' => []
     ];
 }
 

@@ -80,8 +80,19 @@ foreach ($user_orders as $ord) {
                         </div>
                     </div>
                 <?php endforeach; ?>
+            <?php elseif ($currUser): ?>
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2.2rem 1.5rem; background: #F8FAFC; border-radius: 18px; border: 2px dashed #CBD5E1;">
+                    <span style="font-size: 2.5rem; display: block; margin-bottom: 0.6rem;">🐾💉</span>
+                    <strong style="color: #1E293B; font-size: 1.05rem; display: block; margin-bottom: 0.3rem;">คุณยังไม่มีน้องแมวในรายการรับเลี้ยง</strong>
+                    <p style="color: #64748B; font-size: 0.88rem; max-width: 440px; margin: 0 auto 1.2rem auto; line-height: 1.5;">
+                        เมื่อคุณสั่งซื้อน้องแมว รายชื่อและสมุดวัคซีนจะแสดงที่นี่อัตโนมัติ หรือสามารถกรอกข้อมูลคำนวณวันนัดหมายน้องแมวด้านล่างได้ทันทีครับ
+                    </p>
+                    <a href="products.php" class="btn btn-primary btn-sm" style="font-size: 0.85rem; padding: 0.5rem 1.2rem; border-radius: 10px; font-weight: 700; text-decoration: none;">
+                        🐱 เลือกชมน้องแมวพร้อมย้ายบ้าน
+                    </a>
+                </div>
             <?php else: ?>
-                <!-- Fallback Mock Cards for Demo / Guest -->
+                <!-- Fallback Mock Cards for Guest / Demo Visitors -->
                 <div class="adopted-cat-card active-cat-card" 
                      data-breed="Persian"
                      onclick="selectAdoptedCat('น้องปุยหิมะ', 'Persian', '3 เดือน', 'assets/images/cat_persian.jpg', this)">

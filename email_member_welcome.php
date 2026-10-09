@@ -26,16 +26,20 @@ function renderMemberWelcomeEmail($recipient_name = 'คุณสุพรรษ
     $sender_avatar = !empty($sender_info['avatar']) ? $sender_info['avatar'] : 'assets/images/logo.png';
     $sender_avatar_url = (strpos($sender_avatar, 'http') === 0) ? $sender_avatar : ($email_base_url . '/' . ltrim($sender_avatar, '/'));
 
-    // Smart CDN Image Fallback: When running on localhost, Gmail cannot reach localhost:8000,
-    // so we provide crystal-clear public HTTPS CDN images so cats and logos display in email clients 100%!
+    // High-Fidelity CDN Image Fallback & GitHub Pages URLs:
     $is_local = (strpos($email_base_url, 'localhost') !== false || strpos($email_base_url, '127.0.0.1') !== false);
-    $logo_img_url = $is_local ? 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=200&auto=format&fit=crop&q=80' : "{$email_base_url}/assets/images/logo.png";
-    $cat_scottish_url = $is_local ? 'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=600&auto=format&fit=crop&q=80' : "{$email_base_url}/assets/images/cat_scottish.jpg";
-    $cat_british_url = $is_local ? 'https://images.unsplash.com/photo-1592194996308-7b43878e84a6?w=600&auto=format&fit=crop&q=80' : "{$email_base_url}/assets/images/cat_british.jpg";
-    $cat_ragdoll_url = $is_local ? 'https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=600&auto=format&fit=crop&q=80' : "{$email_base_url}/assets/images/cat_ragdoll.jpg";
+    $github_home_url = 'https://patches660.github.io/Purrfect-Shop';
+    $base_asset_url = $github_home_url;
+    $products_url = "{$github_home_url}/products.html";
+    $login_url = "{$github_home_url}/login.html";
+    $deal_url = "{$github_home_url}/products.html";
+    $logo_img_url = "{$base_asset_url}/assets/images/logo.png";
+    $cat_scottish_url = "{$base_asset_url}/assets/images/cat_scottish.jpg";
+    $cat_british_url = "{$base_asset_url}/assets/images/cat_british.jpg";
+    $cat_ragdoll_url = "{$base_asset_url}/assets/images/cat_ragdoll.jpg";
 
     if ($is_local && (strpos($sender_avatar_url, 'localhost') !== false || strpos($sender_avatar_url, '127.0.0.1') !== false)) {
-        $sender_avatar_url = 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?w=200&auto=format&fit=crop&q=80';
+        $sender_avatar_url = "{$base_asset_url}/assets/images/logo.png";
     }
 
     $join_date = date('d/m/Y');
@@ -236,7 +240,7 @@ function renderMemberWelcomeEmail($recipient_name = 'คุณสุพรรษ
                                                     <span style="font-size: 10px; color: #94A3B8; text-decoration: line-through;">22,000 ฿</span>
                                                     <span style="font-size: 14px; font-weight: 900; color: #D97706;">18,700 ฿</span>
                                                 </div>
-                                                <a href="{$email_base_url}/products.php" style="display: block; background: #D97706; color: #FFFFFF; text-decoration: none; font-size: 11px; font-weight: 800; padding: 6px 0; border-radius: 6px; margin-top: 8px;">
+                                                <a href="{$products_url}" target="_blank" style="display: block; background: #D97706; color: #FFFFFF; text-decoration: none; font-size: 11px; font-weight: 800; padding: 6px 0; border-radius: 6px; margin-top: 8px;">
                                                     รับเลี้ยงน้อง 🐾
                                                 </a>
                                             </div>
@@ -255,7 +259,7 @@ function renderMemberWelcomeEmail($recipient_name = 'คุณสุพรรษ
                                                     <span style="font-size: 10px; color: #94A3B8; text-decoration: line-through;">25,000 ฿</span>
                                                     <span style="font-size: 14px; font-weight: 900; color: #D97706;">21,250 ฿</span>
                                                 </div>
-                                                <a href="{$email_base_url}/products.php" style="display: block; background: #D97706; color: #FFFFFF; text-decoration: none; font-size: 11px; font-weight: 800; padding: 6px 0; border-radius: 6px; margin-top: 8px;">
+                                                <a href="{$products_url}" target="_blank" style="display: block; background: #D97706; color: #FFFFFF; text-decoration: none; font-size: 11px; font-weight: 800; padding: 6px 0; border-radius: 6px; margin-top: 8px;">
                                                     รับเลี้ยงน้อง 🐾
                                                 </a>
                                             </div>
@@ -274,7 +278,7 @@ function renderMemberWelcomeEmail($recipient_name = 'คุณสุพรรษ
                                                     <span style="font-size: 10px; color: #94A3B8; text-decoration: line-through;">32,000 ฿</span>
                                                     <span style="font-size: 14px; font-weight: 900; color: #D97706;">27,200 ฿</span>
                                                 </div>
-                                                <a href="{$email_base_url}/products.php" style="display: block; background: #D97706; color: #FFFFFF; text-decoration: none; font-size: 11px; font-weight: 800; padding: 6px 0; border-radius: 6px; margin-top: 8px;">
+                                                <a href="{$products_url}" target="_blank" style="display: block; background: #D97706; color: #FFFFFF; text-decoration: none; font-size: 11px; font-weight: 800; padding: 6px 0; border-radius: 6px; margin-top: 8px;">
                                                     รับเลี้ยงน้อง 🐾
                                                 </a>
                                             </div>
@@ -295,7 +299,7 @@ function renderMemberWelcomeEmail($recipient_name = 'คุณสุพรรษ
                                             ⚡ ขั้นตอนง่ายๆ ในการใช้สิทธิ์รับเลี้ยงน้องแมว:
                                         </div>
                                         <div style="font-size: 12.5px; color: #451A03; line-height: 1.6;">
-                                            1. เข้าสู่ระบบบัญชีของคุณที่ <a href="{$email_base_url}/login.php" style="color: #B45309; font-weight: 800;">Purrfect Shop Login</a><br>
+                                            1. เข้าสู่ระบบบัญชีของคุณที่ <a href="{$login_url}" target="_blank" style="color: #B45309; font-weight: 800;">Purrfect Shop Login</a><br>
                                             2. เลือกชมน้องแมวที่ถูกชะตาแล้วกดเพิ่มลงในตะกร้าการจอง<br>
                                             3. กรอกโค้ด <strong>{$voucher_code}</strong> ในหน้าสรุปยอด เพื่อรับส่วนลด 15% ทันที!
                                         </div>
@@ -308,8 +312,8 @@ function renderMemberWelcomeEmail($recipient_name = 'คุณสุพรรษ
                     <!-- Call To Action Button -->
                     <tr>
                         <td align="center" style="padding: 5px 24px 28px 24px; text-align: center;">
-                            <a href="{$email_base_url}/welcome_deal.php" style="display: inline-block; background: linear-gradient(135deg, #D97706 0%, #B45309 100%); color: #FFFFFF; font-size: 16px; font-weight: 900; text-decoration: none; padding: 14px 36px; border-radius: 999px; box-shadow: 0 6px 20px rgba(180, 83, 9, 0.4);">
-                                👑 เข้าสู่หน้าดีลพิเศษสมาชิก VIP &rarr;
+                            <a href="{$products_url}" target="_blank" style="display: inline-block; background: linear-gradient(135deg, #D97706 0%, #B45309 100%); color: #FFFFFF; font-size: 16px; font-weight: 900; text-decoration: none; padding: 14px 36px; border-radius: 999px; box-shadow: 0 6px 20px rgba(180, 83, 9, 0.4);">
+                                👑 เข้าสู่หน้าเลือกชมน้องแมวสมาชิก VIP &rarr;
                             </a>
                             <div style="font-size: 11.5px; color: #64748B; margin-top: 10px;">
                                 รับสิทธิ์ปรึกษาสัตวแพทย์และผู้เชี่ยวชาญก่อนตัดสินใจรับเลี้ยงฟรี
@@ -324,8 +328,11 @@ function renderMemberWelcomeEmail($recipient_name = 'คุณสุพรรษ
                             <div style="font-size: 13px; font-weight: 800; color: #FEF3C7; margin-bottom: 2px;">
                                 {$sender_name}
                             </div>
-                            <div style="font-size: 11px; color: #94A3B8; margin-bottom: 12px;">
+                            <div style="font-size: 11px; color: #94A3B8; margin-bottom: 8px;">
                                 Founder & Head of Customer Relations &bull; Purrfect Cattery & Boutique
+                            </div>
+                            <div style="font-size: 11px; color: #FCD34D; margin-bottom: 10px;">
+                                🏠 เว็บไซต์ทางการ: <a href="{$github_home_url}" target="_blank" style="color: #FDE68A; font-weight: 800; text-decoration: underline;">{$github_home_url}</a>
                             </div>
                             <div style="font-size: 11px; color: #64748B; line-height: 1.6;">
                                 อีเมลติดต่อทีมงาน: <a href="mailto:{$sender_email}" style="color: #FCD34D;">{$sender_email}</a><br>
