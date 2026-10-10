@@ -6,10 +6,15 @@
 date_default_timezone_set('Asia/Bangkok');
 header('Content-Type: application/json; charset=utf-8');
 
-// 1. ตั้งค่า LINE Developers & Dify API
-$channelAccessToken = 'qSwbwkKSQNctGGIDKAX0Y9JHQ/8fxLl64wsCu5BclFVTwNDCPqCRHoa/S4Noen8WZ0yp9PR+IvdRkRpqOb6mnCON6a5rkpsmLabrzG1B5sYbhbQM6DhDBoiJ41gHykkeUIrOhuU8zu9yi+itSuFbkwdB04t89/1O/w1cDnyilFU=';
-$channelSecret = '887d8c384bb244f57ec9402a59cdea38';
-$difyApiKey = 'app-jQxF8YTJh5hfQRcPnfhuWikn'; // Dify AI Cloud API Key
+// 1. ตั้งค่า LINE Developers & Dify API (โหลดจาก config_secrets.php หรือ Environment Variables)
+$secrets = [];
+if (file_exists(__DIR__ . '/config_secrets.php')) {
+    $secrets = require __DIR__ . '/config_secrets.php';
+}
+
+$channelAccessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN') ?: ($secrets['line_channel_access_token'] ?? '');
+$channelSecret      = getenv('LINE_CHANNEL_SECRET')       ?: ($secrets['line_channel_secret'] ?? '');
+$difyApiKey         = getenv('DIFY_API_KEY')              ?: ($secrets['dify_api_key'] ?? '');
 
 // 2. รับข้อมูล Event จาก LINE Webhook
 $content = file_get_contents('php://input');

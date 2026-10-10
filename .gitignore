@@ -17,9 +17,18 @@ env/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+line_webhook_log.txt
+*.log.txt
+
+# Security & Private Credentials
+config_secrets.php
+.env
+.env.*
+*.env
 
 # IDE & Editor Settings
 .vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
+

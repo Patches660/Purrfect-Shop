@@ -1509,7 +1509,7 @@ function sendOrderConfirmationEmail(array $orderData): array {
 
 /**
  * sendTrackingStatusUpdateEmail — ส่งอีเมลแจ้งเตือนความคืบหน้าการจัดส่งสัตว์เลี้ยง (Live Tracking)
- * ใช้ EmailJS Account ที่ 2 (รหัสล่าสุด: service_3n2rkol / template_pt8dolh / W-8QyJeFcTQcTtoFA)
+ * ใช้การตั้งค่าจาก EmailJS Configuration (data_emailjs.json)
  *
  * @param array  $orderData     ข้อมูลคำสั่งซื้อจาก data_orders.json
  * @param string $currentStatus vet_check | grooming | transit | delivered
